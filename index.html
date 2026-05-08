@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 50%, #2af598 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,12 +22,12 @@
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             border-radius: 24px;
             padding: 40px;
             max-width: 700px;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -39,10 +39,9 @@
             left: 0;
             right: 0;
             height: 6px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c, #fda085);
+            background: linear-gradient(90deg, #43e97b, #38f9d7, #00b894, #55efc4, #00cec9, #81ecec);
         }
 
-        /* 开始页面 */
         .start-page {
             text-align: center;
             padding: 40px 0;
@@ -50,7 +49,7 @@
 
         .start-page h1 {
             font-size: 2.2em;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #00b894, #00cec9);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -78,7 +77,7 @@
         }
 
         .start-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #00b894, #00cec9);
             color: white;
             border: none;
             padding: 16px 48px;
@@ -86,15 +85,14 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.4);
         }
 
         .start-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 12px 35px rgba(0, 184, 148, 0.5);
         }
 
-        /* 进度条 */
         .progress-container {
             margin-bottom: 30px;
         }
@@ -109,27 +107,26 @@
 
         .progress-bar {
             height: 8px;
-            background: #e9ecef;
+            background: #e0f5ee;
             border-radius: 10px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, #00b894, #00cec9);
             border-radius: 10px;
             transition: width 0.5s ease;
             width: 0%;
         }
 
-        /* 问题区域 */
         .question-page {
             display: none;
         }
 
         .question-number {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #00b894, #00cec9);
             color: white;
             width: 36px;
             height: 36px;
@@ -158,7 +155,7 @@
 
         .option {
             padding: 16px 20px;
-            border: 2px solid #e9ecef;
+            border: 2px solid #e0f5ee;
             border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -170,14 +167,14 @@
         }
 
         .option:hover {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.05);
+            border-color: #00b894;
+            background: rgba(0, 184, 148, 0.05);
             transform: translateX(5px);
         }
 
         .option.selected {
-            border-color: #667eea;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-color: #00b894;
+            background: linear-gradient(135deg, rgba(0, 184, 148, 0.1), rgba(0, 206, 201, 0.1));
             color: #333;
             font-weight: 500;
         }
@@ -188,14 +185,14 @@
             right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: #667eea;
+            color: #00b894;
             font-weight: bold;
             font-size: 1.2em;
         }
 
         .option-label {
             display: inline-block;
-            background: #667eea;
+            background: #00b894;
             color: white;
             width: 24px;
             height: 24px;
@@ -208,10 +205,9 @@
         }
 
         .option.selected .option-label {
-            background: #764ba2;
+            background: #00cec9;
         }
 
-        /* 按钮区域 */
         .btn-group {
             display: flex;
             justify-content: space-between;
@@ -229,32 +225,31 @@
         }
 
         .btn-prev {
-            background: #f0f0f0;
-            color: #666;
+            background: #e0f5ee;
+            color: #00b894;
         }
 
         .btn-prev:hover {
-            background: #e0e0e0;
+            background: #c6ede0;
         }
 
         .btn-next {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #00b894, #00cec9);
             color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
         }
 
         .btn-next:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4);
         }
 
         .btn:disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
             transform: none !important;
         }
 
-        /* 结果页面 */
         .result-page {
             display: none;
             text-align: center;
@@ -268,7 +263,7 @@
         .result-city {
             font-size: 2.4em;
             font-weight: bold;
-            background: linear-gradient(135deg, #667eea, #f5576c);
+            background: linear-gradient(135deg, #00b894, #e17055);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -283,7 +278,7 @@
         }
 
         .result-card {
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            background: linear-gradient(135deg, #f0faf6, #dff5ec);
             border-radius: 18px;
             padding: 28px;
             margin-bottom: 24px;
@@ -291,7 +286,7 @@
         }
 
         .result-card h3 {
-            color: #444;
+            color: #2d3436;
             margin-bottom: 14px;
             font-size: 1.15em;
             display: flex;
@@ -301,7 +296,7 @@
 
         .result-card p {
             color: #555;
-            line-height: 1.9;
+            line-height: 0.9;
             font-size: 0.95em;
         }
 
@@ -323,7 +318,7 @@
 
         .dimension-bar {
             height: 10px;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 10px;
             overflow: hidden;
         }
@@ -342,8 +337,8 @@
         }
 
         .tag {
-            background: rgba(102, 126, 234, 0.15);
-            color: #667eea;
+            background: rgba(0, 184, 148, 0.15);
+            color: #00b894;
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.85em;
@@ -354,18 +349,12 @@
             margin-top: 8px;
         }
 
-        .other-cities h3 {
-            color: #444;
-            margin-bottom: 16px;
-            font-size: 1.1em;
-        }
-
         .other-city-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 12px;
             margin-bottom: 8px;
         }
@@ -382,13 +371,13 @@
         }
 
         .match-percent {
-            color: #667eea;
+            color: #00b894;
             font-weight: bold;
             font-size: 0.95em;
         }
 
         .restart-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #00b894, #00cec9);
             color: white;
             border: none;
             padding: 14px 40px;
@@ -397,12 +386,12 @@
             cursor: pointer;
             margin-top: 24px;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 184, 148, 0.3);
         }
 
         .restart-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.4);
         }
 
         .share-hint {
@@ -411,7 +400,6 @@
             font-size: 0.85em;
         }
 
-        /* 加载动画 */
         .loading-page {
             display: none;
             text-align: center;
@@ -421,8 +409,8 @@
         .loading-spinner {
             width: 60px;
             height: 60px;
-            border: 4px solid #e9ecef;
-            border-top: 4px solid #667eea;
+            border: 4px solid #e0f5ee;
+            border-top: 4px solid #00b894;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 24px;
@@ -446,7 +434,7 @@
 
         .paywall-page h2 {
             font-size: 1.6em;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #00b894, #00cec9);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -454,7 +442,7 @@
         }
 
         .paywall-preview {
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            background: linear-gradient(135deg, #f0faf6, #dff5ec);
             border-radius: 18px;
             padding: 24px;
             margin: 20px 0;
@@ -503,13 +491,13 @@
         }
 
         .price-current {
-            color: #f5576c;
+            color: #e17055;
             font-size: 2em;
             font-weight: bold;
         }
 
         .price-tag {
-            background: #f5576c;
+            background: #e17055;
             color: white;
             padding: 2px 10px;
             border-radius: 12px;
@@ -518,7 +506,7 @@
 
         .paywall-features {
             text-align: left;
-            background: #f8f9fa;
+            background: #f0faf6;
             border-radius: 14px;
             padding: 20px;
             margin: 20px 0;
@@ -559,24 +547,35 @@
         }
 
         .pay-btn-wechat {
-            background: #07c160;
+            background: linear-gradient(135deg, #00b894, #00cec9);
             color: white;
-            box-shadow: 0 4px 15px rgba(7, 193, 96, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
         }
 
         .pay-btn-wechat:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(7, 193, 96, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4);
         }
 
-        .pay-btn-free {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        .countdown-bar {
+            margin: 16px 0;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 12px;
+            color: #e17055;
+            font-size: 0.95em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .pay-btn-free:hover {
-            transform: translateY(-2px);
+        .countdown-num {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #d63031;
+            min-width: 80px;
         }
 
         .qrcode-modal {
@@ -619,10 +618,10 @@
         }
 
         .qrcode-placeholder {
-            width: 200px;
-            height: 200px;
-            background: #f0f0f0;
-            border: 3px dashed #ccc;
+            width: 220px;
+            height: 220px;
+            background: #f0faf6;
+            border: 3px dashed #00b894;
             border-radius: 12px;
             margin: 0 auto 16px;
             display: flex;
@@ -632,6 +631,7 @@
             font-size: 0.85em;
             flex-direction: column;
             gap: 8px;
+            overflow: hidden;
         }
 
         .close-modal {
@@ -646,20 +646,28 @@
         }
 
         .confirm-paid-btn {
-            background: #07c160;
+            background: linear-gradient(135deg, #00b894, #00cec9);
             color: white;
             border: none;
-            padding: 12px 32px;
+            padding: 14px 36px;
             border-radius: 50px;
-            font-size: 1em;
+            font-size: 1.05em;
             cursor: pointer;
             margin-top: 8px;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
         }
 
         .confirm-paid-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(7, 193, 96, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4);
+        }
+
+        .modal-price {
+            color: #e17055;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin: 8px 0;
         }
 
         .paywall-note {
@@ -669,7 +677,22 @@
             line-height: 1.6;
         }
 
-        /* 动画 */
+        .paywall-guarantee {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .guarantee-item {
+            color: #999;
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
         .fade-in {
             animation: fadeIn 0.5s ease;
         }
@@ -677,6 +700,21 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 自动跳转提示 */
+        .auto-next-hint {
+            text-align: center;
+            color: #00b894;
+            font-size: 0.85em;
+            margin-top: -20px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .auto-next-hint.show {
+            opacity: 1;
         }
 
         @media (max-width: 600px) {
@@ -734,6 +772,7 @@
                 <div class="question-number" id="questionNum">1</div>
                 <div class="question-text" id="questionText"></div>
                 <div class="options" id="optionsArea"></div>
+                <div class="auto-next-hint" id="autoNextHint">✨ 已选择，自动跳转下一题...</div>
             </div>
 
             <div class="btn-group">
@@ -756,8 +795,8 @@
     </div>
 
     <script>
-        // ==================== 问题数据 ====================
-        const questions = [
+        // ==================== 问题原始数据 ====================
+        const questionsRaw = [
             {
                 q: "你更喜欢怎样的气候环境？",
                 options: [
@@ -1033,135 +1072,105 @@
         // ==================== 城市数据 ====================
         const cities = {
             beijing: {
-                name: "北京",
-                emoji: "🏯",
-                slogan: "千年古都，现代之光",
+                name: "北京", emoji: "🏯", slogan: "千年古都，现代之光",
                 conditions: { north: 3, culture: 3, tier1: 3, career: 2 },
                 analysis: "北京是一座兼具深厚历史底蕴与现代活力的城市。这里有故宫、长城等世界级文化遗产，也有中关村、国贸等充满机遇的商业中心。你对文化的热爱、对事业的追求，与这座城市的气质不谋而合。在北京，你可以在周末逛胡同品味老北京的韵味，工作日在高速发展的行业中实现自我价值。这座城市会给你广阔的视野和无限的可能。",
                 tags: ["历史文化", "事业发展", "教育资源丰富", "四季分明", "包容大气"],
                 dimensions: { career: 90, culture: 95, life: 65, nature: 50, food: 75 }
             },
             shanghai: {
-                name: "上海",
-                emoji: "🌃",
-                slogan: "精致海派，无限可能",
+                name: "上海", emoji: "🌃", slogan: "精致海派，无限可能",
                 conditions: { east: 3, tier1: 3, career: 3, culture: 2 },
                 analysis: "上海是中国最具国际化气质的城市，中西文化在这里完美融合。外滩的万国建筑、陆家嘴的摩天大楼，诉说着这座城市的过去与未来。你追求品质生活的态度、开放包容的心态，与上海的海派精神高度契合。在这里，你会找到丰富的职业机遇、精致的生活方式，以及这座城市独有的优雅与活力。",
                 tags: ["国际化", "精致生活", "商业繁荣", "中西交融", "时尚前沿"],
                 dimensions: { career: 92, culture: 85, life: 70, nature: 45, food: 85 }
             },
             guangzhou: {
-                name: "广州",
-                emoji: "🌺",
-                slogan: "千年商都，美食天堂",
+                name: "广州", emoji: "🌺", slogan: "千年商都，美食天堂",
                 conditions: { south: 3, food: 3, tier1: 2, creative: 1 },
                 analysis: "广州是一座充满烟火气与人情味的城市。两千多年的商业历史让这座城市务实而包容，'食在广州'的美名更让无数人向往。你对美食的热爱、对温暖人际关系的珍视，会在广州得到最好的回应。在这里，你可以在老城区感受市井生活的鲜活，也可以在天河CBD追逐事业的梦想。广州会用它独有的温暖拥抱你。",
                 tags: ["美食之都", "务实包容", "气候温暖", "商业活跃", "烟火气浓"],
                 dimensions: { career: 80, culture: 70, life: 80, nature: 55, food: 98 }
             },
             shenzhen: {
-                name: "深圳",
-                emoji: "🚀",
-                slogan: "创新之城，青春无限",
+                name: "深圳", emoji: "🚀", slogan: "创新之城，青春无限",
                 conditions: { south: 2, tier1: 3, career: 3, creative: 3 },
                 analysis: "深圳是一座年轻而充满创造力的城市，从小渔村到国际化大都市的蜕变本身就是最好的励志故事。你骨子里的创新精神、不甘平庸的进取心，与深圳'敢闯敢试'的城市基因完美共鸣。在这里，每个人都可以凭实力说话，每个梦想都值得被尊重。深圳会给你最公平的舞台和最前沿的机遇。",
                 tags: ["创新创业", "年轻活力", "公平竞争", "科技前沿", "海滨城市"],
                 dimensions: { career: 95, culture: 55, life: 65, nature: 60, food: 70 }
             },
             chengdu: {
-                name: "成都",
-                emoji: "🐼",
-                slogan: "天府之国，安逸之都",
+                name: "成都", emoji: "🐼", slogan: "天府之国，安逸之都",
                 conditions: { southwest: 3, food: 2, peace: 3, nature: 1 },
                 analysis: "成都是一座让人来了就不想走的城市。火锅的热辣、茶馆的悠闲、熊猫的可爱，构成了成都独特的城市性格。你对生活品质的追求、对张弛有度的生活节奏的向往，在成都可以得到完美实现。这座城市告诉你，奋斗与享受并不矛盾——你可以认真工作，也可以在人民公园的竹椅上喝一杯盖碗茶，感受'巴适'的人生。",
                 tags: ["美食天堂", "休闲安逸", "文化底蕴", "宜居宜业", "乐观豁达"],
                 dimensions: { career: 72, culture: 80, life: 92, nature: 75, food: 95 }
             },
             hangzhou: {
-                name: "杭州",
-                emoji: "🏞️",
-                slogan: "人间天堂，数字之城",
+                name: "杭州", emoji: "🏞️", slogan: "人间天堂，数字之城",
                 conditions: { east: 3, nature: 2, creative: 2, tier2: 2 },
                 analysis: "杭州将'上有天堂、下有苏杭'的诗意与互联网时代的活力完美结合。西湖的柔美、钱塘江的壮阔，以及蓬勃发展的数字经济，让这座城市既有千年底蕴又有无限可能。你对自然之美的欣赏、对创新事业的热情，都能在杭州找到归属。这座城市会让你在诗意的生活中，同样收获事业的精彩。",
                 tags: ["山水如画", "数字经济", "诗意生活", "创业热土", "文化深厚"],
                 dimensions: { career: 82, culture: 80, life: 85, nature: 90, food: 75 }
             },
             chongqing: {
-                name: "重庆",
-                emoji: "🌶️",
-                slogan: "山城雾都，热辣人生",
+                name: "重庆", emoji: "🌶️", slogan: "山城雾都，热辣人生",
                 conditions: { southwest: 3, food: 3, nature: 2, culture: 1 },
                 analysis: "重庆是一座建在山上的城市，独特的地形造就了魔幻般的城市景观。这里的人像火锅一样热情直爽，这里的生活像山路一样起伏精彩。你的热情、你对真实生活的追求，与重庆的性格如出一辙。在这里，你会被壮丽的江景感动，被地道的美食征服，更会被重庆人的乐观豁达所感染。",
                 tags: ["山城魅力", "火锅之都", "热情直爽", "夜景壮观", "性价比高"],
                 dimensions: { career: 65, culture: 70, life: 85, nature: 80, food: 95 }
             },
             nanjing: {
-                name: "南京",
-                emoji: "🍂",
-                slogan: "六朝古都，文脉悠长",
+                name: "南京", emoji: "🍂", slogan: "六朝古都，文脉悠长",
                 conditions: { east: 3, culture: 3, tier2: 2, north: 1 },
                 analysis: "南京是一座让人心生敬意的城市。作为六朝古都，它承载着厚重的历史记忆，同时以开放的姿态拥抱未来。你对文化的热爱、对稳健生活的追求，与南京的气质高度吻合。在这座城市，秋天的梧桐大道会让你感动，夫子庙的灯火会让你温暖。南京会给你归属感，让你在深厚的文化滋养中，找到内心的安定。",
                 tags: ["历史厚重", "教育名城", "梧桐大道", "宜居城市", "美食丰富"],
                 dimensions: { career: 70, culture: 92, life: 82, nature: 70, food: 82 }
             },
             xiamen: {
-                name: "厦门",
-                emoji: "🌊",
-                slogan: "海上花园，温馨港湾",
+                name: "厦门", emoji: "🌊", slogan: "海上花园，温馨港湾",
                 conditions: { south: 2, coastal: 3, nature: 2, peace: 2 },
                 analysis: "厦门是一座精致而温柔的海滨城市。鼓浪屿的琴声、环岛路的海风、沙坡尾的文艺，共同编织出这座城市的独特韵味。你内心对美好生活的向往、对自然和艺术的热爱，在厦门可以得到完美的满足。这座不大的城市，会给你恰到好处的舒适——不太快也不太慢，不太喧闹也不太寂静，刚刚好。",
                 tags: ["海滨风光", "文艺气质", "气候宜人", "精致小城", "慢生活"],
                 dimensions: { career: 55, culture: 75, life: 90, nature: 92, food: 78 }
             },
             xian: {
-                name: "西安",
-                emoji: "🏛️",
-                slogan: "十三朝古都，盛世长安",
+                name: "西安", emoji: "🏛️", slogan: "十三朝古都，盛世长安",
                 conditions: { north: 2, northwest: 2, culture: 3, food: 2 },
                 analysis: "西安是一座让你触摸历史脉搏的城市。十三朝古都的辉煌在这里留下了无数印记，而城墙内外的烟火人间又让这座城市充满生机。你对历史文化的热爱、对质朴生活的向往，与西安的性格完美契合。在这里，你可以骑行在古城墙上感受千年时光，也可以在回民街品尝地道美食。西安会让你感受到，历史不是冰冷的文字，而是活生生的日常。",
                 tags: ["历史文化", "美食荟萃", "古今交融", "性价比高", "豪爽热情"],
                 dimensions: { career: 62, culture: 98, life: 78, nature: 60, food: 88 }
             },
             kunming: {
-                name: "昆明",
-                emoji: "🌸",
-                slogan: "春城花都，四季如春",
+                name: "昆明", emoji: "🌸", slogan: "春城花都，四季如春",
                 conditions: { southwest: 3, nature: 3, peace: 2, coastal: 0 },
                 analysis: "昆明是一座被大自然偏爱的城市。四季如春的气候、湛蓝的天空、满城的鲜花，让这座城市成为许多人心中的理想之地。你对自然的亲近、对健康生活方式的追求，在昆明可以得到最好的实现。这座城市的从容与宁静会让你放慢脚步，重新发现生活中那些被忽略的美好。在昆明，每一天都是春天。",
                 tags: ["四季如春", "鲜花之城", "空气清新", "多民族文化", "宜居天堂"],
                 dimensions: { career: 48, culture: 65, life: 92, nature: 98, food: 72 }
             },
             wuhan: {
-                name: "武汉",
-                emoji: "🌅",
-                slogan: "大江大湖，英雄之城",
+                name: "武汉", emoji: "🌅", slogan: "大江大湖，英雄之城",
                 conditions: { north: 1, east: 1, tier2: 2, culture: 2, food: 2, career: 2 },
                 analysis: "武汉是一座充满豪情与烟火气的城市。长江与汉江在这里交汇，赋予了这座城市大气磅礴的气质。你的热情开朗、你对丰富多彩生活的追求，与武汉的性格不谋而合。在这里，你可以清晨吃一碗热干面开始充满活力的一天，傍晚在江滩看壮丽的日落。武汉正在崛起的科技产业和教育资源，也会给你充足的发展空间。",
                 tags: ["大江大湖", "美食丰富", "教育重镇", "交通枢纽", "热情豪迈"],
                 dimensions: { career: 75, culture: 72, life: 75, nature: 70, food: 88 }
             },
             qingdao: {
-                name: "青岛",
-                emoji: "⛵",
-                slogan: "红瓦绿树，碧海蓝天",
+                name: "青岛", emoji: "⛵", slogan: "红瓦绿树，碧海蓝天",
                 conditions: { north: 2, coastal: 3, nature: 2, peace: 1, east: 1 },
                 analysis: "青岛是一座兼具北方大气与海洋浪漫的城市。红瓦绿树、碧海蓝天的城市画面深入人心。你对海洋的向往、对有品质生活的追求，在青岛可以得到很好的满足。这座城市有德式建筑的异域风情、有新鲜的海鲜美食、有宜人的夏季气候。青岛会给你一种既能努力工作又能诗意栖居的美好生活。",
                 tags: ["海滨城市", "啤酒文化", "宜居环境", "海鲜美食", "浪漫气质"],
                 dimensions: { career: 62, culture: 65, life: 85, nature: 88, food: 80 }
             },
             lhasa: {
-                name: "拉萨",
-                emoji: "🏔️",
-                slogan: "日光之城，心灵故乡",
+                name: "拉萨", emoji: "🏔️", slogan: "日光之城，心灵故乡",
                 conditions: { northwest: 3, nature: 3, peace: 3, culture: 2 },
                 analysis: "拉萨是一座让灵魂得到洗礼的城市。湛蓝的天空、神圣的布达拉宫、虔诚的转经人，构成了一幅纯净而震撼的画面。你对内心宁静的追求、对自然与精神世界的向往，与拉萨的气质深度共鸣。在这座日光之城，你会发现生活可以回归最本真的模样。拉萨教会你的，是在广阔天地间找到内心真正的自由与平静。",
                 tags: ["纯净圣洁", "信仰之地", "壮美风光", "心灵净土", "独特文化"],
                 dimensions: { career: 30, culture: 85, life: 70, nature: 100, food: 50 }
             },
             suzhou: {
-                name: "苏州",
-                emoji: "🏡",
-                slogan: "人间烟火，诗意江南",
+                name: "苏州", emoji: "🏡", slogan: "人间烟火，诗意江南",
                 conditions: { east: 3, culture: 2, peace: 2, nature: 1, tier2: 2 },
                 analysis: "苏州是一座将古典韵味与现代活力完美融合的城市。精致的园林、悠长的小巷、温软的吴侬软语，让这座城市充满了独特的魅力。你对精致生活的追求、对文化与自然和谐共处的向往，与苏州的城市精神高度一致。在这里，你可以在拙政园感受匠心之美，也可以在工业园区追逐创新梦想。苏州告诉你，美好的生活可以是诗意与务实的完美结合。",
                 tags: ["园林之城", "江南韵味", "经济发达", "精致生活", "宜居宜业"],
@@ -1173,11 +1182,49 @@
         let currentQuestion = 0;
         let answers = [];
         let scores = {};
-        let hasPaid = false;
         let calculatedResult = null;
+        let questions = [];         // 打乱后的问题
+        let optionMaps = [];        // 记录每题选项的原始索引映射
+        let autoNextTimer = null;   // 自动跳转计时器
+
+        // ==================== 随机打乱函数 ====================
+        function shuffleArray(arr) {
+            const shuffled = [...arr];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // 初始化：打乱问题顺序 + 每题选项顺序
+        function initQuestions() {
+            // 打乱问题顺序
+            const shuffledQuestions = shuffleArray(questionsRaw);
+            questions = [];
+            optionMaps = [];
+
+            shuffledQuestions.forEach(q => {
+                // 为每个问题创建带索引的选项数组
+                const indexedOptions = q.options.map((opt, i) => ({ ...opt, originalIndex: i }));
+                // 打乱选项
+                const shuffledOptions = shuffleArray(indexedOptions);
+
+                questions.push({
+                    q: q.q,
+                    options: shuffledOptions
+                });
+
+                // 记录打乱后的映射关系
+                optionMaps.push(shuffledOptions.map(opt => opt.originalIndex));
+            });
+        }
 
         // ==================== 开始测试 ====================
         function startQuiz() {
+            initQuestions();
+            answers = new Array(questions.length).fill(undefined);
+            currentQuestion = 0;
             document.getElementById('startPage').style.display = 'none';
             document.getElementById('questionPage').style.display = 'block';
             showQuestion(0);
@@ -1189,8 +1236,9 @@
             document.getElementById('questionNum').textContent = index + 1;
             document.getElementById('questionText').textContent = q.q;
             document.getElementById('progressText').textContent = `第 ${index + 1} / ${questions.length} 题`;
-            document.getElementById('progressPercent').textContent = Math.round((index / questions.length) * 100) + '%';
-            document.getElementById('progressFill').style.width = (index / questions.length * 100) + '%';
+            const pct = Math.round((index / questions.length) * 100);
+            document.getElementById('progressPercent').textContent = pct + '%';
+            document.getElementById('progressFill').style.width = pct + '%';
 
             const optionsArea = document.getElementById('optionsArea');
             optionsArea.innerHTML = '';
@@ -1205,24 +1253,63 @@
             });
 
             document.getElementById('prevBtn').disabled = index === 0;
-            document.getElementById('nextBtn').disabled = answers[index] === undefined;
-            document.getElementById('nextBtn').textContent = index === questions.length - 1 ? '查看结果 🎉' : '下一题 →';
 
+            // 最后一题按钮文字
+            if (index === questions.length - 1) {
+                document.getElementById('nextBtn').textContent = '查看结果 🎉';
+                document.getElementById('nextBtn').disabled = answers[index] === undefined;
+            } else {
+                document.getElementById('nextBtn').textContent = '下一题 →';
+                document.getElementById('nextBtn').disabled = answers[index] === undefined;
+            }
+
+            // 隐藏自动跳转提示
+            document.getElementById('autoNextHint').classList.remove('show');
+
+            // 动画
             const questionArea = document.getElementById('questionArea');
             questionArea.classList.remove('fade-in');
             void questionArea.offsetWidth;
             questionArea.classList.add('fade-in');
         }
 
+        // ==================== 选择选项（自动跳转） ====================
         function selectOption(qIndex, optIndex) {
+            // 清除之前的自动跳转计时器
+            if (autoNextTimer) {
+                clearTimeout(autoNextTimer);
+                autoNextTimer = null;
+            }
+
+            const isFirstSelect = answers[qIndex] === undefined;
             answers[qIndex] = optIndex;
+
             document.querySelectorAll('.option').forEach((el, i) => {
                 el.className = 'option' + (i === optIndex ? ' selected' : '');
             });
+
             document.getElementById('nextBtn').disabled = false;
+
+            // 如果是第一次选择这题（不是修改），且不是最后一题，自动跳转
+            if (isFirstSelect && qIndex < questions.length - 1) {
+                document.getElementById('autoNextHint').classList.add('show');
+                autoNextTimer = setTimeout(() => {
+                    document.getElementById('autoNextHint').classList.remove('show');
+                    nextQuestion();
+                }, 600);
+            }
+
+            // 最后一题选了之后，更新按钮状态
+            if (qIndex === questions.length - 1) {
+                document.getElementById('nextBtn').disabled = false;
+            }
         }
 
         function nextQuestion() {
+            if (autoNextTimer) {
+                clearTimeout(autoNextTimer);
+                autoNextTimer = null;
+            }
             if (currentQuestion < questions.length - 1) {
                 currentQuestion++;
                 showQuestion(currentQuestion);
@@ -1232,6 +1319,10 @@
         }
 
         function prevQuestion() {
+            if (autoNextTimer) {
+                clearTimeout(autoNextTimer);
+                autoNextTimer = null;
+            }
             if (currentQuestion > 0) {
                 currentQuestion--;
                 showQuestion(currentQuestion);
@@ -1253,6 +1344,7 @@
         function calculateResult() {
             scores = {};
             answers.forEach((ansIdx, qIdx) => {
+                if (ansIdx === undefined) return;
                 const option = questions[qIdx].options[ansIdx];
                 if (option.scores) {
                     for (const [key, value] of Object.entries(option.scores)) {
@@ -1272,18 +1364,23 @@
 
             const sortedCities = Object.entries(cityScores).sort((a, b) => b[1] - a[1]);
             const maxScore = sortedCities[0][1];
-            const topCityKey = sortedCities[0][0];
-            const topCity = cities[topCityKey];
+            const topCity = cities[sortedCities[0][0]];
 
             return { topCity, sortedCities, maxScore };
         }
 
-        // ==================== 付费墙 ====================
+        // ==================== 付费墙（强制付费） ====================
+        let countdownInterval = null;
+
         function showPaywall(result) {
             document.getElementById('loadingPage').style.display = 'none';
             const paywallPage = document.getElementById('paywallPage');
             paywallPage.style.display = 'block';
             paywallPage.classList.add('fade-in');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // 随机已购买人数
+            const buyers = Math.floor(Math.random() * 3000) + 8000;
 
             paywallPage.innerHTML = `
                 <h2>🎊 分析完成！</h2>
@@ -1291,7 +1388,7 @@
 
                 <div class="paywall-preview">
                     <div class="preview-city">${result.topCity.emoji}</div>
-                    <div style="font-size: 1.5em; font-weight: bold; color: #667eea; margin-bottom: 8px;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #00b894; margin-bottom: 8px;">
                         你的命定之城已揭晓
                     </div>
                     <div class="preview-text">
@@ -1300,14 +1397,23 @@
                     </div>
                 </div>
 
-                <div class="paywall-lock">🔓</div>
+                <div class="paywall-lock">🔐</div>
                 <p style="color: #555; font-weight: 500; font-size: 1.05em;">解锁你的专属城市报告</p>
+
+                <div class="countdown-bar">
+                    <span>⏰ 限时特惠倒计时</span>
+                    <span class="countdown-num" id="countdownTimer">14:59</span>
+                </div>
 
                 <div class="paywall-price">
                     <span class="price-original">¥9.9</span>
                     <span class="price-current">¥1.9</span>
                     <span class="price-tag">限时优惠</span>
                 </div>
+
+                <p style="color: #aaa; font-size: 0.85em; margin-bottom: 16px;">
+                    已有 <strong style="color: #00b894;">${buyers.toLocaleString()}</strong> 人解锁了TA的城市报告
+                </p>
 
                 <div class="paywall-features">
                     <div class="feature-item">你的最佳匹配城市及匹配度</div>
@@ -1318,12 +1424,15 @@
                 </div>
 
                 <div class="pay-methods">
-                    <button class="pay-btn pay-btn-wechat" onclick="showQRCode('pay')">
-                        💚 微信扫码支付 ¥1.9
+                    <button class="pay-btn pay-btn-wechat" onclick="showQRCode()">
+                        💚 微信扫码支付 ¥1.9 解锁报告
                     </button>
-                    <button class="pay-btn pay-btn-free" onclick="showQRCode('follow')">
-                        🎁 关注公众号免费解锁
-                    </button>
+                </div>
+
+                <div class="paywall-guarantee">
+                    <span class="guarantee-item">🔒 安全支付</span>
+                    <span class="guarantee-item">⚡ 即时查看</span>
+                    <span class="guarantee-item">💯 精准分析</span>
                 </div>
 
                 <p class="paywall-note">
@@ -1335,49 +1444,52 @@
                 <div class="qrcode-modal" id="qrcodeModal">
                     <div class="qrcode-content">
                         <button class="close-modal" onclick="closeQRCode()">×</button>
-                        <h3 id="modalTitle">微信扫码支付</h3>
+                        <h3>微信扫码支付</h3>
                         <div class="qrcode-placeholder" id="qrcodePlaceholder">
-                            <span style="font-size: 2em;">📱</span>
-                            <span>在此放置你的二维码</span>
+                            <img src="pay-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;" onerror="this.parentElement.innerHTML='<span style=font-size:2em>📱</span><span>请放置收款码图片</span>'">
                         </div>
-                        <p id="modalDesc">扫码支付 ¥1.9 后点击下方按钮</p>
-                        <button class="confirm-paid-btn" onclick="confirmPaid()">✅ 我已完成付款 / 已关注</button>
+                        <div class="modal-price">¥1.9</div>
+                        <p>扫码支付后，点击下方按钮查看结果</p>
+                        <button class="confirm-paid-btn" onclick="confirmPaid()">✅ 我已完成支付，查看结果</button>
                     </div>
                 </div>
             `;
+
+            // 启动倒计时
+            startCountdown();
         }
 
-        function showQRCode(type) {
-    const modal = document.getElementById('qrcodeModal');
-    const title = document.getElementById('modalTitle');
-    const desc = document.getElementById('modalDesc');
-    const placeholder = document.getElementById('qrcodePlaceholder');
+        // 倒计时
+        function startCountdown() {
+            let totalSeconds = 14 * 60 + 59;
+            if (countdownInterval) clearInterval(countdownInterval);
 
-    if (type === 'pay') {
-        title.textContent = '微信扫码支付';
-        desc.innerHTML = '扫码支付 ¥1.9 后<br>点击下方按钮查看结果';
-        
-        // ✅ 直接用这一行，不要有任何注释包裹
-        placeholder.innerHTML = '<img src="pay-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
+            countdownInterval = setInterval(() => {
+                totalSeconds--;
+                if (totalSeconds <= 0) {
+                    clearInterval(countdownInterval);
+                    totalSeconds = 0;
+                }
+                const m = Math.floor(totalSeconds / 60);
+                const s = totalSeconds % 60;
+                const el = document.getElementById('countdownTimer');
+                if (el) {
+                    el.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
 
-    } else {
-        title.textContent = '关注公众号免费解锁';
-        desc.innerHTML = '长按识别关注公众号后<br>点击下方按钮查看结果';
-        
-        // ✅ 公众号二维码同理
-        placeholder.innerHTML = '<img src="follow-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
-    }
-
-    modal.classList.add('show');
-}
+        function showQRCode() {
+            document.getElementById('qrcodeModal').classList.add('show');
+        }
 
         function closeQRCode() {
             document.getElementById('qrcodeModal').classList.remove('show');
         }
 
         function confirmPaid() {
-            hasPaid = true;
             closeQRCode();
+            if (countdownInterval) clearInterval(countdownInterval);
             document.getElementById('paywallPage').style.display = 'none';
             showFullResult(calculatedResult);
         }
@@ -1391,7 +1503,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             const topPercent = Math.min(98, Math.max(75, Math.round((sortedCities[0][1] / maxScore) * 95 + Math.random() * 5)));
-            const dimColors = ['#667eea', '#f5576c', '#4facfe', '#43e97b', '#fa709a'];
+            const dimColors = ['#00b894', '#e17055', '#0984e3', '#00cec9', '#fdcb6e'];
             const dimLabels = ['事业发展', '文化氛围', '生活品质', '自然环境', '美食体验'];
 
             let dimensionHTML = '';
@@ -1430,7 +1542,7 @@
                 <div class="result-city-emoji">${topCity.emoji}</div>
                 <div class="result-city">${topCity.name}</div>
                 <div class="result-slogan">"${topCity.slogan}"</div>
-                <p style="color: #667eea; font-size: 1.3em; font-weight: bold; margin-bottom: 24px;">
+                <p style="color: #00b894; font-size: 1.3em; font-weight: bold; margin-bottom: 24px;">
                     匹配度：${topPercent}% ✨
                 </p>
 
@@ -1478,6 +1590,8 @@
             answers = [];
             scores = {};
             calculatedResult = null;
+            if (countdownInterval) clearInterval(countdownInterval);
+            if (autoNextTimer) clearTimeout(autoNextTimer);
             document.getElementById('resultPage').style.display = 'none';
             document.getElementById('paywallPage').style.display = 'none';
             document.getElementById('startPage').style.display = 'block';
@@ -1499,7 +1613,6 @@
                     if (!document.getElementById('prevBtn').disabled) prevQuestion();
                 }
             }
-            // ESC 关闭弹窗
             if (e.key === 'Escape') {
                 closeQRCode();
             }

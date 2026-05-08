@@ -1355,7 +1355,7 @@
 
             if (type === 'pay') {
                 title.textContent = '微信扫码支付';
-                desc.innerHTML = '扫码支付 ¥1.9 后<br>点击下方按钮查看结果';
+                desc.innerHTML = '扫码支付 ¥0.9 后<br>点击下方按钮查看结果';
                 placeholder.innerHTML = `
                     <span style="font-size: 2em;">💰</span>
                     <span>在此放置收款码图片</span>
@@ -1365,7 +1365,7 @@
                 ============================================
                 👇 替换为你自己的收款码图片 👇
                 ============================================
-                placeholder.innerHTML = '<img src="微信图片_20260508214323_987_5.png" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
+                placeholder.innerHTML = '<img src="pay-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
 
                 如果图片在本地，和index.html放同一文件夹：
                 placeholder.innerHTML = '<img src="pay-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';

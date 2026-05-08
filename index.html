@@ -1348,48 +1348,28 @@
         }
 
         function showQRCode(type) {
-            const modal = document.getElementById('qrcodeModal');
-            const title = document.getElementById('modalTitle');
-            const desc = document.getElementById('modalDesc');
-            const placeholder = document.getElementById('qrcodePlaceholder');
+    const modal = document.getElementById('qrcodeModal');
+    const title = document.getElementById('modalTitle');
+    const desc = document.getElementById('modalDesc');
+    const placeholder = document.getElementById('qrcodePlaceholder');
 
-            if (type === 'pay') {
-                title.textContent = '微信扫码支付';
-                desc.innerHTML = '扫码支付 ¥0.9 后<br>点击下方按钮查看结果';
-                placeholder.innerHTML = `
-                    <span style="font-size: 2em;">💰</span>
-                    <span>在此放置收款码图片</span>
-                    <span style="font-size: 0.75em;">将此处替换为你的微信收款码</span>
-                `;
-                /*
-                ============================================
-                👇 替换为你自己的收款码图片 👇
-                ============================================
-                placeholder.innerHTML = '<img src="pay-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
+    if (type === 'pay') {
+        title.textContent = '微信扫码支付';
+        desc.innerHTML = '扫码支付 ¥1.9 后<br>点击下方按钮查看结果';
+        
+        // ✅ 直接用这一行，不要有任何注释包裹
+        placeholder.innerHTML = '<img src="pay-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
 
-                如果图片在本地，和index.html放同一文件夹：
-                placeholder.innerHTML = '<img src="pay-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
-                ============================================
-                */
-            } else {
-                title.textContent = '关注公众号免费解锁';
-                desc.innerHTML = '长按识别关注公众号后<br>点击下方按钮查看结果';
-                placeholder.innerHTML = `
-                    <span style="font-size: 2em;">📲</span>
-                    <span>在此放置公众号二维码</span>
-                    <span style="font-size: 0.75em;">将此处替换为你的公众号二维码</span>
-                `;
-                /*
-                ============================================
-                👇 替换为你自己的公众号二维码 👇
-                ============================================
-                placeholder.innerHTML = '<img src="你的公众号二维码网址.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
-                ============================================
-                */
-            }
+    } else {
+        title.textContent = '关注公众号免费解锁';
+        desc.innerHTML = '长按识别关注公众号后<br>点击下方按钮查看结果';
+        
+        // ✅ 公众号二维码同理
+        placeholder.innerHTML = '<img src="follow-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">';
+    }
 
-            modal.classList.add('show');
-        }
+    modal.classList.add('show');
+}
 
         function closeQRCode() {
             document.getElementById('qrcodeModal').classList.remove('show');

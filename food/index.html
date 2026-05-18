@@ -1,1 +1,1612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测测你的美食性格 - JoyCece</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255,255,255,0.97);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #f6d365, #fda085, #fab1a0, #ffeaa7);
+        }
+
+        /* 开始页 */
+        .start-page { text-align: center; padding: 30px 0; }
+
+        .start-page .icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .start-page h1 {
+            font-size: 2em;
+            color: #2d3436;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .start-page .subtitle {
+            color: #636e72;
+            font-size: 1.05em;
+            margin-bottom: 28px;
+            line-height: 1.8;
+        }
+
+        .info-box {
+            background: #fff8ec;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 28px;
+            border-left: 4px solid #e17055;
+        }
+
+        .info-box h4 {
+            color: #e17055;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .info-box p {
+            color: #636e72;
+            font-size: 0.88em;
+            line-height: 1.8;
+        }
+
+        .types-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .type-preview-item {
+            background: #fff8ec;
+            border-radius: 10px;
+            padding: 14px 10px;
+            text-align: center;
+            border: 1px solid #fde4cc;
+        }
+
+        .type-preview-item .icon {
+            font-size: 1.5em;
+            margin-bottom: 6px;
+        }
+
+        .type-preview-item .name {
+            color: #2d3436;
+            font-size: 0.82em;
+            font-weight: 500;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #e17055, #fab1a0);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(225,112,85,0.35);
+            font-weight: 500;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(225,112,85,0.45);
+        }
+
+        .disclaimer {
+            margin-top: 20px;
+            color: #b2bec3;
+            font-size: 0.78em;
+            line-height: 1.6;
+        }
+
+        /* 进度条 */
+        .progress-container { margin-bottom: 28px; }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.88em;
+            color: #636e72;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #fde4cc;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e17055, #fab1a0);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .dim-tag {
+            display: inline-block;
+            background: #fde4cc;
+            color: #e17055;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.78em;
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+
+        /* 答题页 */
+        .question-page { display: none; }
+
+        .question-scenario {
+            color: #636e72;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            color: #2d3436;
+            margin-bottom: 26px;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #fde4cc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.98em;
+            color: #2d3436;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: #fab1a0;
+            background: #fff8ec;
+        }
+
+        .option.selected {
+            border-color: #e17055;
+            background: #fff5ed;
+            font-weight: 500;
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #b2bec3;
+            border-radius: 50%;
+            flex-shrink: 0;
+            position: relative;
+            transition: all 0.25s;
+        }
+
+        .option.selected .option-radio {
+            border-color: #e17055;
+        }
+
+        .option.selected .option-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px; height: 12px;
+            background: #e17055;
+            border-radius: 50%;
+        }
+
+        .option-text { flex: 1; }
+
+        .auto-next-hint {
+            text-align: center;
+            color: #e17055;
+            font-size: 0.85em;
+            margin-top: -16px;
+            margin-bottom: 18px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .auto-next-hint.show { opacity: 1; }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.98em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-prev {
+            background: #f1f5f9;
+            color: #636e72;
+        }
+
+        .btn-prev:hover { background: #e2e8f0; }
+
+        .btn-next {
+            background: linear-gradient(135deg, #e17055, #fab1a0);
+            color: white;
+            box-shadow: 0 4px 15px rgba(225,112,85,0.3);
+        }
+
+        .btn-next:hover { transform: translateY(-2px); }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* 加载 */
+        .loading-page { display: none; text-align: center; padding: 60px 0; }
+
+        .loading-spinner {
+            width: 56px; height: 56px;
+            border: 4px solid #fde4cc;
+            border-top: 4px solid #e17055;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-text { color: #636e72; font-size: 1.05em; }
+
+        /* 付费墙 */
+        .paywall-page { display: none; text-align: center; padding: 20px 0; }
+
+        .paywall-page h2 {
+            font-size: 1.6em;
+            color: #2d3436;
+            margin-bottom: 12px;
+        }
+
+        .paywall-page .subtitle {
+            color: #636e72;
+            margin-bottom: 24px;
+            font-size: 1em;
+        }
+
+        .paywall-preview {
+            background: #fff8ec;
+            border-radius: 16px;
+            padding: 28px 24px;
+            margin: 20px 0;
+            border: 1px solid #fde4cc;
+        }
+
+        .preview-type-name {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #e17055;
+            margin-bottom: 8px;
+        }
+
+        .preview-desc {
+            color: #636e72;
+            font-size: 0.92em;
+            line-height: 1.7;
+        }
+
+        .paywall-lock {
+            font-size: 2.5em;
+            margin: 20px 0 10px;
+            color: #fab1a0;
+        }
+
+        .paywall-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .price-original {
+            color: #b2bec3;
+            text-decoration: line-through;
+            font-size: 1em;
+        }
+
+        .price-current {
+            color: #e74c3c;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .price-tag {
+            background: #e74c3c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+        }
+
+        .paywall-features {
+            text-align: left;
+            background: #fff5ed;
+            border-radius: 14px;
+            padding: 22px;
+            margin: 20px 0;
+        }
+
+        .paywall-features .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            color: #2d3436;
+            font-size: 0.95em;
+        }
+
+        .check-icon {
+            color: #e17055;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .pay-btn {
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            width: 100%;
+            background: linear-gradient(135deg, #e17055, #fab1a0);
+            color: white;
+            box-shadow: 0 4px 15px rgba(225,112,85,0.3);
+            margin: 20px 0;
+        }
+
+        .pay-btn:hover { transform: translateY(-2px); }
+
+        .countdown-bar {
+            margin: 16px 0;
+            padding: 12px 16px;
+            background: #fff5e6;
+            border-radius: 10px;
+            color: #e67e22;
+            font-size: 0.92em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .countdown-num {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #e74c3c;
+            min-width: 70px;
+        }
+
+        .buyer-info {
+            color: #95a5a6;
+            font-size: 0.85em;
+            margin-bottom: 16px;
+        }
+
+        .paywall-guarantee {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .guarantee-item {
+            color: #95a5a6;
+            font-size: 0.82em;
+        }
+
+        .paywall-note {
+            color: #b2bec3;
+            font-size: 0.78em;
+            margin-top: 18px;
+            line-height: 1.6;
+        }
+
+        /* 弹窗 */
+        .qrcode-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qrcode-modal.show { display: flex; }
+
+        .qrcode-content {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            max-width: 380px;
+            width: 92%;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .qrcode-content h3 {
+            margin-bottom: 16px;
+            color: #2d3436;
+            font-size: 1.2em;
+        }
+
+        .qrcode-content p {
+            color: #636e72;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .qrcode-placeholder {
+            width: 220px; height: 220px;
+            background: #fff8ec;
+            border: 2px solid #fde4cc;
+            border-radius: 12px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 12px; right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #b2bec3;
+        }
+
+        .modal-price {
+            color: #e74c3c;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin: 4px 0;
+        }
+
+        .verify-steps {
+            background: #fff8ec;
+            border-radius: 10px;
+            padding: 14px;
+            margin: 14px 0;
+            text-align: left;
+        }
+
+        .verify-steps .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 5px 0;
+            font-size: 0.85em;
+            color: #2d3436;
+            line-height: 1.5;
+        }
+
+        .verify-steps .step-num {
+            background: #e17055;
+            color: white;
+            min-width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        .verify-input-group { margin: 14px 0; }
+
+        .verify-input-group label {
+            display: block;
+            color: #2d3436;
+            font-size: 0.88em;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .verify-input {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid #fde4cc;
+            border-radius: 10px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s;
+            text-align: center;
+        }
+
+        .verify-input:focus { border-color: #e17055; }
+
+        .verify-input-hint {
+            color: #b2bec3;
+            font-size: 0.75em;
+            margin-top: 4px;
+        }
+
+        .confirm-paid-btn {
+            background: linear-gradient(135deg, #e17055, #fab1a0);
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .confirm-paid-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .confirm-paid-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .verify-error {
+            color: #e74c3c;
+            font-size: 0.85em;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .verify-waiting {
+            color: #e17055;
+            font-size: 0.95em;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .verify-waiting .wait-spinner {
+            width: 30px; height: 30px;
+            border: 3px solid #fde4cc;
+            border-top: 3px solid #e17055;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        /* 结果页 */
+        .result-page { display: none; }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .result-type-icon {
+            font-size: 3.5em;
+            margin-bottom: 12px;
+        }
+
+        .result-type-name {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 6px;
+        }
+
+        .result-type-subtitle {
+            color: #e17055;
+            font-size: 1.05em;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .result-type-desc {
+            color: #636e72;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        .result-card {
+            background: #fff8ec;
+            border-radius: 16px;
+            padding: 26px;
+            margin-bottom: 20px;
+            border: 1px solid #fde4cc;
+        }
+
+        .result-card h3 {
+            color: #2d3436;
+            margin-bottom: 16px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .result-card p {
+            color: #2d3436;
+            line-height: 1.9;
+            font-size: 0.95em;
+        }
+
+        .traits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .trait-item {
+            background: white;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 1px solid #fde4cc;
+            color: #2d3436;
+            font-size: 0.92em;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .food-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .food-item {
+            background: white;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 1px solid #fde4cc;
+            color: #2d3436;
+            font-size: 0.92em;
+        }
+
+        .food-item .food-name {
+            color: #e17055;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .food-item .food-desc {
+            color: #95a5a6;
+            font-size: 0.85em;
+        }
+
+        .city-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .city-tag {
+            background: white;
+            color: #e17055;
+            padding: 8px 16px;
+            border-radius: 16px;
+            font-size: 0.9em;
+            font-weight: 500;
+            border: 1px solid #fde4cc;
+        }
+
+        .match-list {
+            margin-top: 14px;
+        }
+
+        .match-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #fde4cc;
+        }
+
+        .match-item:last-child { margin-bottom: 0; }
+
+        .match-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .match-icon { font-size: 1.4em; }
+
+        .match-name {
+            color: #2d3436;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .match-subname {
+            color: #95a5a6;
+            font-size: 0.8em;
+            margin-top: 2px;
+        }
+
+        .match-percent {
+            color: #e17055;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #e17055, #fab1a0);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover { transform: translateY(-2px); }
+
+        .home-btn {
+            background: none;
+            border: 2px solid #fab1a0;
+            color: #e17055;
+            padding: 12px 32px;
+            font-size: 0.95em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .home-btn:hover { background: #fff8ec; }
+
+        .button-center {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 24px 18px; }
+            .start-page h1 { font-size: 1.6em; }
+            .question-text { font-size: 1.05em; }
+            .btn-group { flex-direction: column; }
+            .types-preview { grid-template-columns: repeat(2, 1fr); }
+            .traits-grid { grid-template-columns: 1fr; }
+            .food-list { grid-template-columns: 1fr; }
+            .result-type-name { font-size: 1.6em; }
+            .paywall-guarantee { gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 开始页 -->
+        <div class="start-page" id="startPage">
+            <div class="icon">🍜</div>
+            <h1>测测你的美食性格</h1>
+            <p class="subtitle">从你的饮食偏好<br>解读隐藏的性格密码</p>
+
+            <div class="info-box">
+                <h4>关于这个测试</h4>
+                <p>食物不仅满足胃，也反映心。本测试从口味偏好、用餐习惯、选择倾向和饮食态度四个维度分析你的美食性格，并为你匹配最契合的六种美食性格类型之一。</p>
+            </div>
+
+            <div class="types-preview">
+                <div class="type-preview-item">
+                    <div class="icon">🌶️</div>
+                    <div class="name">川味侠客</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🍵</div>
+                    <div class="name">江南诗人</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🥩</div>
+                    <div class="name">北方豪杰</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🍰</div>
+                    <div class="name">甜品恋人</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🥗</div>
+                    <div class="name">健康主义</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🍱</div>
+                    <div class="name">多元探险</div>
+                </div>
+            </div>
+
+            <p style="color:#636e72;font-size:0.9em;margin-bottom:24px;line-height:1.6;">
+                共 20 道题目，预计用时 3 分钟<br>
+                根据你的真实饮食偏好作答
+            </p>
+
+            <button class="start-btn" onclick="startQuiz()">开始测试</button>
+
+            <p class="disclaimer">
+                本测试仅供参考和娱乐<br>
+                每种美食性格都有独特的魅力
+            </p>
+        </div>
+
+        <!-- 答题页 -->
+        <div class="question-page" id="questionPage">
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="progressText">第 1 / 20 题</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div id="questionArea" class="fade-in">
+                <span class="dim-tag" id="dimTag">口味偏好</span>
+                <p class="question-scenario" id="questionScenario"></p>
+                <div class="question-text" id="questionText"></div>
+                <div class="options" id="optionsArea"></div>
+                <div class="auto-next-hint" id="autoNextHint">已选择，正在跳转下一题...</div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-prev" id="prevBtn" onclick="prevQuestion()" disabled>上一题</button>
+                <button class="btn btn-next" id="nextBtn" onclick="nextQuestion()" disabled>下一题</button>
+            </div>
+        </div>
+
+        <!-- 加载页 -->
+        <div class="loading-page" id="loadingPage">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">正在分析你的美食性格...</div>
+        </div>
+
+        <div class="paywall-page" id="paywallPage"></div>
+        <div class="result-page" id="resultPage"></div>
+    </div>
+
+    <script>
+        // ==================== 题目数据 ====================
+        // 6种性格类型：
+        // sichuan 川味侠客, jiangnan 江南诗人, north 北方豪杰
+        // sweet 甜品恋人, healthy 健康主义, diverse 多元探险
+
+        const dimNames = {
+            taste: "口味偏好",
+            habit: "用餐习惯",
+            choice: "选择倾向",
+            attitude: "饮食态度"
+        };
+
+        const questionsRaw = [
+            // === 口味偏好（5题）===
+            { dim: "taste", scenario: "如果只能选一种口味", q: "你最离不开的是？", options: [
+                { text: "麻辣鲜香，越辣越过瘾", scores: { sichuan: 3 } },
+                { text: "清淡精致，能吃出食材本味", scores: { jiangnan: 3, healthy: 1 } },
+                { text: "咸香浓郁，下饭最重要", scores: { north: 3 } },
+                { text: "酸甜可口，让人心情愉悦", scores: { sweet: 3, diverse: 1 } }
+            ]},
+            { dim: "taste", scenario: "在调味料的选择上", q: "你的偏好是？", options: [
+                { text: "辣椒酱、花椒油，越刺激越好", scores: { sichuan: 3 } },
+                { text: "醋、酱油，简单调味就够", scores: { jiangnan: 2, healthy: 2 } },
+                { text: "蒜泥、葱花，浓郁香味不可少", scores: { north: 3 } },
+                { text: "蜂蜜、果酱，甜味让食物更美好", scores: { sweet: 3 } }
+            ]},
+            { dim: "taste", scenario: "你的早餐选择", q: "通常是？", options: [
+                { text: "热气腾腾的米粉或重庆小面", scores: { sichuan: 2, diverse: 1 } },
+                { text: "一碗白粥配小菜或者一份点心", scores: { jiangnan: 3 } },
+                { text: "包子油条豆浆，或者煎饼", scores: { north: 3 } },
+                { text: "面包蛋糕配咖啡或牛奶", scores: { sweet: 3 } }
+            ]},
+            { dim: "taste", scenario: "夏天最想喝的饮品", q: "你会选？", options: [
+                { text: "冰镇酸梅汤或冷泡茶", scores: { sichuan: 2, jiangnan: 2 } },
+                { text: "现榨果汁或柠檬水", scores: { healthy: 3, diverse: 1 } },
+                { text: "冰啤酒或冰可乐", scores: { north: 3 } },
+                { text: "奶茶或冰淇淋", scores: { sweet: 3 } }
+            ]},
+            { dim: "taste", scenario: "对于水果", q: "你的偏好是？", options: [
+                { text: "酸甜口的，比如百香果、青提", scores: { diverse: 2, sweet: 1 } },
+                { text: "清爽的，比如西瓜、梨子", scores: { jiangnan: 2, healthy: 2 } },
+                { text: "浓郁的，比如榴莲、芒果", scores: { sichuan: 1, sweet: 2 } },
+                { text: "脆爽的，比如苹果、柚子", scores: { north: 2, healthy: 2 } }
+            ]},
+
+            // === 用餐习惯（5题）===
+            { dim: "habit", scenario: "一个人吃饭时", q: "你的状态是？", options: [
+                { text: "也很享受，可以安静地品味食物", scores: { jiangnan: 3, healthy: 1 } },
+                { text: "随便吃点就好，不太讲究", scores: { north: 2, healthy: 1 } },
+                { text: "会觉得有点冷清，希望有人一起", scores: { sichuan: 2, diverse: 1 } },
+                { text: "正好可以尝试新东西", scores: { diverse: 3 } }
+            ]},
+            { dim: "habit", scenario: "和朋友聚餐", q: "你最喜欢哪种场合？", options: [
+                { text: "热闹的火锅或烧烤店，氛围拉满", scores: { sichuan: 3, north: 1 } },
+                { text: "安静的餐厅，可以好好聊天", scores: { jiangnan: 3, sweet: 1 } },
+                { text: "大排档或家常菜，最有人情味", scores: { north: 3 } },
+                { text: "网红餐厅或新店打卡", scores: { diverse: 3, sweet: 1 } }
+            ]},
+            { dim: "habit", scenario: "用餐速度", q: "你通常？", options: [
+                { text: "细嚼慢咽，享受每一口", scores: { jiangnan: 3, healthy: 2 } },
+                { text: "正常速度，吃饱为主", scores: { north: 2, sichuan: 1 } },
+                { text: "比较快，吃完还有事要做", scores: { north: 2 } },
+                { text: "边吃边聊，时间长一点也无所谓", scores: { sichuan: 2, sweet: 1 } }
+            ]},
+            { dim: "habit", scenario: "外卖vs自己做", q: "你更倾向？", options: [
+                { text: "经常自己做，享受烹饪过程", scores: { jiangnan: 2, healthy: 3 } },
+                { text: "工作日外卖，周末偶尔下厨", scores: { diverse: 2, sichuan: 1 } },
+                { text: "几乎都点外卖，方便就好", scores: { north: 1, sweet: 1 } },
+                { text: "看心情，没有固定模式", scores: { diverse: 2 } }
+            ]},
+            { dim: "habit", scenario: "对剩饭剩菜", q: "你的态度是？", options: [
+                { text: "尽量光盘，浪费可耻", scores: { healthy: 2, north: 2 } },
+                { text: "打包回家做下一顿", scores: { healthy: 2, jiangnan: 1 } },
+                { text: "不喜欢吃剩菜，倒掉算了", scores: { sweet: 1, diverse: 1 } },
+                { text: "看情况，好吃的会留着", scores: { sichuan: 1, jiangnan: 1 } }
+            ]},
+
+            // === 选择倾向（5题）===
+            { dim: "choice", scenario: "去陌生城市", q: "你会怎么找吃的？", options: [
+                { text: "去人多的本地老店，错不了", scores: { north: 2, sichuan: 2 } },
+                { text: "搜攻略找网红店，热门的肯定好", scores: { diverse: 3, sweet: 1 } },
+                { text: "随便走走，看到感兴趣的就进", scores: { diverse: 2, jiangnan: 1 } },
+                { text: "找当地特色菜，体验地方风味", scores: { jiangnan: 2, diverse: 2 } }
+            ]},
+            { dim: "choice", scenario: "面对新出的网红美食", q: "你的反应是？", options: [
+                { text: "马上就想试试，跟上潮流", scores: { diverse: 3, sweet: 2 } },
+                { text: "等热度过了再尝试", scores: { healthy: 2, jiangnan: 1 } },
+                { text: "看评价，不错就去", scores: { diverse: 2, north: 1 } },
+                { text: "不感兴趣，还是吃我爱吃的", scores: { sichuan: 2, north: 2 } }
+            ]},
+            { dim: "choice", scenario: "餐厅菜单选择", q: "你通常？", options: [
+                { text: "点经典菜，熟悉的味道最安心", scores: { sichuan: 2, north: 2 } },
+                { text: "点招牌菜，相信餐厅的推荐", scores: { jiangnan: 2 } },
+                { text: "点没吃过的新菜，给自己惊喜", scores: { diverse: 3 } },
+                { text: "看心情，今天想吃什么就点什么", scores: { sweet: 2, diverse: 1 } }
+            ]},
+            { dim: "choice", scenario: "对待异国料理", q: "你的态度是？", options: [
+                { text: "非常感兴趣，喜欢尝试各国美食", scores: { diverse: 3 } },
+                { text: "可以接受日韩料理，西餐偶尔吃", scores: { jiangnan: 1, sweet: 2 } },
+                { text: "还是中餐最对胃口", scores: { sichuan: 2, north: 2 } },
+                { text: "看具体是什么，符合口味就吃", scores: { healthy: 1, diverse: 1 } }
+            ]},
+            { dim: "choice", scenario: "做饭买食材", q: "你会？", options: [
+                { text: "去菜市场，新鲜食材自己挑", scores: { jiangnan: 2, healthy: 3 } },
+                { text: "超市采购，方便又有保障", scores: { healthy: 1, diverse: 1 } },
+                { text: "网上下单，省时省力", scores: { sweet: 1, diverse: 2 } },
+                { text: "看到什么便宜买什么", scores: { north: 2 } }
+            ]},
+
+            // === 饮食态度（5题）===
+            { dim: "attitude", scenario: "对你来说吃饭是？", q: "更像什么？", options: [
+                { text: "生活的重要乐趣，要好好享受", scores: { sichuan: 2, jiangnan: 2, diverse: 1 } },
+                { text: "维持身体所需，吃饱就行", scores: { healthy: 2, north: 2 } },
+                { text: "社交的方式，重要的是和谁一起", scores: { sichuan: 1, north: 1, sweet: 1 } },
+                { text: "探索世界的窗口，发现新美味", scores: { diverse: 3 } }
+            ]},
+            { dim: "attitude", scenario: "情绪不好的时候", q: "你会？", options: [
+                { text: "大吃一顿，越辣越爽", scores: { sichuan: 3 } },
+                { text: "吃点甜的，糖分让人快乐", scores: { sweet: 3 } },
+                { text: "做顿好的犒劳自己", scores: { jiangnan: 2, healthy: 1 } },
+                { text: "完全没胃口，吃不下", scores: { healthy: 1, jiangnan: 1 } }
+            ]},
+            { dim: "attitude", scenario: "饮食和健康", q: "你怎么平衡？", options: [
+                { text: "美食优先，吃得开心最重要", scores: { sichuan: 2, sweet: 2 } },
+                { text: "尽量健康，偶尔放纵一下", scores: { healthy: 2, jiangnan: 1 } },
+                { text: "严格控制，健康饮食是生活方式", scores: { healthy: 3 } },
+                { text: "不太在意，想吃就吃", scores: { north: 2, diverse: 1 } }
+            ]},
+            { dim: "attitude", scenario: "看到精致的摆盘", q: "你会？", options: [
+                { text: "先拍照，仪式感很重要", scores: { jiangnan: 2, sweet: 2, diverse: 1 } },
+                { text: "欣赏一下就开始吃", scores: { jiangnan: 1, healthy: 1 } },
+                { text: "觉得太花哨，分量更重要", scores: { north: 3 } },
+                { text: "好不好吃才是关键", scores: { sichuan: 2, north: 1 } }
+            ]},
+            { dim: "attitude", scenario: "你心中的美食是？", q: "更看重什么？", options: [
+                { text: "味道浓郁，让人欲罢不能", scores: { sichuan: 3 } },
+                { text: "精致用心，体现匠人精神", scores: { jiangnan: 3 } },
+                { text: "实在管饱，物有所值", scores: { north: 3 } },
+                { text: "颜值在线，让心情变好", scores: { sweet: 2, diverse: 2 } }
+            ]}
+        ];
+
+        // ==================== 6种性格类型数据 ====================
+        const typeData = {
+            sichuan: {
+                name: "川味侠客",
+                subtitle: "热情冒险派",
+                icon: "🌶️",
+                desc: "你是味蕾上的勇士，对浓烈的味道有着天生的热爱。麻辣鲜香能瞬间点燃你的激情，重口味让你感受到生活的痛快。",
+                personality: "你的性格如同你钟爱的川菜一样，热情、直接、充满活力。你不喜欢平淡乏味，无论是生活还是食物，都追求强烈的体验和深刻的印象。你是朋友聚会的活跃分子，能让任何场合都变得热闹起来。在工作和生活中，你勇于挑战，敢于尝试新事物，骨子里有一种侠客般的洒脱。你重情重义，吃饭时最喜欢和朋友们一起，热气腾腾的火锅旁，是你交朋友的最佳场景。",
+                traits: ["热情似火", "敢于挑战", "重情重义", "爱热闹", "直率坦诚", "充满活力"],
+                bestFoods: [
+                    { name: "重庆火锅", desc: "热辣滚烫，朋友相聚的首选" },
+                    { name: "麻辣香锅", desc: "干香麻辣，过瘾解馋" },
+                    { name: "水煮鱼", desc: "麻辣鲜香，川菜经典" },
+                    { name: "串串香", desc: "热闹氛围，烟火气十足" }
+                ],
+                bestCities: ["重庆", "成都", "长沙", "贵阳"],
+                match: { high: ["北方豪杰", "多元探险"], low: ["健康主义"] }
+            },
+            jiangnan: {
+                name: "江南诗人",
+                subtitle: "精致文艺派",
+                icon: "🍵",
+                desc: "你的味蕾如诗如画，追求食物的本真之味。你懂得欣赏食材的精妙，能在简单的味道中品出深远的意境。",
+                personality: "你的性格像一幅水墨画，温润、雅致、有内涵。你不喜欢喧闹，更享受安静地品味生活中的美好。你对食物有着细腻的感受力，能从一道菜中读出厨师的用心和食材的故事。在生活中，你注重品质和格调，喜欢有仪式感的事物。你的朋友圈不大但都是知己，你享受深度交流胜过热闹的聚会。你内心丰富，是一个有故事的人，懂得在平凡日子里寻找诗意。",
+                traits: ["温润如玉", "审美独特", "内心丰富", "注重品质", "深度思考", "诗意生活"],
+                bestFoods: [
+                    { name: "西湖醋鱼", desc: "酸甜清雅，江南风味代表" },
+                    { name: "小笼包", desc: "皮薄馅多，匠心之作" },
+                    { name: "清蒸鲈鱼", desc: "鲜美原味，体现食材本质" },
+                    { name: "桂花糕", desc: "清香甜美，四季皆宜" }
+                ],
+                bestCities: ["苏州", "杭州", "南京", "扬州"],
+                match: { high: ["健康主义", "甜品恋人"], low: ["北方豪杰"] }
+            },
+            north: {
+                name: "北方豪杰",
+                subtitle: "豪爽实在派",
+                icon: "🥩",
+                desc: "你是餐桌上的真性情，不矫揉不造作，喜欢扎实管饱的美食。大口吃肉大碗喝酒，这才是生活该有的样子。",
+                personality: "你的性格如北方汉子般豪爽直率，不喜欢虚头巴脑的东西，追求真实和实在。你重视分量和性价比，认为食物首先要吃饱吃好，花哨的摆盘对你来说不如一大盘肉来得实在。在朋友面前，你是个值得托付的人，承诺过的事一定办到。你处事简单直接，不喜欢复杂的人际关系。你享受家常菜的温暖，最爱的就是和家人朋友围坐一桌，吃着热乎的饭菜，聊着家长里短。",
+                traits: ["豪爽直率", "重情守信", "实在可靠", "不拘小节", "热情好客", "真诚朴实"],
+                bestFoods: [
+                    { name: "饺子", desc: "团圆美满，北方主食代表" },
+                    { name: "炖菜", desc: "热乎管饱，家的味道" },
+                    { name: "烤羊肉", desc: "豪迈大气，朋友相聚必备" },
+                    { name: "煎饼果子", desc: "实惠美味，街头经典" }
+                ],
+                bestCities: ["北京", "天津", "哈尔滨", "西安"],
+                match: { high: ["川味侠客", "多元探险"], low: ["江南诗人"] }
+            },
+            sweet: {
+                name: "甜品恋人",
+                subtitle: "温柔治愈派",
+                icon: "🍰",
+                desc: "你相信甜味是治愈一切的良药。生活已经够苦了，何不用一份甜品犒劳自己？你的世界里，幸福就是一口蛋糕的甜蜜。",
+                personality: "你的性格温柔细腻，内心充满浪漫情怀。你善于发现生活中的小确幸，一杯奶茶、一块蛋糕都能让你开心很久。你重视情绪体验，认为生活不仅是为了温饱，更是为了感受美好。你对身边的人很贴心，懂得用甜蜜的方式表达关心。在压力大的时候，甜食是你的解压利器，咬一口甜品，所有烦恼都暂时消散。你的朋友都觉得你像甜品一样治愈，能给人带来温暖和愉悦。",
+                traits: ["温柔治愈", "浪漫细腻", "热爱生活", "情感丰富", "贴心善良", "充满童心"],
+                bestFoods: [
+                    { name: "提拉米苏", desc: "经典甜品，咖啡与奶油的完美融合" },
+                    { name: "草莓蛋糕", desc: "少女心满满，颜值与味道并存" },
+                    { name: "可丽饼", desc: "甜蜜浪漫，下午茶首选" },
+                    { name: "珍珠奶茶", desc: "幸福感爆棚的日常治愈" }
+                ],
+                bestCities: ["上海", "厦门", "苏州", "广州"],
+                match: { high: ["江南诗人", "多元探险"], low: ["北方豪杰"] }
+            },
+            healthy: {
+                name: "健康主义",
+                subtitle: "自律理性派",
+                icon: "🥗",
+                desc: "你把吃饭当作对身体的投资，每一口都经过深思熟虑。你相信好身体来自好食物，健康饮食是你坚持的生活方式。",
+                personality: "你的性格自律理性，懂得长远规划。你不会被一时的口腹之欲所控制，能够为了更好的自己而克制。你做事有条理，目标明确，往往是朋友圈中最自律的那一个。你重视科学和数据，会关注食物的营养成分和热量。但你并非苦行僧，你懂得在健康和美味之间寻找平衡，知道偶尔放纵也是生活的一部分。你的生活方式让你拥有充沛的精力和良好的状态，这正是你坚持的回报。",
+                traits: ["自律理性", "目标明确", "科学严谨", "懂得平衡", "精力充沛", "意志坚定"],
+                bestFoods: [
+                    { name: "牛油果沙拉", desc: "营养均衡，健康首选" },
+                    { name: "蒸蔬菜", desc: "保留营养，清淡爽口" },
+                    { name: "全麦三明治", desc: "粗粮搭配，饱腹感强" },
+                    { name: "希腊酸奶", desc: "蛋白质丰富，助力健康" }
+                ],
+                bestCities: ["深圳", "杭州", "上海", "青岛"],
+                match: { high: ["江南诗人", "多元探险"], low: ["川味侠客"] }
+            },
+            diverse: {
+                name: "多元探险",
+                subtitle: "好奇尝鲜派",
+                icon: "🍱",
+                desc: "你是味蕾上的探险家，对任何新事物都充满好奇。从街边小吃到米其林大餐，从家乡味道到异国料理，你都想一一尝试。",
+                personality: "你的性格开放包容，对世界充满好奇。你不会被固有的观念束缚，总是愿意打开自己去接受新事物。你的视野开阔，懂得欣赏不同文化的美。在生活中，你是个有趣的人，朋友们都喜欢和你出去吃饭，因为你总能发现有趣的新店和不寻常的美味。你适应能力强，无论到哪个城市都能很快融入当地的饮食文化。你相信生命短暂，应该尝试更多可能，让人生丰富多彩。",
+                traits: ["开放包容", "好奇心强", "适应力强", "视野开阔", "热爱探索", "懂得欣赏"],
+                bestFoods: [
+                    { name: "寿司刺身", desc: "日料经典，新鲜原味" },
+                    { name: "东南亚冬阴功", desc: "酸辣鲜美，异国风情" },
+                    { name: "中东烤肉饭", desc: "香料浓郁，独特风味" },
+                    { name: "墨西哥塔可", desc: "色彩缤纷，多元融合" }
+                ],
+                bestCities: ["上海", "广州", "成都", "厦门"],
+                match: { high: ["甜品恋人", "健康主义"], low: ["北方豪杰"] }
+            }
+        };
+
+        // ==================== 全局变量 ====================
+        let currentQuestion = 0;
+        let answers = [];
+        let questions = [];
+        let autoNextTimer = null;
+        let countdownInterval = null;
+        let calculatedResult = null;
+
+        function shuffleArray(arr) {
+            const s = [...arr];
+            for (let i = s.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [s[i], s[j]] = [s[j], s[i]];
+            }
+            return s;
+        }
+
+        function initQuestions() {
+            const byDim = { taste: [], habit: [], choice: [], attitude: [] };
+            questionsRaw.forEach(q => byDim[q.dim].push(q));
+
+            Object.keys(byDim).forEach(d => { byDim[d] = shuffleArray(byDim[d]); });
+
+            // 按维度顺序：口味-习惯-选择-态度
+            questions = [
+                ...byDim.taste,
+                ...byDim.habit,
+                ...byDim.choice,
+                ...byDim.attitude
+            ].map(q => ({
+                ...q,
+                options: shuffleArray(q.options.map(o => ({...o})))
+            }));
+        }
+
+        function startQuiz() {
+            initQuestions();
+            answers = new Array(questions.length).fill(undefined);
+            currentQuestion = 0;
+            document.getElementById('startPage').style.display = 'none';
+            document.getElementById('questionPage').style.display = 'block';
+            showQuestion(0);
+        }
+
+        function showQuestion(idx) {
+            const q = questions[idx];
+            document.getElementById('dimTag').textContent = dimNames[q.dim];
+            document.getElementById('questionScenario').textContent = q.scenario;
+            document.getElementById('questionText').textContent = q.q;
+            document.getElementById('progressText').textContent = `第 ${idx+1} / ${questions.length} 题`;
+            const pct = Math.round(idx / questions.length * 100);
+            document.getElementById('progressPercent').textContent = pct + '%';
+            document.getElementById('progressFill').style.width = pct + '%';
+
+            const area = document.getElementById('optionsArea');
+            area.innerHTML = '';
+
+            q.options.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = 'option' + (answers[idx] === i ? ' selected' : '');
+                div.innerHTML = `<div class="option-radio"></div><div class="option-text">${opt.text}</div>`;
+                div.onclick = () => selectOption(idx, i);
+                area.appendChild(div);
+            });
+
+            document.getElementById('prevBtn').disabled = idx === 0;
+            document.getElementById('nextBtn').textContent = idx === questions.length - 1 ? '查看结果' : '下一题';
+            document.getElementById('nextBtn').disabled = answers[idx] === undefined;
+            document.getElementById('autoNextHint').classList.remove('show');
+
+            const qa = document.getElementById('questionArea');
+            qa.classList.remove('fade-in');
+            void qa.offsetWidth;
+            qa.classList.add('fade-in');
+        }
+
+        function selectOption(qIdx, optIdx) {
+            if (autoNextTimer) { clearTimeout(autoNextTimer); autoNextTimer = null; }
+            const isFirst = answers[qIdx] === undefined;
+            answers[qIdx] = optIdx;
+            document.querySelectorAll('.option').forEach((el, i) => {
+                el.className = 'option' + (i === optIdx ? ' selected' : '');
+            });
+            document.getElementById('nextBtn').disabled = false;
+            if (isFirst && qIdx < questions.length - 1) {
+                document.getElementById('autoNextHint').classList.add('show');
+                autoNextTimer = setTimeout(() => {
+                    document.getElementById('autoNextHint').classList.remove('show');
+                    nextQuestion();
+                }, 600);
+            }
+        }
+
+        function nextQuestion() {
+            if (autoNextTimer) { clearTimeout(autoNextTimer); autoNextTimer = null; }
+            if (currentQuestion < questions.length - 1) { currentQuestion++; showQuestion(currentQuestion); }
+            else showLoading();
+        }
+
+        function prevQuestion() {
+            if (autoNextTimer) { clearTimeout(autoNextTimer); autoNextTimer = null; }
+            if (currentQuestion > 0) { currentQuestion--; showQuestion(currentQuestion); }
+        }
+
+        function showLoading() {
+            document.getElementById('questionPage').style.display = 'none';
+            document.getElementById('loadingPage').style.display = 'block';
+            setTimeout(() => { calculatedResult = calculateResult(); showPaywall(); }, 2500);
+        }
+
+        function calculateResult() {
+            const scores = { sichuan: 0, jiangnan: 0, north: 0, sweet: 0, healthy: 0, diverse: 0 };
+
+            answers.forEach((ans, i) => {
+                if (ans === undefined) return;
+                const opt = questions[i].options[ans];
+                if (opt.scores) {
+                    for (const [k, v] of Object.entries(opt.scores)) {
+                        scores[k] = (scores[k] || 0) + v;
+                    }
+                }
+            });
+
+            // 找出得分最高的类型
+            let topType = 'sichuan';
+            let topScore = -1;
+            const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+
+            for (const [k, v] of Object.entries(scores)) {
+                if (v > topScore) {
+                    topScore = v;
+                    topType = k;
+                }
+            }
+
+            // 计算每种类型的占比
+            const percentages = {};
+            for (const k of Object.keys(scores)) {
+                percentages[k] = totalScore > 0 ? Math.round((scores[k] / totalScore) * 100) : 0;
+            }
+
+            // 排序得到匹配列表
+            const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+
+            return { topType, scores, percentages, sorted, data: typeData[topType] };
+        }
+
+        // ==================== 付费墙 ====================
+        function showPaywall() {
+            document.getElementById('loadingPage').style.display = 'none';
+            const p = document.getElementById('paywallPage');
+            p.style.display = 'block';
+            p.classList.add('fade-in');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const r = calculatedResult;
+            const buyers = Math.floor(Math.random() * 5000) + 20000;
+
+            p.innerHTML = `
+                <h2>测试完成</h2>
+                <p class="subtitle">你的美食性格已揭晓</p>
+
+                <div class="paywall-preview">
+                    <div class="preview-type-name">你的美食灵魂已找到</div>
+                    <div class="preview-desc">完整报告包含详细的性格解读、专属美食推荐、最佳美食城市和最佳搭档分析</div>
+                </div>
+
+                <div class="paywall-lock">🔒</div>
+                <p style="color:#2d3436;font-weight:500;font-size:1.05em;">解锁你的美食性格报告</p>
+
+                <div class="countdown-bar">
+                    <span>限时特惠倒计时</span>
+                    <span class="countdown-num" id="countdownTimer">14:59</span>
+                </div>
+
+                <div class="paywall-price">
+                    <span class="price-original">¥9.9</span>
+                    <span class="price-current">¥0.9</span>
+                    <span class="price-tag">限时特惠</span>
+                </div>
+
+                <p class="buyer-info">已有 <strong style="color:#e17055;">${buyers.toLocaleString()}</strong> 人找到了自己的美食灵魂</p>
+
+                <div class="paywall-features">
+                    <div class="feature-item"><span class="check-icon">✓</span><span>你的美食性格类型和深度解读</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>核心性格特质分析</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>专属美食推荐</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>最适合你的美食城市</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>六种性格类型的匹配占比</span></div>
+                </div>
+
+                <button class="pay-btn" onclick="showQRCode()">微信扫码支付 ¥0.9 查看报告</button>
+
+                <div class="paywall-guarantee">
+                    <span class="guarantee-item">安全支付</span>
+                    <span class="guarantee-item">即时查看</span>
+                    <span class="guarantee-item">趣味分析</span>
+                </div>
+
+                <p class="paywall-note">
+                    本测试仅供参考和娱乐<br>
+                    如有问题请联系客服微信：your_wechat_id
+                </p>
+
+                <div class="qrcode-modal" id="qrcodeModal">
+                    <div class="qrcode-content">
+                        <button class="close-modal" onclick="closeQRCode()">×</button>
+                        <h3>微信支付 ¥0.9</h3>
+
+                        <div style="background:#fff8ec;border-radius:10px;padding:12px;margin-bottom:14px;text-align:left;">
+                            <div style="color:#e17055;font-weight:600;margin-bottom:6px;font-size:0.88em;">手机用户操作步骤</div>
+                            <div style="font-size:0.8em;color:#636e72;line-height:1.7;">
+                                ① 长按下方二维码保存图片<br>
+                                ② 打开微信「扫一扫」<br>
+                                ③ 点击右下角相册图标选择图片<br>
+                                ④ 完成支付 ¥0.9
+                            </div>
+                        </div>
+
+                        <div class="qrcode-placeholder">
+                            <img src="pay-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;" onerror="this.parentElement.innerHTML='<span style=color:#b2bec3;font-size:0.85em>请放置收款码</span>'">
+                        </div>
+
+                        <div class="modal-price">¥0.9</div>
+                        <p style="color:#e67e22;font-size:0.85em;font-weight:500;">请确认支付金额为 ¥0.9</p>
+
+                        <div class="verify-steps">
+                            <div class="step"><span class="step-num">1</span><span>扫描上方二维码</span></div>
+                            <div class="step"><span class="step-num">2</span><span>确认金额 ¥0.9 并完成支付</span></div>
+                            <div class="step"><span class="step-num">3</span><span>支付完成后点击下方按钮</span></div>
+                        </div>
+
+                        <div id="verifyStep1">
+                            <button class="confirm-paid-btn" onclick="startVerify()">我已完成支付</button>
+                        </div>
+
+                        <div id="verifyStep2" style="display:none;">
+                            <div class="verify-waiting" style="display:block;">
+                                <div class="wait-spinner"></div>
+                                <p>正在验证支付状态...</p>
+                                <p style="font-size:0.8em;color:#b2bec3;margin-top:8px;">预计需要 <span id="verifyCountdown">5</span> 秒</p>
+                            </div>
+                        </div>
+
+                        <div id="verifyStep3" style="display:none;">
+                            <div style="background:#fff5e6;border-radius:8px;padding:12px;margin:12px 0;text-align:left;">
+                                <p style="color:#e67e22;font-size:0.85em;margin:0;">未查询到支付记录，请手动验证</p>
+                            </div>
+                            <div class="verify-input-group">
+                                <label>请输入支付金额</label>
+                                <input type="text" id="payAmountInput" class="verify-input" placeholder="例如：0.90" maxlength="5" oninput="checkInput()">
+                                <p class="verify-input-hint">请输入你实际支付的金额</p>
+                            </div>
+                            <div class="verify-input-group">
+                                <label>请输入微信昵称的第一个字</label>
+                                <input type="text" id="payNicknameInput" class="verify-input" placeholder="例如：小" maxlength="2" oninput="checkInput()">
+                                <p class="verify-input-hint">用于核对支付人信息</p>
+                            </div>
+                            <button class="confirm-paid-btn" id="finalConfirmBtn" onclick="finalConfirm()" disabled>验证并查看报告</button>
+                            <p id="verifyError" class="verify-error"></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            startCountdown();
+        }
+
+        function startCountdown() {
+            let t = 14*60+59;
+            if (countdownInterval) clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                t--;
+                if (t<=0) { clearInterval(countdownInterval); t=0; }
+                const el = document.getElementById('countdownTimer');
+                if (el) el.textContent = `${Math.floor(t/60).toString().padStart(2,'0')}:${(t%60).toString().padStart(2,'0')}`;
+            }, 1000);
+        }
+
+        function showQRCode() {
+            document.getElementById('qrcodeModal').classList.add('show');
+            document.getElementById('verifyStep1').style.display = 'block';
+            document.getElementById('verifyStep2').style.display = 'none';
+            document.getElementById('verifyStep3').style.display = 'none';
+        }
+
+        function closeQRCode() {
+            document.getElementById('qrcodeModal').classList.remove('show');
+        }
+
+        function startVerify() {
+            document.getElementById('verifyStep1').style.display = 'none';
+            document.getElementById('verifyStep2').style.display = 'block';
+            let sec = 5;
+            const cdEl = document.getElementById('verifyCountdown');
+            const timer = setInterval(() => {
+                sec--;
+                if (cdEl) cdEl.textContent = sec;
+                if (sec <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('verifyStep2').style.display = 'none';
+                    document.getElementById('verifyStep3').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        function checkInput() {
+            const a = document.getElementById('payAmountInput').value.trim();
+            const n = document.getElementById('payNicknameInput').value.trim();
+            const btn = document.getElementById('finalConfirmBtn');
+            if (a.length > 0 && n.length > 0) { btn.disabled = false; btn.style.opacity = '1'; }
+            else { btn.disabled = true; btn.style.opacity = '0.4'; }
+            const err = document.getElementById('verifyError');
+            if (err) err.style.display = 'none';
+        }
+
+        function finalConfirm() {
+            const a = document.getElementById('payAmountInput').value.trim();
+            const err = document.getElementById('verifyError');
+            if (!['0.9','0.90','￥0.9','￥0.90','¥0.9','¥0.90'].includes(a)) {
+                if (err) { err.textContent = '金额不正确，请确认支付 ¥0.9 后重试'; err.style.display = 'block'; }
+                return;
+            }
+            closeQRCode();
+            if (countdownInterval) clearInterval(countdownInterval);
+            document.getElementById('paywallPage').style.display = 'none';
+            showFullResult();
+        }
+
+        // ==================== 结果页 ====================
+        function showFullResult() {
+            const r = calculatedResult;
+            const d = r.data;
+            const rp = document.getElementById('resultPage');
+            rp.style.display = 'block';
+            rp.classList.add('fade-in');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const traitsHTML = d.traits.map(t => `<div class="trait-item">${t}</div>`).join('');
+            const foodsHTML = d.bestFoods.map(f => `<div class="food-item"><div class="food-name">${f.name}</div><div class="food-desc">${f.desc}</div></div>`).join('');
+            const citiesHTML = d.bestCities.map(c => `<span class="city-tag">${c}</span>`).join('');
+
+            // 匹配占比排行
+            let matchHTML = '';
+            r.sorted.forEach((item, i) => {
+                const [type, score] = item;
+                const t = typeData[type];
+                const percent = r.percentages[type];
+                matchHTML += `
+                    <div class="match-item">
+                        <div class="match-info">
+                            <span class="match-icon">${t.icon}</span>
+                            <div>
+                                <div class="match-name">${t.name}</div>
+                                <div class="match-subname">${t.subtitle}</div>
+                            </div>
+                        </div>
+                        <span class="match-percent">${percent}%</span>
+                    </div>
+                `;
+            });
+
+            rp.innerHTML = `
+                <div class="result-header">
+                    <div class="result-type-icon">${d.icon}</div>
+                    <div class="result-type-name">${d.name}</div>
+                    <div class="result-type-subtitle">${d.subtitle}</div>
+                    <div class="result-type-desc">${d.desc}</div>
+                </div>
+
+                <div class="result-card">
+                    <h3>性格深度解读</h3>
+                    <p>${d.personality}</p>
+                </div>
+
+                <div class="result-card">
+                    <h3>你的核心特质</h3>
+                    <div class="traits-grid">${traitsHTML}</div>
+                </div>
+
+                <div class="result-card">
+                    <h3>专属美食推荐</h3>
+                    <div class="food-list">${foodsHTML}</div>
+                </div>
+
+                <div class="result-card">
+                    <h3>最适合你的美食城市</h3>
+                    <p style="margin-bottom:12px;color:#636e72;font-size:0.9em;">这些城市的饮食文化与你的美食性格最为契合</p>
+                    <div class="city-tags">${citiesHTML}</div>
+                </div>
+
+                <div class="result-card">
+                    <h3>六种性格类型占比</h3>
+                    <div class="match-list">${matchHTML}</div>
+                </div>
+
+                <div class="result-card" style="background:#fff5ed;border-color:#fab1a0;">
+                    <h3>温馨寄语</h3>
+                    <p>食物连接着我们和这个世界，每一口都是生活的体验。无论你是哪一种美食性格，都请保持对食物的热爱和好奇心。记住：好好吃饭，认真生活，是最简单也最深刻的幸福。愿你在每一餐中都能感受到生活的美好。</p>
+                </div>
+
+                <div class="button-center">
+                    <button class="restart-btn" onclick="restart()">重新测试</button>
+                    <br>
+                    <button class="home-btn" onclick="location.href='/'">返回首页</button>
+                </div>
+            `;
+        }
+
+        function restart() {
+            currentQuestion = 0; answers = []; calculatedResult = null;
+            if (countdownInterval) clearInterval(countdownInterval);
+            if (autoNextTimer) clearTimeout(autoNextTimer);
+            document.getElementById('resultPage').style.display = 'none';
+            document.getElementById('paywallPage').style.display = 'none';
+            document.getElementById('startPage').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('questionPage').style.display === 'block') {
+                if (e.key >= '1' && e.key <= '4') { const i = parseInt(e.key)-1; const o = document.querySelectorAll('.option'); if(o[i]) o[i].click(); }
+                if (e.key === 'ArrowRight' || e.key === 'Enter') { if (!document.getElementById('nextBtn').disabled) nextQuestion(); }
+                if (e.key === 'ArrowLeft') { if (!document.getElementById('prevBtn').disabled) prevQuestion(); }
+            }
+            if (e.key === 'Escape') closeQRCode();
+        });
+    </script>
+</body>
+</html>

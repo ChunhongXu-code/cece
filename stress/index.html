@@ -1,1 +1,1545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>压力与情绪自测 - JoyCece</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255,255,255,0.97);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #74b9ff, #0984e3, #00cec9, #55efc4);
+        }
+
+        /* 开始页 */
+        .start-page { text-align: center; padding: 30px 0; }
+
+        .start-page .icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .start-page h1 {
+            font-size: 2em;
+            color: #2d3436;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .start-page .subtitle {
+            color: #636e72;
+            font-size: 1.05em;
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .info-box {
+            background: #f1f8ff;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 28px;
+            border-left: 4px solid #0984e3;
+        }
+
+        .info-box h4 {
+            color: #0984e3;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .info-box p {
+            color: #636e72;
+            font-size: 0.88em;
+            line-height: 1.8;
+        }
+
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .dim-item {
+            background: #f8fafd;
+            border-radius: 10px;
+            padding: 14px;
+            text-align: left;
+            border: 1px solid #e8eef5;
+        }
+
+        .dim-item .num {
+            color: #0984e3;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .dim-item .name {
+            color: #2d3436;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #0984e3, #74b9ff);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(9,132,227,0.35);
+            font-weight: 500;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(9,132,227,0.45);
+        }
+
+        .disclaimer {
+            margin-top: 20px;
+            color: #b2bec3;
+            font-size: 0.78em;
+            line-height: 1.6;
+        }
+
+        /* 进度条 */
+        .progress-container { margin-bottom: 28px; }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.88em;
+            color: #636e72;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e8eef5;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0984e3, #74b9ff);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .dim-tag {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #0984e3;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.78em;
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+
+        /* 答题区 */
+        .question-page { display: none; }
+
+        .question-intro {
+            color: #636e72;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            color: #2d3436;
+            margin-bottom: 26px;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #e8eef5;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.98em;
+            color: #2d3436;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: #74b9ff;
+            background: #f8fbff;
+        }
+
+        .option.selected {
+            border-color: #0984e3;
+            background: #f1f8ff;
+            font-weight: 500;
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #b2bec3;
+            border-radius: 50%;
+            flex-shrink: 0;
+            position: relative;
+            transition: all 0.25s;
+        }
+
+        .option.selected .option-radio {
+            border-color: #0984e3;
+        }
+
+        .option.selected .option-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px; height: 12px;
+            background: #0984e3;
+            border-radius: 50%;
+        }
+
+        .option-text { flex: 1; }
+
+        .option-score {
+            color: #b2bec3;
+            font-size: 0.85em;
+        }
+
+        .option.selected .option-score {
+            color: #0984e3;
+        }
+
+        .auto-next-hint {
+            text-align: center;
+            color: #0984e3;
+            font-size: 0.85em;
+            margin-top: -16px;
+            margin-bottom: 18px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .auto-next-hint.show { opacity: 1; }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.98em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-prev {
+            background: #f1f5f9;
+            color: #636e72;
+        }
+
+        .btn-prev:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #0984e3, #74b9ff);
+            color: white;
+            box-shadow: 0 4px 15px rgba(9,132,227,0.3);
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* 加载 */
+        .loading-page { display: none; text-align: center; padding: 60px 0; }
+
+        .loading-spinner {
+            width: 56px; height: 56px;
+            border: 4px solid #e8eef5;
+            border-top: 4px solid #0984e3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-text { color: #636e72; font-size: 1.05em; }
+
+        /* 付费墙 */
+        .paywall-page { display: none; text-align: center; padding: 20px 0; }
+
+        .paywall-page h2 {
+            font-size: 1.6em;
+            color: #2d3436;
+            margin-bottom: 12px;
+        }
+
+        .paywall-page .subtitle {
+            color: #636e72;
+            margin-bottom: 24px;
+            font-size: 1em;
+        }
+
+        .paywall-preview {
+            background: #f1f8ff;
+            border-radius: 16px;
+            padding: 28px 24px;
+            margin: 20px 0;
+            border: 1px solid #e3f2fd;
+        }
+
+        .preview-level {
+            font-size: 2em;
+            font-weight: bold;
+            color: #0984e3;
+            margin-bottom: 8px;
+        }
+
+        .preview-desc {
+            color: #636e72;
+            font-size: 0.92em;
+            line-height: 1.7;
+        }
+
+        .paywall-lock {
+            font-size: 2.5em;
+            margin: 20px 0 10px;
+            color: #74b9ff;
+        }
+
+        .paywall-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .price-original {
+            color: #b2bec3;
+            text-decoration: line-through;
+            font-size: 1em;
+        }
+
+        .price-current {
+            color: #e74c3c;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .price-tag {
+            background: #e74c3c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+        }
+
+        .paywall-features {
+            text-align: left;
+            background: #f8fafd;
+            border-radius: 14px;
+            padding: 22px;
+            margin: 20px 0;
+        }
+
+        .paywall-features .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            color: #2d3436;
+            font-size: 0.95em;
+        }
+
+        .check-icon {
+            color: #0984e3;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .pay-btn {
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            width: 100%;
+            background: linear-gradient(135deg, #0984e3, #74b9ff);
+            color: white;
+            box-shadow: 0 4px 15px rgba(9,132,227,0.3);
+            margin: 20px 0;
+        }
+
+        .pay-btn:hover { transform: translateY(-2px); }
+
+        .countdown-bar {
+            margin: 16px 0;
+            padding: 12px 16px;
+            background: #fff5e6;
+            border-radius: 10px;
+            color: #e67e22;
+            font-size: 0.92em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .countdown-num {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #e74c3c;
+            min-width: 70px;
+        }
+
+        .buyer-info {
+            color: #95a5a6;
+            font-size: 0.85em;
+            margin-bottom: 16px;
+        }
+
+        .paywall-guarantee {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .guarantee-item {
+            color: #95a5a6;
+            font-size: 0.82em;
+        }
+
+        .paywall-note {
+            color: #b2bec3;
+            font-size: 0.78em;
+            margin-top: 18px;
+            line-height: 1.6;
+        }
+
+        /* 弹窗 */
+        .qrcode-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qrcode-modal.show { display: flex; }
+
+        .qrcode-content {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            max-width: 380px;
+            width: 92%;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .qrcode-content h3 {
+            margin-bottom: 16px;
+            color: #2d3436;
+            font-size: 1.2em;
+        }
+
+        .qrcode-content p {
+            color: #636e72;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .qrcode-placeholder {
+            width: 220px; height: 220px;
+            background: #f8fafd;
+            border: 2px solid #e8eef5;
+            border-radius: 12px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 12px; right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #b2bec3;
+        }
+
+        .modal-price {
+            color: #e74c3c;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin: 4px 0;
+        }
+
+        .verify-steps {
+            background: #f1f8ff;
+            border-radius: 10px;
+            padding: 14px;
+            margin: 14px 0;
+            text-align: left;
+        }
+
+        .verify-steps .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 5px 0;
+            font-size: 0.85em;
+            color: #2d3436;
+            line-height: 1.5;
+        }
+
+        .verify-steps .step-num {
+            background: #0984e3;
+            color: white;
+            min-width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        .verify-input-group { margin: 14px 0; }
+
+        .verify-input-group label {
+            display: block;
+            color: #2d3436;
+            font-size: 0.88em;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .verify-input {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid #e8eef5;
+            border-radius: 10px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s;
+            text-align: center;
+        }
+
+        .verify-input:focus { border-color: #0984e3; }
+
+        .verify-input-hint {
+            color: #b2bec3;
+            font-size: 0.75em;
+            margin-top: 4px;
+        }
+
+        .confirm-paid-btn {
+            background: linear-gradient(135deg, #0984e3, #74b9ff);
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .confirm-paid-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .confirm-paid-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .verify-error {
+            color: #e74c3c;
+            font-size: 0.85em;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .verify-waiting {
+            color: #0984e3;
+            font-size: 0.95em;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .verify-waiting .wait-spinner {
+            width: 30px; height: 30px;
+            border: 3px solid #e8eef5;
+            border-top: 3px solid #0984e3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        /* 结果页 */
+        .result-page { display: none; }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .result-level-icon {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            font-size: 2em;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .result-score {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 4px;
+        }
+
+        .result-score .total {
+            color: #95a5a6;
+            font-size: 0.5em;
+            font-weight: normal;
+        }
+
+        .result-level {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .result-desc {
+            color: #636e72;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        .result-card {
+            background: #f8fafd;
+            border-radius: 16px;
+            padding: 26px;
+            margin-bottom: 20px;
+            border: 1px solid #e8eef5;
+        }
+
+        .result-card h3 {
+            color: #2d3436;
+            margin-bottom: 16px;
+            font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-card p {
+            color: #2d3436;
+            line-height: 1.9;
+            font-size: 0.95em;
+        }
+
+        .dimension-analysis {
+            margin-top: 16px;
+        }
+
+        .dim-detail {
+            margin-bottom: 18px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed #e8eef5;
+        }
+
+        .dim-detail:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .dim-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .dim-detail-name {
+            color: #2d3436;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .dim-detail-score {
+            color: #0984e3;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .dim-detail-bar {
+            height: 8px;
+            background: #e8eef5;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .dim-detail-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 1.5s ease;
+        }
+
+        .dim-detail-desc {
+            color: #636e72;
+            font-size: 0.85em;
+            line-height: 1.6;
+        }
+
+        .advice-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 12px;
+        }
+
+        .advice-list li {
+            padding: 10px 0 10px 30px;
+            color: #2d3436;
+            line-height: 1.7;
+            font-size: 0.93em;
+            position: relative;
+        }
+
+        .advice-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 18px;
+            width: 18px;
+            height: 2px;
+            background: #0984e3;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #f39c12;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 16px;
+        }
+
+        .warning-box .warning-title {
+            color: #d68910;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .warning-box p {
+            color: #6c5500;
+            font-size: 0.88em;
+            line-height: 1.7;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #0984e3, #74b9ff);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .home-btn {
+            background: none;
+            border: 2px solid #74b9ff;
+            color: #0984e3;
+            padding: 12px 32px;
+            font-size: 0.95em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .home-btn:hover {
+            background: #f1f8ff;
+        }
+
+        .button-center {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 24px 18px; }
+            .start-page h1 { font-size: 1.6em; }
+            .question-text { font-size: 1.05em; }
+            .btn-group { flex-direction: column; }
+            .dimension-grid { grid-template-columns: 1fr; }
+            .result-score { font-size: 2em; }
+            .paywall-guarantee { gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 开始页 -->
+        <div class="start-page" id="startPage">
+            <div class="icon">🌊</div>
+            <h1>压力与情绪自测</h1>
+            <p class="subtitle">了解你当前的压力水平<br>获取科学的调节建议</p>
+
+            <div class="info-box">
+                <h4>关于这个测试</h4>
+                <p>本测试参考国际通用的 DASS-21 与 PSS-10 量表设计，从身体、情绪、思维和生活四个维度评估你最近一个月的压力状况，并提供针对性的建议。</p>
+            </div>
+
+            <div class="dimension-grid">
+                <div class="dim-item">
+                    <div class="num">维度 1</div>
+                    <div class="name">身体压力</div>
+                </div>
+                <div class="dim-item">
+                    <div class="num">维度 2</div>
+                    <div class="name">情绪状态</div>
+                </div>
+                <div class="dim-item">
+                    <div class="num">维度 3</div>
+                    <div class="name">思维认知</div>
+                </div>
+                <div class="dim-item">
+                    <div class="num">维度 4</div>
+                    <div class="name">生活功能</div>
+                </div>
+            </div>
+
+            <p style="color:#636e72;font-size:0.9em;margin-bottom:24px;line-height:1.6;">
+                共 20 道题目，预计用时 5 分钟<br>
+                请根据最近一个月的真实情况作答
+            </p>
+
+            <button class="start-btn" onclick="startQuiz()">开始测试</button>
+
+            <p class="disclaimer">
+                本测试仅供自我了解和参考<br>
+                不能替代专业的心理诊断和治疗
+            </p>
+        </div>
+
+        <!-- 答题页 -->
+        <div class="question-page" id="questionPage">
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="progressText">第 1 / 20 题</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div id="questionArea" class="fade-in">
+                <span class="dim-tag" id="dimTag">身体压力</span>
+                <p class="question-intro">最近一个月，你是否：</p>
+                <div class="question-text" id="questionText"></div>
+                <div class="options" id="optionsArea"></div>
+                <div class="auto-next-hint" id="autoNextHint">已选择，正在跳转下一题...</div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-prev" id="prevBtn" onclick="prevQuestion()" disabled>上一题</button>
+                <button class="btn btn-next" id="nextBtn" onclick="nextQuestion()" disabled>下一题</button>
+            </div>
+        </div>
+
+        <!-- 加载页 -->
+        <div class="loading-page" id="loadingPage">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">正在生成你的压力分析报告...</div>
+        </div>
+
+        <div class="paywall-page" id="paywallPage"></div>
+        <div class="result-page" id="resultPage"></div>
+    </div>
+
+    <script>
+        // ==================== 题目数据 ====================
+        // dim: 维度 (body=身体, emotion=情绪, cognition=认知, function=功能)
+        // 选项分数：0=从不, 1=偶尔, 2=经常, 3=几乎总是
+
+        const questionsRaw = [
+            // === 身体压力（4题）===
+            { dim: "body", q: "感到头痛、肩颈僵硬或肌肉紧绷" },
+            { dim: "body", q: "出现入睡困难、睡眠浅或早醒的情况" },
+            { dim: "body", q: "感到疲惫，即使休息后仍然提不起精神" },
+            { dim: "body", q: "出现食欲变化（暴食或没有胃口）" },
+
+            // === 情绪状态（5题）===
+            { dim: "emotion", q: "感到莫名的烦躁或容易被小事激怒" },
+            { dim: "emotion", q: "感到焦虑、紧张或心神不宁" },
+            { dim: "emotion", q: "情绪低落，觉得做什么都没意思" },
+            { dim: "emotion", q: "感到孤独，即使身边有人也觉得无法倾诉" },
+            { dim: "emotion", q: "对未来感到担忧或恐惧" },
+
+            // === 思维认知（5题）===
+            { dim: "cognition", q: "注意力难以集中，工作或学习效率下降" },
+            { dim: "cognition", q: "脑海中反复出现负面想法，难以摆脱" },
+            { dim: "cognition", q: "做决定变得困难，犹豫不决" },
+            { dim: "cognition", q: "感到自己一无是处或对自己不满意" },
+            { dim: "cognition", q: "记忆力下降，容易忘记事情" },
+
+            // === 生活功能（6题）===
+            { dim: "function", q: "工作或学习任务让你感到压力难以应对" },
+            { dim: "function", q: "回避一些原本喜欢的活动或社交" },
+            { dim: "function", q: "在人际关系中感到紧张或冲突增多" },
+            { dim: "function", q: "感觉时间不够用，总是被事情追着跑" },
+            { dim: "function", q: "无法享受当下，总在担心其他事情" },
+            { dim: "function", q: "依靠饮食、购物、刷手机等方式来排解压力" }
+        ];
+
+        const dimNames = {
+            body: "身体压力",
+            emotion: "情绪状态",
+            cognition: "思维认知",
+            function: "生活功能"
+        };
+
+        const dimCount = { body: 4, emotion: 5, cognition: 5, function: 6 };
+
+        // ==================== 压力等级数据 ====================
+        const levelData = {
+            normal: {
+                name: "压力正常", icon: "✓", color: "#27ae60",
+                desc: "你的压力水平处于健康范围，能够良好地应对生活中的挑战。",
+                summary: "你目前的状态非常好。即使面对压力，你也能保持平衡的心态和稳定的情绪。你已经掌握了有效的压力管理方法，请继续保持这种良好的状态。当然，定期的自我觉察和情绪疏导依然重要，这是保持心理健康的长期之道。",
+                analysis: {
+                    body: "你的身体反应处于正常范围，睡眠和精力状态良好，这说明你的生活节奏比较健康。",
+                    emotion: "你的情绪相对稳定，能够正常地体验喜怒哀乐，情绪管理能力较强。",
+                    cognition: "你的思维清晰，能够保持理性思考，对自己的认知积极正向。",
+                    function: "你的工作生活节奏良好，社交功能完善，能够享受生活的各个方面。"
+                },
+                advice: [
+                    "保持规律的作息和均衡的饮食",
+                    "每周进行 3-5 次适度的运动，每次 30 分钟以上",
+                    "继续培养你的兴趣爱好，让生活充满意义",
+                    "保持与亲友的良好沟通，建立稳定的支持系统",
+                    "定期做一些放松练习，如冥想、深呼吸等"
+                ]
+            },
+            mild: {
+                name: "轻度压力", icon: "○", color: "#3498db",
+                desc: "你正在经历一些压力，但仍在可控范围内，需要适当地关注和调节。",
+                summary: "你最近承受着一定的压力，这是现代生活中很常见的状态。虽然你目前还能正常应对，但身体和情绪上已经出现了一些信号，提醒你需要主动进行调节了。好消息是，通过一些简单的方法，你完全可以让自己回到更舒适的状态。",
+                analysis: {
+                    body: "你的身体出现了一些压力反应，比如偶尔的睡眠问题或疲劳感，这是身体在提醒你需要更好地休息。",
+                    emotion: "你的情绪偶尔会有波动，感到焦虑或烦躁，但还在可控范围内。学习情绪调节技巧会很有帮助。",
+                    cognition: "你的思维偶尔会被一些担忧占据，但理性思考能力仍然完整。",
+                    function: "你的日常生活功能基本正常，但偶尔会感到力不从心。"
+                },
+                advice: [
+                    "建立规律的睡眠时间，每天睡足 7-8 小时",
+                    "尝试每天 10-15 分钟的正念冥想或深呼吸练习",
+                    "减少咖啡因和酒精的摄入，多喝水",
+                    "把待办事项写下来，分清优先级，避免大脑超负荷",
+                    "每天给自己留出一段独处的时间，放空自己",
+                    "和信任的人聊聊你的感受，不要独自承担"
+                ]
+            },
+            moderate: {
+                name: "中度压力", icon: "△", color: "#f39c12",
+                desc: "你的压力水平较高，已经开始影响到你的生活质量，需要认真重视。",
+                summary: "你目前正处于明显的压力状态中，这种压力已经在你的身体、情绪和生活的多个方面留下了痕迹。请记住，感到压力大并不是你的错，也不代表你不够强大。每个人都会有这样的阶段。重要的是，你现在意识到了这一点，这就是改变的开始。",
+                analysis: {
+                    body: "你的身体已经在持续的压力下显示出比较明显的反应，包括睡眠、精力和饮食等方面的变化，需要更多的关爱和休养。",
+                    emotion: "你的情绪比较低落或焦虑，这种状态如果持续下去会影响你对生活的感受。是时候关注自己的情绪健康了。",
+                    cognition: "你的思维容易陷入负面循环，注意力和判断力都受到了影响。这是大脑在过载的信号。",
+                    function: "你的工作和生活节奏被打乱，社交意愿降低，需要主动做出一些调整。"
+                },
+                advice: [
+                    "评估你的工作和生活节奏，必要时减少一些任务",
+                    "保证充足的睡眠，睡前一小时远离手机",
+                    "增加户外活动时间，阳光和自然能有效缓解压力",
+                    "尝试写情绪日记，把感受写出来有助于梳理",
+                    "学习说「不」，不要勉强自己接受所有请求",
+                    "考虑寻求心理咨询，专业的帮助可以让你更快走出来",
+                    "和家人朋友坦诚沟通，让他们知道你现在的状态"
+                ],
+                warning: "如果这种状态持续超过两周，或开始影响你的工作和人际关系，建议主动寻求心理咨询师的帮助。"
+            },
+            severe: {
+                name: "重度压力", icon: "！", color: "#e74c3c",
+                desc: "你正经历着较为严重的压力，强烈建议你寻求专业的支持和帮助。",
+                summary: "你目前的状态需要被认真对待。长期处于高压状态下，身体和心理都会受到影响。请相信，你现在的感受是真实的，也是值得被关注的。你不是「想太多」，也不是「不够坚强」。寻求帮助是一种智慧的选择，专业的支持能让你更快地走出当前的困境。",
+                analysis: {
+                    body: "你的身体在长期压力下出现了明显的不适，这些症状不容忽视，需要及时调整生活方式并寻求帮助。",
+                    emotion: "你正在经历较为强烈的情绪困扰，这种状态会消耗大量的心理能量，请允许自己接受帮助。",
+                    cognition: "你的思维被困在负面循环中，这并不是你的本意，而是大脑在压力下的反应。专业的方法可以帮你打破这个循环。",
+                    function: "你的日常功能已经受到显著影响，这说明你需要更系统的支持来恢复状态。"
+                },
+                advice: [
+                    "尽快预约心理咨询师或精神科医生的咨询",
+                    "向家人或亲密朋友坦诚你的状态，请求他们的支持",
+                    "如果可能，适当减少工作或学习的强度",
+                    "保证基本的生活规律：吃饭、睡觉、活动",
+                    "不要使用酒精或药物来麻痹自己，这会让情况更糟",
+                    "拨打心理援助热线：北京 010-82951332 / 全国 400-161-9995",
+                    "记住：寻求帮助不是软弱，而是对自己的负责"
+                ],
+                warning: "请认真对待自己的状态。如果出现持续的悲伤、绝望感，或有伤害自己的想法，请立即联系专业人士或拨打心理危机干预热线 400-161-9995。"
+            }
+        };
+
+        // ==================== 全局变量 ====================
+        let currentQuestion = 0;
+        let answers = [];
+        let questions = [];
+        let autoNextTimer = null;
+        let countdownInterval = null;
+        let calculatedResult = null;
+
+        function shuffleArray(arr) {
+            const s = [...arr];
+            for (let i = s.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [s[i], s[j]] = [s[j], s[i]];
+            }
+            return s;
+        }
+
+        function initQuestions() {
+            // 按维度分组打乱，然后保持维度内顺序但混合呈现
+            // 这里我们让题目按维度顺序呈现，更符合心理测评习惯
+            const byDim = { body: [], emotion: [], cognition: [], function: [] };
+            questionsRaw.forEach(q => byDim[q.dim].push(q));
+
+            // 每个维度内部打乱
+            Object.keys(byDim).forEach(d => { byDim[d] = shuffleArray(byDim[d]); });
+
+            // 按维度顺序拼接（先身体，再情绪，再认知，最后功能）
+            questions = [
+                ...byDim.body,
+                ...byDim.emotion,
+                ...byDim.cognition,
+                ...byDim.function
+            ];
+        }
+
+        function startQuiz() {
+            initQuestions();
+            answers = new Array(questions.length).fill(undefined);
+            currentQuestion = 0;
+            document.getElementById('startPage').style.display = 'none';
+            document.getElementById('questionPage').style.display = 'block';
+            showQuestion(0);
+        }
+
+        function showQuestion(idx) {
+            const q = questions[idx];
+            document.getElementById('dimTag').textContent = dimNames[q.dim];
+            document.getElementById('questionText').textContent = q.q;
+            document.getElementById('progressText').textContent = `第 ${idx + 1} / ${questions.length} 题`;
+            const pct = Math.round(idx / questions.length * 100);
+            document.getElementById('progressPercent').textContent = pct + '%';
+            document.getElementById('progressFill').style.width = pct + '%';
+
+            const optionsArea = document.getElementById('optionsArea');
+            optionsArea.innerHTML = '';
+
+            const optionsData = [
+                { text: "从不或几乎没有", score: 0 },
+                { text: "偶尔有", score: 1 },
+                { text: "经常有", score: 2 },
+                { text: "几乎总是", score: 3 }
+            ];
+
+            optionsData.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = 'option' + (answers[idx] === i ? ' selected' : '');
+                div.innerHTML = `<div class="option-radio"></div><div class="option-text">${opt.text}</div>`;
+                div.onclick = () => selectOption(idx, i);
+                optionsArea.appendChild(div);
+            });
+
+            document.getElementById('prevBtn').disabled = idx === 0;
+            document.getElementById('nextBtn').textContent = idx === questions.length - 1 ? '查看结果' : '下一题';
+            document.getElementById('nextBtn').disabled = answers[idx] === undefined;
+            document.getElementById('autoNextHint').classList.remove('show');
+
+            const qa = document.getElementById('questionArea');
+            qa.classList.remove('fade-in');
+            void qa.offsetWidth;
+            qa.classList.add('fade-in');
+        }
+
+        function selectOption(qIdx, optIdx) {
+            if (autoNextTimer) { clearTimeout(autoNextTimer); autoNextTimer = null; }
+            const isFirst = answers[qIdx] === undefined;
+            answers[qIdx] = optIdx;
+            document.querySelectorAll('.option').forEach((el, i) => {
+                el.className = 'option' + (i === optIdx ? ' selected' : '');
+            });
+            document.getElementById('nextBtn').disabled = false;
+            if (isFirst && qIdx < questions.length - 1) {
+                document.getElementById('autoNextHint').classList.add('show');
+                autoNextTimer = setTimeout(() => {
+                    document.getElementById('autoNextHint').classList.remove('show');
+                    nextQuestion();
+                }, 600);
+            }
+        }
+
+        function nextQuestion() {
+            if (autoNextTimer) { clearTimeout(autoNextTimer); autoNextTimer = null; }
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                showLoading();
+            }
+        }
+
+        function prevQuestion() {
+            if (autoNextTimer) { clearTimeout(autoNextTimer); autoNextTimer = null; }
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function showLoading() {
+            document.getElementById('questionPage').style.display = 'none';
+            document.getElementById('loadingPage').style.display = 'block';
+            setTimeout(() => {
+                calculatedResult = calculateResult();
+                showPaywall();
+            }, 2500);
+        }
+
+        function calculateResult() {
+            const dimScores = { body: 0, emotion: 0, cognition: 0, function: 0 };
+            const dimMax = { body: 12, emotion: 15, cognition: 15, function: 18 };
+
+            answers.forEach((ans, i) => {
+                if (ans === undefined) return;
+                const dim = questions[i].dim;
+                dimScores[dim] += ans;
+            });
+
+            const totalScore = dimScores.body + dimScores.emotion + dimScores.cognition + dimScores.function;
+            const totalMax = 60;  // 20题 × 3分
+
+            // 分数等级划分
+            let level;
+            if (totalScore <= 15) level = 'normal';
+            else if (totalScore <= 30) level = 'mild';
+            else if (totalScore <= 45) level = 'moderate';
+            else level = 'severe';
+
+            // 各维度得分百分比
+            const dimPercents = {};
+            Object.keys(dimScores).forEach(d => {
+                dimPercents[d] = Math.round(dimScores[d] / dimMax[d] * 100);
+            });
+
+            return { totalScore, totalMax, level, dimScores, dimPercents, data: levelData[level] };
+        }
+
+        // ==================== 付费墙 ====================
+        function showPaywall() {
+            document.getElementById('loadingPage').style.display = 'none';
+            const p = document.getElementById('paywallPage');
+            p.style.display = 'block';
+            p.classList.add('fade-in');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const r = calculatedResult;
+            const buyers = Math.floor(Math.random() * 5000) + 18000;
+
+            p.innerHTML = `
+                <h2>测试完成</h2>
+                <p class="subtitle">你的压力评估结果已生成</p>
+
+                <div class="paywall-preview">
+                    <div class="preview-level" style="color:${r.data.color}">${r.data.name}</div>
+                    <div class="preview-desc">完整报告包含详细的维度分析、科学的调节建议和针对性的改善方案</div>
+                </div>
+
+                <div class="paywall-lock">🔒</div>
+                <p style="color:#2d3436;font-weight:500;font-size:1.05em;">解锁你的完整压力报告</p>
+
+                <div class="countdown-bar">
+                    <span>限时特惠倒计时</span>
+                    <span class="countdown-num" id="countdownTimer">14:59</span>
+                </div>
+
+                <div class="paywall-price">
+                    <span class="price-original">¥9.9</span>
+                    <span class="price-current">¥0.9</span>
+                    <span class="price-tag">限时特惠</span>
+                </div>
+
+                <p class="buyer-info">已有 <strong style="color:#0984e3;">${buyers.toLocaleString()}</strong> 人解锁了完整报告</p>
+
+                <div class="paywall-features">
+                    <div class="feature-item"><span class="check-icon">✓</span><span>你的压力等级和具体得分</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>四个维度的详细分析</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>针对你状况的专属建议</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>科学的压力调节方法</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>必要时的专业资源指引</span></div>
+                </div>
+
+                <button class="pay-btn" onclick="showQRCode()">微信扫码支付 ¥0.9 查看报告</button>
+
+                <div class="paywall-guarantee">
+                    <span class="guarantee-item">安全支付</span>
+                    <span class="guarantee-item">即时查看</span>
+                    <span class="guarantee-item">专业分析</span>
+                </div>
+
+                <p class="paywall-note">
+                    本测试参考国际心理学量表设计，仅供自我了解和参考<br>
+                    如有问题请联系客服微信：your_wechat_id
+                </p>
+
+                <div class="qrcode-modal" id="qrcodeModal">
+                    <div class="qrcode-content">
+                        <button class="close-modal" onclick="closeQRCode()">×</button>
+                        <h3>微信支付 ¥0.9</h3>
+
+                        <div style="background:#f1f8ff;border-radius:10px;padding:12px;margin-bottom:14px;text-align:left;">
+                            <div style="color:#0984e3;font-weight:600;margin-bottom:6px;font-size:0.88em;">手机用户操作步骤</div>
+                            <div style="font-size:0.8em;color:#636e72;line-height:1.7;">
+                                ① 长按下方二维码保存图片<br>
+                                ② 打开微信「扫一扫」<br>
+                                ③ 点击右下角相册图标选择图片<br>
+                                ④ 完成支付 ¥0.9
+                            </div>
+                        </div>
+
+                        <div class="qrcode-placeholder">
+                            <img src="pay-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;" onerror="this.parentElement.innerHTML='<span style=color:#b2bec3;font-size:0.85em>请放置收款码</span>'">
+                        </div>
+
+                        <div class="modal-price">¥0.9</div>
+                        <p style="color:#e67e22;font-size:0.85em;font-weight:500;">请确认支付金额为 ¥0.9</p>
+
+                        <div class="verify-steps">
+                            <div class="step"><span class="step-num">1</span><span>扫描上方二维码</span></div>
+                            <div class="step"><span class="step-num">2</span><span>确认金额 ¥0.9 并完成支付</span></div>
+                            <div class="step"><span class="step-num">3</span><span>支付完成后点击下方按钮</span></div>
+                        </div>
+
+                        <div id="verifyStep1">
+                            <button class="confirm-paid-btn" onclick="startVerify()">我已完成支付</button>
+                        </div>
+
+                        <div id="verifyStep2" style="display:none;">
+                            <div class="verify-waiting" style="display:block;">
+                                <div class="wait-spinner"></div>
+                                <p>正在验证支付状态...</p>
+                                <p style="font-size:0.8em;color:#b2bec3;margin-top:8px;">预计需要 <span id="verifyCountdown">5</span> 秒</p>
+                            </div>
+                        </div>
+
+                        <div id="verifyStep3" style="display:none;">
+                            <div style="background:#fff5e6;border-radius:8px;padding:12px;margin:12px 0;text-align:left;">
+                                <p style="color:#e67e22;font-size:0.85em;margin:0;">未查询到支付记录，请手动验证</p>
+                            </div>
+                            <div class="verify-input-group">
+                                <label>请输入支付金额</label>
+                                <input type="text" id="payAmountInput" class="verify-input" placeholder="例如：0.90" maxlength="5" oninput="checkInput()">
+                                <p class="verify-input-hint">请输入你实际支付的金额</p>
+                            </div>
+                            <div class="verify-input-group">
+                                <label>请输入微信昵称的第一个字</label>
+                                <input type="text" id="payNicknameInput" class="verify-input" placeholder="例如：小" maxlength="2" oninput="checkInput()">
+                                <p class="verify-input-hint">用于核对支付人信息</p>
+                            </div>
+                            <button class="confirm-paid-btn" id="finalConfirmBtn" onclick="finalConfirm()" disabled>验证并查看报告</button>
+                            <p id="verifyError" class="verify-error"></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            startCountdown();
+        }
+
+        function startCountdown() {
+            let t = 14 * 60 + 59;
+            if (countdownInterval) clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                t--;
+                if (t <= 0) { clearInterval(countdownInterval); t = 0; }
+                const el = document.getElementById('countdownTimer');
+                if (el) el.textContent = `${Math.floor(t/60).toString().padStart(2,'0')}:${(t%60).toString().padStart(2,'0')}`;
+            }, 1000);
+        }
+
+        function showQRCode() {
+            document.getElementById('qrcodeModal').classList.add('show');
+            document.getElementById('verifyStep1').style.display = 'block';
+            document.getElementById('verifyStep2').style.display = 'none';
+            document.getElementById('verifyStep3').style.display = 'none';
+        }
+
+        function closeQRCode() {
+            document.getElementById('qrcodeModal').classList.remove('show');
+        }
+
+        function startVerify() {
+            document.getElementById('verifyStep1').style.display = 'none';
+            document.getElementById('verifyStep2').style.display = 'block';
+            let sec = 5;
+            const cdEl = document.getElementById('verifyCountdown');
+            const timer = setInterval(() => {
+                sec--;
+                if (cdEl) cdEl.textContent = sec;
+                if (sec <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('verifyStep2').style.display = 'none';
+                    document.getElementById('verifyStep3').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        function checkInput() {
+            const a = document.getElementById('payAmountInput').value.trim();
+            const n = document.getElementById('payNicknameInput').value.trim();
+            const btn = document.getElementById('finalConfirmBtn');
+            if (a.length > 0 && n.length > 0) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            } else {
+                btn.disabled = true;
+                btn.style.opacity = '0.4';
+            }
+            const err = document.getElementById('verifyError');
+            if (err) err.style.display = 'none';
+        }
+
+        function finalConfirm() {
+            const a = document.getElementById('payAmountInput').value.trim();
+            const err = document.getElementById('verifyError');
+            if (!['0.9', '0.90', '￥0.9', '￥0.90', '¥0.9', '¥0.90'].includes(a)) {
+                if (err) {
+                    err.textContent = '金额不正确，请确认支付 ¥0.9 后重试';
+                    err.style.display = 'block';
+                }
+                return;
+            }
+            closeQRCode();
+            if (countdownInterval) clearInterval(countdownInterval);
+            document.getElementById('paywallPage').style.display = 'none';
+            showFullResult();
+        }
+
+        // ==================== 结果页 ====================
+        function showFullResult() {
+            const r = calculatedResult;
+            const d = r.data;
+            const rp = document.getElementById('resultPage');
+            rp.style.display = 'block';
+            rp.classList.add('fade-in');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const dimOrder = ['body', 'emotion', 'cognition', 'function'];
+            const dimColors = ['#3498db', '#9b59b6', '#1abc9c', '#f39c12'];
+
+            let dimHTML = '';
+            dimOrder.forEach((dim, i) => {
+                const pct = r.dimPercents[dim];
+                dimHTML += `
+                    <div class="dim-detail">
+                        <div class="dim-detail-header">
+                            <span class="dim-detail-name">${dimNames[dim]}</span>
+                            <span class="dim-detail-score" style="color:${dimColors[i]}">${pct}%</span>
+                        </div>
+                        <div class="dim-detail-bar">
+                            <div class="dim-detail-fill" style="width:0%;background:${dimColors[i]};" data-width="${pct}%"></div>
+                        </div>
+                        <div class="dim-detail-desc">${d.analysis[dim]}</div>
+                    </div>
+                `;
+            });
+
+            const adviceHTML = d.advice.map(a => `<li>${a}</li>`).join('');
+            const warningHTML = d.warning ? `
+                <div class="warning-box">
+                    <div class="warning-title">重要提醒</div>
+                    <p>${d.warning}</p>
+                </div>
+            ` : '';
+
+            rp.innerHTML = `
+                <div class="result-header">
+                    <div class="result-level-icon" style="background:${d.color}">${d.icon}</div>
+                    <div class="result-score">${r.totalScore}<span class="total"> / ${r.totalMax}</span></div>
+                    <div class="result-level" style="color:${d.color}">${d.name}</div>
+                    <div class="result-desc">${d.desc}</div>
+                </div>
+
+                <div class="result-card">
+                    <h3>整体评估</h3>
+                    <p>${d.summary}</p>
+                </div>
+
+                <div class="result-card">
+                    <h3>四维度分析</h3>
+                    <div class="dimension-analysis">${dimHTML}</div>
+                </div>
+
+                <div class="result-card">
+                    <h3>给你的建议</h3>
+                    <ul class="advice-list">${adviceHTML}</ul>
+                    ${warningHTML}
+                </div>
+
+                <div class="result-card" style="background:#f1f8ff;border-color:#d0e7ff;">
+                    <h3>关于压力的科学认知</h3>
+                    <p>压力本身并不可怕，它是身体应对挑战的自然反应。适度的压力可以帮助我们集中注意力、提高效率。但当压力长期积累、超出承受范围时，就需要主动调节。请记住，关注自己的心理健康是一种成熟和负责任的表现，而不是软弱。每个人都值得被温柔以待，包括你自己。</p>
+                </div>
+
+                <div class="button-center">
+                    <button class="restart-btn" onclick="restart()">重新测试</button>
+                    <br>
+                    <button class="home-btn" onclick="location.href='/'">返回首页</button>
+                </div>
+
+                <p style="text-align:center;margin-top:20px;color:#b2bec3;font-size:0.82em;line-height:1.6;">
+                    本报告基于自我评估，仅供参考<br>
+                    如需专业诊断，请咨询心理咨询师或精神科医生
+                </p>
+            `;
+
+            setTimeout(() => {
+                document.querySelectorAll('.dim-detail-fill').forEach(el => {
+                    el.style.width = el.dataset.width;
+                });
+            }, 300);
+        }
+
+        function restart() {
+            currentQuestion = 0;
+            answers = [];
+            calculatedResult = null;
+            if (countdownInterval) clearInterval(countdownInterval);
+            if (autoNextTimer) clearTimeout(autoNextTimer);
+            document.getElementById('resultPage').style.display = 'none';
+            document.getElementById('paywallPage').style.display = 'none';
+            document.getElementById('startPage').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('questionPage').style.display === 'block') {
+                if (e.key >= '1' && e.key <= '4') {
+                    const i = parseInt(e.key) - 1;
+                    const o = document.querySelectorAll('.option');
+                    if (o[i]) o[i].click();
+                }
+                if (e.key === 'ArrowRight' || e.key === 'Enter') {
+                    if (!document.getElementById('nextBtn').disabled) nextQuestion();
+                }
+                if (e.key === 'ArrowLeft') {
+                    if (!document.getElementById('prevBtn').disabled) prevQuestion();
+                }
+            }
+            if (e.key === 'Escape') closeQRCode();
+        });
+    </script>
+</body>
+</html>

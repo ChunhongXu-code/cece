@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JoyCece - 发现更好的自己</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -34,13 +38,13 @@
         }
 
         .tagline {
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.95);
             font-size: 1.1em;
             margin-bottom: 8px;
         }
 
         .stats {
-            color: rgba(255,255,255,0.75);
+            color: rgba(255,255,255,0.8);
             font-size: 0.9em;
         }
 
@@ -49,8 +53,24 @@
             margin: 0 auto;
         }
 
-        .category {
+        .notice {
+            background: rgba(255,255,255,0.25);
+            border-radius: 14px;
+            padding: 14px 18px;
             margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .notice-icon {
+            font-size: 1.2em;
+        }
+
+        .category {
+            margin-bottom: 40px;
         }
 
         .category-header {
@@ -73,7 +93,7 @@
         }
 
         .category-desc {
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.85);
             font-size: 0.85em;
             margin-left: auto;
         }
@@ -85,7 +105,7 @@
         }
 
         .card {
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.97);
             border-radius: 20px;
             padding: 24px 20px;
             cursor: pointer;
@@ -95,17 +115,25 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             position: relative;
             overflow: hidden;
+            min-height: 180px;
         }
 
         .card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             height: 4px;
         }
 
-        .card.psych::before { background: linear-gradient(90deg, #a29bfe, #6c5ce7); }
-        .card.fun::before { background: linear-gradient(90deg, #00b894, #00cec9); }
+        .card.psych::before {
+            background: linear-gradient(90deg, #a29bfe, #6c5ce7);
+        }
+
+        .card.fun::before {
+            background: linear-gradient(90deg, #00b894, #00cec9);
+        }
 
         .card:hover {
             transform: translateY(-6px);
@@ -113,7 +141,7 @@
         }
 
         .card.coming {
-            opacity: 0.6;
+            opacity: 0.65;
             cursor: not-allowed;
         }
 
@@ -126,6 +154,7 @@
             font-size: 2.2em;
             margin-bottom: 12px;
             display: block;
+            line-height: 1;
         }
 
         .card-title {
@@ -146,6 +175,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-top: auto;
         }
 
         .card-info {
@@ -167,54 +197,58 @@
             color: #999;
         }
 
+        .card.psych .card-price {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+        }
+
         .card-badge {
             position: absolute;
             top: 14px;
             right: 14px;
             color: white;
             font-size: 0.65em;
-            padding: 2px 8px;
+            padding: 3px 10px;
             border-radius: 10px;
             font-weight: bold;
+            letter-spacing: 0.5px;
         }
 
-        .card-badge.new { background: #00b894; }
-        .card-badge.hot { background: #e17055; }
-        .card-badge.coming { background: #b2bec3; }
+        .card-badge.new {
+            background: #00b894;
+        }
+
+        .card-badge.hot {
+            background: #e17055;
+        }
+
+        .card-badge.coming {
+            background: #b2bec3;
+        }
 
         .footer {
             text-align: center;
             margin-top: 50px;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,0.75);
             font-size: 0.82em;
             line-height: 2;
         }
 
-        .divider {
-            height: 1px;
-            background: rgba(255,255,255,0.2);
-            margin: 32px 0;
-        }
-
-        .notice {
-            background: rgba(255,255,255,0.25);
-            border-radius: 14px;
-            padding: 14px 18px;
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
-            font-size: 0.9em;
-        }
-
-        .notice-icon { font-size: 1.2em; }
-
         @media (max-width: 600px) {
-            .logo { font-size: 2em; }
-            .cards-grid { grid-template-columns: 1fr; }
-            .category-desc { display: none; }
-            .header { padding: 30px 0 24px; }
+            .logo {
+                font-size: 2em;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .category-desc {
+                display: none;
+            }
+            .header {
+                padding: 30px 0 24px;
+            }
+            .card {
+                min-height: auto;
+            }
         }
     </style>
 </head>
@@ -222,13 +256,13 @@
     <div class="header">
         <div class="logo"><span>🌿 JoyCece</span></div>
         <p class="tagline">发现更好的自己，从一道题开始</p>
-        <p class="stats">✨ 已有 12,800+ 人完成测试</p>
+        <p class="stats">已有 12,800+ 人完成测试</p>
     </div>
 
     <div class="main">
         <div class="notice">
             <span class="notice-icon">🎉</span>
-            <span>欢迎来到 JoyCece！点击下方测试卡片开始你的探索之旅～</span>
+            <span>欢迎来到 JoyCece！点击下方测试卡片开始你的探索之旅</span>
         </div>
 
         <!-- 心理专业测试 -->
@@ -240,29 +274,27 @@
             </div>
             <div class="cards-grid">
                 <a href="mbti/" class="card psych">
-    <span class="card-badge new">NEW</span>
+                    <span class="card-badge new">NEW</span>
                     <span class="card-emoji">🧩</span>
                     <div class="card-title">MBTI 性格类型测试</div>
                     <div class="card-desc">探索你的16种性格类型，了解自己的思维方式</div>
                     <div class="card-meta">
-                        <span class="card-info">即将上线</span>
-                        <span class="card-price coming">¥0.9</span>
+                        <span class="card-info">48题 · 约10分钟</span>
+                        <span class="card-price">¥0.9</span>
                     </div>
-                </div>
+                </a>
                 <a href="stress/" class="card psych">
-    <span class="card-badge new">NEW</span>
-    <span class="card-emoji">🌊</span>
-    <div class="card-title">压力与情绪自测</div>
+                    <span class="card-badge new">NEW</span>
+                    <span class="card-emoji">🌊</span>
+                    <div class="card-title">压力与情绪自测</div>
                     <div class="card-desc">科学评估你当前的压力水平，获取减压建议</div>
                     <div class="card-meta">
-                        <span class="card-info">即将上线</span>
-                        <span class="card-price coming">¥0.9</span>
+                        <span class="card-info">20题 · 约5分钟</span>
+                        <span class="card-price">¥0.9</span>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
-
-        <div class="divider"></div>
 
         <!-- 趣味测试 -->
         <div class="category">
@@ -276,9 +308,9 @@
                     <span class="card-badge hot">HOT</span>
                     <span class="card-emoji">🏙️</span>
                     <div class="card-title">测测适合你的城市</div>
-                    <div class="card-desc">30道题帮你找到最适合你的中国城市</div>
+                    <div class="card-desc">24道题帮你找到最适合你的中国城市</div>
                     <div class="card-meta">
-                        <span class="card-info">30题 · 约5分钟</span>
+                        <span class="card-info">24题 · 约3分钟</span>
                         <span class="card-price">¥0.9</span>
                     </div>
                 </a>

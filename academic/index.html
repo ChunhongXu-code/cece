@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测测你的学术人格 - JoyCece</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255,255,255,0.97);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #84fab0, #8fd3f4, #a8edea, #fed6e3);
+        }
+
+        /* 开始页 */
+        .start-page { text-align: center; padding: 30px 0; }
+
+        .start-page .icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .start-page h1 {
+            font-size: 2em;
+            color: #2d3436;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .start-page .subtitle {
+            color: #636e72;
+            font-size: 1.05em;
+            margin-bottom: 28px;
+            line-height: 1.8;
+        }
+
+        .info-box {
+            background: #f0fdf4;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 28px;
+            border-left: 4px solid #10b981;
+        }
+
+        .info-box h4 {
+            color: #10b981;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .info-box p {
+            color: #636e72;
+            font-size: 0.88em;
+            line-height: 1.8;
+        }
+
+        .types-preview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .type-preview-item {
+            background: #f0fdf4;
+            border-radius: 10px;
+            padding: 12px 6px;
+            text-align: center;
+            border: 1px solid #d1fae5;
+        }
+
+        .type-preview-item .icon {
+            font-size: 1.4em;
+            margin-bottom: 4px;
+        }
+
+        .type-preview-item .name {
+            color: #2d3436;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(16,185,129,0.35);
+            font-weight: 500;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(16,185,129,0.45);
+        }
+
+        .disclaimer {
+            margin-top: 20px;
+            color: #b2bec3;
+            font-size: 0.78em;
+            line-height: 1.6;
+        }
+
+        /* 进度条 */
+        .progress-container { margin-bottom: 28px; }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.88em;
+            color: #636e72;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #d1fae5;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .dim-tag {
+            display: inline-block;
+            background: #d1fae5;
+            color: #10b981;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.78em;
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+
+        /* 答题页 */
+        .question-page { display: none; }
+
+        .question-scenario {
+            color: #636e72;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            color: #2d3436;
+            margin-bottom: 26px;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #d1fae5;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.98em;
+            color: #2d3436;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: white;
+            line-height: 1.5;
+        }
+
+        .option:hover {
+            border-color: #34d399;
+            background: #f0fdf4;
+        }
+
+        .option.selected {
+            border-color: #10b981;
+            background: #ecfdf5;
+            font-weight: 500;
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #b2bec3;
+            border-radius: 50%;
+            flex-shrink: 0;
+            position: relative;
+            transition: all 0.25s;
+        }
+
+        .option.selected .option-radio {
+            border-color: #10b981;
+        }
+
+        .option.selected .option-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px; height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+        }
+
+        .option-text { flex: 1; }
+
+        .auto-next-hint {
+            text-align: center;
+            color: #10b981;
+            font-size: 0.85em;
+            margin-top: -16px;
+            margin-bottom: 18px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .auto-next-hint.show { opacity: 1; }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.98em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-prev {
+            background: #f1f5f9;
+            color: #636e72;
+        }
+
+        .btn-prev:hover { background: #e2e8f0; }
+
+        .btn-next {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+        }
+
+        .btn-next:hover { transform: translateY(-2px); }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* 加载 */
+        .loading-page { display: none; text-align: center; padding: 60px 0; }
+
+        .loading-spinner {
+            width: 56px; height: 56px;
+            border: 4px solid #d1fae5;
+            border-top: 4px solid #10b981;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-text { color: #636e72; font-size: 1.05em; }
+
+        /* 付费墙 */
+        .paywall-page { display: none; text-align: center; padding: 20px 0; }
+
+        .paywall-page h2 {
+            font-size: 1.6em;
+            color: #2d3436;
+            margin-bottom: 12px;
+        }
+
+        .paywall-page .subtitle {
+            color: #636e72;
+            margin-bottom: 24px;
+            font-size: 1em;
+        }
+
+        .paywall-preview {
+            background: #f0fdf4;
+            border-radius: 16px;
+            padding: 28px 24px;
+            margin: 20px 0;
+            border: 1px solid #d1fae5;
+        }
+
+        .preview-type-name {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #10b981;
+            margin-bottom: 8px;
+        }
+
+        .preview-desc {
+            color: #636e72;
+            font-size: 0.92em;
+            line-height: 1.7;
+        }
+
+        .paywall-lock {
+            font-size: 2.5em;
+            margin: 20px 0 10px;
+            color: #34d399;
+        }
+
+        .paywall-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .price-original {
+            color: #b2bec3;
+            text-decoration: line-through;
+            font-size: 1em;
+        }
+
+        .price-current {
+            color: #e74c3c;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .price-tag {
+            background: #e74c3c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+        }
+
+        .paywall-features {
+            text-align: left;
+            background: #ecfdf5;
+            border-radius: 14px;
+            padding: 22px;
+            margin: 20px 0;
+        }
+
+        .paywall-features .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            color: #2d3436;
+            font-size: 0.95em;
+        }
+
+        .check-icon {
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .pay-btn {
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            width: 100%;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+            margin: 20px 0;
+        }
+
+        .pay-btn:hover { transform: translateY(-2px); }
+
+        .countdown-bar {
+            margin: 16px 0;
+            padding: 12px 16px;
+            background: #fff5e6;
+            border-radius: 10px;
+            color: #e67e22;
+            font-size: 0.92em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .countdown-num {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #e74c3c;
+            min-width: 70px;
+        }
+
+        .buyer-info {
+            color: #95a5a6;
+            font-size: 0.85em;
+            margin-bottom: 16px;
+        }
+
+        .paywall-guarantee {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .guarantee-item {
+            color: #95a5a6;
+            font-size: 0.82em;
+        }
+
+        .paywall-note {
+            color: #b2bec3;
+            font-size: 0.78em;
+            margin-top: 18px;
+            line-height: 1.6;
+        }
+
+        /* 弹窗 */
+        .qrcode-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qrcode-modal.show { display: flex; }
+
+        .qrcode-content {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            max-width: 380px;
+            width: 92%;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .qrcode-content h3 {
+            margin-bottom: 16px;
+            color: #2d3436;
+            font-size: 1.2em;
+        }
+
+        .qrcode-content p {
+            color: #636e72;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .qrcode-placeholder {
+            width: 220px; height: 220px;
+            background: #f0fdf4;
+            border: 2px solid #d1fae5;
+            border-radius: 12px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 12px; right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #b2bec3;
+        }
+
+        .modal-price {
+            color: #e74c3c;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin: 4px 0;
+        }
+
+        .verify-steps {
+            background: #f0fdf4;
+            border-radius: 10px;
+            padding: 14px;
+            margin: 14px 0;
+            text-align: left;
+        }
+
+        .verify-steps .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 5px 0;
+            font-size: 0.85em;
+            color: #2d3436;
+            line-height: 1.5;
+        }
+
+        .verify-steps .step-num {
+            background: #10b981;
+            color: white;
+            min-width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        .verify-input-group { margin: 14px 0; }
+
+        .verify-input-group label {
+            display: block;
+            color: #2d3436;
+            font-size: 0.88em;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .verify-input {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid #d1fae5;
+            border-radius: 10px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s;
+            text-align: center;
+        }
+
+        .verify-input:focus { border-color: #10b981; }
+
+        .verify-input-hint {
+            color: #b2bec3;
+            font-size: 0.75em;
+            margin-top: 4px;
+        }
+
+        .confirm-paid-btn {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .confirm-paid-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .confirm-paid-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .verify-error {
+            color: #e74c3c;
+            font-size: 0.85em;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .verify-waiting {
+            color: #10b981;
+            font-size: 0.95em;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .verify-waiting .wait-spinner {
+            width: 30px; height: 30px;
+            border: 3px solid #d1fae5;
+            border-top: 3px solid #10b981;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        /* 结果页 */
+        .result-page { display: none; }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .result-type-icon {
+            font-size: 4em;
+            margin-bottom: 12px;
+        }
+
+        .result-type-name {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 6px;
+        }
+
+        .result-type-subtitle {
+            color: #10b981;
+            font-size: 1.05em;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .result-type-quote {
+            background: #f0fdf4;
+            border-left: 3px solid #10b981;
+            padding: 12px 18px;
+            color: #2d3436;
+            font-size: 0.95em;
+            font-style: italic;
+            border-radius: 0 10px 10px 0;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .result-card {
+            background: #f0fdf4;
+            border-radius: 16px;
+            padding: 26px;
+            margin-bottom: 20px;
+            border: 1px solid #d1fae5;
+        }
+
+        .result-card h3 {
+            color: #2d3436;
+            margin-bottom: 16px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .result-card p {
+            color: #2d3436;
+            line-height: 1.9;
+            font-size: 0.95em;
+        }
+
+        .traits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .trait-item {
+            background: white;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 1px solid #d1fae5;
+            color: #2d3436;
+            font-size: 0.92em;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .behavior-list {
+            margin-top: 14px;
+        }
+
+        .behavior-item {
+            background: white;
+            padding: 14px 18px;
+            border-radius: 10px;
+            border: 1px solid #d1fae5;
+            margin-bottom: 8px;
+            color: #2d3436;
+            font-size: 0.93em;
+            line-height: 1.7;
+        }
+
+        .behavior-item:last-child { margin-bottom: 0; }
+
+        .behavior-item .label {
+            color: #10b981;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .compat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .compat-item {
+            background: white;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #d1fae5;
+        }
+
+        .compat-item .label {
+            font-size: 0.8em;
+            color: #95a5a6;
+            margin-bottom: 8px;
+        }
+
+        .compat-item .name {
+            color: #10b981;
+            font-weight: 600;
+            font-size: 1em;
+            margin-bottom: 4px;
+        }
+
+        .compat-item .reason {
+            color: #636e72;
+            font-size: 0.82em;
+            line-height: 1.5;
+        }
+
+        .advice-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 12px;
+        }
+
+        .advice-list li {
+            padding: 12px 0 12px 28px;
+            color: #2d3436;
+            line-height: 1.7;
+            font-size: 0.93em;
+            position: relative;
+            border-bottom: 1px dashed #d1fae5;
+        }
+
+        .advice-list li:last-child { border-bottom: none; }
+
+        .advice-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 22px;
+            width: 16px;
+            height: 2px;
+            background: #10b981;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover { transform: translateY(-2px); }
+
+        .home-btn {
+            background: none;
+            border: 2px solid #34d399;
+            color: #10b981;
+            padding: 12px 32px;
+            font-size: 0.95em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .home-btn:hover { background: #f0fdf4; }
+
+        .button-center {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 24px 18px; }
+            .start-page h1 { font-size: 1.6em; }
+            .question-text { font-size: 1.05em; }
+            .btn-group { flex-direction: column; }
+            .types-preview { grid-template-columns: repeat(3, 1fr); }
+            .traits-grid { grid-template-columns: 1fr; }
+            .compat-grid { grid-template-columns: 1fr; }
+            .result-type-name { font-size: 1.6em; }
+            .paywall-guarantee { gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 开始页 -->
+        <div class="start-page" id="startPage">
+            <div class="icon">📚</div>
+            <h1>测测你的学术人格</h1>
+            <p class="subtitle">学术圈生存指南<br>16种你可能就是的学术人格</p>
+
+            <div class="info-box">
+                <h4>关于这个测试</h4>
+                <p>每个搞学术的人都有自己独特的style。你是永远在鸽deadline的学术鸽子，还是任劳任怨的学术沙僧？是只发小果盘也能炫翻天的学术蝗虫，还是一鸣惊人的学术悟空？快来揭晓你的学术人格吧。</p>
+            </div>
+
+            <div class="types-preview">
+                <div class="type-preview-item">
+                    <div class="icon">🐦</div>
+                    <div class="name">学术鸽子</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🐌</div>
+                    <div class="name">学术沙僧</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🦗</div>
+                    <div class="name">学术蝗虫</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🐲</div>
+                    <div class="name">学术悟空</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🐷</div>
+                    <div class="name">学术八戒</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🦉</div>
+                    <div class="name">学术夜枭</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🐝</div>
+                    <div class="name">学术工蜂</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🦝</div>
+                    <div class="name">学术浣熊</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🐱</div>
+                    <div class="name">薛定谔</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🐢</div>
+                    <div class="name">学术海龟</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🦅</div>
+                    <div class="name">学术老鹰</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🐬</div>
+                    <div class="name">学术海豚</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🦊</div>
+                    <div class="name">九尾狐</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🐼</div>
+                    <div class="name">学术国宝</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🦄</div>
+                    <div class="name">独角兽</div>
+                </div>
+                <div class="type-preview-item">
+                    <div class="icon">🐺</div>
+                    <div class="name">学术孤狼</div>
+                </div>
+            </div>
+
+            <p style="color:#636e72;font-size:0.9em;margin-bottom:24px;line-height:1.6;">
+                共 20 道题目，预计用时 3 分钟<br>
+                请根据你的真实状态作答
+            </p>
+
+            <button class="start-btn" onclick="startQuiz()">开始测试</button>
+
+            <p class="disclaimer">
+                本测试纯属娱乐，仅供学术圈人士轻松一下<br>
+                所有人格都很可爱，没有好坏之分
+            </p>
+        </div>
+
+        <!-- 答题页 -->
+        <div class="question-page" id="questionPage">
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="progressText">第 1 / 20 题</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div id="questionArea" class="fade-in">
+                <span class="dim-tag" id="dimTag">时间管理</span>
+                <p class="question-scenario" id="questionScenario"></p>
+                <div class="question-text" id="questionText"></div>
+                <div class="options" id="optionsArea"></div>
+                <div class="auto-next-hint" id="autoNextHint">已选择，正在跳转下一题...</div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-prev" id="prevBtn" onclick="prevQuestion()" disabled>上一题</button>
+                <button class="btn btn-next" id="nextBtn" onclick="nextQuestion()" disabled>下一题</button>
+            </div>
+        </div>
+
+        <!-- 加载页 -->
+        <div class="loading-page" id="loadingPage">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">正在分析你的学术人格...</div>
+        </div>
+
+        <div class="paywall-page" id="paywallPage"></div>
+        <div class="result-page" id="resultPage"></div>
+    </div>
+
+    <script>
+        // ==================== 维度定义 ====================
+        // 4个维度的二元对立：
+        // T: time     (P=Procrastinator 拖延 / D=Disciplined 自律)
+        // W: work     (S=Slow 慢工细活 / F=Fast 快速产出)
+        // C: connect  (I=Independent 独立 / G=Group 合作)
+        // M: motive   (Q=Quality 质量优先 / E=Energy 数量优先)
+
+        const dimNames = {
+            time: "时间管理",
+            work: "工作风格",
+            connect: "社交模式",
+            motive: "学术追求"
+        };
+
+        const questionsRaw = [
+            // === 时间管理（5题）=== T: P(拖延)+ / D(自律)+
+            { dim: "time", scenario: "导师说下周组会汇报", q: "你的反应是？", options: [
+                { text: "今天就开始准备，做个完美的PPT", scores: { D: 3 } },
+                { text: "周末开始弄，时间正好", scores: { D: 1, P: 1 } },
+                { text: "汇报前一天晚上通宵搞定", scores: { P: 3 } },
+                { text: "汇报当天早上爆肝赶出来", scores: { P: 4 } }
+            ]},
+            { dim: "time", scenario: "面对论文deadline", q: "你最常说的话是？", options: [
+                { text: "时间还早，先去摸个鱼", scores: { P: 3 } },
+                { text: "再改一遍，还能更好", scores: { D: 2, S: 1 } },
+                { text: "我已经写完投出去了", scores: { D: 3, F: 1 } },
+                { text: "啊？deadline是今天？", scores: { P: 4 } }
+            ]},
+            { dim: "time", scenario: "导师催进度时", q: "你最真实的状态是？", options: [
+                { text: "其实已经完成大半，正在打磨", scores: { D: 3 } },
+                { text: "刚刚开始，但马上能赶出来", scores: { P: 2, F: 1 } },
+                { text: "今天写明天写后天写……总之快了", scores: { P: 3 } },
+                { text: "为了应付导师，先编一个进度", scores: { P: 3 } }
+            ]},
+            { dim: "time", scenario: "你的科研日常作息是", q: "更接近哪种？", options: [
+                { text: "早睡早起，规律到像高中生", scores: { D: 3 } },
+                { text: "晚上效率最高，凌晨灵感爆发", scores: { P: 1 } },
+                { text: "完全没规律，看心情和ddl", scores: { P: 3 } },
+                { text: "实验室常驻，朝九晚九", scores: { D: 2, F: 2 } }
+            ]},
+            { dim: "time", scenario: "完成一个任务后", q: "你会？", options: [
+                { text: "立刻开始下一个，停不下来", scores: { D: 2, F: 2 } },
+                { text: "好好奖励自己，休息几天", scores: { P: 1 } },
+                { text: "拖个几天再看，反正没急事", scores: { P: 3 } },
+                { text: "回顾总结，列出改进点", scores: { D: 3 } }
+            ]},
+
+            // === 工作风格（5题）=== W: S(慢工)+ / F(快速)+
+            { dim: "work", scenario: "写论文时", q: "你的风格是？", options: [
+                { text: "每个字都要反复推敲", scores: { S: 3 } },
+                { text: "先把想法快速写出来，再慢慢改", scores: { F: 2, S: 1 } },
+                { text: "一气呵成，写完就投", scores: { F: 3 } },
+                { text: "经常卡在某一段，进度龟速", scores: { S: 2 } }
+            ]},
+            { dim: "work", scenario: "对待实验数据", q: "你的态度是？", options: [
+                { text: "反复验证，确保万无一失", scores: { S: 3, Q: 2 } },
+                { text: "差不多就行，赶紧出结果", scores: { F: 3, E: 2 } },
+                { text: "数据不好看？换个角度看看", scores: { F: 1 } },
+                { text: "做大量实验，用数据说话", scores: { S: 1, F: 1, Q: 2 } }
+            ]},
+            { dim: "work", scenario: "做PPT汇报", q: "你通常？", options: [
+                { text: "精雕细琢，每张幻灯片都要美观", scores: { S: 3, Q: 1 } },
+                { text: "套个模板，内容清晰就行", scores: { F: 3 } },
+                { text: "提前几天准备，反复演练", scores: { D: 2, S: 1 } },
+                { text: "汇报前一晚速成，靠口才", scores: { F: 2, P: 2 } }
+            ]},
+            { dim: "work", scenario: "读文献的方式是", q: "哪种？", options: [
+                { text: "精读，每篇都做详细笔记", scores: { S: 3, Q: 1 } },
+                { text: "扫读，抓住核心观点就行", scores: { F: 3, E: 1 } },
+                { text: "看摘要，需要时再深读", scores: { F: 2 } },
+                { text: "看到感兴趣的就深挖一下", scores: { S: 1, F: 1 } }
+            ]},
+            { dim: "work", scenario: "写文章遇到瓶颈", q: "你会？", options: [
+                { text: "停下来仔细思考，找到突破口", scores: { S: 3, Q: 2 } },
+                { text: "先放放，换个任务做", scores: { F: 1, P: 1 } },
+                { text: "硬刚到底，今天不写完不睡", scores: { F: 1, D: 2 } },
+                { text: "找师兄师姐或导师讨论", scores: { Q: 1 } }
+            ]},
+
+            // === 社交模式（5题）=== C: I(独立)+ / G(合作)+
+            { dim: "connect", scenario: "组会讨论时", q: "你通常？", options: [
+                { text: "积极发言，分享自己的见解", scores: { G: 3 } },
+                { text: "安静听讲，做好笔记", scores: { I: 3 } },
+                { text: "只有被点名才说话", scores: { I: 2 } },
+                { text: "提问比发言多，喜欢追问", scores: { G: 2, Q: 1 } }
+            ]},
+            { dim: "connect", scenario: "学术会议上", q: "你是怎样的状态？", options: [
+                { text: "积极networking，加各种微信", scores: { G: 3 } },
+                { text: "认真听报告，不太社交", scores: { I: 3 } },
+                { text: "和同实验室的人扎堆", scores: { I: 1, G: 1 } },
+                { text: "看到大佬就主动上去打招呼", scores: { G: 3 } }
+            ]},
+            { dim: "connect", scenario: "做项目时", q: "你更倾向？", options: [
+                { text: "独立完成，自己掌控全局", scores: { I: 3 } },
+                { text: "团队合作，分工协作", scores: { G: 3 } },
+                { text: "看情况，喜欢的部分自己做", scores: { I: 1, G: 1 } },
+                { text: "和小伙伴一起头脑风暴", scores: { G: 3 } }
+            ]},
+            { dim: "connect", scenario: "实验室同门聚餐", q: "你会？", options: [
+                { text: "积极参加，是聚餐的活跃分子", scores: { G: 3 } },
+                { text: "勉强参加，吃完早走", scores: { I: 2 } },
+                { text: "找借口推掉，宁愿在工位", scores: { I: 3 } },
+                { text: "看心情，有时去有时不去", scores: { I: 1, G: 1 } }
+            ]},
+            { dim: "connect", scenario: "遇到学术问题", q: "你的第一反应是？", options: [
+                { text: "自己查文献、查资料解决", scores: { I: 3 } },
+                { text: "问师兄师姐或者同学", scores: { G: 3 } },
+                { text: "直接去找导师", scores: { G: 2 } },
+                { text: "在学术论坛或群里求助", scores: { G: 2 } }
+            ]},
+
+            // === 学术追求（5题）=== M: Q(质量)+ / E(数量)+
+            { dim: "motive", scenario: "对发论文的态度", q: "你更看重？", options: [
+                { text: "发顶刊，少而精", scores: { Q: 3 } },
+                { text: "多发几篇，量变引起质变", scores: { E: 3 } },
+                { text: "发什么不重要，重要的是想法", scores: { Q: 2 } },
+                { text: "够毕业要求就行，何必难为自己", scores: { E: 2, P: 1 } }
+            ]},
+            { dim: "motive", scenario: "看到师兄发了一篇小paper", q: "你的反应？", options: [
+                { text: "替他开心，多发是好事", scores: { E: 2, G: 1 } },
+                { text: "我也得抓紧搞一个出来", scores: { E: 2 } },
+                { text: "小果盘也值得发个朋友圈炫一下", scores: { E: 3 } },
+                { text: "还是冲顶刊吧，小paper意义不大", scores: { Q: 3 } }
+            ]},
+            { dim: "motive", scenario: "做研究的动力是", q: "更接近哪个？", options: [
+                { text: "真心热爱，享受探索过程", scores: { Q: 3 } },
+                { text: "为了毕业和找工作", scores: { E: 2 } },
+                { text: "想做出有影响力的成果", scores: { Q: 2 } },
+                { text: "不知道为啥，反正在做了", scores: { P: 2 } }
+            ]},
+            { dim: "motive", scenario: "对待研究方向", q: "你是？", options: [
+                { text: "认准一个方向深耕到底", scores: { Q: 3, I: 1 } },
+                { text: "什么热门做什么", scores: { E: 3 } },
+                { text: "跨学科多个方向同时进行", scores: { E: 2, F: 1 } },
+                { text: "导师让做什么就做什么", scores: { G: 1 } }
+            ]},
+            { dim: "motive", scenario: "理想中的自己", q: "学术上想成为？", options: [
+                { text: "学术大牛，发顶刊获大奖", scores: { Q: 3, D: 1 } },
+                { text: "高产学者，著作等身", scores: { E: 3 } },
+                { text: "跨界达人，多领域开花", scores: { E: 2, G: 1 } },
+                { text: "顺利毕业找个好工作", scores: { E: 1, P: 1 } }
+            ]}
+        ];
+
+        // ==================== 16种学术人格 ====================
+        // 每种人格根据4个维度的倾向匹配：T-W-C-M
+        // 例如：PSIQ = 拖延+慢工+独立+质量优先
+        const typeData = {
+            "PSIQ": { // 拖延+慢工+独立+质量 → 学术鸽子
+                key: "PSIQ", name: "学术鸽子", subtitle: "鸽王本王，名声在外",
+                icon: "🐦", quote: "我下周一定开始写",
+                desc: "你是学术圈著名的鸽子选手，鸽deadline、鸽导师、鸽合作者，鸽鸽鸽到天荒地老。但奇怪的是，你的成果一旦出来质量还挺高，这让大家又爱又恨。",
+                personality: "你不是不努力，你只是有自己独特的节奏。你需要灵感和情绪都到位才能进入状态，而这两个东西恰好都不太可控。你内心其实有很高的标准，所以才会一直拖延——因为你害怕做出来的东西不够好。当你真正开始动手时，往往能做出让自己满意的成果。学会和你的拖延和解，与自己温柔相处。",
+                traits: ["完美主义", "情绪驱动", "独立思考", "质量至上", "深度工作", "灵感重要"],
+                behaviors: [
+                    { label: "最常说", content: "明天一定开始（说了两个月）" },
+                    { label: "最擅长", content: "在最后一刻爆发出惊人的战斗力" },
+                    { label: "最害怕", content: "被催进度的微信和邮件" },
+                    { label: "最快乐", content: "看到自己拖延的工作终于完成了" }
+                ],
+                bestPartner: { name: "学术沙僧", reason: "他会推着你按时完成任务" },
+                worstPartner: { name: "学术八戒", reason: "两个人会一起摆烂" },
+                advice: [
+                    "试着把大任务拆成小任务，降低开始的难度",
+                    "给自己设置一些小奖励，完成阶段性目标后犒劳自己",
+                    "找一个监督者，互相督促进度",
+                    "不要追求完美的开始，先动手再说"
+                ]
+            },
+            "DSGQ": { // 自律+慢工+合作+质量 → 学术沙僧
+                key: "DSGQ", name: "学术沙僧", subtitle: "实验室的脊梁",
+                icon: "🐌", quote: "师兄说什么就是什么",
+                desc: "你是实验室不可或缺的存在，任劳任怨、踏实可靠。从打扫卫生到帮师兄师姐处理琐事，你都默默承担。你的存在让整个团队都能高效运转。",
+                personality: "你性格温和、谦逊踏实，是团队的粘合剂。你不擅长抢风头，但每一份贡献都被大家看在眼里。你做事认真负责，从不偷懒，是导师最放心的学生。虽然你有时会觉得自己的努力没有被充分认可，但要相信，你的踏实和善良终将得到回报。你也要学着为自己争取一些机会，你值得被看见。",
+                traits: ["踏实可靠", "团队精神", "认真负责", "善解人意", "默默付出", "执行力强"],
+                behaviors: [
+                    { label: "最常说", content: "好的，我来做" },
+                    { label: "最擅长", content: "把混乱的事务整理得井井有条" },
+                    { label: "最害怕", content: "让团队失望" },
+                    { label: "最快乐", content: "项目顺利完成，团队一起庆祝" }
+                ],
+                bestPartner: { name: "学术悟空", reason: "他冲在前，你稳在后，绝配" },
+                worstPartner: { name: "学术蝗虫", reason: "你的努力可能被他抢功" },
+                advice: [
+                    "学会拒绝一些不属于你的任务",
+                    "适当展示自己的成果，让大家看到你的价值",
+                    "为自己的职业发展做一些规划",
+                    "记住：被需要不等于被珍惜，要学会爱自己"
+                ]
+            },
+            "DFGE": { // 自律+快速+合作+数量 → 学术蝗虫
+                key: "DFGE", name: "学术蝗虫", subtitle: "小果盘炫翻天",
+                icon: "🦗", quote: "又水了一篇，开心",
+                desc: "你是发文章的快手，专精小果盘（小成果）的高效产出。一年发个十几篇不在话下，朋友圈炫得飞起。虽然篇篇都不是顶刊，但架不住数量多啊。",
+                personality: "你深谙学术圈的生存之道，知道在什么阶段需要做什么。你不追求一鸣惊人，而是脚踏实地地积累每一份成果。你的高效产出能力是别人羡慕不来的，这是你的天赋。但也要警惕在数量中迷失了对学术的初心，偶尔停下来想想：我做这些到底是为了什么？深度和广度同样重要。",
+                traits: ["高效产出", "策略清晰", "善用资源", "执行力强", "抗压能力", "目标明确"],
+                behaviors: [
+                    { label: "最常说", content: "这个数据还能再发一篇" },
+                    { label: "最擅长", content: "把一个工作切成多篇文章" },
+                    { label: "最害怕", content: "投稿被拒" },
+                    { label: "最快乐", content: "邮箱收到accept通知" }
+                ],
+                bestPartner: { name: "学术沙僧", reason: "他能帮你处理大量琐事" },
+                worstPartner: { name: "学术老鹰", reason: "理念差异太大，互看不顺眼" },
+                advice: [
+                    "偶尔停下来做一些有深度的研究",
+                    "数量积累后，尝试冲击高质量期刊",
+                    "保持对学术的好奇心，不要只为了发表",
+                    "你的高效是优势，但深度是未来的核心"
+                ]
+            },
+            "DFIE": { // 自律+快速+独立+数量 → 学术悟空
+                key: "DFIE", name: "学术悟空", subtitle: "天才型选手",
+                icon: "🐲", quote: "这个问题我有个想法",
+                desc: "你是学术圈的天才，思维敏捷、想法独到。你不按常理出牌，常常能想出别人想不到的解决方案。导师又爱又怕，因为你太有主见。",
+                personality: "你聪明、有创造力，是团队中的灵感源泉。你不喜欢被规则束缚，喜欢用自己的方式解决问题。你的独立和自信让你在学术上能够走出自己的路。但你也要学会与团队协作，再厉害的孙悟空也需要团队的支持才能取经成功。学会倾听不同的声音，你会变得更强大。",
+                traits: ["天才创意", "独立自信", "执行力强", "敢于挑战", "思维敏捷", "目标明确"],
+                behaviors: [
+                    { label: "最常说", content: "我觉得应该这样做" },
+                    { label: "最擅长", content: "提出颠覆性的想法" },
+                    { label: "最害怕", content: "被束缚在框架里" },
+                    { label: "最快乐", content: "想出绝妙的idea那一刻" }
+                ],
+                bestPartner: { name: "学术沙僧", reason: "他能稳稳承接你的天马行空" },
+                worstPartner: { name: "学术鸽子", reason: "他的拖延会让你抓狂" },
+                advice: [
+                    "学会与团队协作，单打独斗走不远",
+                    "适当尊重前人的工作和现有的规则",
+                    "把你的好idea落到实处，不要只停留在想法上",
+                    "记住：才华是天赋，谦逊是修养"
+                ]
+            },
+            "PFGE": { // 拖延+快速+合作+数量 → 学术八戒
+                key: "PFGE", name: "学术八戒", subtitle: "享受生活第一",
+                icon: "🐷", quote: "今天先休息，明天再说",
+                desc: "你信奉的是劳逸结合，论文当然要写，但人生苦短，享受生活更重要。你能在学术和生活间找到一个让自己舒服的平衡点，这种心态让很多人羡慕。",
+                personality: "你是个有趣的学术人，懂得享受生活，不会让学术压力把自己压垮。你心态好，看得开，不会为了一点小事钻牛角尖。你的人际关系也很好，因为你随和、不计较。这种佛系的态度其实是一种智慧，在卷生卷死的学术圈里反而能让你走得更远。当然，偶尔也要给自己加点油，毕竟人生还是需要一些追求的。",
+                traits: ["心态平和", "热爱生活", "随和友善", "懂得享受", "情绪稳定", "知足常乐"],
+                behaviors: [
+                    { label: "最常说", content: "差不多就行了" },
+                    { label: "最擅长", content: "在压力下保持快乐" },
+                    { label: "最害怕", content: "失去生活的乐趣" },
+                    { label: "最快乐", content: "吃饱睡好，论文也写完了" }
+                ],
+                bestPartner: { name: "学术工蜂", reason: "他能带动你前进的节奏" },
+                worstPartner: { name: "学术鸽子", reason: "你俩在一起会一起摆烂" },
+                advice: [
+                    "适度的努力会让你更有成就感",
+                    "给自己设定一些小目标，慢慢推进",
+                    "保持你的好心态，但也别放过机会",
+                    "享受生活和努力工作并不矛盾"
+                ]
+            },
+            "PFIQ": { // 拖延+快速+独立+质量 → 学术夜枭
+                key: "PFIQ", name: "学术夜枭", subtitle: "凌晨灵感大爆发",
+                icon: "🦉", quote: "白天和夜晚是两个我",
+                desc: "白天的你昏昏欲睡、效率低下，但到了晚上，特别是凌晨时分，你的大脑突然开始飞速运转。你的最好作品都是在万籁俱寂的深夜写出来的。",
+                personality: "你属于真正的夜猫子，生物钟和常人不同。白天你需要应付各种事务，所以效率不高，但夜晚的安静让你能够进入深度工作状态。你的思维在夜晚特别活跃，常常有意想不到的灵感。但长期熬夜对身体不好，建议你尝试调整作息，或者至少保证足够的睡眠时间。健康才是革命的本钱。",
+                traits: ["夜间高效", "灵感丰富", "独立工作", "深度思考", "创造力强", "节奏特殊"],
+                behaviors: [
+                    { label: "最常说", content: "等一下，让我写完这段" },
+                    { label: "最擅长", content: "凌晨3点写出绝妙的段落" },
+                    { label: "最害怕", content: "早上8点的会议" },
+                    { label: "最快乐", content: "深夜灵感如泉涌的时刻" }
+                ],
+                bestPartner: { name: "学术孤狼", reason: "都不需要白天社交，互不打扰" },
+                worstPartner: { name: "学术工蜂", reason: "作息完全相反" },
+                advice: [
+                    "尽量保证每天的总睡眠时间",
+                    "尝试把深度工作集中在你最高效的时段",
+                    "白天可以处理一些机械性的任务",
+                    "注意身体健康，定期体检"
+                ]
+            },
+            "DFGQ": { // 自律+快速+合作+质量 → 学术工蜂
+                key: "DFGQ", name: "学术工蜂", subtitle: "实验室常驻劳模",
+                icon: "🐝", quote: "实验室就是我家",
+                desc: "你每天最早到实验室，最晚离开。你的工位是整个实验室最常亮的灯。你不是在做实验，就是在去做实验的路上。劳模就是你。",
+                personality: "你是科研路上最勤奋的那一个，把绝大部分时间都奉献给了实验室。你的努力是肉眼可见的，导师特别喜欢你这样的学生。你的高效产出和稳定贡献是团队的中坚力量。但要注意身体，过度劳累会损害健康。也要给自己留一些生活的空间，科研是马拉松不是短跑。",
+                traits: ["勤奋努力", "高效产出", "团队贡献", "执行力强", "稳定可靠", "目标坚定"],
+                behaviors: [
+                    { label: "最常说", content: "等我做完这个实验" },
+                    { label: "最擅长", content: "连续奋战十几个小时" },
+                    { label: "最害怕", content: "实验设备坏掉" },
+                    { label: "最快乐", content: "看到实验结果符合预期" }
+                ],
+                bestPartner: { name: "学术老鹰", reason: "你的努力配合他的眼光，强强联合" },
+                worstPartner: { name: "学术八戒", reason: "你的节奏会让他喘不过气" },
+                advice: [
+                    "适当休息，身体是革命的本钱",
+                    "培养一些工作之外的兴趣爱好",
+                    "学会高效工作，不要光靠时长堆",
+                    "记住：可持续的努力胜过短期的爆发"
+                ]
+            },
+            "PSGE": { // 拖延+慢工+合作+数量 → 学术浣熊
+                key: "PSGE", name: "学术浣熊", subtitle: "数据洗洗更健康",
+                icon: "🦝", quote: "这个数据再洗洗就好了",
+                desc: "你深谙数据处理的艺术，原始数据在你手中能变出各种花样。你不是在造假，只是在让数据呈现得更加美观和符合预期。你的P值总是恰到好处地小于0.05。",
+                personality: "你聪明、灵活，懂得在规则的边界游走。你知道学术圈的潜规则，也懂得如何让自己的工作显得更出色。你的这些技巧能让你在短期内取得不错的成绩，但要警惕，学术诚信是底线，不能跨越。把你的聪明用在真正的研究上，你会有更大的成就。记住，真正打动人的，永远是真实和深刻的工作。",
+                traits: ["灵活变通", "技巧丰富", "理解规则", "适应力强", "数据敏感", "高效产出"],
+                behaviors: [
+                    { label: "最常说", content: "我再优化一下数据呈现" },
+                    { label: "最擅长", content: "让数据讲出动人的故事" },
+                    { label: "最害怕", content: "被质疑数据真实性" },
+                    { label: "最快乐", content: "找到完美呈现数据的方式" }
+                ],
+                bestPartner: { name: "学术九尾狐", reason: "你们都擅长多线操作" },
+                worstPartner: { name: "学术海龟", reason: "你的快节奏让他无法接受" },
+                advice: [
+                    "坚守学术诚信的底线，这是不能跨越的红线",
+                    "把聪明才智用在真正的研究上",
+                    "学习更扎实的研究方法",
+                    "真正的好工作不需要刻意美化"
+                ]
+            },
+            "PSIE": { // 拖延+慢工+独立+数量 → 学术薛定谔
+                key: "PSIE", name: "学术薛定谔", subtitle: "进度永远叠加态",
+                icon: "🐱", quote: "进度怎么说呢……",
+                desc: "你的论文进度是个量子叠加态——在被观测（被导师问）之前，它既完成了又没完成。你自己也搞不清楚到底进展到哪一步了，因为你的大脑里同时跑着好几个进度条。",
+                personality: "你是个有趣的存在，思维跳跃、行动随性。你同时在做好几件事，每件事都有一点点进展，但没有一件能让你说清楚到底完成了多少。你的状态让导师摸不着头脑，但你自己活得挺自在。你需要的不是更多的工作，而是更清晰的优先级和更明确的目标。试试每天列一个三件事的清单，先把最重要的那个做完。",
+                traits: ["思维跳跃", "随性自由", "多线并行", "灵感丰富", "适应力强", "独立思考"],
+                behaviors: [
+                    { label: "最常说", content: "差不多……大概……应该" },
+                    { label: "最擅长", content: "同时开启五个项目" },
+                    { label: "最害怕", content: "被要求量化进度" },
+                    { label: "最快乐", content: "突然发现某件事意外完成了" }
+                ],
+                bestPartner: { name: "学术沙僧", reason: "他能帮你梳理混乱的进度" },
+                worstPartner: { name: "学术老鹰", reason: "他无法忍受你的模糊" },
+                advice: [
+                    "每天列出三件最重要的事，优先完成",
+                    "学习使用项目管理工具",
+                    "一次专注做好一件事，再开始下一件",
+                    "定期复盘自己的进度，让自己清晰"
+                ]
+            },
+            "DSIQ": { // 自律+慢工+独立+质量 → 学术海龟
+                key: "DSIQ", name: "学术海龟", subtitle: "慢工出细活",
+                icon: "🐢", quote: "再打磨一下",
+                desc: "你做研究的速度像海龟一样慢，但每一步都走得无比扎实。别人发了十篇你才发一篇，但你那一篇可能就是这个领域的经典之作。你相信时间会证明一切。",
+                personality: "你是真正的学者型选手，追求深度和质量胜过速度和数量。你不会被外界的浮躁所影响，始终保持自己的节奏。你的研究往往需要很长时间才能完成，但完成的作品质量极高，经得起时间的检验。你需要面对的挑战是：在快节奏的学术圈里，如何让你的深度工作得到应有的认可。学会适当展示你的工作，让更多人看到你的价值。",
+                traits: ["深度思考", "扎实严谨", "追求卓越", "耐心十足", "独立工作", "经典造就"],
+                behaviors: [
+                    { label: "最常说", content: "我觉得还不够好" },
+                    { label: "最擅长", content: "做出经得起时间检验的工作" },
+                    { label: "最害怕", content: "被迫赶时间出粗糙的作品" },
+                    { label: "最快乐", content: "完成一个让自己满意的研究" }
+                ],
+                bestPartner: { name: "学术老鹰", reason: "他能欣赏你工作的深度" },
+                worstPartner: { name: "学术蝗虫", reason: "你看不惯他的快餐式研究" },
+                advice: [
+                    "适当加快节奏，毕竟时间也是一种成本",
+                    "学会推广自己的工作，让更多人看到",
+                    "在追求完美的同时，也要懂得放手",
+                    "你的坚持值得，时间会证明一切"
+                ]
+            },
+            "DSIQ_2": { // 自律+慢工+独立+质量（强Q） → 学术老鹰
+                key: "DSIQ_2", name: "学术老鹰", subtitle: "顶刊狙击手",
+                icon: "🦅", quote: "不发顶刊，宁可不发",
+                desc: "你的目标永远是顶刊，从来不屑于发那些小杂志。你像老鹰一样目光锐利，专注于最重要的目标。一旦出手，必然是高质量的工作。",
+                personality: "你有极高的学术追求和严格的自我要求。你的眼光毒辣，能一眼看出研究的价值和高度。你不会浪费时间在低水平的工作上，宁愿花几年时间做一个真正有影响力的研究。你的存在让团队都向更高的标准看齐。但要注意不要给自己太大压力，也要尊重不同的研究风格。学术圈需要多样性，每种风格都有它的价值。",
+                traits: ["眼光高远", "追求卓越", "目标坚定", "独立思考", "影响力强", "严格自律"],
+                behaviors: [
+                    { label: "最常说", content: "这个工作够不上Nature" },
+                    { label: "最擅长", content: "做出有影响力的顶刊工作" },
+                    { label: "最害怕", content: "工作被认为没有创新性" },
+                    { label: "最快乐", content: "顶刊接收的那一刻" }
+                ],
+                bestPartner: { name: "学术工蜂", reason: "他的努力配合你的眼光" },
+                worstPartner: { name: "学术蝗虫", reason: "理念差异太大" },
+                advice: [
+                    "降低对自己的过度要求，避免焦虑",
+                    "尊重不同风格的研究者",
+                    "保持身心健康，学术是长跑",
+                    "享受研究的过程，而不只是结果"
+                ]
+            },
+            "DFGQ_2": { // 自律+快速+合作+质量 → 学术海豚
+                key: "DFGQ_2", name: "学术海豚", subtitle: "跨学科社交达人",
+                icon: "🐬", quote: "我们可以合作一下",
+                desc: "你聪明、友善、社交能力一流。你善于在不同学科之间搭建桥梁，跨学科合作做得风生水起。你的合作者遍布各个领域，朋友圈比谁都广。",
+                personality: "你是学术圈的明星，聪明又有亲和力。你能在不同的学科和团队之间游刃有余，是天生的合作者。你的视野开阔，能够看到不同领域之间的联系。这种能力在当今学术界非常珍贵。但要注意不要过度分散精力，找到自己真正热爱的方向深耕。同时，在合作中也要保护好自己的核心贡献。",
+                traits: ["社交达人", "跨界融合", "视野开阔", "亲和友善", "合作精神", "灵活高效"],
+                behaviors: [
+                    { label: "最常说", content: "我认识一个人，可以介绍给你" },
+                    { label: "最擅长", content: "促成跨学科合作" },
+                    { label: "最害怕", content: "被孤立或排斥" },
+                    { label: "最快乐", content: "促成一次成功的合作" }
+                ],
+                bestPartner: { name: "学术悟空", reason: "他的创意配合你的资源" },
+                worstPartner: { name: "学术孤狼", reason: "他不喜欢你的热情社交" },
+                advice: [
+                    "找到一个核心方向深耕，不要过度分散",
+                    "在合作中明确自己的贡献和权益",
+                    "保留独立思考的能力，不要被他人影响",
+                    "你的社交能力是优势，用好它"
+                ]
+            },
+            "PFIE": { // 拖延+快速+独立+数量 → 学术九尾狐
+                key: "PFIE", name: "学术九尾狐", subtitle: "多线并行高手",
+                icon: "🦊", quote: "我同时在做五个项目",
+                desc: "你像九尾狐一样有九条尾巴，每条尾巴上都挂着一个项目。你能同时推进多个研究方向，虽然每个都不是最快的，但加起来你的产出非常可观。",
+                personality: "你聪明、灵活，能够同时处理多个任务。你的大脑像一台多线程的计算机，能够在不同的项目之间切换自如。这种能力让你的总产出非常高。但同时也面临着精力分散的风险，每个项目都做到深度不够。建议你定期评估你的项目，砍掉一些低优先级的，把精力集中在最重要的几个上。少即是多。",
+                traits: ["多线并行", "聪明灵活", "适应力强", "高效切换", "独立工作", "产出可观"],
+                behaviors: [
+                    { label: "最常说", content: "等等，我先处理另一个" },
+                    { label: "最擅长", content: "同时推进多个项目" },
+                    { label: "最害怕", content: "项目突然集中爆发" },
+                    { label: "最快乐", content: "多个项目同时收获成果" }
+                ],
+                bestPartner: { name: "学术海豚", reason: "你们都擅长多线操作" },
+                worstPartner: { name: "学术海龟", reason: "节奏完全不一致" },
+                advice: [
+                    "学会聚焦，砍掉一些不重要的项目",
+                    "用工具管理你的多个项目",
+                    "在每个项目上都投入足够的深度",
+                    "记住：少即是多，专注产生力量"
+                ]
+            },
+            "DSGQ_2": { // 自律+慢工+合作+质量 → 学术国宝
+                key: "DSGQ_2", name: "学术国宝", subtitle: "大佬罩着的幸运儿",
+                icon: "🐼", quote: "我导师说……",
+                desc: "你是导师重点培养的对象，资源和机会都向你倾斜。你的研究方向是导师精心规划的，你的合作者是导师亲自介绍的。你像国宝一样被精心呵护着。",
+                personality: "你很幸运，有一个好导师为你保驾护航。你的学术之路相对顺畅，能够接触到最好的资源和机会。这种背景让你有了一个不错的起点。但要注意，过度依赖导师不利于你的成长，要学会独立思考和决策。同时，珍惜你的机会，做出对得起这份幸运的成绩。未来某一天，你也要成为别人的国宝守护者。",
+                traits: ["机会优渥", "资源丰富", "团队支持", "稳步前进", "学习能力强", "前途光明"],
+                behaviors: [
+                    { label: "最常说", content: "我和导师商量一下" },
+                    { label: "最擅长", content: "把握导师给的好机会" },
+                    { label: "最害怕", content: "辜负导师的期待" },
+                    { label: "最快乐", content: "得到导师的肯定" }
+                ],
+                bestPartner: { name: "学术海豚", reason: "他能扩展你的人脉网络" },
+                worstPartner: { name: "学术孤狼", reason: "你们的工作方式完全不同" },
+                advice: [
+                    "培养独立思考和独立工作的能力",
+                    "珍惜你的机会，做出有分量的工作",
+                    "学习如何成为未来的导师",
+                    "感恩，并把这份幸运传递下去"
+                ]
+            },
+            "DFIQ": { // 自律+快速+独立+质量 → 学术独角兽
+                key: "DFIQ", name: "学术独角兽", subtitle: "神秘的天选之子",
+                icon: "🦄", quote: "好像也没怎么努力？",
+                desc: "你就是传说中的天选之子。别人苦哈哈做几年才能发一篇的工作，你好像随便弄弄就出来了。你的脑子里似乎有别人没有的东西，让人羡慕又嫉妒。",
+                personality: "你是真正的天才型选手，似乎拥有别人没有的天赋。你能轻松理解复杂的概念，能快速找到问题的核心。在别人看来你毫不费力，其实你也在默默努力，只是不让人看见。你的存在激励着身边的人，也让一些人感到压力。要保持低调和谦逊，不要让你的才华成为别人的负担。把你的天赋用来推动整个领域的进步。",
+                traits: ["天赋异禀", "高效产出", "独立思考", "影响力强", "前途光明", "学习能力"],
+                behaviors: [
+                    { label: "最常说", content: "其实挺简单的" },
+                    { label: "最擅长", content: "用最少的时间做出最好的工作" },
+                    { label: "最害怕", content: "被过度关注或捧杀" },
+                    { label: "最快乐", content: "解决一个困扰大家的难题" }
+                ],
+                bestPartner: { name: "学术沙僧", reason: "他能默默支持你的工作" },
+                worstPartner: { name: "学术蝗虫", reason: "你们的价值观差异很大" },
+                advice: [
+                    "保持谦逊，不要让天赋成为骄傲的资本",
+                    "把你的能力用来帮助他人",
+                    "记住，天赋之外还需要持续的努力",
+                    "享受你的幸运，但也要回馈这份幸运"
+                ]
+            },
+            "DSIE": { // 自律+慢工+独立+数量（强I） → 学术孤狼
+                key: "DSIE", name: "学术孤狼", subtitle: "独立科研一匹狼",
+                icon: "🐺", quote: "一个人挺好",
+                desc: "你享受独自做研究的状态，不喜欢热闹的社交，也不爱团队合作。你的工作完全独立完成，从选题到投稿，全程一个人。你的世界很安静，但也很专注。",
+                personality: "你是真正独立的研究者，不依赖任何人也不被任何人束缚。你的思考深度和专注程度是大多数人无法企及的。在这个越来越强调合作的时代，你的独立显得格外珍贵。但完全的孤立也会让你错过一些机会和不同的视角。试着偶尔走出舒适圈，和同行交流一下，你可能会有意想不到的收获。独立不等于孤独，开放也不会削弱你的独立性。",
+                traits: ["独立自主", "深度思考", "自给自足", "专注执着", "不随波逐流", "意志坚定"],
+                behaviors: [
+                    { label: "最常说", content: "我自己来吧" },
+                    { label: "最擅长", content: "独自完成完整的研究" },
+                    { label: "最害怕", content: "被迫参加冗长的会议" },
+                    { label: "最快乐", content: "独自专注工作的时光" }
+                ],
+                bestPartner: { name: "学术夜枭", reason: "都不需要社交，互不打扰" },
+                worstPartner: { name: "学术海豚", reason: "他的热情让你窒息" },
+                advice: [
+                    "偶尔参加一些学术交流，开拓视野",
+                    "找一两个能深度交流的同行",
+                    "适当合作能让你的工作影响更大",
+                    "保持独立的同时，保持开放"
+                ]
+            }
+        };
+
+        // 类型映射函数
+        function getTypeKey(scores) {
+            // 根据四个维度的得分判断倾向
+            const T = scores.D >= scores.P ? 'D' : 'P';
+            const W = scores.F >= scores.S ? 'F' : 'S';
+            const C = scores.G >= scores.I ? 'G' : 'I';
+            const M = scores.Q >= scores.E ? 'Q' : 'E';
+
+            // 直接拼接四个字母作为基础key
+            const baseKey = T + W + C + M;  // 例如 DFGQ
+
+            // 简化映射：找匹配度最高的类型
+            const allKeys = Object.keys(typeData);
+            let bestMatch = allKeys[0];
+            let bestScore = -1;
+
+            allKeys.forEach(key => {
+                // 提取该类型的特征字母（去掉_2等后缀）
+                const cleanKey = key.split('_')[0];
+                let matchCount = 0;
+
+                // PSIQ → P-S-I-Q
+                const features = [cleanKey[0], cleanKey[1], cleanKey[2], cleanKey[3]];
+                const userTraits = [T, W, C, M];
+
+                features.forEach((f, i) => {
+                    if (f === userTraits[i]) matchCount++;
+                });
+
+                if (matchCount > bestScore) {
+                    bestScore = matchCount;
+                    bestMatch = key;
+                }
+            });
+
+            // 如果有多个相同匹配度，根据最强维度选择
+            if (bestScore < 4) {
+                // 找差异最小的
+                const candidates = allKeys.filter(key => {
+                    const cleanKey = key.split('_')[0];
+                    let matchCount = 0;
+                    [cleanKey[0], cleanKey[1], cleanKey[2], cleanKey[3]].forEach((f, i) => {
+                        if (f === [T, W, C, M][i]) matchCount++;
+                    });
+                    return matchCount === bestScore;
+                });
+
+                if (candidates.length > 1) {
+                    // 根据最强得分维度判断
+                    const maxDimScore = Math.max(scores.D, scores.P, scores.F, scores.S, scores.G, scores.I, scores.Q, scores.E);
+                    bestMatch = candidates[Math.floor(Math.random() * candidates.length)];
+                    // 或者根据具体得分选择第一个
+                    bestMatch = candidates[0];
+                }
+            }
+
+            return bestMatch;
+        }
+
+        // ==================== 全局变量 ====================
+        let currentQuestion = 0;
+        let answers = [];
+        let questions = [];
+        let autoNextTimer = null;
+        let countdownInterval = null;
+        let calculatedResult = null;
+
+        function shuffleArray(arr) {
+            const s = [...arr];
+            for (let i = s.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [s[i], s[j]] = [s[j], s[i]];
+            }
+            return s;
+        }
+
+        function initQuestions() {
+            const byDim = { time: [], work: [], connect: [], motive: [] };
+            questionsRaw.forEach(q => byDim[q.dim].push(q));
+
+            Object.keys(byDim).forEach(d => { byDim[d] = shuffleArray(byDim[d]); });
+
+            questions = [
+                ...byDim.time,
+                ...byDim.work,
+                ...byDim.connect,
+                ...byDim.motive
+            ].map(q => ({
+                ...q,
+                options: shuffleArray(q.options.map(o => ({...o})))
+            }));
+        }
+
+        function startQuiz() {
+            initQuestions();
+            answers = new Array(questions.length).fill(undefined);
+            currentQuestion = 0;
+            document.getElementById('startPage').style.display = 'none';
+            document.getElementById('questionPage').style.display = 'block';
+            showQuestion(0);
+        }
+
+        function showQuestion(idx) {
+            const q = questions[idx];
+            document.getElementById('dimTag').textContent = dimNames[q.dim];
+            document.getElementById('questionScenario').textContent = q.scenario;
+            document.getElementById('questionText').textContent = q.q;
+            document.getElementById('progressText').textContent = `第 ${idx+1} / ${questions.length} 题`;
+            const pct = Math.round(idx / questions.length * 100);
+            document.getElementById('progressPercent').textContent = pct + '%';
+            document.getElementById('progressFill').style.width = pct + '%';
+
+            const area = document.getElementById('optionsArea');
+            area.innerHTML = '';
+
+            q.options.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = 'option' + (answers[idx] === i ? ' selected' : '');
+                div.innerHTML = `<div class="option-radio"></div><div class="option-text">${opt.text}</div>`;
+                div.onclick = () => selectOption(idx, i);
+                area.appendChild(div);
+            });
+
+            document.getElementById('prevBtn').disabled = idx === 0;
+            document.getElementById('nextBtn').textContent = idx === questions.length - 1 ? '查看结果' : '下一题';
+            document.getElementById('nextBtn').disabled = answers[idx] === undefined;
+            document.getElementById('autoNextHint').classList.remove('show');
+
+            const qa = document.getElementById('questionArea');
+            qa.classList.remove('fade-in');
+            void qa.offsetWidth;
+            qa.classList.add('fade-in');
+        }
+
+        function selectOption(qIdx, optIdx) {
+            if (autoNextTimer) { clearTimeout(autoNextTimer); autoNextTimer = null; }
+            const isFirst = answers[qIdx] === undefined;
+            answers[qIdx] = optIdx;
+            document.querySelectorAll('.option').forEach((el, i) => {
+                el.className = 'option' + (i === optIdx ? ' selected' : '');
+            });
+            document.getElementById('nextBtn').disabled = false;
+            if (isFirst && qIdx < questions.length - 1) {
+                document.getElementById('autoNextHint').classList.add('show');
+                autoNextTimer = setTimeout(() => {
+                    document.getElementById('autoNextHint').classList.remove('show');
+                    nextQuestion();
+                }, 600);
+            }
+        }
+
+        function nextQuestion() {
+            if (autoNextTimer) { clearTimeout(autoNextTimer); autoNextTimer = null; }
+            if (currentQuestion < questions.length - 1) { currentQuestion++; showQuestion(currentQuestion); }
+            else showLoading();
+        }
+
+        function prevQuestion() {
+            if (autoNextTimer) { clearTimeout(autoNextTimer); autoNextTimer = null; }
+            if (currentQuestion > 0) { currentQuestion--; showQuestion(currentQuestion); }
+        }
+
+        function showLoading() {
+            document.getElementById('questionPage').style.display = 'none';
+            document.getElementById('loadingPage').style.display = 'block';
+            setTimeout(() => { calculatedResult = calculateResult(); showPaywall(); }, 2500);
+        }
+
+        function calculateResult() {
+            const scores = { D: 0, P: 0, S: 0, F: 0, I: 0, G: 0, Q: 0, E: 0 };
+
+            answers.forEach((ans, i) => {
+                if (ans === undefined) return;
+                const opt = questions[i].options[ans];
+                if (opt.scores) {
+                    for (const [k, v] of Object.entries(opt.scores)) {
+                        scores[k] = (scores[k] || 0) + v;
+                    }
+                }
+            });
+
+            const typeKey = getTypeKey(scores);
+            const data = typeData[typeKey];
+
+            return { typeKey, scores, data };
+        }
+
+        // ==================== 付费墙 ====================
+        function showPaywall() {
+            document.getElementById('loadingPage').style.display = 'none';
+            const p = document.getElementById('paywallPage');
+            p.style.display = 'block';
+            p.classList.add('fade-in');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const buyers = Math.floor(Math.random() * 5000) + 25000;
+
+            p.innerHTML = `
+                <h2>测试完成</h2>
+                <p class="subtitle">你的学术人格已揭晓</p>
+
+                <div class="paywall-preview">
+                    <div class="preview-type-name">你的学术圈身份已确认</div>
+                    <div class="preview-desc">完整报告包含人格深度解读、行为特征、最佳搭档以及成长建议</div>
+                </div>
+
+                <div class="paywall-lock">🔒</div>
+                <p style="color:#2d3436;font-weight:500;font-size:1.05em;">解锁你的学术人格报告</p>
+
+                <div class="countdown-bar">
+                    <span>限时特惠倒计时</span>
+                    <span class="countdown-num" id="countdownTimer">14:59</span>
+                </div>
+
+                <div class="paywall-price">
+                    <span class="price-original">¥9.9</span>
+                    <span class="price-current">¥0.9</span>
+                    <span class="price-tag">限时特惠</span>
+                </div>
+
+                <p class="buyer-info">已有 <strong style="color:#10b981;">${buyers.toLocaleString()}</strong> 位学术圈人士解锁了报告</p>
+
+                <div class="paywall-features">
+                    <div class="feature-item"><span class="check-icon">✓</span><span>你的学术人格类型和经典语录</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>性格深度解读</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>核心特质与行为画像</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>最佳搭档与不合搭档分析</span></div>
+                    <div class="feature-item"><span class="check-icon">✓</span><span>学术成长建议</span></div>
+                </div>
+
+                <button class="pay-btn" onclick="showQRCode()">微信扫码支付 ¥0.9 查看报告</button>
+
+                <div class="paywall-guarantee">
+                    <span class="guarantee-item">安全支付</span>
+                    <span class="guarantee-item">即时查看</span>
+                    <span class="guarantee-item">趣味解读</span>
+                </div>
+
+                <p class="paywall-note">
+                    本测试纯属娱乐，仅供学术圈人士轻松一下<br>
+                    如有问题请联系客服微信：your_wechat_id
+                </p>
+
+                <div class="qrcode-modal" id="qrcodeModal">
+                    <div class="qrcode-content">
+                        <button class="close-modal" onclick="closeQRCode()">×</button>
+                        <h3>微信支付 ¥0.9</h3>
+
+                        <div style="background:#f0fdf4;border-radius:10px;padding:12px;margin-bottom:14px;text-align:left;">
+                            <div style="color:#10b981;font-weight:600;margin-bottom:6px;font-size:0.88em;">手机用户操作步骤</div>
+                            <div style="font-size:0.8em;color:#636e72;line-height:1.7;">
+                                ① 长按下方二维码保存图片<br>
+                                ② 打开微信「扫一扫」<br>
+                                ③ 点击右下角相册图标选择图片<br>
+                                ④ 完成支付 ¥0.9
+                            </div>
+                        </div>
+
+                        <div class="qrcode-placeholder">
+                            <img src="pay-qrcode.jpg" style="width:100%;height:100%;object-fit:contain;border-radius:8px;" onerror="this.parentElement.innerHTML='<span style=color:#b2bec3;font-size:0.85em>请放置收款码</span>'">
+                        </div>
+
+                        <div class="modal-price">¥0.9</div>
+                        <p style="color:#e67e22;font-size:0.85em;font-weight:500;">请确认支付金额为 ¥0.9</p>
+
+                        <div class="verify-steps">
+                            <div class="step"><span class="step-num">1</span><span>扫描上方二维码</span></div>
+                            <div class="step"><span class="step-num">2</span><span>确认金额 ¥0.9 并完成支付</span></div>
+                            <div class="step"><span class="step-num">3</span><span>支付完成后点击下方按钮</span></div>
+                        </div>
+
+                        <div id="verifyStep1">
+                            <button class="confirm-paid-btn" onclick="startVerify()">我已完成支付</button>
+                        </div>
+
+                        <div id="verifyStep2" style="display:none;">
+                            <div class="verify-waiting" style="display:block;">
+                                <div class="wait-spinner"></div>
+                                <p>正在验证支付状态...</p>
+                                <p style="font-size:0.8em;color:#b2bec3;margin-top:8px;">预计需要 <span id="verifyCountdown">5</span> 秒</p>
+                            </div>
+                        </div>
+
+                        <div id="verifyStep3" style="display:none;">
+                            <div style="background:#fff5e6;border-radius:8px;padding:12px;margin:12px 0;text-align:left;">
+                                <p style="color:#e67e22;font-size:0.85em;margin:0;">未查询到支付记录，请手动验证</p>
+                            </div>
+                            <div class="verify-input-group">
+                                <label>请输入支付金额</label>
+                                <input type="text" id="payAmountInput" class="verify-input" placeholder="例如：0.90" maxlength="5" oninput="checkInput()">
+                                <p class="verify-input-hint">请输入你实际支付的金额</p>
+                            </div>
+                            <div class="verify-input-group">
+                                <label>请输入微信昵称的第一个字</label>
+                                <input type="text" id="payNicknameInput" class="verify-input" placeholder="例如：小" maxlength="2" oninput="checkInput()">
+                                <p class="verify-input-hint">用于核对支付人信息</p>
+                            </div>
+                            <button class="confirm-paid-btn" id="finalConfirmBtn" onclick="finalConfirm()" disabled>验证并查看报告</button>
+                            <p id="verifyError" class="verify-error"></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            startCountdown();
+        }
+
+        function startCountdown() {
+            let t = 14*60+59;
+            if (countdownInterval) clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                t--;
+                if (t<=0) { clearInterval(countdownInterval); t=0; }
+                const el = document.getElementById('countdownTimer');
+                if (el) el.textContent = `${Math.floor(t/60).toString().padStart(2,'0')}:${(t%60).toString().padStart(2,'0')}`;
+            }, 1000);
+        }
+
+        function showQRCode() {
+            document.getElementById('qrcodeModal').classList.add('show');
+            document.getElementById('verifyStep1').style.display = 'block';
+            document.getElementById('verifyStep2').style.display = 'none';
+            document.getElementById('verifyStep3').style.display = 'none';
+        }
+
+        function closeQRCode() {
+            document.getElementById('qrcodeModal').classList.remove('show');
+        }
+
+        function startVerify() {
+            document.getElementById('verifyStep1').style.display = 'none';
+            document.getElementById('verifyStep2').style.display = 'block';
+            let sec = 5;
+            const cdEl = document.getElementById('verifyCountdown');
+            const timer = setInterval(() => {
+                sec--;
+                if (cdEl) cdEl.textContent = sec;
+                if (sec <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('verifyStep2').style.display = 'none';
+                    document.getElementById('verifyStep3').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        function checkInput() {
+            const a = document.getElementById('payAmountInput').value.trim();
+            const n = document.getElementById('payNicknameInput').value.trim();
+            const btn = document.getElementById('finalConfirmBtn');
+            if (a.length > 0 && n.length > 0) { btn.disabled = false; btn.style.opacity = '1'; }
+            else { btn.disabled = true; btn.style.opacity = '0.4'; }
+            const err = document.getElementById('verifyError');
+            if (err) err.style.display = 'none';
+        }
+
+        function finalConfirm() {
+            const a = document.getElementById('payAmountInput').value.trim();
+            const err = document.getElementById('verifyError');
+            if (!['0.9','0.90','￥0.9','￥0.90','¥0.9','¥0.90'].includes(a)) {
+                if (err) { err.textContent = '金额不正确，请确认支付 ¥0.9 后重试'; err.style.display = 'block'; }
+                return;
+            }
+            closeQRCode();
+            if (countdownInterval) clearInterval(countdownInterval);
+            document.getElementById('paywallPage').style.display = 'none';
+            showFullResult();
+        }
+
+        // ==================== 结果页 ====================
+        function showFullResult() {
+            const r = calculatedResult;
+            const d = r.data;
+            const rp = document.getElementById('resultPage');
+            rp.style.display = 'block';
+            rp.classList.add('fade-in');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const traitsHTML = d.traits.map(t => `<div class="trait-item">${t}</div>`).join('');
+            const behaviorsHTML = d.behaviors.map(b => `<div class="behavior-item"><span class="label">${b.label}：</span>${b.content}</div>`).join('');
+            const adviceHTML = d.advice.map(a => `<li>${a}</li>`).join('');
+
+            rp.innerHTML = `
+                <div class="result-header">
+                    <div class="result-type-icon">${d.icon}</div>
+                    <div class="result-type-name">${d.name}</div>
+                    <div class="result-type-subtitle">${d.subtitle}</div>
+                    <div class="result-type-quote">"${d.quote}"</div>
+                </div>
+
+                <div class="result-card">
+                    <h3>简短画像</h3>
+                    <p>${d.desc}</p>
+                </div>
+
+                <div class="result-card">
+                    <h3>性格深度解读</h3>
+                    <p>${d.personality}</p>
+                </div>
+
+                <div class="result-card">
+                    <h3>你的核心特质</h3>
+                    <div class="traits-grid">${traitsHTML}</div>
+                </div>
+
+                <div class="result-card">
+                    <h3>行为画像</h3>
+                    <div class="behavior-list">${behaviorsHTML}</div>
+                </div>
+
+                <div class="result-card">
+                    <h3>搭档分析</h3>
+                    <div class="compat-grid">
+                        <div class="compat-item">
+                            <div class="label">最佳搭档</div>
+                            <div class="name">${d.bestPartner.name}</div>
+                            <div class="reason">${d.bestPartner.reason}</div>
+                        </div>
+                        <div class="compat-item">
+                            <div class="label">慎重搭配</div>
+                            <div class="name">${d.worstPartner.name}</div>
+                            <div class="reason">${d.worstPartner.reason}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>给你的建议</h3>
+                    <ul class="advice-list">${adviceHTML}</ul>
+                </div>
+
+                <div class="result-card" style="background:#ecfdf5;border-color:#a7f3d0;">
+                    <h3>温馨寄语</h3>
+                    <p>学术之路漫长且充满挑战，每个人都有自己的style，没有标准答案。无论你是哪种学术人格，都有自己独特的价值。鸽子有鸽子的灵感，沙僧有沙僧的踏实，老鹰有老鹰的眼光。在追求学术成就的同时，别忘了照顾好自己，享受这段独特的旅程。愿你在学术的星辰大海中，找到属于自己的航向。</p>
+                </div>
+
+                <div class="button-center">
+                    <button class="restart-btn" onclick="restart()">重新测试</button>
+                    <br>
+                    <button class="home-btn" onclick="location.href='/'">返回首页</button>
+                </div>
+            `;
+        }
+
+        function restart() {
+            currentQuestion = 0; answers = []; calculatedResult = null;
+            if (countdownInterval) clearInterval(countdownInterval);
+            if (autoNextTimer) clearTimeout(autoNextTimer);
+            document.getElementById('resultPage').style.display = 'none';
+            document.getElementById('paywallPage').style.display = 'none';
+            document.getElementById('startPage').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('questionPage').style.display === 'block') {
+                if (e.key >= '1' && e.key <= '4') { const i = parseInt(e.key)-1; const o = document.querySelectorAll('.option'); if(o[i]) o[i].click(); }
+                if (e.key === 'ArrowRight' || e.key === 'Enter') { if (!document.getElementById('nextBtn').disabled) nextQuestion(); }
+                if (e.key === 'ArrowLeft') { if (!document.getElementById('prevBtn').disabled) prevQuestion(); }
+            }
+            if (e.key === 'Escape') closeQRCode();
+        });
+    </script>
+</body>
+</html>

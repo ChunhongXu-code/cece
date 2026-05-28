@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>玉米叶面积测定</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #f0f4f0;
+      color: #222;
+      padding-bottom: 60px;
+    }
+    .container { max-width: 460px; margin: 0 auto; padding: 12px; }
+
+    .header {
+      background: linear-gradient(135deg, #2d6a4f, #40916c);
+      color: #fff;
+      text-align: center;
+      padding: 16px 12px;
+      border-radius: 14px;
+      margin-bottom: 12px;
+    }
+    .header h1 { font-size: 20px; margin-bottom: 4px; }
+    .header p { font-size: 12px; opacity: 0.85; }
+
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .card h3 {
+      font-size: 15px;
+      color: #2d6a4f;
+      margin-bottom: 10px;
+      border-left: 3px solid #2d6a4f;
+      padding-left: 8px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+    .form-row label {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      min-width: 56px;
+    }
+    .form-row input, .form-row select {
+      flex: 1;
+      padding: 11px 12px;
+      border: 1.5px solid #d0d7de;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+      background: #fafcff;
+    }
+    .form-row input:focus, .form-row select:focus {
+      border-color: #2d6a4f;
+      background: #fff;
+    }
+
+    .treat-row { display: flex; gap: 6px; margin-bottom: 10px; }
+    .treat-row input {
+      flex: 1;
+      padding: 9px 10px;
+      border: 1.5px solid #d0d7de;
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+    }
+    .treat-tag {
+      display: inline-block;
+      background: #d8f3dc;
+      color: #1b4332;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin: 2px 4px 2px 0;
+    }
+    .treat-tag .x {
+      color: #d00;
+      margin-left: 4px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    button {
+      flex: 1;
+      min-width: 80px;
+      padding: 11px 8px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:active { opacity: 0.7; }
+    .btn-green { background: #2d6a4f; color: #fff; }
+    .btn-orange { background: #e76f51; color: #fff; }
+    .btn-teal { background: #40916c; color: #fff; }
+    .btn-red { background: #d90429; color: #fff; }
+    .btn-gray { background: #e9ecef; color: #333; }
+    .btn-small {
+      flex: none;
+      min-width: auto;
+      padding: 6px 12px;
+      font-size: 13px;
+      border-radius: 8px;
+    }
+
+    /* 当前株叶片列表 */
+    .leaf-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      background: #f0faf4;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+    .leaf-item .info { color: #333; }
+    .leaf-item .area { font-weight: 700; color: #2d6a4f; }
+    .leaf-item .del {
+      color: #d00;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 2px 8px;
+    }
+
+    .current-total {
+      text-align: center;
+      padding: 10px;
+      background: #d8f3dc;
+      border-radius: 10px;
+      margin: 10px 0;
+      font-size: 15px;
+    }
+    .current-total strong {
+      font-size: 22px;
+      color: #1b4332;
+    }
+
+    /* 历史汇总 */
+    .summary {
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+    }
+    .summary .num {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2d6a4f;
+    }
+    .summary .lab {
+      font-size: 12px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    /* 历史记录 */
+    .record {
+      border: 1px solid #e8ecf0;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 8px;
+      background: #fafcff;
+    }
+    .record-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .record-head .idx { font-weight: 700; font-size: 14px; }
+    .record-head .badge {
+      background: #b7e4c7;
+      color: #1b4332;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .record-body {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.8;
+    }
+    .record-body .total-line {
+      font-size: 15px;
+      color: #2d6a4f;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    .record-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .record-foot .time { font-size: 11px; color: #999; }
+    .record-foot .btns { display: flex; gap: 6px; }
+
+    .filter-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .filter-btn {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      border: 1.5px solid #b7e4c7;
+      background: #fff;
+      color: #2d6a4f;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .filter-btn.active {
+      background: #2d6a4f;
+      color: #fff;
+      border-color: #2d6a4f;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    /* 编辑弹窗 */
+    .modal-mask {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-mask.show { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal h3 { margin-bottom: 14px; }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .step {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .step.done { background: #2d6a4f; color: #fff; }
+    .step.current { background: #e76f51; color: #fff; }
+    .step.todo { background: #e9ecef; color: #888; }
+    .step-line { width: 20px; height: 2px; background: #ccc; align-self: center; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1>🌽 玉米叶面积测定</h1>
+    <p>逐叶录入 → 完成本株汇总 → 下一株</p>
+  </div>
+
+  <!-- 步骤指示 -->
+  <div class="card">
+    <div class="step-indicator">
+      <div class="step current" id="s1">1</div>
+      <div class="step-line"></div>
+      <div class="step todo" id="s2">2</div>
+      <div class="step-line"></div>
+      <div class="step todo" id="s3">3</div>
+    </div>
+    <div class="hint">
+      ① 选处理，逐叶输入 → ② 点"完成本株"汇总 → ③ 自动清空，继续下一株
+    </div>
+  </div>
+
+  <!-- 处理组管理 -->
+  <div class="card">
+    <h3>处理组管理</h3>
+    <div id="treatTags"></div>
+    <div class="treat-row">
+      <input type="text" id="newTreat" placeholder="如 CK、N1、N2"
+        onkeydown="if(event.key==='Enter') addTreat()" />
+      <button class="btn-teal btn-small" onclick="addTreat()">添加</button>
+    </div>
+  </div>
+
+  <!-- 输入区 -->
+  <div class="card">
+    <h3>📝 当前录入</h3>
+
+    <div class="form-row">
+      <label>处理</label>
+      <select id="treatment"></select>
+    </div>
+
+    <div class="form-row">
+      <label>系数 k</label>
+      <input type="number" id="inputK" value="0.75" step="0.01" />
+    </div>
+
+    <div style="height:1px;background:#eee;margin:8px 0"></div>
+
+    <div class="form-row">
+      <label>叶长</label>
+      <input type="number" id="inputL" placeholder="cm" step="0.01"
+        inputmode="decimal"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('inputW').focus()}" />
+    </div>
+
+    <div class="form-row">
+      <label>叶宽</label>
+      <input type="number" id="inputW" placeholder="cm" step="0.01"
+        inputmode="decimal"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();addLeaf()}" />
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-green" onclick="addLeaf()">➕ 添加此叶</button>
+    </div>
+    <div class="hint">叶长回车→跳叶宽→回车→自动添加</div>
+  </div>
+
+  <!-- 当前这一株的叶片 -->
+  <div class="card">
+    <h3>🌿 当前株叶片 <span id="leafCount" style="color:#e76f51">(0片)</span></h3>
+    <div id="leafList"></div>
+    <div class="hint" id="leafEmpty">还没录入叶片</div>
+
+    <div class="current-total" id="currentTotal" style="display:none">
+      本株总叶面积：<strong id="currentSum">0.00</strong> cm²
+    </div>
+
+    <div class="btn-row" style="margin-top:10px">
+      <button class="btn-orange" onclick="finishPlant()">✅ 完成本株</button>
+      <button class="btn-gray" onclick="clearLeaves()">🔄 清空重来</button>
+    </div>
+  </div>
+
+  <!-- 历史汇总 -->
+  <div class="card">
+    <h3>📊 汇总统计</h3>
+    <div class="filter-row" id="filterRow"></div>
+    <div class="summary">
+      <div><div class="num" id="sPlants">0</div><div class="lab">株数</div></div>
+      <div><div class="num" id="sTotal">0.00</div><div class="lab">总面积 cm²</div></div>
+      <div><div class="num" id="sAvg">0.00</div><div class="lab">株均 cm²</div></div>
+    </div>
+  </div>
+
+  <!-- 导出/清空 -->
+  <div class="card">
+    <div class="btn-row">
+      <button class="btn-teal" onclick="exportCSV()">📥 导出CSV</button>
+      <button class="btn-red" onclick="clearAll()">🗑 清空全部历史</button>
+    </div>
+  </div>
+
+  <!-- 历史记录 -->
+  <div class="card">
+    <h3>📋 历史记录（按株）</h3>
+    <div id="recordList"></div>
+    <div class="hint" id="recordEmpty">暂无记录</div>
+  </div>
+</div>
+
+<!-- 编辑弹窗 -->
+<div class="modal-mask" id="editModal">
+  <div class="modal">
+    <h3>✏️ 编辑本株数据</h3>
+    <div class="form-row">
+      <label>处理</label>
+      <select id="editTreat"></select>
+    </div>
+    <div id="editLeafList"></div>
+    <div class="btn-row" style="margin-top:14px">
+      <button class="btn-green" onclick="saveEdit()">保存</button>
+      <button class="btn-gray" onclick="closeEdit()">取消</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== 数据结构 =====
+  // records: [{treat, coef, leaves:[{l,w,area}], totalArea, leafCount, time}]
+  let records = JSON.parse(localStorage.getItem("mz2_records")) || [];
+  let treats = JSON.parse(localStorage.getItem("mz2_treats")) || ["CK", "N1", "N2", "N3"];
+  let currentLeaves = []; // 当前正在录入的叶片
+  let filterTreat = "全部";
+  let editIndex = -1;
+
+  function save() {
+    localStorage.setItem("mz2_records", JSON.stringify(records));
+    localStorage.setItem("mz2_treats", JSON.stringify(treats));
+  }
+
+  // ===== 处理组 =====
+  function renderTreats() {
+    document.getElementById("treatTags").innerHTML = treats.map((t, i) =>
+      `<span class="treat-tag">${t}<span class="x" onclick="removeTreat(${i})">×</span></span>`
+    ).join("");
+
+    const opts = treats.map(t => `<option value="${t}">${t}</option>`).join("");
+    document.getElementById("treatment").innerHTML = opts;
+    document.getElementById("editTreat").innerHTML = opts;
+    renderFilter();
+  }
+
+  function addTreat() {
+    const inp = document.getElementById("newTreat");
+    const v = inp.value.trim();
+    if (!v) return;
+    if (treats.includes(v)) { alert("已存在"); return; }
+    treats.push(v);
+    save();
+    renderTreats();
+    inp.value = "";
+  }
+
+  function removeTreat(i) {
+    if (!confirm(`删除处理 "${treats[i]}"？`)) return;
+    treats.splice(i, 1);
+    save();
+    renderTreats();
+  }
+
+  // ===== 当前叶片操作 =====
+  function addLeaf() {
+    const L = parseFloat(document.getElementById("inputL").value);
+    const W = parseFloat(document.getElementById("inputW").value);
+    const K = parseFloat(document.getElementById("inputK").value);
+
+    if (isNaN(L) || isNaN(W) || isNaN(K) || L <= 0 || W <= 0) {
+      alert("请输入有效的叶长和叶宽");
+      return;
+    }
+
+    currentLeaves.push({ l: L, w: W, area: L * W * K });
+
+    document.getElementById("inputL").value = "";
+    document.getElementById("inputW").value = "";
+    document.getElementById("inputL").focus();
+
+    renderCurrentLeaves();
+    updateStep(1);
+  }
+
+  function removeLeaf(i) {
+    currentLeaves.splice(i, 1);
+    renderCurrentLeaves();
+  }
+
+  function renderCurrentLeaves() {
+    const list = document.getElementById("leafList");
+    const hint = document.getElementById("leafEmpty");
+    const totalDiv = document.getElementById("currentTotal");
+    const countSpan = document.getElementById("leafCount");
+
+    countSpan.textContent = `(${currentLeaves.length}片)`;
+
+    if (currentLeaves.length === 0) {
+      list.innerHTML = "";
+      hint.style.display = "block";
+      totalDiv.style.display = "none";
+      return;
+    }
+
+    hint.style.display = "none";
+    totalDiv.style.display = "block";
+
+    let sum = 0;
+    list.innerHTML = currentLeaves.map((leaf, i) => {
+      sum += leaf.area;
+      return `
+        <div class="leaf-item">
+          <span class="info">叶${i+1}：${leaf.l} × ${leaf.w}</span>
+          <span class="area">${leaf.area.toFixed(2)} cm²</span>
+          <span class="del" onclick="removeLeaf(${i})">✕</span>
+        </div>`;
+    }).join("");
+
+    document.getElementById("currentSum").textContent = sum.toFixed(2);
+  }
+
+  function clearLeaves() {
+    if (currentLeaves.length > 0 && !confirm("清空当前株所有叶片？")) return;
+    currentLeaves = [];
+    renderCurrentLeaves();
+    updateStep(0);
+  }
+
+  // ===== 完成本株 =====
+  function finishPlant() {
+    if (currentLeaves.length === 0) {
+      alert("还没有录入叶片");
+      return;
+    }
+
+    const treat = document.getElementById("treatment").value;
+    const coef = parseFloat(document.getElementById("inputK").value);
+    let totalArea = 0;
+    currentLeaves.forEach(l => totalArea += l.area);
+
+    records.push({
+      treat,
+      coef,
+      leaves: JSON.parse(JSON.stringify(currentLeaves)),
+      totalArea,
+      leafCount: currentLeaves.length,
+      time: new Date().toISOString()
+    });
+
+    save();
+
+    // 清空当前叶片，准备下一株
+    currentLeaves = [];
+    renderCurrentLeaves();
+    renderRecords();
+    updateStep(2);
+
+    // 短暂提示后重置步骤
+    setTimeout(() => updateStep(0), 1500);
+
+    alert(`✅ 已保存！\n处理：${treat}\n叶片数：${records[records.length-1].leafCount}\n总面积：${totalArea.toFixed(2)} cm²`);
+  }
+
+  // ===== 步骤指示 =====
+  function updateStep(n) {
+    const s1 = document.getElementById("s1");
+    const s2 = document.getElementById("s2");
+    const s3 = document.getElementById("s3");
+    s1.className = "step " + (n === 0 ? "current" : n > 0 ? "done" : "todo");
+    s2.className = "step " + (n === 1 ? "current" : n > 1 ? "done" : "todo");
+    s3.className = "step " + (n >= 2 ? "done" : "todo");
+  }
+
+  // ===== 筛选 =====
+  function renderFilter() {
+    const row = document.getElementById("filterRow");
+    let html = `<span class="filter-btn ${filterTreat==='全部'?'active':''}" onclick="setFilter('全部')">全部</span>`;
+    treats.forEach(t => {
+      html += `<span class="filter-btn ${filterTreat===t?'active':''}" onclick="setFilter('${t}')">${t}</span>`;
+    });
+    row.innerHTML = html;
+  }
+
+  function setFilter(t) {
+    filterTreat = t;
+    renderFilter();
+    renderRecords();
+  }
+
+  // ===== 历史记录 =====
+  function fmtTime(d) {
+    const o = new Date(d);
+    return `${o.getMonth()+1}/${o.getDate()} ${String(o.getHours()).padStart(2,'0')}:${String(o.getMinutes()).padStart(2,'0')}`;
+  }
+
+  function renderRecords() {
+    const list = document.getElementById("recordList");
+    const hint = document.getElementById("recordEmpty");
+
+    const filtered = filterTreat === "全部"
+      ? records
+      : records.filter(r => r.treat === filterTreat);
+
+    if (filtered.length === 0) {
+      list.innerHTML = "";
+      hint.style.display = "block";
+    } else {
+      hint.style.display = "none";
+      list.innerHTML = filtered.map(item => {
+        const idx = records.indexOf(item);
+        const leafDetail = item.leaves.map((lf, li) =>
+          `叶${li+1}：${lf.l}×${lf.w}=${lf.area.toFixed(2)}`
+        ).join("<br>");
+        return `
+          <div class="record">
+            <div class="record-head">
+              <span class="idx">株 #${idx + 1}</span>
+              <span class="badge">${item.treat}</span>
+            </div>
+            <div class="record-body">
+              ${leafDetail}
+              <div class="total-line">
+                共 ${item.leafCount} 片叶 ｜ 总面积：${item.totalArea.toFixed(2)} cm²
+              </div>
+            </div>
+            <div class="record-foot">
+              <span class="time">${fmtTime(item.time)}</span>
+              <div class="btns">
+                <button class="btn-teal btn-small" onclick="openEdit(${idx})">编辑</button>
+                <button class="btn-red btn-small" onclick="delRecord(${idx})">删除</button>
+              </div>
+            </div>
+          </div>`;
+      }).join("");
+    }
+
+    // 汇总
+    let total = 0;
+    filtered.forEach(r => total += r.totalArea);
+    document.getElementById("sPlants").textContent = filtered.length;
+    document.getElementById("sTotal").textContent = total.toFixed(2);
+    document.getElementById("sAvg").textContent = filtered.length ? (total / filtered.length).toFixed(2) : "0.00";
+  }
+
+  function delRecord(i) {
+    if (!confirm("删除这株记录？")) return;
+    records.splice(i, 1);
+    save();
+    renderRecords();
+  }
+
+  // ===== 编辑弹窗 =====
+  function openEdit(i) {
+    editIndex = i;
+    const r = records[i];
+    document.getElementById("editTreat").value = r.treat;
+
+    const el = document.getElementById("editLeafList");
+    el.innerHTML = r.leaves.map((lf, li) => `
+      <div class="form-row">
+        <label>叶${li+1}</label>
+        <input type="number" class="edit-l" value="${lf.l}" step="0.01" style="max-width:35%" placeholder="长" />
+        <span style="color:#999">×</span>
+        <input type="number" class="edit-w" value="${lf.w}" step="0.01" style="max-width:35%" placeholder="宽" />
+      </div>
+    `).join("");
+
+    document.getElementById("editModal").classList.add("show");
+  }
+
+  function closeEdit() {
+    document.getElementById("editModal").classList.remove("show");
+    editIndex = -1;
+  }
+
+  function saveEdit() {
+    const r = records[editIndex];
+    r.treat = document.getElementById("editTreat").value;
+
+    const ls = document.querySelectorAll(".edit-l");
+    const ws = document.querySelectorAll(".edit-w");
+
+    let totalArea = 0;
+    const newLeaves = [];
+    for (let i = 0; i < ls.length; i++) {
+      const l = parseFloat(ls[i].value);
+      const w = parseFloat(ws[i].value);
+      if (isNaN(l) || isNaN(w)) {
+        alert(`叶${i+1} 数据有误`);
+        return;
+      }
+      const area = l * w * r.coef;
+      newLeaves.push({ l, w, area });
+      totalArea += area;
+    }
+
+    r.leaves = newLeaves;
+    r.totalArea = totalArea;
+    r.leafCount = newLeaves.length;
+
+    save();
+    renderRecords();
+    closeEdit();
+  }
+
+  // ===== 导出CSV =====
+  function exportCSV() {
+    const filtered = filterTreat === "全部"
+      ? records
+      : records.filter(r => r.treat === filterTreat);
+
+    if (filtered.length === 0) { alert("无数据"); return; }
+
+    let csv = "\uFEFF株号,处理,叶位,叶长(cm),叶宽(cm),系数,单叶面积(cm²),株总面积(cm²),时间\n";
+    filtered.forEach((r) => {
+      const idx = records.indexOf(r) + 1;
+      r.leaves.forEach((lf, li) => {
+        csv += `${idx},${r.treat},${li+1},${lf.l},${lf.w},${r.coef},${lf.area.toFixed(2)},${li===0 ? r.totalArea.toFixed(2) : ''},${li===0 ? fmtTime(r.time) : ''}\n`;
+      });
+    });
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `玉米叶面积_${filterTreat}_${new Date().toLocaleDateString()}.csv`;
+    a.click();
+  }
+
+  // ===== 清空全部 =====
+  function clearAll() {
+    if (!confirm("确定清空全部历史数据？不可恢复！")) return;
+    records = [];
+    save();
+    renderRecords();
+  }
+
+  // ===== 初始化 =====
+  renderTreats();
+  renderCurrentLeaves();
+  renderRecords();
+</script>
+</body>
+</html>

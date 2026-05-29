@@ -62,7 +62,6 @@
 
         .disclaimer { margin-top: 20px; color: #b2bec3; font-size: 0.78em; line-height: 1.6; }
 
-        /* 恢复提示 */
         .restore-banner {
             background: #f0faf6; border: 1.5px solid #00b894; border-radius: 14px;
             padding: 18px; margin-bottom: 24px; text-align: center; display: none;
@@ -73,7 +72,6 @@
             padding: 10px 28px; border-radius: 50px; font-size: 0.95em; cursor: pointer; font-weight: 500;
         }
 
-        /* 进度条 */
         .progress-container { margin-bottom: 28px; }
         .progress-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.88em; color: #636e72; }
         .progress-bar { height: 6px; background: #e8f5ee; border-radius: 10px; overflow: hidden; }
@@ -125,7 +123,6 @@
         .btn-next:hover { transform: translateY(-2px); }
         .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
 
-        /* 加载 */
         .loading-page { display: none; text-align: center; padding: 60px 0; }
         .loading-spinner {
             width: 56px; height: 56px; border: 4px solid #e8f5ee; border-top: 4px solid #00b894;
@@ -134,7 +131,6 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         .loading-text { color: #636e72; font-size: 1.05em; }
 
-        /* 付费墙 */
         .paywall-page { display: none; text-align: center; padding: 20px 0; }
         .paywall-page h2 { font-size: 1.6em; color: #2d3436; margin-bottom: 12px; }
         .paywall-page .subtitle { color: #636e72; margin-bottom: 24px; font-size: 1em; }
@@ -167,7 +163,7 @@
         .guarantee-item { color: #95a5a6; font-size: 0.82em; }
         .paywall-note { color: #b2bec3; font-size: 0.78em; margin-top: 18px; line-height: 1.6; }
 
-        /* ====== 支付弹窗（从底部弹出） ====== */
+        /* ====== 支付弹窗 ====== */
         .pay-overlay {
             display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.55); z-index: 1000;
@@ -178,7 +174,7 @@
         .pay-sheet {
             background: white; border-radius: 20px 20px 0 0;
             padding: 24px 22px calc(16px + env(safe-area-inset-bottom, 0px));
-            width: 100%; max-width: 500px; max-height: 90vh;
+            width: 100%; max-width: 500px; max-height: 92vh;
             overflow-y: auto; -webkit-overflow-scrolling: touch;
             animation: sheetUp 0.3s ease; position: relative;
         }
@@ -206,14 +202,24 @@
         .sheet-price .sp-num { color: #e74c3c; font-size: 2.2em; font-weight: bold; }
         .sheet-price .sp-yen { font-size: 0.5em; vertical-align: top; margin-right: 2px; }
 
-        .sheet-tip {
-            background: #f0faf6; border-radius: 12px; padding: 14px 16px;
-            margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px;
+        /* 验证码展示 */
+        .verify-code-box {
+            background: linear-gradient(135deg, #fff5e6, #ffe9cc);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 18px;
+            text-align: center;
+            border: 2px dashed #e67e22;
         }
-        .sheet-tip .st-icon { font-size: 1.2em; flex-shrink: 0; margin-top: 1px; }
-        .sheet-tip .st-text { color: #2d3436; font-size: 0.88em; line-height: 1.7; }
-        .sheet-tip .st-text strong { color: #00b894; }
+        .vcb-label { color: #e67e22; font-size: 0.88em; margin-bottom: 8px; font-weight: 500; }
+        .vcb-code {
+            color: #e74c3c; font-size: 2em; font-weight: bold;
+            letter-spacing: 6px; font-family: 'Courier New', monospace;
+            user-select: all;
+        }
+        .vcb-tip { color: #e67e22; font-size: 0.8em; margin-top: 8px; line-height: 1.5; }
 
+        /* 二维码 */
         .sheet-qr {
             text-align: center; margin-bottom: 16px;
         }
@@ -224,7 +230,6 @@
         }
         .sheet-qr-box img {
             width: 100%; height: 100%; object-fit: contain;
-            /* 关键：允许长按保存 */
             -webkit-touch-callout: default !important;
             -webkit-user-select: auto !important;
             user-select: auto !important;
@@ -236,13 +241,13 @@
             display: flex; align-items: flex-start; gap: 10px; padding: 7px 0;
         }
         .sheet-step .ss-num {
-            width: 20px; height: 20px; background: #00b894; color: white;
-            border-radius: 50%; font-size: 0.7em; font-weight: bold;
+            width: 22px; height: 22px; background: #00b894; color: white;
+            border-radius: 50%; font-size: 0.72em; font-weight: bold;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0; margin-top: 2px;
         }
-        .sheet-step .ss-text { color: #2d3436; font-size: 0.88em; line-height: 1.6; }
-        .sheet-step .ss-text strong { color: #00b894; }
+        .sheet-step .ss-text { color: #2d3436; font-size: 0.9em; line-height: 1.6; }
+        .sheet-step .ss-text strong { color: #e74c3c; }
 
         .sheet-divider {
             display: flex; align-items: center; gap: 12px;
@@ -260,38 +265,49 @@
         }
         .sheet-confirm-btn:active { transform: scale(0.98); }
 
-        /* 验证阶段 */
+        /* 验证码输入页 */
         .v-phase { display: none; }
-        .v-loading { text-align: center; padding: 28px 0; }
-        .v-loading .v-spin {
-            width: 36px; height: 36px; border: 3px solid #e8f5ee;
-            border-top: 3px solid #00b894; border-radius: 50%;
-            animation: spin 1s linear infinite; margin: 0 auto 12px;
+        .v-phase .v-icon { font-size: 2.5em; margin-bottom: 14px; text-align: center; }
+        .v-phase h3 { color: #2d3436; text-align: center; margin-bottom: 14px; font-size: 1.15em; }
+        .v-phase .v-desc { color: #636e72; font-size: 0.9em; text-align: center; margin-bottom: 22px; line-height: 1.6; }
+        
+        .v-input-wrap { text-align: center; margin-bottom: 16px; }
+        .v-input {
+            width: 220px; padding: 16px;
+            font-size: 1.8em; text-align: center; letter-spacing: 10px;
+            border: 2px solid #e8f5ee; border-radius: 12px;
+            font-family: 'Courier New', monospace; text-transform: uppercase;
+            outline: none; font-weight: bold; color: #2d3436;
+            transition: all 0.2s;
         }
-        .v-loading p { color: #636e72; font-size: 0.92em; }
-        .v-loading .v-sec { color: #b2bec3; font-size: 0.82em; margin-top: 4px; }
+        .v-input:focus { border-color: #00b894; }
+        .v-input.error { border-color: #e74c3c; animation: shake 0.3s; }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
 
-        .v-manual { display: none; }
-        .v-manual .vm-warn {
-            background: #fff5e6; border-radius: 10px; padding: 12px 14px;
-            color: #e67e22; font-size: 0.86em; line-height: 1.6; margin-bottom: 16px;
-        }
-        .vm-field { margin-bottom: 14px; text-align: left; }
-        .vm-field label { display: block; font-size: 0.88em; color: #2d3436; font-weight: 500; margin-bottom: 6px; }
-        .vm-field input {
-            width: 100%; padding: 12px; border: 2px solid #e8f5ee; border-radius: 10px;
-            font-size: 1em; text-align: center; outline: none; transition: border-color 0.3s;
-        }
-        .vm-field input:focus { border-color: #00b894; }
-        .vm-field .vm-hint { font-size: 0.75em; color: #b2bec3; margin-top: 4px; }
+        .v-msg { text-align: center; min-height: 20px; font-size: 0.9em; margin-bottom: 16px; }
+        .v-msg.success { color: #00b894; }
+        .v-msg.error { color: #e74c3c; }
 
-        .vm-submit {
-            width: 100%; padding: 14px; border: none; border-radius: 50px;
-            background: linear-gradient(135deg, #00b894, #00cec9); color: white;
-            font-size: 1em; font-weight: 500; cursor: pointer;
+        .v-submit-btn {
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white; border: none; border-radius: 50px;
+            font-size: 1em; cursor: pointer; font-weight: 500;
+            transition: all 0.3s; opacity: 0.4;
         }
-        .vm-submit:disabled { opacity: 0.4; cursor: not-allowed; }
-        .vm-error { color: #e74c3c; font-size: 0.85em; margin-top: 8px; display: none; text-align: center; }
+        .v-submit-btn.active { opacity: 1; }
+        .v-submit-btn:disabled { cursor: not-allowed; }
+
+        .v-back-btn {
+            display: block; margin: 12px auto 0;
+            background: none; border: none; color: #b2bec3;
+            font-size: 0.85em; cursor: pointer;
+        }
 
         .sheet-footer {
             text-align: center; margin-top: 12px; color: #b2bec3; font-size: 0.75em; line-height: 1.5;
@@ -382,6 +398,8 @@
             .profile-grid { grid-template-columns: 1fr; }
             .result-city { font-size: 1.8em; }
             .paywall-guarantee { gap: 12px; }
+            .v-input { width: 180px; font-size: 1.5em; letter-spacing: 8px; }
+            .vcb-code { font-size: 1.7em; letter-spacing: 5px; }
         }
     </style>
 </head>
@@ -456,7 +474,7 @@
         <div class="result-page" id="resultPage"></div>
     </div>
 
-    <!-- ====== 支付弹窗（在container外面） ====== -->
+    <!-- ====== 支付弹窗 ====== -->
     <div class="pay-overlay" id="payOverlay">
         <div class="pay-sheet">
             <div class="sheet-handle"></div>
@@ -469,48 +487,61 @@
 
             <!-- 阶段1：扫码支付 -->
             <div id="phase1">
-                <div class="sheet-tip" id="sheetTip"></div>
+                <!-- 验证码 -->
+                <div class="verify-code-box">
+                    <div class="vcb-label">🔑 你的专属验证码</div>
+                    <div class="vcb-code" id="verifyCodeDisplay">A7K3</div>
+                    <div class="vcb-tip">⚠️ 支付时请在「<strong>备注</strong>」中填写此验证码</div>
+                </div>
 
+                <!-- 二维码 -->
                 <div class="sheet-qr">
                     <div class="sheet-qr-box">
-                        <img id="qrImg" src="pay-qrcode.jpg" alt="收款码"
-                             onerror="this.parentElement.innerHTML='<span style=color:#b2bec3;font-size:0.85em;line-height:1.5;padding:20px;display:block>请将收款码图片命名为<br><b>pay-qrcode.jpg</b><br>放在网站根目录</span>'">
+                        <img id="qrImg" src="wechat-pay.jpg" alt="收款码"
+                             onerror="this.parentElement.innerHTML='<span style=color:#b2bec3;font-size:0.85em;line-height:1.5;padding:20px;display:block>请将收款码图片<br>命名为<b>wechat-pay.jpg</b><br>上传到网站根目录</span>'">
                     </div>
                 </div>
 
+                <!-- 步骤 -->
                 <div class="sheet-steps" id="sheetSteps"></div>
 
-                <div class="sheet-divider">支付完成后点击下方按钮</div>
+                <div class="sheet-divider">支付完成后</div>
 
-                <button class="sheet-confirm-btn" onclick="onClickPaid()">✅ 我已完成支付</button>
+                <button class="sheet-confirm-btn" onclick="showVerifyInput()">
+                    ✅ 我已完成支付，输入验证码
+                </button>
             </div>
 
-            <!-- 阶段2：验证 -->
+            <!-- 阶段2：输入验证码 -->
             <div class="v-phase" id="phase2">
-                <div class="v-loading" id="vLoading">
-                    <div class="v-spin"></div>
-                    <p>正在确认支付状态...</p>
-                    <p class="v-sec">预计 <span id="vSec">5</span> 秒</p>
+                <div class="v-icon">🔐</div>
+                <h3>输入验证码解锁</h3>
+                <div class="v-desc">
+                    请输入你刚才支付时<br>
+                    在备注里填写的 <strong style="color:#e74c3c;">4位验证码</strong>
                 </div>
 
-                <div class="v-manual" id="vManual">
-                    <div class="vm-warn">⚠️ 未自动查询到记录，请手动验证</div>
-                    <div class="vm-field">
-                        <label>请输入支付金额</label>
-                        <input type="text" id="vmAmount" placeholder="例如：0.90" maxlength="5" inputmode="decimal" oninput="chkInput()">
-                        <div class="vm-hint">请输入你实际支付的金额</div>
-                    </div>
-                    <div class="vm-field">
-                        <label>请输入微信昵称的第一个字</label>
-                        <input type="text" id="vmName" placeholder="例如：小" maxlength="2" oninput="chkInput()">
-                        <div class="vm-hint">用于核对支付人信息</div>
-                    </div>
-                    <button class="vm-submit" id="vmBtn" onclick="doVerify()" disabled>验证并查看报告</button>
-                    <p class="vm-error" id="vmErr"></p>
+                <div class="v-input-wrap">
+                    <input type="text" id="verifyInput" class="v-input"
+                           placeholder="••••" maxlength="4"
+                           oninput="onVerifyInputChange()"
+                           onkeypress="if(event.key==='Enter')submitVerifyCode()">
                 </div>
+
+                <div class="v-msg" id="verifyMsg"></div>
+
+                <button id="verifyBtn" class="v-submit-btn" onclick="submitVerifyCode()" disabled>
+                    解锁完整报告
+                </button>
+
+                <button class="v-back-btn" onclick="backToQR()">
+                    ← 返回查看二维码
+                </button>
             </div>
 
-            <p class="sheet-footer">如遇问题请联系客服微信：your_wechat_id</p>
+            <p class="sheet-footer">
+                如遇问题请联系客服微信：your_wechat_id
+            </p>
         </div>
     </div>
 
@@ -666,7 +697,6 @@
             ]}
         ];
 
-        // ==================== 城市数据 ====================
         const cities = {
             beijing:{name:"北京",emoji:"🏯",slogan:"千年古都，现代之光",profile:{tempo:7,soul:8,nature:4,social:6,ambition:9,taste:6},analysis:"北京是一座兼具深厚历史底蕴与现代活力的城市。故宫的红墙、胡同的烟火气、中关村的科技范儿，这里既有最厚重的文化底蕴，也有最前沿的发展机遇。你对事业的追求与对文化的热爱，和这座城市的气质不谋而合。在北京，你可以周末逛故宫品味历史，工作日在CBD追逐梦想。",tags:["历史文化","事业发展","教育名城","四季分明","包容大气"]},
             shanghai:{name:"上海",emoji:"🌃",slogan:"精致海派，无限可能",profile:{tempo:8,soul:7,nature:3,social:7,ambition:9,taste:5},analysis:"上海是中国最国际化的城市，中西文化在这里完美融合。外滩的万国建筑、陆家嘴的摩天大楼诉说着这座城市的底蕴与未来。你追求品质生活的态度和开放包容的心态，与上海的海派精神高度契合。",tags:["国际化","精致生活","商业繁荣","时尚前沿","海派文化"]},
@@ -697,11 +727,7 @@
         let autoNextTimer = null;
         let countdownInterval = null;
         let calculatedResult = null;
-
-        // ==================== 环境检测 ====================
-        const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
-        const isAlipay = /AlipayClient/i.test(navigator.userAgent);
-        const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+        let currentVerifyCode = '';
 
         // ==================== 本地存储 ====================
         function store(k, v) { try { localStorage.setItem('cq_'+k, typeof v==='object'?JSON.stringify(v):v); } catch(e){} }
@@ -709,8 +735,23 @@
         function loadJSON(k) { try { const v=localStorage.getItem('cq_'+k); return v?JSON.parse(v):null; } catch(e){ return null; } }
         function removeStore(k) { try { localStorage.removeItem('cq_'+k); } catch(e){} }
 
-        function markPaid() { store('paid','yes'); store('paidTime', Date.now()); if(calculatedResult) store('result', calculatedResult); }
+        function markPaid() { 
+            store('paid','yes'); 
+            store('paidTime', Date.now()); 
+            if(calculatedResult) store('result', calculatedResult); 
+        }
         function isPaid() { return load('paid')==='yes'; }
+
+        // ==================== 验证码生成 ====================
+        function generateVerifyCode() {
+            // 排除易混淆字符：0/O, 1/I/L
+            const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+            let code = '';
+            for (let i = 0; i < 4; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
 
         // ==================== 页面初始化 ====================
         (function init() {
@@ -728,7 +769,6 @@
             }
         }
 
-        // ==================== 工具函数 ====================
         function shuffleArray(arr) {
             const s = [...arr];
             for (let i = s.length - 1; i > 0; i--) {
@@ -754,7 +794,6 @@
             }
         }
 
-        // ==================== 答题流程 ====================
         function startQuiz() {
             initQuestions();
             answers = new Array(questions.length).fill(undefined);
@@ -796,9 +835,6 @@
             answers[qIdx] = optIdx;
             document.querySelectorAll('.option').forEach((el, i) => { el.className = 'option' + (i===optIdx?' selected':''); });
             document.getElementById('nextBtn').disabled = false;
-            // 保存进度
-            store('answers', answers);
-            store('currentQ', currentQuestion);
             if (isFirst && qIdx < questions.length - 1) {
                 document.getElementById('autoNextHint').classList.add('show');
                 autoNextTimer = setTimeout(() => { document.getElementById('autoNextHint').classList.remove('show'); nextQuestion(); }, 600);
@@ -816,7 +852,6 @@
             if (currentQuestion > 0) { currentQuestion--; showQuestion(currentQuestion); }
         }
 
-        // ==================== 加载和计算 ====================
         function showLoading() {
             document.getElementById('questionPage').style.display = 'none';
             document.getElementById('loadingPage').style.display = 'block';
@@ -852,7 +887,6 @@
             return { userProfile, cityMatches, topCity: cityMatches[0] };
         }
 
-        // ==================== 付费墙 ====================
         function showPaywall() {
             document.getElementById('loadingPage').style.display = 'none';
             const p = document.getElementById('paywallPage');
@@ -905,132 +939,162 @@
 
         // ==================== 支付弹窗 ====================
         function openSheet() {
+            // 生成新的验证码
+            currentVerifyCode = generateVerifyCode();
+            store('verifyCode', currentVerifyCode);
+            
+            // 显示验证码
+            document.getElementById('verifyCodeDisplay').textContent = currentVerifyCode;
+            
+            // 显示弹窗
             document.getElementById('payOverlay').classList.add('show');
             document.getElementById('phase1').style.display = 'block';
             document.getElementById('phase2').style.display = 'none';
-            buildSheetUI();
+            
+            // 清空输入框
+            const input = document.getElementById('verifyInput');
+            if (input) input.value = '';
+            
+            // 构建步骤
+            buildSteps();
         }
 
         function closeSheet() {
             document.getElementById('payOverlay').classList.remove('show');
         }
 
-        // 点遮罩关闭
+        // 点击遮罩关闭
         document.getElementById('payOverlay').addEventListener('click', function(e) {
             if (e.target === this) closeSheet();
         });
 
-        function buildSheetUI() {
-            const tipEl = document.getElementById('sheetTip');
+        function buildSteps() {
             const stepsEl = document.getElementById('sheetSteps');
-
-            if (isWeChat) {
-                // ====== 微信内打开：最流畅，长按直接识别 ======
-                tipEl.innerHTML = `
-                    <span class="st-icon">💬</span>
-                    <div class="st-text">
-                        你正在 <strong>微信</strong> 中浏览<br>
-                        长按下方收款码即可<strong>直接识别支付</strong>
-                    </div>
-                `;
+            const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+            const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+            
+            if (isWeChat || isMobile) {
                 stepsEl.innerHTML = `
-                    <div class="sheet-step"><span class="ss-num">1</span><span class="ss-text"><strong>长按</strong>下方收款码 2 秒</span></div>
-                    <div class="sheet-step"><span class="ss-num">2</span><span class="ss-text">点击弹出的「<strong>识别图中二维码</strong>」</span></div>
-                    <div class="sheet-step"><span class="ss-num">3</span><span class="ss-text">确认金额 <strong>¥0.9</strong> 完成支付</span></div>
-                    <div class="sheet-step"><span class="ss-num">4</span><span class="ss-text">支付后<strong>返回此页面</strong>，点击下方按钮</span></div>
-                `;
-            } else if (isAlipay) {
-                // ====== 支付宝内打开 ======
-                tipEl.innerHTML = `
-                    <span class="st-icon">💙</span>
-                    <div class="st-text">
-                        你正在 <strong>支付宝</strong> 中浏览<br>
-                        长按下方收款码即可<strong>直接识别支付</strong>
+                    <div class="sheet-step">
+                        <span class="ss-num">1</span>
+                        <span class="ss-text"><strong>长按</strong>上方收款码 → 保存图片到相册</span>
                     </div>
-                `;
-                stepsEl.innerHTML = `
-                    <div class="sheet-step"><span class="ss-num">1</span><span class="ss-text"><strong>长按</strong>下方收款码 2 秒</span></div>
-                    <div class="sheet-step"><span class="ss-num">2</span><span class="ss-text">选择「<strong>识别二维码</strong>」</span></div>
-                    <div class="sheet-step"><span class="ss-num">3</span><span class="ss-text">确认金额 <strong>¥0.9</strong> 完成支付</span></div>
-                    <div class="sheet-step"><span class="ss-num">4</span><span class="ss-text">支付后<strong>返回此页面</strong>，点击下方按钮</span></div>
-                `;
-            } else if (isMobile) {
-                // ====== 手机浏览器（Safari/Chrome等）======
-                tipEl.innerHTML = `
-                    <span class="st-icon">📱</span>
-                    <div class="st-text">
-                        请按以下步骤完成支付<br>
-                        支付后<strong>返回本页面</strong>即可查看报告
+                    <div class="sheet-step">
+                        <span class="ss-num">2</span>
+                        <span class="ss-text">微信「<strong>扫一扫</strong>」 → 右上角「<strong>相册</strong>」选取</span>
                     </div>
-                `;
-                stepsEl.innerHTML = `
-                    <div class="sheet-step"><span class="ss-num">1</span><span class="ss-text"><strong>截屏</strong>保存下方收款码（或长按保存图片）</span></div>
-                    <div class="sheet-step"><span class="ss-num">2</span><span class="ss-text">打开 <strong>微信</strong> → 右上角 <strong>＋</strong> → <strong>扫一扫</strong></span></div>
-                    <div class="sheet-step"><span class="ss-num">3</span><span class="ss-text">点右下角 <strong>相册</strong> 图标，选刚才的截图</span></div>
-                    <div class="sheet-step"><span class="ss-num">4</span><span class="ss-text">确认 <strong>¥0.9</strong> 完成支付</span></div>
-                    <div class="sheet-step"><span class="ss-num">5</span><span class="ss-text"><strong>返回本页面</strong>，点击下方按钮</span></div>
+                    <div class="sheet-step">
+                        <span class="ss-num">3</span>
+                        <span class="ss-text">付款页面点「<strong>添加备注</strong>」</span>
+                    </div>
+                    <div class="sheet-step">
+                        <span class="ss-num">4</span>
+                        <span class="ss-text">备注里填入验证码 <strong>${currentVerifyCode}</strong></span>
+                    </div>
+                    <div class="sheet-step">
+                        <span class="ss-num">5</span>
+                        <span class="ss-text">完成支付 → 返回本页面输入验证码</span>
+                    </div>
                 `;
             } else {
-                // ====== 电脑浏览器 ======
-                tipEl.innerHTML = `
-                    <span class="st-icon">💻</span>
-                    <div class="st-text">
-                        请用手机 <strong>微信</strong> 扫描下方二维码<br>
-                        完成支付后点击下方按钮
+                stepsEl.innerHTML = `
+                    <div class="sheet-step">
+                        <span class="ss-num">1</span>
+                        <span class="ss-text">手机微信打开「<strong>扫一扫</strong>」</span>
+                    </div>
+                    <div class="sheet-step">
+                        <span class="ss-num">2</span>
+                        <span class="ss-text">扫描上方二维码</span>
+                    </div>
+                    <div class="sheet-step">
+                        <span class="ss-num">3</span>
+                        <span class="ss-text">付款页面点「<strong>添加备注</strong>」</span>
+                    </div>
+                    <div class="sheet-step">
+                        <span class="ss-num">4</span>
+                        <span class="ss-text">备注里填入验证码 <strong>${currentVerifyCode}</strong></span>
+                    </div>
+                    <div class="sheet-step">
+                        <span class="ss-num">5</span>
+                        <span class="ss-text">完成支付后回到本页面输入验证码</span>
                     </div>
                 `;
-                stepsEl.innerHTML = `
-                    <div class="sheet-step"><span class="ss-num">1</span><span class="ss-text">打开手机 <strong>微信</strong></span></div>
-                    <div class="sheet-step"><span class="ss-num">2</span><span class="ss-text">点 <strong>扫一扫</strong>，扫描上方二维码</span></div>
-                    <div class="sheet-step"><span class="ss-num">3</span><span class="ss-text">确认金额 <strong>¥0.9</strong> 并完成支付</span></div>
-                `;
             }
         }
 
-        // ==================== 验证流程 ====================
-        function onClickPaid() {
+        // 切换到验证码输入页
+        function showVerifyInput() {
             document.getElementById('phase1').style.display = 'none';
             document.getElementById('phase2').style.display = 'block';
-            document.getElementById('vLoading').style.display = 'block';
-            document.getElementById('vManual').style.display = 'none';
-
-            let sec = 5;
-            const el = document.getElementById('vSec');
-            const timer = setInterval(() => {
-                sec--;
-                if (el) el.textContent = sec;
-                if (sec <= 0) {
-                    clearInterval(timer);
-                    document.getElementById('vLoading').style.display = 'none';
-                    document.getElementById('vManual').style.display = 'block';
-                }
-            }, 1000);
+            setTimeout(() => {
+                const input = document.getElementById('verifyInput');
+                if (input) input.focus();
+            }, 100);
         }
 
-        function chkInput() {
-            const a = document.getElementById('vmAmount').value.trim();
-            const n = document.getElementById('vmName').value.trim();
-            document.getElementById('vmBtn').disabled = !(a.length > 0 && n.length > 0);
-            const err = document.getElementById('vmErr');
-            if (err) err.style.display = 'none';
+        // 返回二维码
+        function backToQR() {
+            document.getElementById('phase2').style.display = 'none';
+            document.getElementById('phase1').style.display = 'block';
         }
 
-        function doVerify() {
-            const a = document.getElementById('vmAmount').value.trim();
-            const err = document.getElementById('vmErr');
-            if (!['0.9','0.90','￥0.9','￥0.90','¥0.9','¥0.90'].includes(a)) {
-                if (err) { err.textContent = '金额不正确，请确认支付 ¥0.9 后重试'; err.style.display = 'block'; }
+        // 输入框变化
+        function onVerifyInputChange() {
+            const input = document.getElementById('verifyInput');
+            // 自动大写
+            input.value = input.value.toUpperCase();
+            
+            const btn = document.getElementById('verifyBtn');
+            const msg = document.getElementById('verifyMsg');
+            
+            if (input.value.length === 4) {
+                btn.disabled = false;
+                btn.classList.add('active');
+            } else {
+                btn.disabled = true;
+                btn.classList.remove('active');
+            }
+            
+            // 清除错误状态
+            input.classList.remove('error');
+            msg.textContent = '';
+            msg.className = 'v-msg';
+        }
+
+        // 提交验证码
+        function submitVerifyCode() {
+            const input = document.getElementById('verifyInput');
+            const code = input.value.toUpperCase().trim();
+            const msg = document.getElementById('verifyMsg');
+            const savedCode = load('verifyCode');
+            
+            if (!code || code.length !== 4) {
+                msg.textContent = '请输入完整的4位验证码';
+                msg.className = 'v-msg error';
+                input.classList.add('error');
                 return;
             }
-            // 通过！
-            markPaid();
-            closeSheet();
-            if (countdownInterval) clearInterval(countdownInterval);
-            document.getElementById('paywallPage').style.display = 'none';
-            showFullResult();
+            
+            // 验证
+            if (code === savedCode || code === currentVerifyCode) {
+                msg.textContent = '✅ 验证成功！正在解锁报告...';
+                msg.className = 'v-msg success';
+                
+                setTimeout(() => {
+                    markPaid();
+                    closeSheet();
+                    if (countdownInterval) clearInterval(countdownInterval);
+                    document.getElementById('paywallPage').style.display = 'none';
+                    showFullResult();
+                }, 800);
+            } else {
+                msg.textContent = '❌ 验证码不正确，请检查后重试';
+                msg.className = 'v-msg error';
+                input.classList.add('error');
+                setTimeout(() => { input.classList.remove('error'); }, 500);
+            }
         }
 
-        // ==================== 结果页 ====================
         function showFullResult() {
             const { userProfile, cityMatches, topCity } = calculatedResult;
             const rp = document.getElementById('resultPage');
@@ -1038,7 +1102,6 @@
             rp.classList.add('fade-in');
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // 确保结果已保存
             if (isPaid()) store('result', calculatedResult);
 
             const tc = topCity.city;
@@ -1103,7 +1166,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ==================== 快捷键 ====================
         document.addEventListener('keydown', (e) => {
             if (document.getElementById('questionPage').style.display === 'block') {
                 if (e.key>='1'&&e.key<='4') { const o=document.querySelectorAll('.option'); if(o[parseInt(e.key)-1]) o[parseInt(e.key)-1].click(); }

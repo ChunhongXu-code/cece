@@ -38,22 +38,9 @@
 
         /* 开始页 */
         .start-page { text-align: center; padding: 30px 0; }
-
         .start-page .icon { font-size: 3em; margin-bottom: 20px; }
-
-        .start-page h1 {
-            font-size: 2em;
-            color: #2d3436;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        .start-page .subtitle {
-            color: #636e72;
-            font-size: 1.05em;
-            margin-bottom: 28px;
-            line-height: 1.8;
-        }
+        .start-page h1 { font-size: 2em; color: #2d3436; margin-bottom: 12px; font-weight: 600; }
+        .start-page .subtitle { color: #636e72; font-size: 1.05em; margin-bottom: 28px; line-height: 1.8; }
 
         .info-box {
             background: #f0faf6;
@@ -63,19 +50,8 @@
             margin-bottom: 28px;
             border-left: 4px solid #00b894;
         }
-
-        .info-box h4 {
-            color: #00b894;
-            font-size: 0.95em;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .info-box p {
-            color: #636e72;
-            font-size: 0.88em;
-            line-height: 1.8;
-        }
+        .info-box h4 { color: #00b894; font-size: 0.95em; margin-bottom: 10px; font-weight: 600; }
+        .info-box p { color: #636e72; font-size: 0.88em; line-height: 1.8; }
 
         .dimension-grid {
             display: grid;
@@ -83,7 +59,6 @@
             gap: 10px;
             margin-bottom: 28px;
         }
-
         .dim-item {
             background: #f8fcfa;
             border-radius: 10px;
@@ -91,19 +66,8 @@
             text-align: left;
             border: 1px solid #e8f5ee;
         }
-
-        .dim-item .num {
-            color: #00b894;
-            font-size: 0.72em;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-
-        .dim-item .name {
-            color: #2d3436;
-            font-size: 0.9em;
-            font-weight: 500;
-        }
+        .dim-item .num { color: #00b894; font-size: 0.72em; font-weight: bold; margin-bottom: 4px; }
+        .dim-item .name { color: #2d3436; font-size: 0.9em; font-weight: 500; }
 
         .start-btn {
             background: linear-gradient(135deg, #00b894, #00cec9);
@@ -117,80 +81,22 @@
             box-shadow: 0 8px 25px rgba(0,184,148,0.35);
             font-weight: 500;
         }
-
-        .start-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0,184,148,0.45);
-        }
-
-        .disclaimer {
-            margin-top: 20px;
-            color: #b2bec3;
-            font-size: 0.78em;
-            line-height: 1.6;
-        }
+        .start-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0,184,148,0.45); }
+        .disclaimer { margin-top: 20px; color: #b2bec3; font-size: 0.78em; line-height: 1.6; }
 
         /* 进度条 */
         .progress-container { margin-bottom: 28px; }
-
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 0.88em;
-            color: #636e72;
-        }
-
-        .progress-bar {
-            height: 6px;
-            background: #e8f5ee;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00b894, #00cec9);
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-
-        .dim-tag {
-            display: inline-block;
-            background: #e8f5ee;
-            color: #00b894;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.78em;
-            margin-bottom: 18px;
-            font-weight: 500;
-        }
+        .progress-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.88em; color: #636e72; }
+        .progress-bar { height: 6px; background: #e8f5ee; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #00b894, #00cec9); border-radius: 10px; transition: width 0.5s ease; }
+        .dim-tag { display: inline-block; background: #e8f5ee; color: #00b894; padding: 4px 14px; border-radius: 20px; font-size: 0.78em; margin-bottom: 18px; font-weight: 500; }
 
         /* 答题页 */
         .question-page { display: none; }
-
-        .question-scenario {
-            color: #636e72;
-            font-size: 0.9em;
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
-
-        .question-text {
-            font-size: 1.15em;
-            color: #2d3436;
-            margin-bottom: 26px;
-            line-height: 1.7;
-            font-weight: 500;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 28px;
-        }
-
+        .question-scenario { color: #636e72; font-size: 0.9em; margin-bottom: 8px; line-height: 1.6; }
+        .question-text { font-size: 1.15em; color: #2d3436; margin-bottom: 26px; line-height: 1.7; font-weight: 500; }
+        .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+        
         .option {
             padding: 15px 20px;
             border: 2px solid #e8f5ee;
@@ -204,800 +110,116 @@
             gap: 14px;
             background: white;
         }
-
-        .option:hover {
-            border-color: #55efc4;
-            background: #f8fcfa;
-        }
-
-        .option.selected {
-            border-color: #00b894;
-            background: #f0faf6;
-            font-weight: 500;
-        }
-
-        .option-radio {
-            width: 22px;
-            height: 22px;
-            border: 2px solid #b2bec3;
-            border-radius: 50%;
-            flex-shrink: 0;
-            position: relative;
-            transition: all 0.25s;
-        }
-
-        .option.selected .option-radio {
-            border-color: #00b894;
-        }
-
-        .option.selected .option-radio::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 12px; height: 12px;
-            background: #00b894;
-            border-radius: 50%;
-        }
-
+        .option:hover { border-color: #55efc4; background: #f8fcfa; }
+        .option.selected { border-color: #00b894; background: #f0faf6; font-weight: 500; }
+        .option-radio { width: 22px; height: 22px; border: 2px solid #b2bec3; border-radius: 50%; flex-shrink: 0; position: relative; transition: all 0.25s; }
+        .option.selected .option-radio { border-color: #00b894; }
+        .option.selected .option-radio::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; background: #00b894; border-radius: 50%; }
         .option-text { flex: 1; }
-
-        .auto-next-hint {
-            text-align: center;
-            color: #00b894;
-            font-size: 0.85em;
-            margin-top: -16px;
-            margin-bottom: 18px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
+        .auto-next-hint { text-align: center; color: #00b894; font-size: 0.85em; margin-top: -16px; margin-bottom: 18px; opacity: 0; transition: opacity 0.3s; }
         .auto-next-hint.show { opacity: 1; }
 
-        .btn-group {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .btn {
-            padding: 12px 32px;
-            border: none;
-            border-radius: 50px;
-            font-size: 0.98em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
+        .btn-group { display: flex; justify-content: space-between; gap: 12px; }
+        .btn { padding: 12px 32px; border: none; border-radius: 50px; font-size: 0.98em; cursor: pointer; transition: all 0.3s ease; font-weight: 500; }
         .btn-prev { background: #f1f5f9; color: #636e72; }
         .btn-prev:hover { background: #e2e8f0; }
-
-        .btn-next {
-            background: linear-gradient(135deg, #00b894, #00cec9);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0,184,148,0.3);
-        }
-
+        .btn-next { background: linear-gradient(135deg, #00b894, #00cec9); color: white; box-shadow: 0 4px 15px rgba(0,184,148,0.3); }
         .btn-next:hover { transform: translateY(-2px); }
-
-        .btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none !important;
-        }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
 
         /* 加载 */
         .loading-page { display: none; text-align: center; padding: 60px 0; }
-
-        .loading-spinner {
-            width: 56px; height: 56px;
-            border: 4px solid #e8f5ee;
-            border-top: 4px solid #00b894;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 24px;
-        }
-
+        .loading-spinner { width: 56px; height: 56px; border: 4px solid #e8f5ee; border-top: 4px solid #00b894; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 24px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
         .loading-text { color: #636e72; font-size: 1.05em; }
 
-        /* ========== 付费墙（重新设计）========== */
+        /* ========== 付费墙 ========== */
         .paywall-page { display: none; text-align: center; padding: 20px 0; }
+        .paywall-page h2 { font-size: 1.6em; color: #2d3436; margin-bottom: 12px; }
+        .paywall-page .subtitle { color: #636e72; margin-bottom: 24px; font-size: 1em; }
+        .paywall-preview { background: #f0faf6; border-radius: 16px; padding: 28px 24px; margin: 20px 0; border: 1px solid #e8f5ee; }
+        .preview-city-name { font-size: 1.6em; font-weight: bold; color: #00b894; margin-bottom: 8px; }
+        .preview-desc { color: #636e72; font-size: 0.92em; line-height: 1.7; }
+        .paywall-lock { font-size: 2.5em; margin: 20px 0 10px; color: #55efc4; }
+        
+        .paywall-price { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 18px 0; }
+        .price-original { color: #b2bec3; text-decoration: line-through; font-size: 1em; }
+        .price-current { color: #e74c3c; font-size: 2em; font-weight: bold; }
+        .price-tag { background: #e74c3c; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.75em; }
 
-        .paywall-page h2 {
-            font-size: 1.6em;
-            color: #2d3436;
-            margin-bottom: 12px;
-        }
+        .paywall-features { text-align: left; background: #f8fcfa; border-radius: 14px; padding: 22px; margin: 20px 0; }
+        .paywall-features .feature-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; color: #2d3436; font-size: 0.95em; }
+        .check-icon { color: #00b894; font-weight: bold; font-size: 1.1em; }
 
-        .paywall-page .subtitle {
-            color: #636e72;
-            margin-bottom: 24px;
-            font-size: 1em;
-        }
-
-        .paywall-preview {
-            background: #f0faf6;
-            border-radius: 16px;
-            padding: 28px 24px;
-            margin: 20px 0;
-            border: 1px solid #e8f5ee;
-        }
-
-        .preview-city-name {
-            font-size: 1.6em;
-            font-weight: bold;
-            color: #00b894;
-            margin-bottom: 8px;
-        }
-
-        .preview-desc {
-            color: #636e72;
-            font-size: 0.92em;
-            line-height: 1.7;
-        }
-
-        .paywall-lock {
-            font-size: 2.5em;
-            margin: 20px 0 10px;
-            color: #55efc4;
-        }
-
-        .paywall-price {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 18px 0;
-        }
-
-        .price-original {
-            color: #b2bec3;
-            text-decoration: line-through;
-            font-size: 1em;
-        }
-
-        .price-current {
-            color: #e74c3c;
-            font-size: 2em;
-            font-weight: bold;
-        }
-
-        .price-tag {
-            background: #e74c3c;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.75em;
-        }
-
-        .paywall-features {
-            text-align: left;
-            background: #f8fcfa;
-            border-radius: 14px;
-            padding: 22px;
-            margin: 20px 0;
-        }
-
-        .paywall-features .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 0;
-            color: #2d3436;
-            font-size: 0.95em;
-        }
-
-        .check-icon {
-            color: #00b894;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-
-        .pay-btn {
-            padding: 16px;
-            border: none;
-            border-radius: 14px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            width: 100%;
-            background: linear-gradient(135deg, #00b894, #00cec9);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0,184,148,0.3);
-            margin: 10px 0;
-        }
-
+        .pay-btn { padding: 16px; border: none; border-radius: 14px; font-size: 1.1em; cursor: pointer; transition: all 0.3s ease; font-weight: 500; width: 100%; background: linear-gradient(135deg, #ff2442, #ff4d66); color: white; box-shadow: 0 4px 15px rgba(255,36,66,0.3); margin: 10px 0; }
         .pay-btn:hover { transform: translateY(-2px); }
+        .pay-btn-dark { background: linear-gradient(135deg, #2d3436, #636e72); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 
-        .pay-btn-wechat {
-            background: linear-gradient(135deg, #07c160, #06ad56);
-            box-shadow: 0 4px 15px rgba(7,193,96,0.3);
-        }
+        .countdown-bar { margin: 16px 0; padding: 12px 16px; background: #fff5e6; border-radius: 10px; color: #e67e22; font-size: 0.92em; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .countdown-num { font-size: 1.2em; font-weight: bold; color: #e74c3c; min-width: 70px; }
+        .buyer-info { color: #95a5a6; font-size: 0.85em; margin-bottom: 16px; }
+        .paywall-guarantee { display: flex; justify-content: center; gap: 24px; margin-top: 18px; flex-wrap: wrap; }
+        .guarantee-item { color: #95a5a6; font-size: 0.82em; }
+        .paywall-note { color: #b2bec3; font-size: 0.78em; margin-top: 18px; line-height: 1.6; }
 
-        .pay-btn-secondary {
-            background: white;
-            color: #00b894;
-            border: 2px solid #00b894;
-            box-shadow: none;
-        }
+        .pay-env-tip { background: #f0faf6; border-radius: 14px; padding: 24px; margin: 16px 0; text-align: left; border: 1px dashed #00b894; }
+        .pay-env-tip .tip-title { font-weight: 600; color: #00b894; margin-bottom: 8px; display: block; font-size: 1.05em; }
 
-        .pay-btn-secondary:hover {
-            background: #f0faf6;
-        }
+        .verify-section { margin-top: 20px; background: #f8fcfa; padding: 24px; border-radius: 14px; border: 1px solid #e8f5ee; text-align: left; }
+        .verify-section label { display: block; color: #2d3436; font-size: 0.95em; margin-bottom: 10px; font-weight: bold; }
+        .verify-input { width: 100%; padding: 14px; border: 2px solid #e8f5ee; border-radius: 10px; font-size: 1.1em; outline: none; transition: border-color 0.3s; text-align: center; font-weight: bold; letter-spacing: 2px; }
+        .verify-input:focus { border-color: #ff2442; }
+        .verify-error { color: #e74c3c; font-size: 0.88em; margin-top: 10px; display: none; font-weight: 500; }
 
-        .countdown-bar {
-            margin: 16px 0;
-            padding: 12px 16px;
-            background: #fff5e6;
-            border-radius: 10px;
-            color: #e67e22;
-            font-size: 0.92em;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .countdown-num {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #e74c3c;
-            min-width: 70px;
-        }
-
-        .buyer-info {
-            color: #95a5a6;
-            font-size: 0.85em;
-            margin-bottom: 16px;
-        }
-
-        .paywall-guarantee {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-top: 18px;
-            flex-wrap: wrap;
-        }
-
-        .guarantee-item {
-            color: #95a5a6;
-            font-size: 0.82em;
-        }
-
-        .paywall-note {
-            color: #b2bec3;
-            font-size: 0.78em;
-            margin-top: 18px;
-            line-height: 1.6;
-        }
-
-        /* ========== 支付方式选择区 ========== */
-        .pay-methods {
-            margin: 20px 0;
-        }
-
-        .pay-methods-title {
-            color: #636e72;
-            font-size: 0.88em;
-            margin-bottom: 12px;
-        }
-
-        .pay-method-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
-            justify-content: center;
-        }
-
-        .pay-tab {
-            padding: 10px 24px;
-            border: 2px solid #e8f5ee;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 0.92em;
-            color: #636e72;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: white;
-        }
-
-        .pay-tab.active {
-            border-color: #00b894;
-            color: #00b894;
-            background: #f0faf6;
-            font-weight: 500;
-        }
-
-        .pay-tab-icon {
-            font-size: 1.2em;
-        }
-
-        .pay-content { display: none; }
-        .pay-content.active { display: block; }
-
-        /* 微信内支付区域 */
-        .wechat-pay-area {
-            background: #f0faf6;
-            border-radius: 14px;
-            padding: 24px;
-            margin: 16px 0;
-        }
-
-        .wechat-pay-area .qr-wrapper {
-            width: 240px;
-            height: 240px;
-            margin: 0 auto 16px;
-            background: white;
-            border-radius: 12px;
-            padding: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-
-        .wechat-pay-area .qr-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .pay-env-tip {
-            background: #e8f5ee;
-            border-radius: 10px;
-            padding: 14px;
-            margin: 12px 0;
-            font-size: 0.85em;
-            color: #2d3436;
-            line-height: 1.6;
-            text-align: left;
-        }
-
-        .pay-env-tip strong {
-            color: #00b894;
-        }
-
-        .pay-env-tip .tip-title {
-            font-weight: 600;
-            color: #00b894;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        /* 直接转账区域 */
-        .transfer-area {
-            background: #f8fcfa;
-            border-radius: 14px;
-            padding: 24px;
-            margin: 16px 0;
-            text-align: left;
-        }
-
-        .transfer-info-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #e8f5ee;
-        }
-
-        .transfer-info-item:last-child {
-            border-bottom: none;
-        }
-
-        .transfer-label {
-            color: #636e72;
-            font-size: 0.88em;
-        }
-
-        .transfer-value {
-            color: #2d3436;
-            font-weight: 600;
-            font-size: 0.95em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .copy-btn {
-            background: #00b894;
-            color: white;
-            border: none;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 0.78em;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .copy-btn:hover { background: #00a884; }
-
-        .copy-btn.copied {
-            background: #636e72;
-        }
-
-        .transfer-note {
-            background: #fff5e6;
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 14px;
-            font-size: 0.82em;
-            color: #e67e22;
-            line-height: 1.6;
-        }
-
-        /* ========== 弹窗（重新设计）========== */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal-overlay.show { display: flex; }
-
-        .modal-box {
-            background: white;
-            border-radius: 20px;
-            padding: 32px;
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            position: relative;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-box h3 {
-            margin-bottom: 16px;
-            color: #2d3436;
-            font-size: 1.2em;
-        }
-
-        .modal-box p {
-            color: #636e72;
-            font-size: 0.9em;
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 12px; right: 16px;
-            background: none;
-            border: none;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: #b2bec3;
-            z-index: 10;
-        }
-
-        .modal-price {
-            color: #e74c3c;
-            font-size: 1.4em;
-            font-weight: bold;
-            margin: 4px 0 12px;
-        }
-
-        /* 验证区域 */
-        .verify-section {
-            margin-top: 16px;
-        }
-
-        .verify-input-group {
-            margin: 14px 0;
-            text-align: left;
-        }
-
-        .verify-input-group label {
-            display: block;
-            color: #2d3436;
-            font-size: 0.88em;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .verify-input {
-            width: 100%;
-            padding: 13px 16px;
-            border: 2px solid #e8f5ee;
-            border-radius: 10px;
-            font-size: 1em;
-            outline: none;
-            transition: border-color 0.3s;
-            text-align: center;
-        }
-
-        .verify-input:focus { border-color: #00b894; }
-
-        .verify-input-hint {
-            color: #b2bec3;
-            font-size: 0.75em;
-            margin-top: 4px;
-        }
-
-        .confirm-paid-btn {
-            background: linear-gradient(135deg, #00b894, #00cec9);
-            color: white;
-            border: none;
-            padding: 14px 36px;
-            border-radius: 50px;
-            font-size: 1em;
-            cursor: pointer;
-            margin-top: 12px;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .confirm-paid-btn:hover:not(:disabled) { transform: translateY(-2px); }
-
-        .confirm-paid-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .verify-error {
-            color: #e74c3c;
-            font-size: 0.85em;
-            margin-top: 8px;
-            display: none;
-        }
-
-        .verify-waiting {
-            color: #00b894;
-            font-size: 0.95em;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .verify-waiting .wait-spinner {
-            width: 30px; height: 30px;
-            border: 3px solid #e8f5ee;
-            border-top: 3px solid #00b894;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 12px;
-        }
-
-        /* 已保存状态提示 */
-        .saved-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #f0faf6;
-            color: #00b894;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            margin-bottom: 16px;
-            font-weight: 500;
-        }
+        .saved-badge { display: inline-flex; align-items: center; gap: 6px; background: #f0faf6; color: #00b894; padding: 6px 14px; border-radius: 20px; font-size: 0.8em; margin-bottom: 16px; font-weight: 500; }
 
         /* 结果页 */
         .result-page { display: none; }
-
         .result-header { text-align: center; margin-bottom: 28px; }
-
         .result-city-emoji { font-size: 3.5em; margin-bottom: 12px; }
+        .result-city { font-size: 2.2em; font-weight: bold; color: #2d3436; margin-bottom: 6px; }
+        .result-slogan { color: #636e72; font-size: 1em; margin-bottom: 12px; font-style: italic; }
+        .result-match { color: #00b894; font-size: 1.2em; font-weight: bold; }
 
-        .result-city {
-            font-size: 2.2em;
-            font-weight: bold;
-            color: #2d3436;
-            margin-bottom: 6px;
-        }
+        .result-card { background: #f8fcfa; border-radius: 16px; padding: 26px; margin-bottom: 20px; border: 1px solid #e8f5ee; text-align: left; }
+        .result-card h3 { color: #2d3436; margin-bottom: 16px; font-size: 1.1em; font-weight: 600; }
+        .result-card p { color: #2d3436; line-height: 1.9; font-size: 0.95em; }
 
-        .result-slogan {
-            color: #636e72;
-            font-size: 1em;
-            margin-bottom: 12px;
-            font-style: italic;
-        }
-
-        .result-match {
-            color: #00b894;
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-
-        .result-card {
-            background: #f8fcfa;
-            border-radius: 16px;
-            padding: 26px;
-            margin-bottom: 20px;
-            border: 1px solid #e8f5ee;
-        }
-
-        .result-card h3 {
-            color: #2d3436;
-            margin-bottom: 16px;
-            font-size: 1.1em;
-            font-weight: 600;
-        }
-
-        .result-card p {
-            color: #2d3436;
-            line-height: 1.9;
-            font-size: 0.95em;
-        }
-
-        .profile-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 14px;
-        }
-
-        .profile-item {
-            background: white;
-            padding: 14px 16px;
-            border-radius: 10px;
-            border: 1px solid #e8f5ee;
-        }
-
-        .profile-item .p-label {
-            font-size: 0.78em;
-            color: #95a5a6;
-            margin-bottom: 6px;
-        }
-
-        .profile-item .p-value {
-            font-size: 1em;
-            color: #00b894;
-            font-weight: 600;
-        }
+        .profile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+        .profile-item { background: white; padding: 14px 16px; border-radius: 10px; border: 1px solid #e8f5ee; }
+        .profile-item .p-label { font-size: 0.78em; color: #95a5a6; margin-bottom: 6px; }
+        .profile-item .p-value { font-size: 1em; color: #00b894; font-weight: 600; }
 
         .dimension-analysis { margin-top: 16px; }
-
         .dim-detail { margin-bottom: 16px; }
         .dim-detail:last-child { margin-bottom: 0; }
+        .dim-detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .dim-detail-name { color: #2d3436; font-weight: 500; font-size: 0.92em; }
+        .dim-detail-score { color: #00b894; font-weight: bold; font-size: 0.92em; }
+        .dim-detail-bar { height: 8px; background: #e8f5ee; border-radius: 5px; overflow: hidden; }
+        .dim-detail-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #00b894, #00cec9); transition: width 1.5s ease; }
 
-        .dim-detail-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .tag { background: #e8f5ee; color: #00b894; padding: 6px 14px; border-radius: 16px; font-size: 0.85em; font-weight: 500; }
 
-        .dim-detail-name {
-            color: #2d3436;
-            font-weight: 500;
-            font-size: 0.92em;
-        }
-
-        .dim-detail-score {
-            color: #00b894;
-            font-weight: bold;
-            font-size: 0.92em;
-        }
-
-        .dim-detail-bar {
-            height: 8px;
-            background: #e8f5ee;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .dim-detail-fill {
-            height: 100%;
-            border-radius: 5px;
-            background: linear-gradient(90deg, #00b894, #00cec9);
-            transition: width 1.5s ease;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 14px;
-        }
-
-        .tag {
-            background: #e8f5ee;
-            color: #00b894;
-            padding: 6px 14px;
-            border-radius: 16px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
-
-        .other-city-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 18px;
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            border: 1px solid #e8f5ee;
-        }
-
+        .other-city-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: white; border-radius: 12px; margin-bottom: 8px; border: 1px solid #e8f5ee; }
         .other-city-item:last-child { margin-bottom: 0; }
+        .other-city-info { display: flex; align-items: center; gap: 10px; color: #2d3436; font-size: 0.95em; }
+        .other-city-rank { color: #95a5a6; font-size: 0.85em; }
+        .match-percent { color: #00b894; font-weight: bold; font-size: 0.95em; }
 
-        .other-city-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #2d3436;
-            font-size: 0.95em;
-        }
-
-        .other-city-rank {
-            color: #95a5a6;
-            font-size: 0.85em;
-        }
-
-        .match-percent {
-            color: #00b894;
-            font-weight: bold;
-            font-size: 0.95em;
-        }
-
-        .restart-btn {
-            background: linear-gradient(135deg, #00b894, #00cec9);
-            color: white;
-            border: none;
-            padding: 14px 40px;
-            font-size: 1em;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 24px;
-            transition: all 0.3s ease;
-        }
-
+        .restart-btn { background: linear-gradient(135deg, #00b894, #00cec9); color: white; border: none; padding: 14px 40px; font-size: 1em; border-radius: 50px; cursor: pointer; margin-top: 24px; transition: all 0.3s ease; }
         .restart-btn:hover { transform: translateY(-2px); }
-
-        .home-btn {
-            background: none;
-            border: 2px solid #55efc4;
-            color: #00b894;
-            padding: 12px 32px;
-            font-size: 0.95em;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 12px;
-            transition: all 0.3s ease;
-        }
-
+        .home-btn { background: none; border: 2px solid #55efc4; color: #00b894; padding: 12px 32px; font-size: 0.95em; border-radius: 50px; cursor: pointer; margin-top: 12px; transition: all 0.3s ease; }
         .home-btn:hover { background: #f0faf6; }
-
         .button-center { text-align: center; margin-top: 20px; }
 
         .fade-in { animation: fadeIn 0.5s ease; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Toast 提示 */
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: #2d3436;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 0.9em;
-            z-index: 2000;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #2d3436; color: white; padding: 12px 24px; border-radius: 10px; font-size: 0.9em; z-index: 2000; transition: transform 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .toast.show { transform: translateX(-50%) translateY(0); }
 
         @media (max-width: 600px) {
             .container { padding: 24px 18px; }
@@ -1008,17 +230,13 @@
             .profile-grid { grid-template-columns: 1fr; }
             .result-city { font-size: 1.8em; }
             .paywall-guarantee { gap: 12px; }
-            .pay-method-tabs { flex-direction: column; align-items: center; }
-            .pay-tab { width: 80%; justify-content: center; }
         }
     </style>
 </head>
 <body>
-    <!-- Toast 提示 -->
     <div class="toast" id="toast"></div>
 
     <div class="container">
-        <!-- 开始页 -->
         <div class="start-page" id="startPage">
             <div class="icon">🏙️</div>
             <h1>测测适合你的城市</h1>
@@ -1047,7 +265,6 @@
             <p class="disclaimer">本测试仅供参考和娱乐<br>适合你的城市是你心之所向的地方</p>
         </div>
 
-        <!-- 答题页 -->
         <div class="question-page" id="questionPage">
             <div class="progress-container">
                 <div class="progress-info">
@@ -1073,26 +290,18 @@
             </div>
         </div>
 
-        <!-- 加载页 -->
         <div class="loading-page" id="loadingPage">
             <div class="loading-spinner"></div>
             <div class="loading-text" id="loadingText">正在为你匹配最合适的城市...</div>
         </div>
 
-        <!-- 付费墙 -->
         <div class="paywall-page" id="paywallPage"></div>
 
-        <!-- 结果页 -->
         <div class="result-page" id="resultPage"></div>
     </div>
 
-    <!-- 支付验证弹窗 -->
-    <div class="modal-overlay" id="payModal">
-        <div class="modal-box" id="payModalContent"></div>
-    </div>
-
     <script>
-        // ==================== 题目数据（和你原版一致）====================
+        // ==================== 题目数据 ====================
         const dimNames = {
             tempo: "生活节奏", soul: "审美取向", nature: "环境偏好",
             social: "社交倾向", ambition: "事业追求", taste: "口味偏好"
@@ -1240,7 +449,7 @@
             ]},
             { dim: "taste", scenario: "你的冰箱里一定会有的东西", q: "是什么？", options: [
                 { text: "辣椒酱、豆瓣酱或老干妈", scores: { taste: 9 } },
-                { text: "鸡蛋和新鲜蔬菜", scores: { taste: 3, nature: 1 } },
+                { text: "鸡蛋 and 新鲜蔬菜", scores: { taste: 3, nature: 1 } },
                 { text: "饮料和零食，快乐源泉", scores: { taste: 5, social: 2 } },
                 { text: "各种酱料调料，做饭必备", scores: { taste: 6, soul: 1 } }
             ]}
@@ -1248,86 +457,26 @@
 
         // ==================== 20座城市数据 ====================
         const cities = {
-            beijing: { name: "北京", emoji: "🏯", slogan: "千年古都，现代之光",
-                profile: { tempo: 7, soul: 8, nature: 4, social: 6, ambition: 9, taste: 6 },
-                analysis: "北京是一座兼具深厚历史底蕴与现代活力的城市。故宫的红墙、胡同的烟火气、中关村的科技范儿，这里既有最厚重的文化底蕴，也有最前沿的发展机遇。你对事业的追求与对文化的热爱，和这座城市的气质不谋而合。在北京，你可以周末逛故宫品味历史，工作日在CBD追逐梦想。",
-                tags: ["历史文化", "事业发展", "教育名城", "四季分明", "包容大气"] },
-            shanghai: { name: "上海", emoji: "🌃", slogan: "精致海派，无限可能",
-                profile: { tempo: 8, soul: 7, nature: 3, social: 7, ambition: 9, taste: 5 },
-                analysis: "上海是中国最国际化的城市，中西文化在这里完美融合。外滩的万国建筑、陆家嘴的摩天大楼诉说着这座城市的底蕴与未来。你追求品质生活的态度和开放包容的心态，与上海的海派精神高度契合。在这里有精致的生活方式和丰富的职业机遇。",
-                tags: ["国际化", "精致生活", "商业繁荣", "时尚前沿", "海派文化"] },
-            guangzhou: { name: "广州", emoji: "🌺", slogan: "千年商都，美食天堂",
-                profile: { tempo: 6, soul: 4, nature: 4, social: 8, ambition: 6, taste: 7 },
-                analysis: "广州是一座充满烟火气与人情味的城市。食在广州绝非浪得虚名，从早茶到夜宵，这座城市用美食温暖每一个人。你对美食的热爱、对温暖人际关系的珍视，会在广州得到最好的回应。务实包容的广州人会让你感到，这里就是家。",
-                tags: ["美食之都", "务实包容", "早茶文化", "烟火气浓", "气候温暖"] },
-            shenzhen: { name: "深圳", emoji: "🚀", slogan: "创新之城，青春无限",
-                profile: { tempo: 9, soul: 3, nature: 4, social: 6, ambition: 10, taste: 5 },
-                analysis: "深圳是一座年轻而充满创造力的城市，从小渔村到国际大都市的蜕变本身就是最好的励志故事。你骨子里的创新精神和进取心，与深圳敢闯敢试的城市基因完美共鸣。在这里凭实力说话，每个梦想都值得尊重。",
-                tags: ["创新创业", "年轻活力", "公平竞争", "科技前沿", "海滨城市"] },
-            chengdu: { name: "成都", emoji: "🐼", slogan: "天府之国，巴适安逸",
-                profile: { tempo: 3, soul: 7, nature: 6, social: 8, ambition: 4, taste: 9 },
-                analysis: "成都是一座让人来了就不想走的城市。火锅的热辣、茶馆的悠闲、熊猫的可爱，构成了成都独特的城市性格。这座城市告诉你，奋斗与享受并不矛盾，你可以认真工作，也可以在人民公园喝一杯盖碗茶，感受巴适的人生。",
-                tags: ["美食天堂", "休闲安逸", "火锅之都", "宜居宜业", "乐观豁达"] },
-            hangzhou: { name: "杭州", emoji: "🏞️", slogan: "人间天堂，数字之城",
-                profile: { tempo: 6, soul: 8, nature: 7, social: 5, ambition: 7, taste: 5 },
-                analysis: "杭州将诗意与活力完美结合。西湖的柔美、钱塘江的壮阔、蓬勃发展的数字经济，让这座城市既有千年底蕴又有无限可能。你对自然之美的欣赏和对创新事业的热情，都能在杭州找到归属。",
-                tags: ["山水如画", "数字经济", "诗意生活", "创业热土", "文化深厚"] },
-            chongqing: { name: "重庆", emoji: "🌶️", slogan: "山城雾都，热辣人生",
-                profile: { tempo: 5, soul: 5, nature: 7, social: 9, ambition: 5, taste: 10 },
-                analysis: "重庆是一座建在山上的魔幻城市，独特的地形造就了8D的城市景观。这里的人像火锅一样热情直爽，生活像山路一样起伏精彩。在这里你会被壮丽的江景感动、被地道的美食征服、更会被重庆人的乐观豁达感染。",
-                tags: ["山城魔幻", "火锅之都", "热情直爽", "夜景壮观", "性价比高"] },
-            nanjing: { name: "南京", emoji: "🍂", slogan: "六朝古都，文脉悠长",
-                profile: { tempo: 5, soul: 9, nature: 5, social: 6, ambition: 5, taste: 6 },
-                analysis: "南京是一座让人心生敬意的城市。作为六朝古都，它承载着厚重的历史记忆，同时以开放的姿态拥抱未来。秋天的梧桐大道会让你感动，夫子庙的灯火会让你温暖。南京会给你归属感，让你在深厚的文化滋养中找到内心的安定。",
-                tags: ["历史厚重", "教育名城", "梧桐大道", "宜居城市", "鸭血粉丝"] },
-            suzhou: { name: "苏州", emoji: "🏡", slogan: "诗意江南，人间烟火",
-                profile: { tempo: 4, soul: 9, nature: 7, social: 4, ambition: 5, taste: 4 },
-                analysis: "苏州将古典韵味与现代活力完美融合。精致的园林、悠长的小巷、温软的吴侬软语，让这座城市充满独特魅力。你对精致生活的追求、对文化与自然和谐共处的向往，与苏州的城市精神高度一致。",
-                tags: ["园林之城", "江南韵味", "经济发达", "精致生活", "宜居宜业"] },
-            xiamen: { name: "厦门", emoji: "🌊", slogan: "海上花园，温馨港湾",
-                profile: { tempo: 3, soul: 8, nature: 9, social: 4, ambition: 3, taste: 4 },
-                analysis: "厦门是一座精致而温柔的海滨城市。鼓浪屿的琴声、环岛路的海风、沙坡尾的文艺，共同编织出这座城市的独特韵味。这座不大的城市，会给你恰到好处的舒适，不太快也不太慢，不太喧闹也不太寂静，刚刚好。",
-                tags: ["海滨风光", "文艺气质", "气候宜人", "精致小城", "慢生活"] },
-            xian: { name: "西安", emoji: "🏛️", slogan: "十三朝古都，盛世长安",
-                profile: { tempo: 4, soul: 8, nature: 5, social: 7, ambition: 4, taste: 8 },
-                analysis: "西安是一座让你触摸历史脉搏的城市。十三朝古都的辉煌在这里留下了无数印记，而城墙内外的烟火人间又让这座城市充满生机。你可以骑行在古城墙上感受千年时光，也可以在回民街品尝地道美食。",
-                tags: ["历史文化", "美食荟萃", "古今交融", "性价比高", "豪爽热情"] },
-            changsha: { name: "长沙", emoji: "📺", slogan: "娱乐之都，烟火人间",
-                profile: { tempo: 6, soul: 5, nature: 4, social: 9, ambition: 5, taste: 9 },
-                analysis: "长沙是一座让你根本停不下来的城市。这里有最火的夜生活、最辣的小龙虾、最嗨的娱乐产业。长沙人骨子里的热情和乐观会感染你，凌晨两点的解放西路和永远排队的茶颜悦色，都是这座城市最真实的模样。",
-                tags: ["娱乐之都", "夜生活丰富", "网红美食", "热情豪爽", "性价比高"] },
-            wuhan: { name: "武汉", emoji: "🌅", slogan: "大江大湖，英雄之城",
-                profile: { tempo: 6, soul: 5, nature: 5, social: 8, ambition: 6, taste: 8 },
-                analysis: "武汉是一座充满豪情与烟火气的城市。长江与汉江在这里交汇，赋予了这座城市大气磅礴的气质。清晨一碗热干面开始充满活力的一天，傍晚在江滩看壮丽的日落。武汉正在崛起的科技产业也会给你充足的发展空间。",
-                tags: ["大江大湖", "热干面", "教育重镇", "交通枢纽", "热情豪迈"] },
-            kunming: { name: "昆明", emoji: "🌸", slogan: "春城花都，四季如春",
-                profile: { tempo: 2, soul: 6, nature: 10, social: 4, ambition: 2, taste: 5 },
-                analysis: "昆明是一座被大自然偏爱的城市。四季如春的气候、湛蓝的天空、满城的鲜花，让这座城市成为许多人心中的理想之地。这座城市的从容与宁静会让你放慢脚步，重新发现生活中那些被忽略的美好。在昆明，每一天都是春天。",
-                tags: ["四季如春", "鲜花之城", "空气清新", "多民族文化", "宜居天堂"] },
-            lhasa: { name: "拉萨", emoji: "🏔️", slogan: "日光之城，心灵故乡",
-                profile: { tempo: 1, soul: 9, nature: 10, social: 2, ambition: 1, taste: 3 },
-                analysis: "拉萨是一座让灵魂得到洗礼的城市。湛蓝的天空、神圣的布达拉宫、虔诚的转经人，构成了一幅纯净而震撼的画面。在这座日光之城，你会发现生活可以回归最本真的模样。拉萨教会你的是在广阔天地间找到内心真正的自由与平静。",
-                tags: ["纯净圣洁", "壮美风光", "心灵净土", "独特文化", "日光之城"] },
-            qingdao: { name: "青岛", emoji: "⛵", slogan: "红瓦绿树，碧海蓝天",
-                profile: { tempo: 4, soul: 6, nature: 8, social: 5, ambition: 4, taste: 6 },
-                analysis: "青岛是一座兼具北方大气与海洋浪漫的城市。红瓦绿树、碧海蓝天的城市画面深入人心。这座城市有德式建筑的异域风情、新鲜的海鲜美食和宜人的夏季气候。青岛会给你一种既能努力工作又能诗意栖居的美好生活。",
-                tags: ["海滨城市", "啤酒文化", "宜居环境", "海鲜美食", "浪漫气质"] },
-            dalian: { name: "大连", emoji: "🚢", slogan: "浪漫之都，北方明珠",
-                profile: { tempo: 4, soul: 5, nature: 8, social: 5, ambition: 4, taste: 6 },
-                analysis: "大连是北方最具浪漫气质的海滨城市。广阔的海岸线、优美的城市绿化和适宜的气候让人流连忘返。这里没有北方城市的粗犷，多了一份精致和浪漫。在大连生活，你可以每天面朝大海，感受这座城市独有的温柔与大气。",
-                tags: ["海滨浪漫", "宜居环境", "海鲜丰富", "足球文化", "北方明珠"] },
-            haerbin: { name: "哈尔滨", emoji: "❄️", slogan: "冰城夏都，东方莫斯科",
-                profile: { tempo: 4, soul: 6, nature: 7, social: 8, ambition: 3, taste: 7 },
-                analysis: "哈尔滨是一座充满异域风情的城市。冬天的冰雪大世界、中央大街的欧式建筑、热情豪爽的东北人，构成了这座城市独特的魅力。在零下二十度的冬天吃着马迭尔冰棍，这种反差感就是哈尔滨的浪漫。",
-                tags: ["冰雪世界", "欧式风情", "热情豪爽", "东北美食", "性价比高"] },
-            tianjin: { name: "天津", emoji: "🎭", slogan: "哏都生活，津味人间",
-                profile: { tempo: 4, soul: 6, nature: 3, social: 8, ambition: 4, taste: 7 },
-                analysis: "天津是一座充满幽默感和生活智慧的城市。相声和快板是这座城市的名片，天津人骨子里的幽默和乐观让生活充满欢笑。煎饼果子、狗不理包子、麻花，天津用美食和段子告诉你，生活可以是有滋有味又妙趣横生的。",
-                tags: ["相声之城", "美食丰富", "幽默乐观", "近京优势", "烟火气浓"] },
-            sanya: { name: "三亚", emoji: "🏖️", slogan: "碧海蓝天，椰风海韵",
-                profile: { tempo: 2, soul: 5, nature: 10, social: 4, ambition: 2, taste: 5 },
-                analysis: "三亚是中国最美的热带海滨城市。碧蓝的大海、洁白的沙滩、温暖的阳光和椰林，让每一天都像在度假。如果你向往海边的生活，渴望在大自然中找到内心的平静，三亚就是你的理想之地。",
-                tags: ["热带天堂", "碧海蓝天", "度假胜地", "阳光充沛", "慢生活"] }
+            beijing: { name: "北京", emoji: "🏯", slogan: "千年古都，现代之光", profile: { tempo: 7, soul: 8, nature: 4, social: 6, ambition: 9, taste: 6 }, analysis: "北京是一座兼具深厚历史底蕴与现代活力的城市。故宫的红墙、胡同的烟火气、中关村的科技范儿，这里既有最厚重的文化底蕴，也有最前沿的发展机遇。你对事业的追求与对文化的热爱，和这座城市的气质不谋而合。在北京，你可以周末逛故宫品味历史，工作日在CBD追逐梦想。", tags: ["历史文化", "事业发展", "教育名城", "四季分明", "包容大气"] },
+            shanghai: { name: "上海", emoji: "🌃", slogan: "精致海派，无限可能", profile: { tempo: 8, soul: 7, nature: 3, social: 7, ambition: 9, taste: 5 }, analysis: "上海是中国最国际化的城市，中西文化在这里完美融合。外滩的万国建筑、陆家嘴的摩天大楼诉说着这座城市的底蕴与未来。你追求品质生活的态度和开放包容的心态，与上海的海派精神高度契合。在这里有精致的生活方式和丰富的职业机遇。", tags: ["国际化", "精致生活", "商业繁荣", "时尚前沿", "海派文化"] },
+            guangzhou: { name: "广州", emoji: "🌺", slogan: "千年商都，美食天堂", profile: { tempo: 6, soul: 4, nature: 4, social: 8, ambition: 6, taste: 7 }, analysis: "广州是一座充满烟火气与人情味的城市。食在广州绝非浪得虚名，从早茶到夜宵，这座城市用美食温暖每一个人。你对美食的热爱、对温暖人际关系的珍视，会在广州得到最好的回应。务实包容的广州人会让你感到，这里就是家。", tags: ["美食之都", "务实包容", "早茶文化", "烟火气浓", "气候温暖"] },
+            shenzhen: { name: "深圳", emoji: "🚀", slogan: "创新之城，青春无限", profile: { tempo: 9, soul: 3, nature: 4, social: 6, ambition: 10, taste: 5 }, analysis: "深圳是一座年轻而充满创造力的城市，从小渔村到国际大都市的蜕变本身就是最好的励志故事。你骨子里的创新精神和进取心，与深圳敢闯敢试的城市基因完美共鸣。在这里凭实力说话，每个梦想都值得尊重。", tags: ["创新创业", "年轻活力", "公平竞争", "科技前沿", "海滨城市"] },
+            chengdu: { name: "成都", emoji: "🐼", slogan: "天府之国，巴适安逸", profile: { tempo: 3, soul: 7, nature: 6, social: 8, ambition: 4, taste: 9 }, analysis: "成都是一座让人来了就不想走的城市。火锅的热辣、茶馆的悠闲、熊猫的可爱，构成了成都独特的城市性格。这座城市告诉你，奋斗与享受并不矛盾，你可以认真工作，也可以在人民公园喝一杯盖碗茶，感受巴适的人生。", tags: ["美食天堂", "休闲安逸", "火锅之都", "宜居宜业", "乐观豁达"] },
+            hangzhou: { name: "杭州", emoji: "🏞️", slogan: "人间天堂，数字之城", profile: { tempo: 6, soul: 8, nature: 7, social: 5, ambition: 7, taste: 5 }, analysis: "杭州将诗意与活力完美结合。西湖的柔美、钱塘江的壮阔、蓬勃发展的数字经济，让这座城市既有千年底蕴又有无限可能。你对自然之美的欣赏和对创新事业的热情，都能在杭州找到归属。", tags: ["山水如画", "数字经济", "诗意生活", "创业热土", "文化深厚"] },
+            chongqing: { name: "重庆", emoji: "🌶️", slogan: "山城雾都，热辣人生", profile: { tempo: 5, soul: 5, nature: 7, social: 9, ambition: 5, taste: 10 }, analysis: "重庆是一座建在山上的魔幻城市，独特的地形造就了8D的城市景观。这里的人像火锅一样热情直爽，生活像山路一样起伏精彩。在这里你会被壮丽的江景感动、被地道的美食征服、更会被重庆人的乐观豁达感染。", tags: ["山城魔幻", "火锅之都", "热情直爽", "夜景壮观", "性价比高"] },
+            nanjing: { name: "南京", emoji: "🍂", slogan: "六朝古都，文脉悠长", profile: { tempo: 5, soul: 9, nature: 5, social: 6, ambition: 5, taste: 6 }, analysis: "南京是一座让人心生敬意的城市。作为六朝古都，它承载着厚重的历史记忆，同时以开放的姿态拥抱未来。秋天的梧桐大道会让你感动，夫子庙的灯火会让你温暖。南京会给你归属感，让你在深厚的文化滋养中找到内心的安定。", tags: ["历史厚重", "教育名城", "梧桐大道", "宜居城市", "鸭血粉丝"] },
+            suzhou: { name: "苏州", emoji: "🏡", slogan: "诗意江南，人间烟火", profile: { tempo: 4, soul: 9, nature: 7, social: 4, ambition: 5, taste: 4 }, analysis: "苏州将古典韵味与现代活力完美融合。精致的园林、悠长的小巷、温软的吴侬软语，让这座城市充满独特魅力。你对精致生活的追求、对文化与自然和谐共处的向往，与苏州的城市精神高度一致。", tags: ["园林之城", "江南韵味", "经济发达", "精致生活", "宜居宜业"] },
+            xiamen: { name: "厦门", emoji: "🌊", slogan: "海上花园，温馨港湾", profile: { tempo: 3, soul: 8, nature: 9, social: 4, ambition: 3, taste: 4 }, analysis: "厦门是一座精致而温柔的海滨城市。鼓浪屿的琴声、环岛路的海风、沙坡尾的文艺，共同编织出这座城市的独特韵味。这座不大的城市，会给你恰到好处的舒适，不太快也不太慢，不太喧闹也不太寂静，刚刚好。", tags: ["海滨风光", "文艺气质", "气候宜人", "精致小城", "慢生活"] },
+            xian: { name: "西安", emoji: "🏛️", slogan: "十三朝古都，盛世长安", profile: { tempo: 4, soul: 8, nature: 5, social: 7, ambition: 4, taste: 8 }, analysis: "西安是一座让你触摸历史脉搏的城市。十三朝古都的辉煌在这里留下了无数印记，而城墙内外的烟火人间又让这座城市充满生机。你可以骑行在古城墙上感受千年时光，也可以在回民街品尝地道美食。", tags: ["历史文化", "美食荟萃", "古今交融", "性价比高", "豪爽热情"] },
+            changsha: { name: "长沙", emoji: "📺", slogan: "娱乐之都，烟火人间", profile: { tempo: 6, soul: 5, nature: 4, social: 9, ambition: 5, taste: 9 }, analysis: "长沙是一座让你根本停不下来的城市。这里有最火的夜生活、最辣的小龙虾、最嗨的娱乐产业。长沙人骨子里的热情和乐观会感染你，凌晨两点的解放西路和永远排队的茶颜悦色，都是这座城市最真实的模样。", tags: ["娱乐之都", "夜生活丰富", "网红美食", "热情豪爽", "性价比高"] },
+            wuhan: { name: "武汉", emoji: "🌅", slogan: "大江大湖，英雄之城", profile: { tempo: 6, soul: 5, nature: 5, social: 8, ambition: 6, taste: 8 }, analysis: "武汉是一座充满豪情与烟火气稳定的城市。长江与汉江在这里交汇，赋予了这座城市大气磅礴的气质。清晨一碗热干面开始充满活力的一天，傍晚在江滩看壮丽的日落。武汉正在崛起的科技产业也会给你充足的发展空间。", tags: ["大江大湖", "热干面", "教育重镇", "交通枢纽", "热情豪迈"] },
+            kunming: { name: "昆明", emoji: "🌸", slogan: "春城花都，四季如春", profile: { tempo: 2, soul: 6, nature: 10, social: 4, ambition: 2, taste: 5 }, analysis: "昆明是一座被大自然偏爱的城市。四季如春的气候、湛蓝的天空、满城的鲜花，让这座城市成为许多人心中的理想之地。这座城市的从容与宁静会让你放慢脚步，重新发现生活中那些被忽略的美好。在昆明，每一天都是春天。", tags: ["四季如春", "鲜花之城", "空气清新", "多民族文化", "宜居天堂"] },
+            lhasa: { name: "拉萨", emoji: "🏔️", slogan: "日光之城，心灵故乡", profile: { tempo: 1, soul: 9, nature: 10, social: 2, ambition: 1, taste: 3 }, analysis: "拉萨是一座让灵魂得到洗礼的城市。湛蓝的天空、神圣的布达拉宫、虔诚的转经人，构成了一幅纯净而震撼的画面。在这座日光之城，你会发现生活可以回归最本真的模样。拉萨教会你的是在广阔天地间找到内心真正的自由与平静。", tags: ["纯净圣洁", "壮美风光", "心灵净土", "独特文化", "日光之城"] },
+            qingdao: { name: "青岛", emoji: "⛵", slogan: "红瓦绿树，碧海蓝天", profile: { tempo: 4, soul: 6, nature: 8, social: 5, ambition: 4, taste: 6 }, analysis: "青岛是一座兼具北方大气与海洋浪漫的城市。红瓦绿树、碧海蓝天的城市画面深入人心。这座城市有德式建筑的异域风情、新鲜的海鲜美食和宜人的夏季气候。青岛会给你一种既能努力工作又能诗意栖居的美好生活。", tags: ["海滨城市", "啤酒文化", "宜居环境", "海鲜美食", "浪漫气质"] },
+            dalian: { name: "大连", emoji: "🚢", slogan: "浪漫之都，北方明珠", profile: { tempo: 4, soul: 5, nature: 8, social: 5, ambition: 4, taste: 6 }, analysis: "大连是北方最具浪漫气质的海滨城市。广阔的海岸线、优美的城市绿化和适宜的气候让人流连忘返。这里没有北方城市的粗犷，多了一份精致和浪漫。在大连生活，你可以每天面朝大海，感受这座城市独有的温柔与大气。", tags: ["海滨浪漫", "宜居环境", "海鲜丰富", "足球文化", "北方明珠"] },
+            haerbin: { name: "哈尔滨", emoji: "❄️", slogan: "冰城夏都，东方莫斯科", profile: { tempo: 4, soul: 6, nature: 7, social: 8, ambition: 3, taste: 7 }, analysis: "哈尔滨是一座充满异域风情的城市。冬天的冰雪大世界、中央大街的欧式建筑、热情豪爽的东北人，构成了这座城市独特的魅力。在零下二十度的冬天吃着马迭尔冰棍，这种反差感就是哈尔滨的浪漫。", tags: ["冰雪世界", "欧式风情", "热情豪爽", "东北美食", "性价比高"] },
+            tianjin: { name: "天津", emoji: "🎭", slogan: "哏都生活，津味人间", profile: { tempo: 4, soul: 6, nature: 3, social: 8, ambition: 4, taste: 7 }, analysis: "天津是一座充满幽默感和生活智慧的城市。相声和快板是这座城市的名片，天津人骨子里的幽默和乐观让生活充满欢笑。煎饼果子、狗不理包子、麻花，天津用美食和段子告诉你，生活可以是有滋有味又妙趣横生的。", tags: ["相声之城", "美食丰富", "幽默乐观", "近京优势", "烟火气浓"] },
+            sanya: { name: "三亚", emoji: "🏖️", slogan: "碧海蓝天，椰风海韵", profile: { tempo: 2, soul: 5, nature: 10, social: 4, ambition: 2, taste: 5 }, analysis: "三亚是中国最美的热带海滨城市。碧蓝的大海、洁白的沙滩、温暖的阳光和椰林，让每一天都像在度假。如果你向往海边的生活，渴望在大自然中找到内心的平静，三亚就是你的理想之地。", tags: ["热带天堂", "碧海蓝天", "度假胜地", "阳光充沛", "慢生活"] }
         };
 
         // ==================== 全局变量 ====================
@@ -1367,9 +516,7 @@
                 paid: false,
                 timestamp: Date.now()
             };
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-            } catch(e) {}
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
         }
 
         function savePaidState() {
@@ -1388,29 +535,15 @@
                 const raw = localStorage.getItem(STORAGE_KEY);
                 if (!raw) return null;
                 const data = JSON.parse(raw);
-                // 24小时内有效
                 if (Date.now() - data.timestamp > 24 * 60 * 60 * 1000) {
                     localStorage.removeItem(STORAGE_KEY);
                     return null;
                 }
                 return data;
-            } catch(e) {
-                return null;
-            }
+            } catch(e) { return null; }
         }
 
-        function clearState() {
-            try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
-        }
-
-        // ==================== 环境检测 ====================
-        function isWechatBrowser() {
-            return /MicroMessenger/i.test(navigator.userAgent);
-        }
-
-        function isMobile() {
-            return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-        }
+        function clearState() { try { localStorage.removeItem(STORAGE_KEY); } catch(e) {} }
 
         // ==================== 初始化 ====================
         function initQuestions() {
@@ -1436,25 +569,21 @@
             }
         }
 
-        // 页面加载时检查是否有保存的状态
         window.addEventListener('load', () => {
             const saved = loadState();
             if (saved && saved.calculatedResult) {
-                // 有计算结果
                 questions = saved.questions;
                 answers = saved.answers;
                 calculatedResult = saved.calculatedResult;
 
                 if (saved.paid) {
-                    // 已付费，直接显示结果
                     document.getElementById('startPage').style.display = 'none';
                     showFullResult();
                     showToast('已恢复你的测试结果 ✓');
                 } else {
-                    // 未付费，显示付费墙
                     document.getElementById('startPage').style.display = 'none';
                     showPaywall();
-                    showToast('已恢复测试进度，请完成支付查看结果');
+                    showToast('已恢复测试进度，请输入解锁码查看结果');
                 }
             }
         });
@@ -1536,26 +665,18 @@
             document.getElementById('questionPage').style.display = 'none';
             document.getElementById('loadingPage').style.display = 'block';
 
-            // 动态加载文案
-            const texts = [
-                '正在分析你的生活偏好...',
-                '正在匹配城市性格特征...',
-                '正在计算六维契合度...',
-                '即将揭晓你的灵魂城市...'
-            ];
+            const texts = ['正在分析你的生活偏好...', '正在匹配城市性格特征...', '正在计算六维契合度...', '即将揭晓你的灵魂城市...'];
             let ti = 0;
             const loadingTextEl = document.getElementById('loadingText');
             const textTimer = setInterval(() => {
                 ti++;
-                if (ti < texts.length) {
-                    loadingTextEl.textContent = texts[ti];
-                }
+                if (ti < texts.length) loadingTextEl.textContent = texts[ti];
             }, 700);
 
             setTimeout(() => {
                 clearInterval(textTimer);
                 calculatedResult = calculateResult();
-                saveState(); // 保存状态
+                saveState();
                 showPaywall();
             }, 3000);
         }
@@ -1597,7 +718,7 @@
             return { userProfile, cityMatches, topCity: cityMatches[0] };
         }
 
-        // ==================== 付费墙（全新设计）====================
+        // ==================== 极简小红书付费墙 ====================
         function showPaywall() {
             document.getElementById('loadingPage').style.display = 'none';
             const p = document.getElementById('paywallPage');
@@ -1606,107 +727,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             const buyers = Math.floor(Math.random() * 5000) + 15000;
-            const inWechat = isWechatBrowser();
-            const mobile = isMobile();
-
-            // 根据环境生成不同的支付引导
-            let payAreaHTML = '';
-
-            if (inWechat) {
-                // ===== 微信内打开：直接识别二维码 =====
-                payAreaHTML = `
-                    <div class="pay-env-tip">
-                        <span class="tip-title">💡 当前在微信中打开</span>
-                        长按下方收款码即可直接识别支付，无需截图
-                    </div>
-                    <div class="wechat-pay-area">
-                        <div class="qr-wrapper">
-                            <img src="pay-qrcode.jpg" alt="微信收款码"
-                                 onerror="this.parentElement.innerHTML='<span style=color:#b2bec3;font-size:0.85em;display:flex;align-items:center;justify-content:center;height:100%>请放置收款码图片<br>文件名：pay-qrcode.jpg</span>'">
-                        </div>
-                        <p style="color:#636e72;font-size:0.85em;margin:8px 0;">长按上方二维码 → 识别 → 支付 ¥0.9</p>
-                    </div>
-                    <button class="pay-btn" onclick="openVerifyModal()">✅ 我已完成支付，查看结果</button>
-                `;
-            } else if (mobile) {
-                // ===== 手机浏览器打开 =====
-                payAreaHTML = `
-                    <div class="pay-methods">
-                        <div class="pay-method-tabs">
-                            <div class="pay-tab active" onclick="switchPayTab('qrcode', this)">
-                                <span class="pay-tab-icon">📱</span> 扫码支付
-                            </div>
-                            <div class="pay-tab" onclick="switchPayTab('transfer', this)">
-                                <span class="pay-tab-icon">💬</span> 微信转账
-                            </div>
-                        </div>
-
-                        <div class="pay-content active" id="payContent_qrcode">
-                            <div class="pay-env-tip">
-                                <span class="tip-title">📱 手机浏览器支付方式</span>
-                                ① 长按下方二维码，选择「保存图片」<br>
-                                ② 打开微信 → 扫一扫 → 右上角相册<br>
-                                ③ 选择刚保存的图片完成支付<br>
-                                <strong>⚡ 你的答题记录已自动保存，支付后回到本页即可查看</strong>
-                            </div>
-                            <div class="wechat-pay-area">
-                                <div class="qr-wrapper">
-                                    <img src="pay-qrcode.jpg" alt="微信收款码"
-                                         onerror="this.parentElement.innerHTML='<span style=color:#b2bec3;font-size:0.85em;display:flex;align-items:center;justify-content:center;height:100%>请放置收款码图片<br>文件名：pay-qrcode.jpg</span>'">
-                                </div>
-                                <p style="color:#636e72;font-size:0.85em;margin:8px 0;">长按保存 → 微信扫一扫 → 选相册图片</p>
-                            </div>
-                        </div>
-
-                        <div class="pay-content" id="payContent_transfer">
-                            <div class="pay-env-tip">
-                                <span class="tip-title">💬 微信好友转账</span>
-                                添加下方微信号，转账 ¥0.9 并发送「城市测试」即可
-                            </div>
-                            <div class="transfer-area">
-                                <div class="transfer-info-item">
-                                    <span class="transfer-label">微信号</span>
-                                    <span class="transfer-value">
-                                        <span id="wechatId">your_wechat_id</span>
-                                        <button class="copy-btn" onclick="copyText('your_wechat_id', this)">复制</button>
-                                    </span>
-                                </div>
-                                <div class="transfer-info-item">
-                                    <span class="transfer-label">转账金额</span>
-                                    <span class="transfer-value" style="color:#e74c3c;">¥0.9</span>
-                                </div>
-                                <div class="transfer-info-item">
-                                    <span class="transfer-label">备注信息</span>
-                                    <span class="transfer-value">
-                                        <span>城市测试</span>
-                                        <button class="copy-btn" onclick="copyText('城市测试', this)">复制</button>
-                                    </span>
-                                </div>
-                                <div class="transfer-note">
-                                    💡 转账后请发送「城市测试」，客服会在5分钟内回复解锁码
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="pay-btn" onclick="openVerifyModal()">✅ 我已完成支付，查看结果</button>
-                `;
-            } else {
-                // ===== 电脑浏览器打开 =====
-                payAreaHTML = `
-                    <div class="pay-env-tip">
-                        <span class="tip-title">💻 电脑端支付</span>
-                        请使用微信扫描下方二维码完成支付
-                    </div>
-                    <div class="wechat-pay-area">
-                        <div class="qr-wrapper">
-                            <img src="pay-qrcode.jpg" alt="微信收款码"
-                                 onerror="this.parentElement.innerHTML='<span style=color:#b2bec3;font-size:0.85em;display:flex;align-items:center;justify-content:center;height:100%>请放置收款码图片<br>文件名：pay-qrcode.jpg</span>'">
-                        </div>
-                        <p style="color:#636e72;font-size:0.85em;margin:8px 0;">打开微信扫一扫 → 扫描上方二维码 → 支付 ¥0.9</p>
-                    </div>
-                    <button class="pay-btn" onclick="openVerifyModal()">✅ 我已完成支付，查看结果</button>
-                `;
-            }
 
             p.innerHTML = `
                 <h2>匹配完成</h2>
@@ -1743,16 +763,37 @@
                     <div class="feature-item"><span class="check-icon">✓</span><span>专属城市标签和详细介绍</span></div>
                 </div>
 
-                ${payAreaHTML}
+                <div class="pay-env-tip">
+                    <span class="tip-title">📕 购买与解锁说明</span>
+                    <p style="color:#636e72; font-size:14px; line-height:1.8;">
+                        1. 点击下方大红按钮，前往小红书购买解锁码（仅需 0.9 元）<br>
+                        2. 付款成功后，小红书系统会自动在聊天里发送一个【解锁码】给你<br>
+                        3. 复制它，回到这里在最下方输入，即可秒开查看完整报告
+                    </p>
+                </div>
+
+                <button class="pay-btn" onclick="window.location.href='https://xhslink.com/你的小红书商品链接'">
+                    前往小红书购买解锁码 (¥0.9)
+                </button>
+
+                <div class="verify-section">
+                    <label>🔑 已在小红书购票？请输入解锁码：</label>
+                    <input type="text" id="myCodeInput" placeholder="请输入发卡插件发你的解锁码" class="verify-input">
+                    
+                    <button class="pay-btn pay-btn-dark" onclick="checkMyCode()">
+                        验证解锁码并查看报告
+                    </button>
+                    <p id="errorMsg" class="verify-error">解锁码验证不通过，请检查是否输入正确或已被使用</p>
+                </div>
 
                 <div class="paywall-guarantee">
-                    <span class="guarantee-item">🔒 安全支付</span>
-                    <span class="guarantee-item">⚡ 即时查看</span>
+                    <span class="guarantee-item">🔒 平台担保</span>
+                    <span class="guarantee-item">⚡ 自动发货</span>
                     <span class="guarantee-item">🎯 精准匹配</span>
                 </div>
 
                 <p class="paywall-note">
-                    支付遇到问题？添加客服微信：your_wechat_id<br>
+                    支付遇到问题或需要售后？添加作者微信：your_wechat_id<br>
                     本测试仅供参考和娱乐
                 </p>
             `;
@@ -1760,39 +801,27 @@
             startCountdown();
         }
 
-        function switchPayTab(tab, el) {
-            document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.pay-content').forEach(c => c.classList.remove('active'));
-            el.classList.add('active');
-            document.getElementById('payContent_' + tab).classList.add('active');
-        }
+        // ==================== 验证解锁码 ====================
+        function checkMyCode() {
+            const inputCode = document.getElementById('myCodeInput').value.trim().toUpperCase();
+            const errorMsg = document.getElementById('errorMsg');
+            
+            // ⚠️【替换重要】这里放你在小红书自动发卡软件里存好的卡密，用户输入只要匹配其中一个就算通过
+            const validCodes = [
+                'JOY-888', 
+                'JOY-999', 
+                'JOY-666',
+                'XHS-ABC123XYZ'
+            ];
 
-        function copyText(text, btn) {
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(text).then(() => {
-                    btn.textContent = '已复制';
-                    btn.classList.add('copied');
-                    showToast('已复制到剪贴板 ✓');
-                    setTimeout(() => {
-                        btn.textContent = '复制';
-                        btn.classList.remove('copied');
-                    }, 2000);
-                });
+            if (validCodes.includes(inputCode)) {
+                errorMsg.style.display = 'none';
+                savePaidState(); // 更新 LocalStorage 为已支付
+                document.getElementById('paywallPage').style.display = 'none';
+                showFullResult();
+                showToast('解锁成功！正在为您生成精美报告 🎉');
             } else {
-                // 降级方案
-                const input = document.createElement('input');
-                input.value = text;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
-                btn.textContent = '已复制';
-                btn.classList.add('copied');
-                showToast('已复制到剪贴板 ✓');
-                setTimeout(() => {
-                    btn.textContent = '复制';
-                    btn.classList.remove('copied');
-                }, 2000);
+                errorMsg.style.display = 'block';
             }
         }
 
@@ -1807,108 +836,6 @@
             }, 1000);
         }
 
-        // ==================== 支付验证弹窗 ====================
-        function openVerifyModal() {
-            const modal = document.getElementById('payModal');
-            const content = document.getElementById('payModalContent');
-
-            content.innerHTML = `
-                <button class="close-modal" onclick="closeModal()">×</button>
-                <h3>验证支付</h3>
-
-                <div id="vStep1">
-                    <div class="verify-waiting">
-                        <div class="wait-spinner"></div>
-                        <p>正在查询支付记录...</p>
-                        <p style="font-size:0.8em;color:#b2bec3;margin-top:8px;">预计需要 <span id="vCountdown">5</span> 秒</p>
-                    </div>
-                </div>
-
-                <div id="vStep2" style="display:none;">
-                    <div style="background:#fff5e6;border-radius:10px;padding:14px;margin:12px 0;text-align:left;">
-                        <p style="color:#e67e22;font-size:0.88em;margin:0;font-weight:500;">⚠️ 未自动查询到支付记录</p>
-                        <p style="color:#b2bec3;font-size:0.78em;margin:6px 0 0;">可能存在延迟，请手动验证</p>
-                    </div>
-
-                    <div class="verify-input-group">
-                        <label>请输入你支付的金额</label>
-                        <input type="text" id="vAmountInput" class="verify-input"
-                               placeholder="请输入金额，如 0.90" maxlength="5"
-                               oninput="checkVerifyInput()">
-                        <p class="verify-input-hint">请输入实际支付金额（精确到分）</p>
-                    </div>
-
-                    <div class="verify-input-group">
-                        <label>请输入微信昵称的第一个字</label>
-                        <input type="text" id="vNameInput" class="verify-input"
-                               placeholder="例如：小" maxlength="2"
-                               oninput="checkVerifyInput()">
-                        <p class="verify-input-hint">用于核对支付信息</p>
-                    </div>
-
-                    <button class="confirm-paid-btn" id="vConfirmBtn" onclick="doFinalVerify()" disabled>
-                        验证并查看报告
-                    </button>
-                    <p id="vError" class="verify-error"></p>
-
-                    <p style="color:#b2bec3;font-size:0.78em;margin-top:14px;line-height:1.6;">
-                        如果确实已支付但无法验证，请联系客服<br>
-                        微信：your_wechat_id
-                    </p>
-                </div>
-            `;
-
-            modal.classList.add('show');
-
-            // 自动倒计时
-            let sec = 5;
-            const cdEl = document.getElementById('vCountdown');
-            const timer = setInterval(() => {
-                sec--;
-                if (cdEl) cdEl.textContent = sec;
-                if (sec <= 0) {
-                    clearInterval(timer);
-                    document.getElementById('vStep1').style.display = 'none';
-                    document.getElementById('vStep2').style.display = 'block';
-                }
-            }, 1000);
-        }
-
-        function closeModal() {
-            document.getElementById('payModal').classList.remove('show');
-        }
-
-        function checkVerifyInput() {
-            const a = document.getElementById('vAmountInput').value.trim();
-            const n = document.getElementById('vNameInput').value.trim();
-            const btn = document.getElementById('vConfirmBtn');
-            btn.disabled = !(a.length > 0 && n.length > 0);
-            const err = document.getElementById('vError');
-            if (err) err.style.display = 'none';
-        }
-
-        function doFinalVerify() {
-            const a = document.getElementById('vAmountInput').value.trim();
-            const err = document.getElementById('vError');
-            const validAmounts = ['0.9', '0.90', '￥0.9', '￥0.90', '¥0.9', '¥0.90'];
-
-            if (!validAmounts.includes(a)) {
-                if (err) {
-                    err.textContent = '金额不正确，请确认支付 ¥0.9 后重试';
-                    err.style.display = 'block';
-                }
-                return;
-            }
-
-            // 验证通过
-            closeModal();
-            if (countdownInterval) clearInterval(countdownInterval);
-            savePaidState(); // 保存已付费状态
-            document.getElementById('paywallPage').style.display = 'none';
-            showFullResult();
-            showToast('验证成功，报告已解锁 🎉');
-        }
-
         // ==================== 结果页 ====================
         function showFullResult() {
             const { userProfile, cityMatches, topCity } = calculatedResult;
@@ -1919,7 +846,6 @@
 
             const tc = topCity.city;
             const matchPct = Math.min(98, Math.max(72, topCity.matchScore + Math.floor(Math.random()*5)));
-
             const dimLabels = ["生活节奏", "审美取向", "环境偏好", "社交倾向", "事业追求", "口味偏好"];
 
             let dimHTML = '';
@@ -2018,14 +944,14 @@
             calculatedResult = null;
             if (countdownInterval) clearInterval(countdownInterval);
             if (autoNextTimer) clearTimeout(autoNextTimer);
-            clearState(); // 清除本地存储
+            clearState();
             document.getElementById('resultPage').style.display = 'none';
             document.getElementById('paywallPage').style.display = 'none';
             document.getElementById('startPage').style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ==================== 键盘快捷键 ====================
+        // 键盘处理
         document.addEventListener('keydown', (e) => {
             if (document.getElementById('questionPage').style.display === 'block') {
                 if (e.key >= '1' && e.key <= '4') {
@@ -2040,12 +966,6 @@
                     if (!document.getElementById('prevBtn').disabled) prevQuestion();
                 }
             }
-            if (e.key === 'Escape') closeModal();
-        });
-
-        // 点击弹窗外部关闭
-        document.getElementById('payModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('payModal')) closeModal();
         });
     </script>
 </body>

@@ -5,7 +5,6 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>测测适合你的城市 - JoyCece</title>
     <style>
-        /* CSS样式保持不变，直接复用你原来的设计 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -89,7 +88,7 @@
         .progress-container { margin-bottom: 28px; }
         .progress-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.88em; color: #636e72; }
         .progress-bar { height: 6px; background: #e8f5ee; border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, #00b894, #00cec9); border-radius: 10px; transition: width 0.5s ease; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #00b894, #00cec9); border-radius: 10px; transition: width 0.3s ease; }
         .dim-tag { display: inline-block; background: #e8f5ee; color: #00b894; padding: 4px 14px; border-radius: 20px; font-size: 0.78em; margin-bottom: 18px; font-weight: 500; }
 
         /* 答题页 */
@@ -103,7 +102,7 @@
             border: 2px solid #e8f5ee;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             font-size: 0.98em;
             color: #2d3436;
             display: flex;
@@ -113,11 +112,11 @@
         }
         .option:hover { border-color: #55efc4; background: #f8fcfa; }
         .option.selected { border-color: #00b894; background: #f0faf6; font-weight: 500; }
-        .option-radio { width: 22px; height: 22px; border: 2px solid #b2bec3; border-radius: 50%; flex-shrink: 0; position: relative; transition: all 0.25s; }
+        .option-radio { width: 22px; height: 22px; border: 2px solid #b2bec3; border-radius: 50%; flex-shrink: 0; position: relative; transition: all 0.2s; }
         .option.selected .option-radio { border-color: #00b894; }
         .option.selected .option-radio::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; background: #00b894; border-radius: 50%; }
         .option-text { flex: 1; }
-        .auto-next-hint { text-align: center; color: #00b894; font-size: 0.85em; margin-top: -16px; margin-bottom: 18px; opacity: 0; transition: opacity 0.3s; }
+        .auto-next-hint { text-align: center; color: #00b894; font-size: 0.85em; margin-top: -16px; margin-bottom: 18px; opacity: 0; transition: opacity 0.2s; }
         .auto-next-hint.show { opacity: 1; }
 
         .btn-group { display: flex; justify-content: space-between; gap: 12px; }
@@ -134,7 +133,7 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         .loading-text { color: #636e72; font-size: 1.05em; }
 
-        /* ========== 公众号验证墙 (原付费墙) ========== */
+        /* ========== 公众号验证墙 ========== */
         .paywall-page { display: none; text-align: center; padding: 20px 0; }
         .paywall-page h2 { font-size: 1.6em; color: #2d3436; margin-bottom: 12px; }
         .paywall-page .subtitle { color: #636e72; margin-bottom: 24px; font-size: 1em; }
@@ -204,8 +203,9 @@
         .home-btn:hover { background: #f0faf6; }
         .button-center { text-align: center; margin-top: 20px; }
 
-        .fade-in { animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        /* 动画提速 */
+        .fade-in { animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Toast 提示 */
         .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #2d3436; color: white; padding: 12px 24px; border-radius: 10px; font-size: 0.9em; z-index: 2000; transition: transform 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
@@ -234,7 +234,7 @@
 
             <div class='info-box'>
                 <h4>关于这个测试</h4>
-                <p>本测试从六个维度评估你的生活偏好和性格特质，并从20座中国城市中为你匹配最适合的那一座。每座城市都有独特的气质和生活节奏，找到与你最契合的城市。</p>
+                <p>本测试从六个维度评估你的生活偏好和性格特质，并从20座中国城市中为你匹配最适合的那一座。不要想太多，凭第一直觉作答即可！</p>
             </div>
 
             <div class='dimension-grid'>
@@ -247,16 +247,14 @@
             </div>
 
             <p style='color:#636e72;font-size:0.9em;margin-bottom:24px;line-height:1.6;'>
-                共 24 道题目，预计用时 3 分钟<br>请根据你的真实感受作答
+                共 24 道情境题，预计用时 2 分钟<br>跟随内心，马上出发
             </p>
 
-            <button class='start-btn' onclick='startQuiz()'>开始测试</button>
-
-            <p class='disclaimer'>本测试仅供参考和娱乐<br>适合你的城市是你心之所向的地方</p>
+            <button class='start-btn' onclick='startQuiz()'>开始匹配我的城市</button>
         </div>
 
         <div class='question-page' id='questionPage'>
-             <div class='progress-container'>
+            <div class='progress-container'>
                 <div class='progress-info'>
                     <span id='progressText'>第 1 / 24 题</span>
                     <span id='progressPercent'>0%</span>
@@ -271,7 +269,7 @@
                 <p class='question-scenario' id='questionScenario'></p>
                 <div class='question-text' id='questionText'></div>
                 <div class='options' id='optionsArea'></div>
-                <div class='auto-next-hint' id='autoNextHint'>已选择，正在跳转下一题...</div>
+                <div class='auto-next-hint' id='autoNextHint'>已选择，自动跳转中...</div>
             </div>
 
             <div class='btn-group'>
@@ -282,7 +280,7 @@
 
         <div class='loading-page' id='loadingPage'>
             <div class='loading-spinner'></div>
-            <div class='loading-text' id='loadingText'>正在为你匹配最合适的城市...</div>
+            <div class='loading-text' id='loadingText'>正在解码你的生活基因...</div>
         </div>
 
         <div class='paywall-page' id='paywallPage'></div>
@@ -291,18 +289,191 @@
     </div>
 
     <script>
-        // ==================== 题目数据及城市数据 ====================
-        // （这部分因为非常长，为了代码简洁我在这里省略了，你直接保留你原来的 questionsRaw 和 cities 对象即可！）
-        // 请在此处保留你原来的 const dimNames, questionsRaw 和 cities
-        /* --- 请在这里粘回你原有的题库和城市数据 --- */
-
-        // 为了保证代码可直接运行演示，我放置一个简化版的占位数据，实际请用你的完整数据覆盖这里
+        // ==================== 全新情境题库 (24题) ====================
         const dimNames = { tempo: '生活节奏', soul: '审美取向', nature: '环境偏好', social: '社交倾向', ambition: '事业追求', taste: '口味偏好' };
         const dimCodes = ['tempo', 'soul', 'nature', 'social', 'ambition', 'taste'];
-        // 注意：将你的 questionsRaw 和 cities 放回这里
-        const questionsRaw = [{ dim: 'tempo', scenario: '测试题目加载', q: '你看到了这个说明代码没粘全', options: [ { text: '替换回我原来的题库', scores: { tempo: 9 } } ] }];
-        const cities = { beijing: { name: '北京', emoji: '🏯', slogan: '请替换回原数据', profile: { tempo: 7, soul: 8, nature: 4, social: 6, ambition: 9, taste: 6 }, analysis: '略', tags: ['略'] } };
 
+        const questionsRaw = [
+            // 维度 1: 生活节奏 (tempo)
+            { dim: 'tempo', scenario: '假如你拥有一个“人生遥控器”', q: '面对目前的日常生活，你最想按哪个键？', options: [
+                { text: '▶️ 2.0倍速快进，想要尽快达成目标', scores: { tempo: 9, ambition: 3 } },
+                { text: '⏸️ 暂停键，让我喘口气发会儿呆', scores: { tempo: 1, soul: 3 } },
+                { text: '🔀 随机播放，想要一些意料之外的惊喜', scores: { tempo: 6, social: 2 } },
+                { text: '正常播放就好，按部就班地体验一切', scores: { tempo: 4, nature: 2 } }
+            ]},
+            { dim: 'tempo', scenario: '突然天降一个完全没有任何安排的周末', q: '你的第一反应和行动会是？', options: [
+                { text: '有点慌，马上掏出手机规划一堆待办事项', scores: { tempo: 9, ambition: 2 } },
+                { text: '太爽了！睡到自然醒，穿着睡衣宅一天', scores: { tempo: 1, soul: 3 } },
+                { text: '看心情，可能会临时约个局或随便溜达', scores: { tempo: 5, social: 3 } },
+                { text: '趁机做大扫除或者研究一道复杂的菜', scores: { tempo: 3, nature: 2 } }
+            ]},
+            { dim: 'tempo', scenario: '赶去见朋友，导航显示你会迟到5分钟', q: '这时的你会怎么做？', options: [
+                { text: '一路狂奔，并且提前疯狂发微信道歉', scores: { tempo: 8, social: 2 } },
+                { text: '稍微加快脚步，心里有点急但尽力了', scores: { tempo: 6 } },
+                { text: '发消息告知情况，然后按正常步速走', scores: { tempo: 4 } },
+                { text: '慢悠悠走过去，顺便在路边买杯奶茶', scores: { tempo: 1, soul: 3 } }
+            ]},
+            { dim: 'tempo', scenario: '出门在外，手机电量只剩15%且没带充电宝', q: '你的真实心理活动是？', options: [
+                { text: '极度焦虑，四处扫视哪里有共享充电宝', scores: { tempo: 9, social: 2 } },
+                { text: '开启省电模式，只处理最重要的信息', scores: { tempo: 6, ambition: 2 } },
+                { text: '无所谓，正好戒网几个小时，感受真实世界', scores: { tempo: 2, soul: 4 } },
+                { text: '凭直觉往回走，相信自己不看导航也能行', scores: { tempo: 4, nature: 2 } }
+            ]},
+
+            // 维度 2: 审美取向 (soul)
+            { dim: 'soul', scenario: '如果要给你的生活加一层电影滤镜', q: '你希望它呈现出怎样的色调？', options: [
+                { text: '赛博朋克的霓虹色，充满科幻与未来感', scores: { soul: 2, tempo: 4, ambition: 3 } },
+                { text: '极简的黑白灰，干净利落高级感', scores: { soul: 4, ambition: 2 } },
+                { text: '胶片质感的暖黄色，复古且充满故事感', scores: { soul: 9, nature: 2 } },
+                { text: '高饱和的多巴胺色彩，明媚活泼热烈', scores: { soul: 6, social: 4 } }
+            ]},
+            { dim: 'soul', scenario: '推开一家陌生咖啡店的门', q: '最先让你决定“就是这儿了”的原因是？', options: [
+                { text: '店里放着一首极其小众且对胃口的歌', scores: { soul: 9 } },
+                { text: '角落里有一只正在打盹的胖橘猫', scores: { soul: 7, nature: 4 } },
+                { text: '明亮通透的落地窗和极简的工业风装修', scores: { soul: 3, tempo: 2 } },
+                { text: '刚出炉的黄油羊角包散发出的致命香气', scores: { soul: 5, taste: 4 } }
+            ]},
+            { dim: 'soul', scenario: '深夜失眠，你需要一段白噪音来助眠', q: '你会选择播放什么声音？', options: [
+                { text: '淅淅沥沥打在树叶上的春雨声', scores: { soul: 8, nature: 4 } },
+                { text: '壁炉里木柴燃烧发出轻微的劈啪声', scores: { soul: 9 } },
+                { text: '深夜城市街道隐约的车流声', scores: { soul: 2, tempo: 3 } },
+                { text: '带有异国情调的轻柔爵士乐', scores: { soul: 7, taste: 2 } }
+            ]},
+            { dim: 'soul', scenario: '挑选一本明年要用的日历或手帐', q: '什么特质能让你毫不犹豫地买单？', options: [
+                { text: '内页插画出自喜欢的独立插画师之手', scores: { soul: 9 } },
+                { text: '纸张触感极佳，摸起来有颗粒感', scores: { soul: 8, nature: 2 } },
+                { text: '功能分区极其合理，带各种打卡追踪模块', scores: { soul: 2, ambition: 4 } },
+                { text: '设计极其简单，只有一个大大的日期', scores: { soul: 4, tempo: 2 } }
+            ]},
+
+            // 维度 3: 环境偏好 (nature)
+            { dim: 'nature', scenario: '终于买下了梦想中的房子', q: '拉开窗帘的那一刻，你最渴望看到什么？', options: [
+                { text: '一望无际的海平线和海浪的波纹', scores: { nature: 9, soul: 2 } },
+                { text: '繁华CBD闪烁的霓虹灯和车水马龙', scores: { nature: 1, tempo: 4, ambition: 4 } },
+                { text: '郁郁葱葱的山林和缭绕的晨雾', scores: { nature: 10, soul: 3 } },
+                { text: '楼下充满生活气息的老街道和小摊贩', scores: { nature: 4, social: 3, taste: 2 } }
+            ]},
+            { dim: 'nature', scenario: '抽中了一张免费的单程机票', q: '行李已经打包好，你想立刻飞去哪里？', options: [
+                { text: '原始森林里的避世小木屋', scores: { nature: 10, social: 1 } },
+                { text: '充满人文历史气息的千年古镇', scores: { nature: 6, soul: 5 } },
+                { text: '热烈奔放的热带阳光海岛', scores: { nature: 8, social: 3 } },
+                { text: '全世界最繁华的国际大都市', scores: { nature: 2, ambition: 4, tempo: 3 } }
+            ]},
+            { dim: 'nature', scenario: '如果在路上散步时只能带一样东西', q: '你会选择带什么？', options: [
+                { text: '一部相机，记录偶尔出现的光影', scores: { nature: 7, soul: 4 } },
+                { text: '一只修狗，和它一起在草地上奔跑', scores: { nature: 9, social: 2 } },
+                { text: '一副降噪耳机，隔绝喧嚣只听播客', scores: { nature: 3, soul: 2 } },
+                { text: '什么都不带，双手插兜感受晚风', scores: { nature: 8, soul: 3 } }
+            ]},
+            { dim: 'nature', scenario: '连续下了一周的雨后终于迎来了大晴天', q: '你的多巴胺分泌来源于？', options: [
+                { text: '立刻拿上野餐垫去公园晒太阳', scores: { nature: 9, social: 2 } },
+                { text: '把所有被子衣服拿出来洗晒，闻太阳的味道', scores: { nature: 6, soul: 2 } },
+                { text: '打开窗户通通风，然后继续在屋里待着', scores: { nature: 3, soul: 2 } },
+                { text: '太好了，终于可以不受阻碍地出门逛街/办事了', scores: { nature: 1, tempo: 3 } }
+            ]},
+
+            // 维度 4: 社交倾向 (social)
+            { dim: 'social', scenario: '对你来说，一场“人类高质量聚会”必须是：', q: '以下哪种场景？', options: [
+                { text: '和两三个交心好友在微醺中深度畅聊', scores: { social: 5, soul: 4 } },
+                { text: '几十个人的大Party，音乐震天响到处认识新朋友', scores: { social: 10, tempo: 3 } },
+                { text: '大家聚在一起玩桌游或剧本杀，有共同目标', scores: { social: 7, ambition: 2 } },
+                { text: '我更喜欢“高质量独处”，和我的猫/狗待在一起', scores: { social: 1, nature: 3 } }
+            ]},
+            { dim: 'social', scenario: '手机突然弹出来一条微信：“在吗？”', q: '你真实的内心OS是：', options: [
+                { text: '“秒回一个问号，看看有啥八卦或安排”', scores: { social: 9, tempo: 2 } },
+                { text: '“有事说事，别问在不在（等半小时再回）”', scores: { social: 4, tempo: 3 } },
+                { text: '心里一紧：“天哪，又有什么麻烦事找我...”', scores: { social: 1, soul: 2 } },
+                { text: '装作没看见，直到对方说出具体事情再判断', scores: { social: 3, ambition: 1 } }
+            ]},
+            { dim: 'social', scenario: '独自一人来到一家人气很旺的苍蝇馆子', q: '店里只剩下需要和陌生人拼桌的座位，你会？', options: [
+                { text: '毫不犹豫坐下，甚至还能和对面聊上两句', scores: { social: 9, taste: 3 } },
+                { text: '坐下默默吃自己的，绝不抬头对视', scores: { social: 4, taste: 4 } },
+                { text: '觉得太尴尬了，果断打包带走', scores: { social: 2 } },
+                { text: '果断换一家不需要拼桌的店', scores: { social: 1, soul: 2 } }
+            ]},
+            { dim: 'social', scenario: '周末的晚上，你理想的状态是？', q: '哪个画面让你觉得最舒服？', options: [
+                { text: '穿梭在热闹的夜市或酒吧街，感受人声鼎沸', scores: { social: 9, taste: 2 } },
+                { text: '邀请几个朋友来家里做客，亲自下厨招待', scores: { social: 7, taste: 3 } },
+                { text: '一个人窝在沙发里，看一部早就马好的老电影', scores: { social: 2, soul: 4 } },
+                { text: '戴着耳机夜跑，享受流汗和独处的快感', scores: { social: 3, tempo: 2, nature: 2 } }
+            ]},
+
+            // 维度 5: 事业追求 (ambition)
+            { dim: 'ambition', scenario: '面对两个工作Offer，待遇完全相同', q: '哪个“附加属性”会让你毫不犹豫签合同？', options: [
+                { text: '公司处于风口赛道，未来有巨大升值和敲钟空间', scores: { ambition: 10, tempo: 3 } },
+                { text: '做的是我极度热爱的事，能发挥我的创造力', scores: { ambition: 6, soul: 4 } },
+                { text: '严格双休绝对不加班，能实现生活与工作平衡', scores: { ambition: 1, nature: 3 } },
+                { text: '同事氛围极好，每天上班像在说相声', scores: { ambition: 4, social: 4 } }
+            ]},
+            { dim: 'ambition', scenario: '领导交给你一个极具挑战但也极容易搞砸的项目', q: '你的第一直觉是？', options: [
+                { text: '干就完了！风险越大收益越大，搏一搏单车变摩托', scores: { ambition: 9, tempo: 3 } },
+                { text: '先冷静分析利弊，评估自己到底有几成胜算', scores: { ambition: 7, soul: 2 } },
+                { text: '试着把锅甩出去或者拉别人一起垫背（组队）', scores: { ambition: 4, social: 3 } },
+                { text: '婉言拒绝，我只想安安稳稳做我分内的事', scores: { ambition: 1, nature: 2 } }
+            ]},
+            { dim: 'ambition', scenario: '关于“搞钱”和“搞快乐”', q: '如果在当前人生阶段只能选其一，你的答案是？', options: [
+                { text: '毫无疑问搞钱！有了钱自然就快乐了', scores: { ambition: 10, tempo: 2 } },
+                { text: '千金难买我乐意，生活质量和心情最重要', scores: { ambition: 2, soul: 4 } },
+                { text: '钱要赚，但绝不能以牺牲健康和自由为代价', scores: { ambition: 5, nature: 3 } },
+                { text: '跟着感觉走，哪边让我有成就感就搞哪边', scores: { ambition: 6, soul: 2 } }
+            ]},
+            { dim: 'ambition', scenario: '幻想一下十年后的同学聚会', q: '你最希望别人在背后怎么评价你？', options: [
+                { text: '“大佬啊，他现在真的是混得风生水起。”', scores: { ambition: 9, social: 2 } },
+                { text: '“他活得真通透，过着我们都羡慕的自由生活。”', scores: { ambition: 3, soul: 5, nature: 3 } },
+                { text: '“他真的一点都没变，还是那么有趣、热爱生活。”', scores: { ambition: 2, social: 4 } },
+                { text: '最好别讨论我，我只是来吃个饭叙个旧的', scores: { ambition: 1, social: 2 } }
+            ]},
+
+            // 维度 6: 口味偏好 (taste)
+            { dim: 'taste', scenario: '结束了极其疲惫、甚至想哭的一天', q: '什么食物能瞬间把你从深渊里拉出来？', options: [
+                { text: '一顿暴汗的热辣火锅，用痛觉驱赶丧气', scores: { taste: 9, social: 2 } },
+                { text: '一碗热气腾腾的软糯鸡汤面，抚慰肠胃', scores: { taste: 4, soul: 2 } },
+                { text: '高热量的炸鸡汉堡可乐，快乐水万岁', scores: { taste: 7, tempo: 2 } },
+                { text: '一份精致甜到心坎里的法式甜点', scores: { taste: 5, soul: 3 } }
+            ]},
+            { dim: 'taste', scenario: '如果要把你的性格比作一种味道', q: '你觉得你更偏向？', options: [
+                { text: '鲜香麻辣：直爽火爆，敢爱敢恨', scores: { taste: 9, social: 3 } },
+                { text: '清淡回甘：温和包容，越品越有味道', scores: { taste: 2, soul: 3 } },
+                { text: '咸甜交织：有点矛盾，但在熟人面前很对味', scores: { taste: 6, social: 2 } },
+                { text: '微苦醇厚：像黑咖啡，理智且清醒', scores: { taste: 3, ambition: 4 } }
+            ]},
+            { dim: 'taste', scenario: '去一个完全陌生的城市旅行', q: '你的“觅食雷达”通常是如何运作的？', options: [
+                { text: '一头扎进当地的老菜市场，那才是灵魂所在', scores: { taste: 9, nature: 3 } },
+                { text: '提前在各大APP做好详细攻略，打卡必吃榜', scores: { taste: 5, ambition: 2 } },
+                { text: '跟着感觉走，看到哪家顺眼/人多就吃哪家', scores: { taste: 6, tempo: 2 } },
+                { text: '对吃不挑剔，快餐或便利店解决也没关系', scores: { taste: 1, tempo: 3 } }
+            ]},
+            { dim: 'taste', scenario: '在你的冰箱里，永远不能断货的“续命神器”是？', q: '如果断货了你会感到非常没有安全感：', options: [
+                { text: '各种口味的辣椒酱/拌饭酱，万物皆可拌', scores: { taste: 9 } },
+                { text: '冰镇啤酒或各种气泡饮料，主打一个爽', scores: { taste: 7, social: 2 } },
+                { text: '新鲜的时令水果或蔬菜，保持健康规律', scores: { taste: 3, nature: 3 } },
+                { text: '咖啡豆、茶叶或各种精致小零食', scores: { taste: 4, soul: 3 } }
+            ]}
+        ];
+
+        // ==================== 20座城市数据 (完整保留) ====================
+        const cities = {
+            beijing: { name: '北京', emoji: '🏯', slogan: '千年古都，现代之光', profile: { tempo: 7, soul: 8, nature: 4, social: 6, ambition: 9, taste: 6 }, analysis: '北京是一座兼具深厚历史底蕴与现代活力的城市。故宫的红墙、胡同的烟火气、中关村的科技范儿，这里既有最厚重的文化底蕴，也有最前沿的发展机遇。你对事业的追求与对文化的热爱，和这座城市的气质不谋而合。在北京，你可以周末逛故宫品味历史，工作日在CBD追逐梦想。', tags: ['历史文化', '事业发展', '教育名城', '四季分明', '包容大气'] },
+            shanghai: { name: '上海', emoji: '🌃', slogan: '精致海派，无限可能', profile: { tempo: 8, soul: 7, nature: 3, social: 7, ambition: 9, taste: 5 }, analysis: '上海是中国最国际化的城市，中西文化在这里完美融合。外滩的万国建筑、陆家嘴的摩天大楼诉说着这座城市的底蕴与未来。你追求品质生活的态度和开放包容的心态，与上海的海派精神高度契合。在这里有精致的生活方式和丰富的职业机遇。', tags: ['国际化', '精致生活', '商业繁荣', '时尚前沿', '海派文化'] },
+            guangzhou: { name: '广州', emoji: '🌺', slogan: '千年商都，美食天堂', profile: { tempo: 6, soul: 4, nature: 4, social: 8, ambition: 6, taste: 7 }, analysis: '广州是一座充满烟火气与人情味的城市。食在广州绝非浪得虚名，从早茶到夜宵，这座城市用美食温暖每一个人。你对美食的热爱、对温暖人际关系的珍视，会在广州得到最好的回应。务实包容的广州人会让你感到，这里就是家。', tags: ['美食之都', '务实包容', '早茶文化', '烟火气浓', '气候温暖'] },
+            shenzhen: { name: '深圳', emoji: '🚀', slogan: '创新之城，青春无限', profile: { tempo: 9, soul: 3, nature: 4, social: 6, ambition: 10, taste: 5 }, analysis: '深圳是一座年轻而充满创造力的城市，从小渔村到国际大都市的蜕变本身就是最好的励志故事。你骨子里的创新精神和进取心，与深圳敢闯敢试的城市基因完美共鸣。在这里凭实力说话，每个梦想都值得尊重。', tags: ['创新创业', '年轻活力', '公平竞争', '科技前沿', '海滨城市'] },
+            chengdu: { name: '成都', emoji: '🐼', slogan: '天府之国，巴适安逸', profile: { tempo: 3, soul: 7, nature: 6, social: 8, ambition: 4, taste: 9 }, analysis: '成都是一座让人来了就不想走的城市。火锅的热辣、茶馆的悠闲、熊猫的可爱，构成了成都独特的城市性格。这座城市告诉你，奋斗与享受并不矛盾，你可以认真工作，也可以在人民公园喝一杯盖碗茶，感受巴适的人生。', tags: ['美食天堂', '休闲安逸', '火锅之都', '宜居宜业', '乐观豁达'] },
+            hangzhou: { name: '杭州', emoji: '🏞️', slogan: '人间天堂，数字之城', profile: { tempo: 6, soul: 8, nature: 7, social: 5, ambition: 7, taste: 5 }, analysis: '杭州将诗意与活力完美结合。西湖的柔美、钱塘江的壮阔、蓬勃发展的数字经济，让这座城市既有千年底蕴又有无限可能。你对自然之美的欣赏和对创新事业的热情，都能在杭州找到归属。', tags: ['山水如画', '数字经济', '诗意生活', '创业热土', '文化深厚'] },
+            chongqing: { name: '重庆', emoji: '🌶️', slogan: '山城雾都，热辣人生', profile: { tempo: 5, soul: 5, nature: 7, social: 9, ambition: 5, taste: 10 }, analysis: '重庆是一座建在山上的魔幻城市，独特的地形造就了8D的城市景观。这里的人像火锅一样热情直爽，生活像山路一样起伏精彩。在这里你会被壮丽的江景感动、被地道的美食征服、更会被重庆人的乐观豁达感染。', tags: ['山城魔幻', '火锅之都', '热情直爽', '夜景壮观', '性价比高'] },
+            nanjing: { name: '南京', emoji: '🍂', slogan: '六朝古都，文脉悠长', profile: { tempo: 5, soul: 9, nature: 5, social: 6, ambition: 5, taste: 6 }, analysis: '南京是一座让人心生敬意的城市。作为六朝古都，它承载着厚重的历史记忆，同时以开放的姿态拥抱未来。秋天的梧桐大道会让你感动，夫子庙的灯火会让你温暖。南京会给你归属感，让你在深厚的文化滋养中找到内心的安定。', tags: ['历史厚重', '教育名城', '梧桐大道', '宜居城市', '鸭血粉丝'] },
+            suzhou: { name: '苏州', emoji: '🏡', slogan: '诗意江南，人间烟火', profile: { tempo: 4, soul: 9, nature: 7, social: 4, ambition: 5, taste: 4 }, analysis: '苏州将古典韵味与现代活力完美融合。精致的园林、悠长的小巷、温软的吴侬软语，让这座城市充满独特魅力。你对精致生活的追求、对文化与自然和谐共处的向往，与苏州的城市精神高度一致。', tags: ['园林之城', '江南韵味', '经济发达', '精致生活', '宜居宜业'] },
+            xiamen: { name: '厦门', emoji: '🌊', slogan: '海上花园，温馨港湾', profile: { tempo: 3, soul: 8, nature: 9, social: 4, ambition: 3, taste: 4 }, analysis: '厦门是一座精致而温柔的海滨城市。鼓浪屿的琴声、环岛路的海风、沙坡尾的文艺，共同编织出这座城市的独特韵味。这座不大的城市，会给你恰到好处的舒适，不太快也不太慢，不太喧闹也不太寂静，刚刚好。', tags: ['海滨风光', '文艺气质', '气候宜人', '精致小城', '慢生活'] },
+            xian: { name: '西安', emoji: '🏛️', slogan: '十三朝古都，盛世长安', profile: { tempo: 4, soul: 8, nature: 5, social: 7, ambition: 4, taste: 8 }, analysis: '西安是一座让你触摸历史脉搏的城市。十三朝古都的辉煌在这里留下了无数印记，而城墙内外的烟火人间又让这座城市充满生机。你可以骑行在古城墙上感受千年时光，也可以在回民街品尝地道美食。', tags: ['历史文化', '美食荟萃', '古今交融', '性价比高', '豪爽热情'] },
+            changsha: { name: '长沙', emoji: '📺', slogan: '娱乐之都，烟火人间', profile: { tempo: 6, soul: 5, nature: 4, social: 9, ambition: 5, taste: 9 }, analysis: '长沙是一座让你根本停不下来的城市。这里有最火的夜生活、最辣的小龙虾、最嗨的娱乐产业。长沙人骨子里的热情和乐观会感染你，凌晨两点的解放西路和永远排队的茶颜悦色，都是这座城市最真实的模样。', tags: ['娱乐之都', '夜生活丰富', '网红美食', '热情豪爽', '性价比高'] },
+            wuhan: { name: '武汉', emoji: '🌅', slogan: '大江大湖，英雄之城', profile: { tempo: 6, soul: 5, nature: 5, social: 8, ambition: 6, taste: 8 }, analysis: '武汉是一座充满豪情与烟火气稳定的城市。长江与汉江在这里交汇，赋予了这座城市大气磅礴的气质。清晨一碗热干面开始充满活力的一天，傍晚在江滩看壮丽的日落。武汉正在崛起的科技产业也会给你充足的发展空间。', tags: ['大江大湖', '热干面', '教育重镇', '交通枢纽', '热情豪迈'] },
+            kunming: { name: '昆明', emoji: '🌸', slogan: '春城花都，四季如春', profile: { tempo: 2, soul: 6, nature: 10, social: 4, ambition: 2, taste: 5 }, analysis: '昆明是一座被大自然偏爱的城市。四季如春的气候、湛蓝的天空、满城的鲜花，让这座城市成为许多人心中的理想之地。这座城市的从容与宁静会让你放慢脚步，重新发现生活中那些被忽略的美好。在昆明，每一天都是春天。', tags: ['四季如春', '鲜花之城', '空气清新', '多民族文化', '宜居天堂'] },
+            lhasa: { name: '拉萨', emoji: '🏔️', slogan: '日光之城，心灵故乡', profile: { tempo: 1, soul: 9, nature: 10, social: 2, ambition: 1, taste: 3 }, analysis: '拉萨是一座让灵魂得到洗礼的城市。湛蓝的天空、神圣的布达拉宫、虔诚的转经人，构成了一幅纯净而震撼的画面。在这座日光之城，你会发现生活可以回归最本真的模样。拉萨教会你的是在广阔天地间找到内心真正的自由与平静。', tags: ['纯净圣洁', '壮美风光', '心灵净土', '独特文化', '日光之城'] },
+            qingdao: { name: '青岛', emoji: '⛵', slogan: '红瓦绿树，碧海蓝天', profile: { tempo: 4, soul: 6, nature: 8, social: 5, ambition: 4, taste: 6 }, analysis: '青岛是一座兼具北方大气与海洋浪漫的城市。红瓦绿树、碧海蓝天的城市画面深入人心。这座城市有德式建筑的异域风情、新鲜的海鲜美食和宜人的夏季气候。青岛会给你一种既能努力工作又能诗意栖居的美好生活。', tags: ['海滨城市', '啤酒文化', '宜居环境', '海鲜美食', '浪漫气质'] },
+            dalian: { name: '大连', emoji: '🚢', slogan: '浪漫之都，北方明珠', profile: { tempo: 4, soul: 5, nature: 8, social: 5, ambition: 4, taste: 6 }, analysis: '大连是北方最具浪漫气质的海滨城市。广阔的海岸线、优美的城市绿化和适宜的气候让人流连忘返。这里没有北方城市的粗犷，多了一份精致和浪漫。在大连生活，你可以每天面朝大海，感受这座城市独有的温柔与大气。', tags: ['海滨浪漫', '宜居环境', '海鲜丰富', '足球文化', '北方明珠'] },
+            haerbin: { name: '哈尔滨', emoji: '❄️', slogan: '冰城夏都，东方莫斯科', profile: { tempo: 4, soul: 6, nature: 7, social: 8, ambition: 3, taste: 7 }, analysis: '哈尔滨是一座充满异域风情的城市。冬天的冰雪大世界、中央大街的欧式建筑、热情豪爽的东北人，构成了这座城市独特的魅力。在零下二十度的冬天吃着马迭尔冰棍，这种反差感就是哈尔滨的浪漫。', tags: ['冰雪世界', '欧式风情', '热情豪爽', '东北美食', '性价比高'] },
+            tianjin: { name: '天津', emoji: '🎭', slogan: '哏都生活，津味人间', profile: { tempo: 4, soul: 6, nature: 3, social: 8, ambition: 4, taste: 7 }, analysis: '天津是一座充满幽默感和生活智慧的城市。相声和快板是这座城市的名片，天津人骨子里的幽默和乐观让生活充满欢笑。煎饼果子、狗不理包子、麻花，天津用美食和段子告诉你，生活可以是有滋有味又妙趣横生的。', tags: ['相声之城', '美食丰富', '幽默乐观', '近京优势', '烟火气浓'] },
+            sanya: { name: '三亚', emoji: '🏖️', slogan: '碧海蓝天，椰风海韵', profile: { tempo: 2, soul: 5, nature: 10, social: 4, ambition: 2, taste: 5 }, analysis: '三亚是中国最美的热带海滨城市。碧蓝的大海、洁白的沙滩、温暖的阳光和椰林，让每一天都像在度假。如果你向往海边的生活，渴望在大自然中找到内心的平静，三亚就是你的理想之地。', tags: ['热带天堂', '碧海蓝天', '度假胜地', '阳光充沛', '慢生活'] }
+        };
 
         // ==================== 全局变量 ====================
         let currentQuestion = 0;
@@ -459,10 +630,11 @@
             document.getElementById('nextBtn').disabled = false;
             if (isFirst && qIdx < questions.length - 1) {
                 document.getElementById('autoNextHint').classList.add('show');
+                // 跳转提速：从 600ms 修改为了 200ms
                 autoNextTimer = setTimeout(() => {
                     document.getElementById('autoNextHint').classList.remove('show');
                     nextQuestion();
-                }, 600);
+                }, 200);
             }
         }
 
@@ -485,7 +657,7 @@
             document.getElementById('questionPage').style.display = 'none';
             document.getElementById('loadingPage').style.display = 'block';
 
-            const texts = ['正在分析你的生活偏好...', '正在匹配城市性格特征...', '正在计算六维契合度...', '即将揭晓你的灵魂城市...'];
+            const texts = ['正在解码你的生活基因...', '正在匹配城市性格特征...', '正在计算六维契合度...', '即将揭晓你的灵魂城市...'];
             let ti = 0;
             const loadingTextEl = document.getElementById('loadingText');
             const textTimer = setInterval(() => {
@@ -538,7 +710,7 @@
             return { userProfile, cityMatches, topCity: cityMatches[0] };
         }
 
-        // ==================== 公众号验证墙 (核心修改点) ====================
+        // ==================== 公众号验证墙 ====================
         function showPaywall() {
             document.getElementById('loadingPage').style.display = 'none';
             const p = document.getElementById('paywallPage');
@@ -595,18 +767,15 @@
 
         // ==================== 验证唯一密码逻辑 ====================
         function checkMyCode() {
-            // 获取用户输入的密码（去除首尾空格）
             const inputCode = document.getElementById('myCodeInput').value.trim();
             const errorMsg = document.getElementById('errorMsg');
             
-            // ⚠️【替换重要】这里设置你公众号后台自动回复的那个“唯一验证密码”
-            // 比如你在公众号设置了回复"城市"，自动回复内容为："感谢关注！解锁密码是：8888"
-            // 那么这里的 validPassword 就填 '8888'
+            // ⚠️在这里设置你公众号后台自动回复的那个“唯一验证密码”
             const validPassword = '8888';
 
             if (inputCode === validPassword) {
                 errorMsg.style.display = 'none';
-                savePaidState(); // 更新 LocalStorage 为已解锁
+                savePaidState();
                 document.getElementById('paywallPage').style.display = 'none';
                 showFullResult();
                 showToast('解锁成功！正在为您生成精美报告 🎉');
@@ -643,12 +812,12 @@
             });
 
             const profileValues = [
-                userProfile.tempo > 5 ? '快节奏' : '慢生活',
-                userProfile.soul > 5 ? '文艺浪漫' : '务实接地气',
-                userProfile.nature > 5 ? '亲近自然' : '都市生活',
-                userProfile.social > 5 ? '社交达人' : '独处爱好者',
-                userProfile.ambition > 5 ? '拼搏进取' : '安稳幸福',
-                userProfile.taste > 5 ? '重口味' : '清淡系'
+                userProfile.tempo > 5 ? '倍速快进' : '佛系慢摇',
+                userProfile.soul > 5 ? '文艺浪漫' : '务实清醒',
+                userProfile.nature > 5 ? '山林海风' : '霓虹都市',
+                userProfile.social > 5 ? '社交悍匪' : '独处重度患者',
+                userProfile.ambition > 5 ? '搞钱拼搏' : '岁月静好',
+                userProfile.taste > 5 ? '无辣不欢' : '清淡养生'
             ];
 
             let profileHTML = '';
@@ -670,11 +839,11 @@
                     <div class='result-city-emoji'>${tc.emoji}</div>
                     <div class='result-city'>${tc.name}</div>
                     <div class='result-slogan'>${tc.slogan}</div>
-                    <div class='result-match'>匹配度 ${matchPct}%</div>
+                    <div class='result-match'>灵魂契合度 ${matchPct}%</div>
                 </div>
 
                 <div class='result-card'>
-                    <h3>你的生活画像</h3>
+                    <h3>你的生活基因图谱</h3>
                     <div class='profile-grid'>${profileHTML}</div>
                 </div>
 
@@ -684,29 +853,29 @@
                 </div>
 
                 <div class='result-card'>
-                    <h3>六维度详细分析</h3>
+                    <h3>六维雷达详细解析</h3>
                     <div class='dimension-analysis'>${dimHTML}</div>
                 </div>
 
                 <div class='result-card'>
-                    <h3>城市标签</h3>
+                    <h3>城市专属标签</h3>
                     <div class='tags'>${tagsHTML}</div>
                 </div>
 
                 <div class='result-card'>
-                    <h3>其他适合你的城市</h3>
+                    <h3>其他可能适合你的城市</h3>
                     ${otherHTML}
                 </div>
 
                 <div class='result-card' style='background:#f0faf6;border-color:#d0ede0;'>
-                    <h3>温馨寄语</h3>
-                    <p>每座城市都有它独特的魅力与温度。测试结果是一种有趣的参考，而真正适合你的地方，是那个让你心生欢喜、愿意为之努力的地方。</p>
+                    <h3>To 你的一封信</h3>
+                    <p>每座城市都有它独特的韵律，就像每个人都有自己的人生节拍。这个测试或许能为你指引一个方向，但真正能让你安放灵魂的地方，是那个你在奔赴的路上、且愿意为之停留的地方。祝你早日找到你的“命定之城”。</p>
                 </div>
 
                 <div class='button-center'>
                     <button class='restart-btn' onclick='restart()'>重新测试</button>
                     <br>
-                    <button class='home-btn' onclick='location.reload()'>刷新页面</button>
+                    <button class='home-btn' onclick='location.reload()'>返回首页</button>
                 </div>
             `;
 

@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>研究生精神状态鉴定测试 2026版</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+
+  :root {
+    --bg: #0e0e12;
+    --surface: #16161c;
+    --card: #1c1c24;
+    --border: #2a2a36;
+    --accent: #7c6af7;
+    --accent2: #f76a8a;
+    --accent3: #6af7c8;
+    --text: #e8e8f0;
+    --muted: #7a7a92;
+    --yellow: #f7d96a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Subtle grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,106,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,106,247,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* ── COVER ── */
+  #cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 0;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    opacity: 0.9;
+  }
+
+  .cover-title {
+    font-size: clamp(26px, 6vw, 40px);
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .cover-title .highlight {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cover-sub {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+
+  .cover-stats {
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    margin-bottom: 44px;
+  }
+
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--accent3);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  .btn-start {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 50px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 24px rgba(124,106,247,0.35);
+    font-family: inherit;
+  }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,106,247,0.45); }
+  .btn-start:active { transform: translateY(0); }
+
+  .cover-disclaimer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ── QUIZ ── */
+  #quiz { display: none; }
+
+  .progress-bar-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    padding: 16px 0 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .progress-meta span:last-child { color: var(--accent); font-weight: 700; }
+
+  .progress-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+
+  .question-card {
+    animation: slideIn 0.28s cubic-bezier(.4,0,.2,1);
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .q-text {
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    white-space: pre-line;
+  }
+
+  .q-context {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    line-height: 1.6;
+    white-space: pre-line;
+    font-style: italic;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .opt-btn {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    padding: 15px 18px;
+    border-radius: 12px;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    line-height: 1.5;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .opt-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .opt-btn:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+  .opt-btn:hover::before { opacity: 0.07; }
+
+  .opt-btn.selected {
+    border-color: var(--accent);
+    background: rgba(124,106,247,0.15);
+    color: #fff;
+    transform: translateX(6px);
+    pointer-events: none;
+  }
+
+  .opt-btn .opt-text { position: relative; z-index: 1; }
+
+  /* ── RESULT ── */
+  #result { display: none; text-align: center; padding: 40px 0; }
+
+  .result-eyebrow {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .result-type-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    background: rgba(124,106,247,0.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+  }
+
+  .result-name {
+    font-size: clamp(28px, 7vw, 44px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 28px;
+  }
+
+  .result-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: left;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+  }
+
+  .result-desc {
+    font-size: 16px;
+    line-height: 2;
+    color: var(--text);
+    white-space: pre-line;
+  }
+
+  .result-desc .em {
+    color: var(--accent2);
+    font-weight: 700;
+  }
+  .result-desc .num {
+    color: var(--accent3);
+    font-weight: 900;
+    font-size: 18px;
+  }
+  .result-desc .quote {
+    display: block;
+    margin: 12px 0;
+    padding: 10px 16px;
+    background: rgba(124,106,247,0.1);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .compatibility {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .compat-title {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+  .compat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .compat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .compat-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+
+  .share-section { margin-bottom: 28px; }
+  .share-hint {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.8;
+  }
+
+  .share-hint strong { color: var(--yellow); }
+
+  .wechat-box {
+    background: var(--card);
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .wechat-label {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .wechat-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--accent3);
+  }
+  .keyword-pill {
+    background: rgba(246,106,138,0.15);
+    border: 1px solid var(--accent2);
+    color: var(--accent2);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .wechat-tip {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .btn-retry {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    margin-top: 8px;
+  }
+  .btn-retry:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── SCORE BAR ── */
+  .score-breakdown {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .score-title {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .score-label {
+    width: 58px;
+    color: var(--muted);
+    flex-shrink: 0;
+    font-size: 11px;
+  }
+  .score-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .score-bar {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.8s cubic-bezier(.4,0,.2,1);
+  }
+  .score-val {
+    width: 28px;
+    text-align: right;
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  @media (max-width: 480px) {
+    .cover-stats { gap: 20px; }
+    .stat-num { font-size: 22px; }
+    .q-text { font-size: 17px; }
+    .opt-btn { font-size: 14px; padding: 13px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- ══ COVER ══ -->
+<div id="cover">
+  <div class="badge">JoyCece 精神鉴定中心 · 2026版</div>
+  <h1 class="cover-title">
+    研究生<br>
+    <span class="highlight">精神状态鉴定测试</span>
+  </h1>
+  <p class="cover-sub">
+    科学认证™ · 胡说八道™<br>
+    28个问题 · 判断你属于哪种科研生物
+  </p>
+  <div class="cover-stats">
+    <div class="stat">
+      <div class="stat-num">28</div>
+      <div class="stat-label">道题</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">7</div>
+      <div class="stat-label">种结果</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">次崩溃</div>
+    </div>
+  </div>
+  <button class="btn-start" onclick="startQuiz()">开始鉴定 →</button>
+  <p class="cover-disclaimer">免费 · 无需注册 · 结果100%真实（胡说）</p>
+</div>
+
+<!-- ══ QUIZ ══ -->
+<div id="quiz">
+  <div class="progress-bar-wrap">
+    <div class="progress-meta">
+      <span id="prog-text">第 1 题 / 共 28 题</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+    </div>
+  </div>
+  <div id="question-area"></div>
+</div>
+
+<!-- ══ RESULT ══ -->
+<div id="result"></div>
+
+</div>
+
+<script>
+// ──────────────────────────────────────────────
+//  DATA
+// ──────────────────────────────────────────────
+const QUESTIONS_RAW = [
+  {
+    context: '导师发来：\n"有空来办公室聊聊"',
+    text: '你的第一反应是：',
+    opts: [
+      { text: '完了', scores: {B:3,G:1} },
+      { text: '哪里做错了', scores: {B:4,G:1} },
+      { text: '我要毕业了吗', scores: {D:2,G:2} },
+      { text: '假装没看见', scores: {E:3,G:2} },
+    ]
+  },
+  {
+    text: '实验失败第7次时：',
+    opts: [
+      { text: '查文献', scores: {C:3,A:1} },
+      { text: '查运势', scores: {D:4,F:1} },
+      { text: '查退学流程', scores: {B:2,G:2} },
+      { text: '查招聘信息', scores: {E:3,G:1} },
+    ]
+  },
+  {
+    text: '你电脑桌面目前：',
+    opts: [
+      { text: '干净整洁', scores: {A:3,G:1} },
+      { text: '论文PDF堆满', scores: {C:4,A:1} },
+      { text: 'screenshot(1257).png', scores: {F:3,G:2} },
+      { text: '不敢打开', scores: {B:2,G:3} },
+    ]
+  },
+  {
+    text: '凌晨2点你在：',
+    opts: [
+      { text: '改图', scores: {A:4,F:1} },
+      { text: '跑代码', scores: {A:3,F:2} },
+      { text: '写回复审稿人', scores: {B:2,G:2} },
+      { text: '刷B站假装放松', scores: {D:3,G:2} },
+    ]
+  },
+  {
+    text: '面对审稿意见：',
+    opts: [
+      { text: '虚心接受', scores: {A:3,G:1} },
+      { text: '据理力争', scores: {F:3,B:1} },
+      { text: '怀疑人生', scores: {B:3,G:2} },
+      { text: '怀疑审稿人', scores: {G:4,F:1} },
+    ]
+  },
+  {
+    text: '实验室停电时：',
+    opts: [
+      { text: '紧张', scores: {A:2,B:1} },
+      { text: '开心', scores: {E:4,D:1} },
+      { text: '继续干活', scores: {A:4,G:1} },
+      { text: '当场下班', scores: {E:4,G:1} },
+    ]
+  },
+  {
+    text: '你最常说的话：',
+    opts: [
+      { text: '差不多', scores: {D:3,G:2} },
+      { text: '再优化一下', scores: {A:4,F:1} },
+      { text: '应该能发', scores: {F:3,D:2} },
+      { text: '我不读了', scores: {B:3,G:2} },
+    ]
+  },
+  {
+    text: '下载文献后：',
+    opts: [
+      { text: '马上阅读', scores: {A:4} },
+      { text: '收藏', scores: {C:3} },
+      { text: '永久收藏', scores: {C:4,G:1} },
+      { text: '二次收藏', scores: {C:5,G:1} },
+    ]
+  },
+  {
+    text: '实验成功时：',
+    opts: [
+      { text: '记录数据', scores: {A:3} },
+      { text: '马上复现', scores: {A:4,F:1} },
+      { text: '发朋友圈', scores: {D:3,E:1} },
+      { text: '怀疑是假阳性', scores: {G:4,F:2} },
+    ]
+  },
+  {
+    text: '导师凌晨发消息：',
+    opts: [
+      { text: '秒回', scores: {A:4,B:1} },
+      { text: '装睡', scores: {E:3,G:2} },
+      { text: '真睡了', scores: {G:3,E:1} },
+      { text: '退群', scores: {E:4,G:2} },
+    ]
+  },
+  {
+    text: '你的GitHub状态：',
+    opts: [
+      { text: '每天提交', scores: {A:4,F:1} },
+      { text: '有账号', scores: {C:2,G:1} },
+      { text: '注册过', scores: {D:3,G:1} },
+      { text: '什么Hub', scores: {B:2,D:2} },
+    ]
+  },
+  {
+    text: '你最熟悉的软件：',
+    opts: [
+      { text: 'R', scores: {A:3,F:2} },
+      { text: 'Python', scores: {A:3,F:2} },
+      { text: 'Excel', scores: {D:3,C:1} },
+      { text: '微信', scores: {B:3,G:2} },
+    ]
+  },
+  {
+    text: '遇到Bug时：',
+    opts: [
+      { text: '查官方文档', scores: {A:4} },
+      { text: '问师兄师姐', scores: {B:2,D:1} },
+      { text: '问AI', scores: {G:3,D:1} },
+      { text: '重启电脑', scores: {D:4,G:1} },
+    ]
+  },
+  {
+    text: '组会前一天：',
+    opts: [
+      { text: '提前准备好', scores: {A:4} },
+      { text: '临时抱佛脚', scores: {D:3,G:1} },
+      { text: '熬夜赶ppt', scores: {A:2,B:2} },
+      { text: '消失', scores: {E:4,G:2} },
+    ]
+  },
+  {
+    text: '你觉得自己的论文：',
+    opts: [
+      { text: '相当不错', scores: {A:3,F:1} },
+      { text: '还行吧', scores: {G:3} },
+      { text: '能发就行', scores: {D:4,G:1} },
+      { text: '说不定是垃圾', scores: {B:3,G:3} },
+    ]
+  },
+  {
+    text: '最害怕的环节：',
+    opts: [
+      { text: '开题报告', scores: {B:2,G:1} },
+      { text: '中期考核', scores: {B:3,G:1} },
+      { text: '论文答辩', scores: {B:3,F:1} },
+      { text: '导师来电', scores: {B:5,G:1} },
+    ]
+  },
+  {
+    text: '你的实验记录本：',
+    opts: [
+      { text: '事无巨细', scores: {A:4} },
+      { text: '言简意赅', scores: {G:3,A:1} },
+      { text: '打算补一补', scores: {D:3,C:1} },
+      { text: '找不到了', scores: {E:3,G:2} },
+    ]
+  },
+  {
+    text: '你和统计学的关系：',
+    opts: [
+      { text: '真爱', scores: {A:4,F:2} },
+      { text: '普通朋友', scores: {G:2,A:1} },
+      { text: '互不了解', scores: {D:3,C:1} },
+      { text: '深仇大恨', scores: {F:3,B:2} },
+    ]
+  },
+  {
+    text: '投稿后的状态：',
+    opts: [
+      { text: '平静如水', scores: {G:4,A:1} },
+      { text: '刷一下邮箱', scores: {F:3,B:1} },
+      { text: '疯狂刷邮箱', scores: {F:4,B:2} },
+      { text: '已开始写下一篇', scores: {A:4,G:1} },
+    ]
+  },
+  {
+    text: '你最擅长：',
+    opts: [
+      { text: '做实验', scores: {A:3} },
+      { text: '摸鱼', scores: {E:4,D:1} },
+      { text: '焦虑', scores: {B:4,G:1} },
+      { text: '假装不焦虑', scores: {G:5} },
+    ]
+  },
+  {
+    text: '实验失败了，你归因于：',
+    opts: [
+      { text: '自己操作失误', scores: {A:2,B:2} },
+      { text: '仪器问题', scores: {G:3,F:1} },
+      { text: '样品的锅', scores: {D:3,G:1} },
+      { text: '水逆', scores: {D:4,C:1} },
+    ]
+  },
+  {
+    context: '导师说：\n"这个工作很简单"',
+    text: '你理解为：',
+    opts: [
+      { text: '真的很简单', scores: {A:1,G:1} },
+      { text: '可能有点难', scores: {G:2,B:1} },
+      { text: '要加班了', scores: {B:3,A:1} },
+      { text: '要命了', scores: {B:4,G:2} },
+    ]
+  },
+  {
+    text: '论文返修时的心情：',
+    opts: [
+      { text: '开心，有机会', scores: {A:4,G:1} },
+      { text: '紧张但可以', scores: {G:2,F:1} },
+      { text: '愤怒', scores: {F:3,B:2} },
+      { text: '麻木', scores: {G:5,B:1} },
+    ]
+  },
+  {
+    text: '读研后实际收获：',
+    opts: [
+      { text: '硬核技能', scores: {A:4} },
+      { text: '宝贵经验', scores: {G:3,E:1} },
+      { text: '一把好发量（没了）', scores: {B:4,G:1} },
+      { text: '失眠配方', scores: {B:3,G:3} },
+    ]
+  },
+  {
+    text: '你最相信：',
+    opts: [
+      { text: '数据', scores: {A:3,F:2} },
+      { text: '文献', scores: {C:4,A:1} },
+      { text: 'AI', scores: {G:3,D:1} },
+      { text: '运气', scores: {D:4,F:1} },
+    ]
+  },
+  {
+    text: '做图时的流程：',
+    opts: [
+      { text: '一次过，完美', scores: {A:4,G:1} },
+      { text: '改了十版', scores: {F:3,B:2} },
+      { text: '改了二十版', scores: {F:4,B:2} },
+      { text: '改完导师继续改', scores: {B:5,G:1} },
+    ]
+  },
+  {
+    text: '毕业前的精神状态：',
+    opts: [
+      { text: '胸有成竹', scores: {A:4} },
+      { text: '小有把握', scores: {G:3} },
+      { text: '听天由命', scores: {D:4,G:1} },
+      { text: '已经超脱', scores: {G:5,E:1} },
+    ]
+  },
+  {
+    text: '如果时光倒流，你会：',
+    opts: [
+      { text: '继续读研', scores: {A:3,G:2} },
+      { text: '换个导师', scores: {B:4} },
+      { text: '换个专业', scores: {E:3,D:1} },
+      { text: '先去工作', scores: {E:3,G:1} },
+    ]
+  },
+];
+
+const TYPES = {
+  A: {
+    name: '熬夜炼丹型',
+    color: '#7c6af7',
+    desc: `你是实验室里那台
+<span class="num">24小时</span>不停运转的离心机。
+
+别人睡觉，你跑程序。
+别人休息，你改图。
+别人摸鱼，你还在<span class="em">优化那个已经够好的模型</span>。
+
+你相信：只要再努力一下，就能发Nature。
+
+<span class="quote">实际上你早就可以投了，但你总觉得"再优化一下"。</span>
+
+你的精神状态关键词：<span class="em">卷、卷、卷、睡死了</span>。`,
+    compat: { good: '文献收藏家型（互补）', bad: '田野流浪型（互斥）' },
+  },
+  B: {
+    name: '导师PTSD型',
+    color: '#f76a8a',
+    desc: `你的手机已经设置了：
+<span class="em">导师来电铃声 = 心跳骤停</span>。
+
+"有空来办公室聊聊" 这句话，
+已经让你条件反射式地
+开始回忆过去三周所有可能犯错的瞬间。
+
+你不是在读研，你在<span class="em">进行心理训练</span>。
+
+<span class="quote">"他说这个工作很简单。" ——你已经开始写遗嘱。</span>
+
+好消息是：<span class="num">你会是最能抗压的打工人</span>。`,
+    compat: { good: '已经疯了但很稳定型（精神共鸣）', bad: '熬夜炼丹型（压力叠加）' },
+  },
+  C: {
+    name: '文献收藏家型',
+    color: '#6af7c8',
+    desc: `你的Zotero里有 <span class="num">2847</span> 篇文献。
+
+认真读完的：<span class="num">19</span> 篇。
+读了一半的：<span class="num">73</span> 篇。
+只看了标题的：<span class="num">2755</span> 篇。
+
+你的收藏夹是你的第二实验室。
+你相信：<span class="em">收藏 = 已经学会了</span>。
+
+<span class="quote">下载文献的速度，快过你阅读文献的速度。</span>
+
+你买了很多书。
+都放在桌上当<span class="em">精神摆件</span>。`,
+    compat: { good: '熬夜炼丹型（你收藏，他来读）', bad: '数据赌徒型（一个收，一个赌）' },
+  },
+  D: {
+    name: '玄学毕业型',
+    color: '#f7d96a',
+    desc: `你已经不相信实验逻辑了。
+
+你相信：<span class="em">水逆退散 > 重复实验</span>。
+你相信：木星合相那天不适合投稿。
+你相信：实验室门口的绿萝
+是你毕业的最后希望。
+
+<span class="quote">"p = 0.049，神佛保佑。"</span>
+
+你不是在做科研，
+你是在进行<span class="num">玄学与统计学的跨学科融合研究</span>。
+
+导师不知道，审稿人不知道，只有你知道。`,
+    compat: { good: '数据赌徒型（玄学+赌博=完美组合）', bad: '熬夜炼丹型（三观不合）' },
+  },
+  E: {
+    name: '田野流浪型',
+    color: '#fa9f6a',
+    desc: `你的导师以为你在做实验。
+
+实际上你在：
+· 食堂蹭第三顿饭
+· 在图书馆睡觉（已订到2027年）
+· 考虑是否可以用田野调查代替所有实验
+
+你有一种天赋：
+<span class="em">把所有事情都变成"不在实验室"的理由</span>。
+
+<span class="quote">"我在收集灵感。"——你已经说了18个月了。</span>
+
+好消息：你在外面认识了很多朋友。
+坏消息：他们都已经毕业了。`,
+    compat: { good: '已经疯了但很稳定型（彼此不打扰）', bad: '熬夜炼丹型（你跑路他卷你）' },
+  },
+  F: {
+    name: '数据赌徒型',
+    color: '#6aaaf7',
+    desc: `你的科研信仰，只有一句话：
+
+<span class="quote">"再跑一次，可能就显著了。"</span>
+
+你和 <span class="num">p = 0.051</span> 的关系，
+就像牛郎织女——
+差一点点，但就是过不去。
+
+你改过 <span class="num">23</span> 次参数。
+你删过 <span class="num">4</span> 个"异常值"。
+你换过 <span class="num">3</span> 种统计方法。
+
+最终你得到了：<span class="em">p = 0.049</span>。
+
+你管这叫做"科学探索"。`,
+    compat: { good: '玄学毕业型（天作之合）', bad: '文献收藏家型（务虚vs务实）' },
+  },
+  G: {
+    name: '已经疯了但很稳定型',
+    color: '#c86af7',
+    desc: `你的精神状态，
+类似连续运行 <span class="num">300天</span> 的服务器。
+
+<em>表面正常。</em>
+实际上错误日志已经堆满硬盘。
+风扇转速异常。
+内存占用99%。
+但你还在<span class="em">正常输出</span>。
+
+<span class="quote">"总会毕业的。"</span>
+
+虽然你并不知道为什么，
+也不知道什么时候，
+但你就是<span class="em">莫名地相信</span>。
+
+这是一种境界。<span class="num">不建议模仿</span>。`,
+    compat: { good: '所有类型（你已经超越了兼容性）', bad: '无（你已无敌）' },
+  },
+};
+
+// ──────────────────────────────────────────────
+//  STATE
+// ──────────────────────────────────────────────
+let shuffledQuestions = [];
+let current = 0;
+let scores = { A:0, B:0, C:0, D:0, E:0, F:0, G:0 };
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  // Shuffle questions and each question's options
+  shuffledQuestions = shuffle(QUESTIONS_RAW).map(q => ({
+    ...q,
+    opts: shuffle(q.opts)
+  }));
+  scores = { A:0, B:0, C:0, D:0, E:0, F:0, G:0 };
+  current = 0;
+
+  document.getElementById('cover').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = shuffledQuestions[current];
+  const total = shuffledQuestions.length;
+  const pct = Math.round((current / total) * 100);
+
+  document.getElementById('prog-text').textContent = `第 ${current + 1} 题 / 共 ${total} 题`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  const area = document.getElementById('question-area');
+  area.innerHTML = '';
+
+  const card = document.createElement('div');
+  card.className = 'question-card';
+
+  let html = `<div class="q-number">Q${String(current + 1).padStart(2, '0')}</div>`;
+  if (q.context) html += `<div class="q-context">${q.context}</div>`;
+  html += `<div class="q-text">${q.text}</div>`;
+  html += `<div class="options">`;
+  q.opts.forEach((opt, i) => {
+    html += `<button class="opt-btn" onclick="choose(${i})">
+      <span class="opt-text">${opt.text}</span>
+    </button>`;
+  });
+  html += `</div>`;
+  card.innerHTML = html;
+  area.appendChild(card);
+}
+
+function choose(idx) {
+  const q = shuffledQuestions[current];
+  const opt = q.opts[idx];
+
+  // Highlight selected
+  const btns = document.querySelectorAll('.opt-btn');
+  btns[idx].classList.add('selected');
+
+  // Add scores
+  for (const [k, v] of Object.entries(opt.scores || {})) {
+    scores[k] = (scores[k] || 0) + v;
+  }
+
+  // Advance with short delay
+  setTimeout(() => {
+    current++;
+    if (current < shuffledQuestions.length) {
+      renderQuestion();
+      // Smooth scroll to top of quiz area
+      document.getElementById('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      showResult();
+    }
+  }, 320);
+}
+
+function showResult() {
+  document.getElementById('quiz').style.display = 'none';
+  const resultEl = document.getElementById('result');
+  resultEl.style.display = 'block';
+
+  // Find winner
+  const winner = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
+  const type = TYPES[winner];
+
+  // Score bars
+  const maxScore = Math.max(...Object.values(scores));
+  const barColors = {
+    A:'#7c6af7', B:'#f76a8a', C:'#6af7c8',
+    D:'#f7d96a', E:'#fa9f6a', F:'#6aaaf7', G:'#c86af7'
+  };
+
+  let barRows = '';
+  const scoreOrder = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+  scoreOrder.forEach(([k, v]) => {
+    const pct = maxScore > 0 ? Math.round((v / maxScore) * 100) : 0;
+    barRows += `<div class="score-row">
+      <span class="score-label">${TYPES[k].name.replace('型','')}</span>
+      <div class="score-track"><div class="score-bar" style="width:${pct}%;background:${barColors[k]}"></div></div>
+      <span class="score-val">${v}分</span>
+    </div>`;
+  });
+
+  resultEl.innerHTML = `
+    <div class="result-eyebrow">鉴定结果</div>
+    <div class="result-type-badge">TYPE ${winner} · RGTI</div>
+    <div class="result-name" style="color:${type.color}">${type.name}</div>
+
+    <div class="result-card">
+      <div class="result-desc">${type.desc}</div>
+    </div>
+
+    <div class="score-breakdown">
+      <div class="score-title">📊 你的科研人格光谱</div>
+      ${barRows}
+    </div>
+
+    <div class="compatibility">
+      <div class="compat-title">🔬 人格兼容性分析</div>
+      <div class="compat-grid">
+        <div class="compat-item">
+          <div class="compat-dot" style="background:#6af7c8"></div>
+          <span style="color:var(--muted)">最配：</span>&nbsp;${type.compat.good}
+        </div>
+        <div class="compat-item">
+          <div class="compat-dot" style="background:#f76a8a"></div>
+          <span style="color:var(--muted)">慎选：</span>&nbsp;${type.compat.bad}
+        </div>
+      </div>
+    </div>
+
+    <div class="share-section">
+      <p class="share-hint">
+        截图发朋友圈 or 实验室群，<br>
+        看看你们实验室都是哪种科研生物 🧬<br><br>
+        想测试更多？关注 <strong>JoyCece公众号</strong><br>
+        后台回复关键词 <strong>「学术」</strong> 获取测试链接
+      </p>
+      <div class="wechat-box">
+        <div class="wechat-label">🎁 更多测试 · 免费获取</div>
+        <div class="wechat-name">JoyCece公众号</div>
+        <div class="keyword-pill">回复「学术」</div>
+        <div class="wechat-tip">👆 关注后发送关键词即可</div>
+      </div>
+    </div>
+
+    <button class="btn-retry" onclick="retryQuiz()">↩ 再测一次</button>
+  `;
+
+  resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function retryQuiz() {
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('cover').style.display = 'flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

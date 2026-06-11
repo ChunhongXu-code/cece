@@ -544,14 +544,14 @@ body{
   <p class="cover-subtitle">基于28题量表的跨类型研究生心理画像研究</p>
 
   <p class="author-line">JoyCece Research Consortium<sup>1</sup>, Lab for Existential Crisis Studies<sup>2</sup></p>
-  <p class="affil-line"><sup>1</sup>公众号研究院 &nbsp;<sup>2</sup>实验室对面的咖啡馆</p>
+  <p class="affil-line"><sup>1</sup>JoyCece公众号研究院 &nbsp;<sup>2</sup>实验室对面的咖啡馆</p>
 
   <div class="abstract-box">
     <div class="abstract-label">Abstract</div>
     <div class="abstract-text">本研究通过对研究生群体进行小样本不全面调查，开发并验证了一套包含28道题目的研究生精神状态量表（Graduate Mentality Scale, GMS-28）。研究共识别出7种具有显著差异的精神状态类型。结果表明，<strong>83.7%</strong>的受试者在答题过程中至少产生一次"不想读了"的念头。本测试具有极高的胡说八道效应，不具有任何临床诊断价值。</div>
   </div>
 
-  <p class="keywords-line"><em>Keywords:</em> 研究生；精神状态；量表开发；焦虑；水逆；p值</p>
+  <p class="keywords-line"><em>Keywords:</em> 研究生；精神状态；量表开发；我不焦虑；水逆；p值</p>
 
   <div class="cover-fig">
     <div class="fig-stat">
@@ -847,153 +847,221 @@ function saveImage(){
 }
 
 function drawCanvas(topK,T,sorted,maxV,qrImg){
-  const W=900, H=1280;
+  const W=900, H=1400;
   const canvas=document.getElementById('shareCanvas');
   canvas.width=W; canvas.height=H;
   const ctx=canvas.getContext('2d');
 
-  const BG='#fafaf8', INK='#1a1a18', INK2='#3d3d3a', INK3='#6b6b66';
-  const RULE='#d4d4cc', RULE2='#e8e8e2', ACCENT='#2b4c8c';
+  const BG='#fafaf8', WHITE='#ffffff', INK='#1a1a18', INK2='#3d3d3a', INK3='#6b6b66';
+  const RULE='#d4d4cc', RULE2='#e8e8e2', ACCENT='#2b4c8c', ACCENT_LIGHT='#dce5f5';
+  // palette for non-top bars — muted slate progression
+  const BAR_COLORS=['#8fa8cc','#a0b5d4','#b2c3dc','#c3d0e4','#d4deed','#e4ecf4'];
 
   ctx.fillStyle=BG;
   ctx.fillRect(0,0,W,H);
 
-  // top rule (double: thick + thin)
+  // ── HEADER ──
   ctx.fillStyle=INK;
-  ctx.fillRect(60,60,W-120,2);
+  ctx.fillRect(60,52,W-120,3);
   ctx.fillStyle=RULE;
-  ctx.fillRect(60,66,W-120,1);
+  ctx.fillRect(60,59,W-120,1);
 
-  // journal name
   ctx.fillStyle=INK3;
-  ctx.font="500 13px 'Noto Sans SC', sans-serif";
-  ctx.fillText('Journal of Graduate Studies  ·  JoyCece 精神鉴定中心  ·  Vol. 2026', 60, 92);
+  ctx.font="400 12px 'Noto Sans SC', sans-serif";
+  ctx.fillText('Journal of Graduate Studies  ·  JoyCece 精神鉴定中心  ·  Vol. 2026', 60, 84);
 
   ctx.fillStyle=RULE;
-  ctx.fillRect(60,104,W-120,1);
+  ctx.fillRect(60,96,W-120,1);
 
-  // type tag
+  // ── TYPE TAG ──
   ctx.fillStyle=ACCENT;
-  ctx.font="500 13px 'Noto Sans SC', sans-serif";
-  ctx.fillText(`TYPE ${topK}  ·  RGTI-2026  ·  ORIGINAL RESEARCH`, 60, 142);
+  ctx.font="500 12px 'Noto Sans SC', sans-serif";
+  ctx.fillText(`TYPE ${topK}  ·  RGTI-2026  ·  ORIGINAL RESEARCH`, 60, 130);
 
-  // main title
+  // ── MAIN TITLE ──
   ctx.fillStyle=INK;
-  ctx.font="500 54px 'Noto Serif SC', Georgia, serif";
-  ctx.fillText(T.name, 60, 216);
+  ctx.font="600 58px 'Noto Serif SC', Georgia, serif";
+  ctx.fillText(T.name, 60, 210);
 
-  // EN subtitle
   ctx.fillStyle=INK3;
-  ctx.font="italic 19px 'EB Garamond', Georgia, serif";
-  ctx.fillText(T.en, 60, 252);
+  ctx.font="italic 18px 'EB Garamond', Georgia, serif";
+  ctx.fillText(T.en, 60, 244);
 
   ctx.fillStyle=RULE;
-  ctx.fillRect(60,272,W-120,1);
+  ctx.fillRect(60,262,W-120,1);
 
-  function stripHtml(html){
-    return html.replace(/<[^>]+>/g,'').replace(/\n{3,}/g,'\n\n').trim();
-  }
+  // ── HELPERS ──
+  function stripHtml(h){ return h.replace(/<[^>]+>/g,'').replace(/\n{3,}/g,'\n\n').trim(); }
   function wrapText(text,x,y,maxW,lineH){
     const chars=text.split('');
     let line='',ly=y;
     for(let i=0;i<chars.length;i++){
       const c=chars[i];
-      if(c==='\n'){
-        ctx.fillText(line,x,ly);
-        line=''; ly+=lineH+6;
-        continue;
-      }
+      if(c==='\n'){ ctx.fillText(line,x,ly); line=''; ly+=lineH+5; continue; }
       const test=line+c;
-      if(ctx.measureText(test).width>maxW&&line!==''){
-        ctx.fillText(line,x,ly);
-        line=c; ly+=lineH;
-      } else line=test;
+      if(ctx.measureText(test).width>maxW&&line!==''){ctx.fillText(line,x,ly);line=c;ly+=lineH;}
+      else line=test;
     }
     if(line) ctx.fillText(line,x,ly);
     return ly;
   }
+  function sectionLabel(text, y){
+    ctx.fillStyle=INK3;
+    ctx.font="500 11px 'Noto Sans SC', sans-serif";
+    ctx.fillText(text, 60, y);
+    ctx.fillStyle=RULE;
+    ctx.fillRect(60,y+10,W-120,1);
+  }
 
+  // ── DESCRIPTION ──
   const cleanDesc=stripHtml(T.desc);
   ctx.fillStyle=INK2;
-  ctx.font="400 18px 'Noto Serif SC', Georgia, serif";
-  const descEndY=wrapText(cleanDesc,60,308,W-120,30);
+  ctx.font="400 17px 'Noto Serif SC', Georgia, serif";
+  const descEndY=wrapText(cleanDesc,60,300,W-120,28);
 
-  // spectrum
-  const specY=Math.max(descEndY+52,640);
-  ctx.fillStyle=INK3;
-  ctx.font="500 11px 'Noto Sans SC', sans-serif";
-  ctx.fillText('FIGURE 2  ·  人格光谱分布（Personality Spectrum）', 60, specY);
+  // ── FIGURE 2: BAR CHART ──
+  const chartTop=Math.max(descEndY+56, 620);
+  sectionLabel('FIGURE 2  ·  人格光谱（Personality Spectrum, n=28 items）', chartTop);
+
+  const chartL=60, chartR=W-60;
+  const chartW=chartR-chartL;
+  const barCount=sorted.length; // 7
+  const groupW=Math.floor(chartW/barCount);
+  const barW=Math.floor(groupW*0.52);
+  const chartH=180;
+  const chartBaseY=chartTop+chartH+32;
+
+  // axis baseline
   ctx.fillStyle=RULE;
-  ctx.fillRect(60,specY+12,W-120,1);
+  ctx.fillRect(chartL, chartBaseY, chartW, 1);
 
-  sorted.forEach(([k,v],i)=>{
-    const rowY=specY+34+i*36;
-    const barX=210, barW=W-120-barX-60;
-    const pct=maxV>0?v/maxV:0;
-
-    ctx.fillStyle=k===topK?INK:INK3;
-    ctx.font=`${k===topK?'500':'400'} 13px 'Noto Sans SC', sans-serif`;
-    ctx.fillText(TYPES[k].name.replace('型',''), 60, rowY+12);
-
+  // y-axis grid lines (light)
+  [0.25,0.5,0.75,1.0].forEach(frac=>{
+    const gy=chartBaseY-Math.round(chartH*frac);
     ctx.fillStyle=RULE2;
-    ctx.fillRect(barX,rowY,barW,5);
-    ctx.fillStyle=k===topK?ACCENT:RULE;
-    ctx.fillRect(barX,rowY,barW*pct,5);
-
-    ctx.fillStyle=INK3;
-    ctx.font="400 12px 'Noto Sans SC', sans-serif";
-    ctx.fillText(String(v), barX+barW+12, rowY+10);
+    ctx.fillRect(chartL,gy,chartW,1);
   });
 
-  // bottom section — qr code or text CTA
-  const botY=H-200;
+  sorted.forEach(([k,v],i)=>{
+    const pct=maxV>0?v/maxV:0;
+    const bH=Math.max(4, Math.round(chartH*pct));
+    const bX=chartL + i*groupW + Math.floor((groupW-barW)/2);
+    const bY=chartBaseY-bH;
+    const isTop=k===topK;
+
+    // bar fill
+    ctx.fillStyle=isTop?ACCENT:(BAR_COLORS[i]||'#c0cfe3');
+    ctx.fillRect(bX, bY, barW, bH);
+
+    // top highlight stripe on winning bar
+    if(isTop){
+      ctx.fillStyle=ACCENT_LIGHT;
+      ctx.fillRect(bX, bY, barW, 4);
+    }
+
+    // value label above bar
+    ctx.fillStyle=isTop?ACCENT:INK3;
+    ctx.font=`${isTop?'500':'400'} 13px 'Noto Sans SC', sans-serif`;
+    ctx.textAlign='center';
+    ctx.fillText(String(v), bX+barW/2, bY-8);
+
+    // x-axis label (type name, split if needed)
+    const shortName=TYPES[k].name.replace('型','');
+    ctx.fillStyle=isTop?INK:INK3;
+    ctx.font=`${isTop?'500':'400'} 12px 'Noto Sans SC', sans-serif`;
+    ctx.fillText(shortName, bX+barW/2, chartBaseY+20);
+    ctx.textAlign='left';
+  });
+
+  // ── COMPAT BOX ──
+  const compatY=chartBaseY+48;
+  sectionLabel('TABLE 1  ·  人格兼容性分析（Compatibility Analysis）', compatY);
+
+  const boxTop=compatY+22;
+  const halfW=(W-120-16)/2;
+
+  // Good box
+  ctx.fillStyle=WHITE;
+  ctx.strokeStyle=RULE;
+  ctx.lineWidth=1;
+  ctx.strokeRect(60, boxTop, halfW, 80);
+  ctx.fillRect(60, boxTop, halfW, 80);
+  // accent top stripe
+  ctx.fillStyle=ACCENT;
+  ctx.fillRect(60, boxTop, halfW, 3);
+
+  ctx.fillStyle=ACCENT;
+  ctx.font="500 10px 'Noto Sans SC', sans-serif";
+  ctx.fillText('▲  最佳合作', 76, boxTop+22);
+  ctx.fillStyle=INK2;
+  ctx.font="400 13px 'Noto Sans SC', sans-serif";
+  // wrap within box
+  const goodLines=T.compat.good.match(/.{1,14}/g)||[T.compat.good];
+  goodLines.slice(0,3).forEach((ln,i)=>ctx.fillText(ln, 76, boxTop+42+i*18));
+
+  // Bad box
+  const badX=60+halfW+16;
+  ctx.fillStyle=WHITE;
+  ctx.strokeStyle=RULE;
+  ctx.strokeRect(badX, boxTop, halfW, 80);
+  ctx.fillRect(badX, boxTop, halfW, 80);
+  ctx.fillStyle=INK3;
+  ctx.fillRect(badX, boxTop, halfW, 3);
+
+  ctx.fillStyle=INK3;
+  ctx.font="500 10px 'Noto Sans SC', sans-serif";
+  ctx.fillText('▽  慎重组合', badX+16, boxTop+22);
+  ctx.fillStyle=INK2;
+  ctx.font="400 13px 'Noto Sans SC', sans-serif";
+  const badLines=T.compat.bad.match(/.{1,14}/g)||[T.compat.bad];
+  badLines.slice(0,3).forEach((ln,i)=>ctx.fillText(ln, badX+16, boxTop+42+i*18));
+
+  // ── QR / CTA ──
+  const ctaY=boxTop+100;
   ctx.fillStyle=RULE;
-  ctx.fillRect(60,botY,W-120,1);
+  ctx.fillRect(60,ctaY,W-120,1);
 
   if(qrImg){
-    // Draw QR image on the right
-    const qrSize=140;
+    const qrSize=130;
     const qrX=W-60-qrSize;
-    const qrY=botY+28;
-    // white bg behind qr
-    ctx.fillStyle='#ffffff';
+    const qrY=ctaY+24;
+    ctx.fillStyle=WHITE;
     ctx.fillRect(qrX-6,qrY-6,qrSize+12,qrSize+12);
     ctx.strokeStyle=RULE;
     ctx.lineWidth=1;
     ctx.strokeRect(qrX-6,qrY-6,qrSize+12,qrSize+12);
     ctx.drawImage(qrImg,qrX,qrY,qrSize,qrSize);
 
-    // text to the left of QR
-    const textMaxX=qrX-28;
-    ctx.fillStyle=INK2;
-    ctx.font="500 18px 'Noto Serif SC', Georgia, serif";
-    wrapText('扫码关注 JoyCece 公众号',60,botY+46,textMaxX-60,26);
-    ctx.fillStyle=INK3;
-    ctx.font="400 14px 'Noto Sans SC', sans-serif";
-    wrapText('后台回复关键词「学术」\n免费获取完整测试链接',60,botY+82,textMaxX-60,22);
-
-    ctx.fillStyle=INK3;
-    ctx.font="400 12px 'Noto Sans SC', sans-serif";
-    ctx.fillText('扫一扫↗',qrX+(qrSize-50)/2,qrY+qrSize+22);
-  } else {
     ctx.fillStyle=INK2;
     ctx.font="500 17px 'Noto Serif SC', Georgia, serif";
-    ctx.fillText('关注 JoyCece公众号，后台回复关键词「学术」免费获取测试链接', 60, botY+46);
+    wrapText('扫码关注 JoyCece 公众号',60,ctaY+42,qrX-90,24);
+    ctx.fillStyle=INK3;
+    ctx.font="400 13px 'Noto Sans SC', sans-serif";
+    wrapText('后台回复「学术」\n免费获取完整测试链接',60,ctaY+76,qrX-90,20);
+
+    ctx.fillStyle=INK3;
+    ctx.font="400 11px 'Noto Sans SC', sans-serif";
+    ctx.textAlign='center';
+    ctx.fillText('↑ 扫一扫', qrX+qrSize/2, qrY+qrSize+18);
+    ctx.textAlign='left';
+  } else {
+    ctx.fillStyle=INK2;
+    ctx.font="500 16px 'Noto Serif SC', Georgia, serif";
+    ctx.fillText('关注 JoyCece公众号，后台回复「学术」免费获取测试链接', 60, ctaY+46);
   }
 
+  // ── FOOTER ──
   ctx.fillStyle=INK3;
-  ctx.font="400 12px 'Noto Sans SC', sans-serif";
-  ctx.fillText('本测试仅供娱乐，不具有任何临床诊断价值', 60, H-66);
+  ctx.font="400 11px 'Noto Sans SC', sans-serif";
+  ctx.fillText('本测试仅供娱乐，不具有任何临床诊断价值', 60, H-54);
 
-  // bottom rule
   ctx.fillStyle=INK;
-  ctx.fillRect(60,H-52,W-120,2);
+  ctx.fillRect(60,H-42,W-120,2);
   ctx.fillStyle=RULE;
-  ctx.fillRect(60,H-46,W-120,1);
-
+  ctx.fillRect(60,H-36,W-120,1);
   ctx.fillStyle=INK3;
-  ctx.font="400 12px 'Noto Sans SC', sans-serif";
-  ctx.fillText('Journal of Graduate Studies  ·  2026  ·  JoyCece', 60, H-26);
+  ctx.font="400 11px 'Noto Sans SC', sans-serif";
+  ctx.fillText('Journal of Graduate Studies  ·  2026  ·  JoyCece', 60, H-18);
 
   const link=document.createElement('a');
   link.download=`研究生精神状态_${T.name}_${topK}.png`;

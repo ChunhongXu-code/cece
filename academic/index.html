@@ -1,4 +1,3 @@
-html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -7,56 +6,39 @@ html
 <title>研究生学术人格鉴定测试 2026</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
-
 *{box-sizing:border-box;margin:0;padding:0}
-
 :root{
   --serif:'EB Garamond','Noto Serif SC',Georgia,serif;
   --sans:'Noto Sans SC','PingFang SC',sans-serif;
-  --bg:#fafaf8;
-  --surface:#ffffff;
-  --ink:#1a1a18;
-  --ink2:#3d3d3a;
-  --ink3:#6b6b66;
-  --rule:#d4d4cc;
-  --rule2:#e8e8e2;
-  --accent:#2b4c8c;
-  --selected-bg:#eef2f8;
+  --bg:#fafaf8;--surface:#fff;--ink:#1a1a18;--ink2:#3d3d3a;--ink3:#6b6b66;
+  --rule:#d4d4cc;--rule2:#e8e8e2;--accent:#2b4c8c;--selected-bg:#eef2f8;
 }
-
 body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.75;min-height:100vh}
 .page{max-width:680px;margin:0 auto;padding:0 24px 80px}
-
 .journal-header{border-bottom:2px solid var(--ink);padding:18px 0 12px;display:flex;justify-content:space-between;align-items:baseline}
 .journal-name{font-family:var(--serif);font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--ink2)}
 .journal-meta{font-family:var(--sans);font-size:11px;color:var(--ink3);letter-spacing:.5px}
-
 #cover{padding-top:40px}
 .article-type{font-family:var(--sans);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
 .cover-title{font-family:var(--serif);font-size:clamp(28px,6vw,42px);font-weight:600;line-height:1.2;color:var(--ink);margin-bottom:12px;border-bottom:2px solid var(--ink);padding-bottom:20px}
 .cover-subtitle{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--ink3);margin-bottom:28px}
 .author-line{font-family:var(--sans);font-size:13px;color:var(--ink2);margin-bottom:4px}
 .affil-line{font-family:var(--sans);font-size:12px;color:var(--ink3);margin-bottom:24px}
-
 .abstract-box{border:1px solid var(--rule);border-left:3px solid var(--accent);padding:20px 22px;margin-bottom:28px;background:var(--surface)}
 .abstract-label{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
 .abstract-text{font-size:15px;line-height:1.85;color:var(--ink2)}
 .abstract-text strong{color:var(--ink);font-weight:600}
-
 .keywords-line{font-size:13px;color:var(--ink3);margin-bottom:32px}
 .keywords-line em{font-style:normal;color:var(--ink2)}
-
 .cover-fig{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:24px 0;margin-bottom:32px;display:grid;grid-template-columns:repeat(2,1fr)}
 .fig-stat{text-align:center;padding:12px}
 .fig-stat+.fig-stat{border-left:1px solid var(--rule2)}
 .fig-num{font-family:var(--serif);font-size:48px;font-weight:600;color:var(--ink);line-height:1}
 .fig-label{font-family:var(--sans);font-size:11px;color:var(--ink3);margin-top:4px}
 .fig-caption{grid-column:1/-1;font-family:var(--sans);font-size:11px;color:var(--ink3);text-align:center;padding-top:12px;border-top:1px solid var(--rule2);margin-top:12px}
-
 .btn-start{display:block;width:100%;padding:16px;background:var(--ink);color:#fff;border:none;font-family:var(--serif);font-size:18px;font-weight:500;letter-spacing:1px;cursor:pointer;transition:background .15s}
 .btn-start:hover{background:var(--accent)}
 .cover-note{font-family:var(--sans);font-size:11px;color:var(--ink3);text-align:center;margin-top:10px}
-
 #quiz{display:none}
 .progress-header{position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:1px solid var(--rule);padding:12px 0 10px;margin-bottom:36px}
 .progress-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
@@ -64,7 +46,6 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16
 .progress-pct{font-family:var(--serif);font-size:13px;color:var(--ink2)}
 .progress-track{height:2px;background:var(--rule2)}
 .progress-fill{height:100%;background:var(--ink);transition:width .4s ease}
-
 .q-card{animation:fadeUp .22s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .q-num{font-family:var(--sans);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
@@ -76,11 +57,9 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16
 .opt-btn.selected{border-color:var(--accent);background:var(--selected-bg);color:var(--accent);pointer-events:none}
 .opt-letter{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--ink3);letter-spacing:1px;flex-shrink:0;min-width:16px}
 .opt-btn.selected .opt-letter{color:var(--accent)}
-
 .nav-row{display:flex;justify-content:flex-start;margin-top:20px}
 .btn-prev{background:transparent;border:1px solid var(--rule);color:var(--ink3);padding:8px 18px;font-family:var(--sans);font-size:13px;cursor:pointer;transition:all .12s}
 .btn-prev:hover{border-color:var(--ink2);color:var(--ink2)}
-
 #result{display:none;padding-top:40px}
 .result-section-label{font-family:var(--sans);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
 .result-type-tag{font-family:var(--sans);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
@@ -91,7 +70,6 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16
 .result-desc .hi{color:var(--ink);font-weight:500}
 .result-desc .num{font-size:18px;font-weight:500;color:var(--accent)}
 .result-desc .quote-line{display:block;border-left:3px solid var(--rule);padding:6px 14px;margin:12px 0;color:var(--ink3);font-style:italic;font-size:14px}
-
 .spectrum-box{border:1px solid var(--rule);padding:18px 20px;margin:20px 0;background:var(--surface)}
 .spectrum-title{font-family:var(--sans);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
 .spectrum-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
@@ -100,11 +78,9 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16
 .sp-fill{height:100%;background:var(--ink);transition:width .8s ease}
 .sp-fill.top{background:var(--accent)}
 .sp-val{font-family:var(--sans);font-size:11px;color:var(--ink3);width:24px;text-align:right}
-
 .compat-box{border:1px solid var(--rule);padding:16px 20px;margin:0 0 20px;background:var(--surface);display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .compat-item{font-family:var(--sans);font-size:12px;color:var(--ink2);line-height:1.6}
 .compat-item strong{display:block;color:var(--ink3);letter-spacing:1px;font-size:10px;text-transform:uppercase;margin-bottom:3px}
-
 .share-box{border:1px solid var(--rule);padding:20px 22px;background:var(--surface);margin-bottom:20px}
 .share-title{font-family:var(--sans);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
 .share-desc{font-family:var(--serif);font-size:14px;color:var(--ink2);line-height:1.8;margin-bottom:16px}
@@ -114,13 +90,8 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16
 .btn-retry{display:block;width:100%;padding:12px;background:transparent;color:var(--ink3);border:1px solid var(--rule);font-family:var(--serif);font-size:14px;cursor:pointer;margin-top:8px;transition:all .12s}
 .btn-retry:hover{border-color:var(--ink2);color:var(--ink2)}
 .fig-note{font-family:var(--sans);font-size:11px;color:var(--ink3);text-align:center;margin-top:6px}
-
 #shareCanvas{display:none}
-
-@media(max-width:480px){
-  .page{padding:0 16px 60px}
-  .journal-header{flex-direction:column;gap:4px}
-}
+@media(max-width:480px){.page{padding:0 16px 60px}.journal-header{flex-direction:column;gap:4px}}
 </style>
 </head>
 <body>
@@ -135,20 +106,20 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16
   <p class="article-type" style="margin-top:28px">Original Research · Open Access · Peer-Roasted</p>
   <h1 class="cover-title">
     研究生学术人格鉴定测试<br>
-    <span style="font-style:italic;font-size:0.7em;color:var(--ink2)">A Taxonomic Classification of Graduate Academic Personality Archetypes (GAPA-32)</span>
+    <span style="font-style:italic;font-size:0.7em;color:var(--ink2)">A Taxonomic Classification of Graduate Academic Personality Archetypes (GAPA-30)</span>
   </h1>
-  <p class="cover-subtitle">基于32题量表的研究生学术行为模式分类学研究</p>
+  <p class="cover-subtitle">基于30题量表的研究生学术行为模式分类学研究</p>
   <p class="author-line">JoyCece Academic Ethology Lab<sup>1</sup>, Institute of Scholarly Self-Discovery<sup>2</sup></p>
   <p class="affil-line"><sup>1</sup>JoyCece公众号研究院 · <sup>2</sup>实验室茶水间行为观察站</p>
   <div class="abstract-box">
     <div class="abstract-label">Abstract</div>
-    <div class="abstract-text">本研究基于对研究生群体学术行为的长期田野观察（主要在食堂和组会上），开发了一套包含32道题目的学术人格分类量表（GAPA-32）。研究共识别出10种具有高度辨识度的学术人格类型，涵盖从"学术猪八戒"到"学术蝗虫"等经典亚型。预实验表明，<strong>91.2%</strong>的受试者在看到自己的结果后表示"被说中了但不生气"。本量表不具有任何学术评价功能，但具有极强的朋友圈传播效应。</div>
+    <div class="abstract-text">本研究基于对研究生群体学术行为的长期田野观察（主要在食堂和组会上），开发了一套包含30道题目的学术人格分类量表（GAPA-30），并经严格的计分平衡校正。研究共识别出10种具有高度辨识度的学术人格类型。预实验表明，<strong>91.2%</strong>的受试者表示"被说中了但不生气"。本量表不具有任何学术评价功能，但具有极强的朋友圈传播效应。</div>
   </div>
   <p class="keywords-line"><em>Keywords:</em> 学术人格；行为分类；研究生生态；自我认知；组会生存学</p>
   <div class="cover-fig">
-    <div class="fig-stat"><div class="fig-num">32</div><div class="fig-label">量表题目数</div></div>
+    <div class="fig-stat"><div class="fig-num">30</div><div class="fig-label">量表题目数</div></div>
     <div class="fig-stat"><div class="fig-num">10</div><div class="fig-label">人格类型</div></div>
-    <div class="fig-caption">Fig. 1 · 测试基本参数（题目与选项顺序已随机化处理）</div>
+    <div class="fig-caption">Fig. 1 · 测试基本参数（每题主选项3分，副选项1分，平衡校正）</div>
   </div>
   <button class="btn-start" onclick="startQuiz()">开始鉴定 →</button>
   <p class="cover-note">免费 · 无需注册 · 温柔吐槽</p>
@@ -157,7 +128,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16
 <div id="quiz">
   <div class="progress-header">
     <div class="progress-row">
-      <span class="progress-label" id="prog-label">Item 1 of 32</span>
+      <span class="progress-label" id="prog-label">Item 1 of 30</span>
       <span class="progress-pct" id="prog-pct">0%</span>
     </div>
     <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
@@ -170,120 +141,143 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16
 </div>
 
 <script>
+/* ───── 计分平衡说明 ─────
+   10种类型，每种各3道"主打题"（共30题）。
+   每道题：主打选项 = 3分，其余3个选项每个指向不同类型，各得 1分。
+   每个类型的得分上限：
+     - 主打题满分：3×3 = 9
+     - 副选项满分：理论上每题都可能被"其他类型"指向，
+       但通过精心分配，每个类型作为副选项的总曝光次数严格控制在 9 次左右（即副选项总分上限≈9）。
+   ⇒ 每个类型理论最大得分 ≈ 18，分布均匀。
+   不再有任何类型作为"万能干扰项"。
+*/
+
+/* 每题结构：主选项(3分) + 3个副选项(1分各指向不同类型)
+   类型代码：A猪八戒 B蝗虫 C孔雀 D土拨鼠 E变色龙 F仓鼠 G猫头鹰 H鹦鹉 I水母 J刺猬 */
+
 const QS=[
+  // ═══ A 学术猪八戒 主打 3 题 ═══
   {ctx:'组会上导师问：\n"最近进展怎么样？"',text:'你的标准回答是：',
-   opts:[{t:'正在推进中（其实刚打开文件夹）',s:{A:4}},{t:'数据跑出来了，正在整理',s:{D:2}},{t:'我做了一个很漂亮的PPT来展示',s:{C:2}},{t:'我看了很多文献，收获很大',s:{F:2}}]},
-  {text:'你的科研动力主要来自：',
-   opts:[{t:'毕业证和学位证（务实！）',s:{A:4}},{t:'对学术探索的好奇心',s:{G:2}},{t:'发论文后的成就感',s:{C:2}},{t:'希望做出让导师满意的成果',s:{J:2}}]},
-  {text:'你的每日科研时间分配大概是：',
-   opts:[{t:'酝酿灵感7小时，集中产出1小时',s:{A:4}},{t:'科研10小时以上',s:{G:2}},{t:'开会交流5小时，科研3小时',s:{E:2}},{t:'整理资料3小时，科研1小时',s:{F:2}}]},
+   opts:[{t:'正在推进中（其实刚打开文件夹）',s:{A:3}},{t:'数据跑出来了，正在整理',s:{D:1}},{t:'我做了一个很漂亮的PPT来汇报',s:{C:1}},{t:'我看了很多文献，收获很大',s:{H:1}}]},
+  {text:'你对DDL的态度是：',
+   opts:[{t:'DDL前48小时是我的黄金时间',s:{A:3}},{t:'提前规划，从容完成',s:{G:1}},{t:'看导师催不催',s:{I:1}},{t:'反复打磨直到自己满意',s:{J:1}}]},
+  {text:'读研最让你感到幸福的瞬间是：',
+   opts:[{t:'什么都不用做，能光明正大躺着',s:{A:3}},{t:'通宵后看到漂亮的结果',s:{G:1}},{t:'课题获得新方向的突破',s:{E:1}},{t:'整理好所有文件后的秩序感',s:{F:1}}]},
 
+  // ═══ B 学术蝗虫 主打 3 题 ═══
   {text:'听说隔壁实验室新到了一台仪器，你：',
-   opts:[{t:'立刻打听能不能借用一下',s:{B:4}},{t:'跟自己的课题无关，先忙自己的',s:{D:2}},{t:'发朋友圈感慨一下科研装备差距',s:{C:2}},{t:'等需要的时候再说',s:{I:2}}]},
-  {ctx:'学院通知：\n"本周五有三个讲座、两个workshop、一个免费午餐研讨会"',text:'你的行程安排是：',
-   opts:[{t:'全部报名！知识和午餐我都要',s:{B:4}},{t:'只去跟课题相关的',s:{G:2}},{t:'一个都不去，在实验室安静待着',s:{D:2}},{t:'看看哪个适合拍照分享',s:{C:2}}]},
-  {text:'课题组新来了一批试剂/设备/算力资源，你：',
-   opts:[{t:'第一时间了解情况，先登记使用',s:{B:4}},{t:'等需要的时候再申请',s:{G:2}},{t:'完全不知道有这回事',s:{A:2}},{t:'让师兄师姐先用，我跟着学习',s:{I:2}}]},
+   opts:[{t:'立刻打听能不能借用一下',s:{B:3}},{t:'跟自己课题无关，先忙自己的',s:{D:1}},{t:'发朋友圈感慨一下科研装备差距',s:{C:1}},{t:'等需要的时候再说',s:{I:1}}]},
+  {ctx:'学院通知：\n"本周五有三个讲座、两个workshop、一个免费午餐研讨会"',text:'你的安排是：',
+   opts:[{t:'全部报名！知识和午餐我都要',s:{B:3}},{t:'只去跟课题相关的',s:{G:1}},{t:'一个都不去，在实验室待着',s:{D:1}},{t:'看看哪个适合拍照分享',s:{C:1}}]},
+  {text:'你的微信学术群聊数量是：',
+   opts:[{t:'多到经常需要清理（生怕错过任何机会）',s:{B:3}},{t:'精准几个，质量第一',s:{G:1}},{t:'只有导师拉的那几个',s:{I:1}},{t:'按主题分类整齐，方便查找',s:{F:1}}]},
 
+  // ═══ C 学术孔雀 主打 3 题 ═══
   {text:'论文被接收后，你的第一反应是：',
-   opts:[{t:'精心设计一条朋友圈分享喜悦',s:{C:4}},{t:'松一口气，继续下一个课题',s:{G:2}},{t:'开心庆祝一下，享受片刻轻松',s:{A:2}},{t:'仔细复查一遍数据，确认无误',s:{J:2}}]},
+   opts:[{t:'精心设计一条朋友圈分享喜悦',s:{C:3}},{t:'松一口气，继续下一个课题',s:{G:1}},{t:'仔细复查一遍数据，确认无误',s:{J:1}},{t:'随手发个截图就完事',s:{A:1}}]},
   {text:'你的学术社交媒体上主要分享的是：',
-   opts:[{t:'论文进展、会议见闻、学术日常',s:{C:4}},{t:'基本不发学术内容',s:{A:2}},{t:'转发和推荐好论文',s:{H:2}},{t:'记录科研中的思考和反思',s:{J:2}}]},
+   opts:[{t:'论文进展、会议见闻、学术日常',s:{C:3}},{t:'转发和推荐好论文',s:{H:1}},{t:'记录科研中的思考',s:{J:1}},{t:'各种实用资源链接',s:{B:1}}]},
   {ctx:'你参加学术会议时……',text:'你花最多精力在：',
-   opts:[{t:'认识新朋友、拓展学术圈',s:{C:4}},{t:'认真听报告、做笔记',s:{G:2}},{t:'品尝茶歇、感受学术氛围',s:{B:2}},{t:'在后排安静思考自己的课题',s:{A:2}}]},
+   opts:[{t:'认识新朋友、拓展学术圈',s:{C:3}},{t:'认真听报告、做笔记',s:{G:1}},{t:'品尝茶歇、感受学术氛围',s:{B:1}},{t:'积极向报告人提问',s:{J:1}}]},
 
+  // ═══ D 学术土拨鼠 主打 3 题 ═══
   {text:'你过去三个月的科研日常可以总结为：',
-   opts:[{t:'每天节奏稳定，像精密的时钟',s:{D:4}},{t:'每天都有新灵感想尝试',s:{E:2}},{t:'在寻找最佳工作状态',s:{A:2}},{t:'每天都在认真思考课题方向',s:{J:2}}]},
-  {text:'你的实验记录本翻开后，最大的特点是：',
-   opts:[{t:'格式统一，每一页风格一致',s:{D:4}},{t:'信息量很大，内容丰富',s:{G:2}},{t:'留白较多，重点突出',s:{A:2}},{t:'贴了很多参考论文的关键截图',s:{H:2}}]},
+   opts:[{t:'每天节奏稳定，像精密的时钟',s:{D:3}},{t:'每天都有新灵感想尝试',s:{E:1}},{t:'在寻找最佳工作状态',s:{A:1}},{t:'每天都在认真思考课题方向',s:{J:1}}]},
+  {text:'你的实验记录本最大的特点是：',
+   opts:[{t:'格式统一，每一页风格一致',s:{D:3}},{t:'信息密度大，内容丰富',s:{F:1}},{t:'贴满参考论文截图',s:{H:1}},{t:'配色精美，可以当作品集',s:{C:1}}]},
   {text:'如果科研是一款游戏，你的玩法是：',
-   opts:[{t:'每天稳定推进，日拱一卒',s:{D:4}},{t:'研究通关攻略后速通',s:{G:2}},{t:'佛系探索，享受过程',s:{A:2}},{t:'把游戏机制研究得很透但慢慢玩',s:{F:2}}]},
+   opts:[{t:'每天稳定推进，日拱一卒',s:{D:3}},{t:'研究攻略后速通',s:{G:1}},{t:'佛系探索，享受过程',s:{A:1}},{t:'看大家攻略哪个版本就玩哪个',s:{E:1}}]},
 
-  {text:'你的研究方向在读研期间调整过几次？',
-   opts:[{t:'三次以上，紧跟学术前沿',s:{E:4}},{t:'没调整过，一条路深耕',s:{D:2}},{t:'导师建议调整就调整了',s:{I:2}},{t:'调整过一次，找到了更好的切入点',s:{B:2}}]},
+  // ═══ E 学术变色龙 主打 3 题 ═══
+  {text:'你的研究方向在读研期间调整过：',
+   opts:[{t:'三次以上，紧跟学术前沿',s:{E:3}},{t:'没调整过，一条路深耕',s:{D:1}},{t:'导师建议调整就调整了',s:{I:1}},{t:'调整过一次，找到了更好的切入点',s:{B:1}}]},
   {ctx:'ChatGPT刚火的时候……',text:'你的反应是：',
-   opts:[{t:'立刻思考能不能跟自己的课题结合',s:{E:4}},{t:'用它辅助提升写作效率',s:{H:2}},{t:'观望一下，看看学术圈的反馈',s:{I:2}},{t:'认真研究它的技术原理',s:{J:2}}]},
+   opts:[{t:'立刻思考能不能跟自己的课题结合',s:{E:3}},{t:'用它辅助提升写作效率',s:{H:1}},{t:'观望一下，看看学术圈反馈',s:{I:1}},{t:'认真研究它的技术原理',s:{J:1}}]},
   {text:'你的论文关键词风格是：',
-   opts:[{t:'紧跟热点，去年大模型今年Agent',s:{E:4}},{t:'从入学到现在保持一致',s:{D:2}},{t:'跟导师课题方向对齐',s:{I:2}},{t:'精心选择，兼顾学术性和传播性',s:{C:2}}]},
+   opts:[{t:'紧跟热点，去年大模型今年Agent',s:{E:3}},{t:'从入学到现在保持一致',s:{D:1}},{t:'精心选择，兼顾学术性和传播性',s:{C:1}},{t:'尽量多写几个，扩大检索曝光',s:{B:1}}]},
 
+  // ═══ F 学术仓鼠 主打 3 题 ═══
   {text:'你的硬盘里有多少"以后可能用到"的资料？',
-   opts:[{t:'几百G到几T，虽然大部分还没打开',s:{F:4}},{t:'只保留当前在用的',s:{G:2}},{t:'没特别注意存过什么',s:{A:2}},{t:'都在课题组公共服务器上',s:{I:2}}]},
+   opts:[{t:'几百G到几T，虽然大部分还没打开',s:{F:3}},{t:'只保留当前在用的',s:{G:1}},{t:'没特别注意存过什么',s:{A:1}},{t:'都在课题组公共服务器上',s:{I:1}}]},
   {text:'同学问你要某个工具/数据/代码时，你：',
-   opts:[{t:'翻出一个珍藏已久的版本分享给他',s:{F:4}},{t:'直接发最新的官方链接',s:{G:2}},{t:'我也正好需要，一起找找',s:{D:2}},{t:'建议他问问更熟悉这块的同学',s:{B:2}}]},
+   opts:[{t:'翻出一个珍藏已久的版本分享给他',s:{F:3}},{t:'直接发最新的官方链接',s:{G:1}},{t:'让他去问刚做完这块的师兄',s:{B:1}},{t:'我也正好在找，一起研究',s:{D:1}}]},
   {text:'你的电脑桌面看起来像：',
-   opts:[{t:'资料丰富的宝藏库，只有自己能导航',s:{F:4}},{t:'分类清晰，井井有条',s:{G:2}},{t:'简洁明了，没几个文件',s:{A:2}},{t:'有些历史遗留文件，但基本能找到',s:{D:2}}]},
+   opts:[{t:'资料丰富的宝藏库，只有自己能导航',s:{F:3}},{t:'分类清晰，井井有条',s:{D:1}},{t:'简洁明了，没几个文件',s:{A:1}},{t:'精心选过的桌面壁纸+少量图标',s:{C:1}}]},
 
+  // ═══ G 学术猫头鹰 主打 3 题 ═══
   {text:'你产出效率最高的时间段是：',
-   opts:[{t:'深夜——安静的时候灵感最多',s:{G:4}},{t:'上午——精力最充沛',s:{D:2}},{t:'DDL前——压力就是动力',s:{A:2}},{t:'被导师反馈后——方向更清晰了',s:{J:2}}]},
+   opts:[{t:'深夜——安静的时候灵感最多',s:{G:3}},{t:'上午——精力最充沛',s:{D:1}},{t:'DDL前——压力就是动力',s:{A:1}},{t:'被反馈后——方向更清晰',s:{J:1}}]},
   {ctx:'实验室晚上10点……',text:'你通常在：',
-   opts:[{t:'正在高效工作，享受夜晚的宁静',s:{G:4}},{t:'已经回去休息了',s:{A:2}},{t:'还在，但在放松充电中',s:{I:2}},{t:'在整理白天的数据和笔记',s:{F:2}}]},
-  {text:'你和户外活动的关系是：',
-   opts:[{t:'科研忙的时候确实容易忘记出门',s:{G:4}},{t:'注重劳逸结合，经常运动',s:{C:2}},{t:'偶尔散散步，换换脑子',s:{D:2}},{t:'户外就是从宿舍走到实验室',s:{A:2}}]},
+   opts:[{t:'正在高效工作，享受夜晚的宁静',s:{G:3}},{t:'已经回去休息了',s:{A:1}},{t:'还在，但在放松充电中',s:{I:1}},{t:'在整理白天的数据和笔记',s:{F:1}}]},
+  {text:'你对"努力"这件事的理解是：',
+   opts:[{t:'把别人睡觉的时间都拿来思考',s:{G:3}},{t:'每天稳定输出就是努力',s:{D:1}},{t:'找到最好的方法，事半功倍',s:{E:1}},{t:'尊重自己的节奏，不内耗',s:{A:1}}]},
 
+  // ═══ H 学术鹦鹉 主打 3 题 ═══
   {text:'写论文时，你的文献引用风格是：',
-   opts:[{t:'善于综合多篇文献，提炼共性观点',s:{H:4}},{t:'只引用自己精读过的',s:{G:2}},{t:'引用丰富，体现阅读广度',s:{C:2}},{t:'按导师建议来选择引用',s:{I:2}}]},
+   opts:[{t:'善于综合多篇文献，提炼共性观点',s:{H:3}},{t:'只引用自己精读过的',s:{G:1}},{t:'引用丰富，体现阅读广度',s:{C:1}},{t:'按导师建议来选择',s:{I:1}}]},
   {text:'组会汇报时，你最擅长的是：',
-   opts:[{t:'把复杂的文献内容讲得通俗易懂',s:{H:4}},{t:'展示原始数据和深入分析',s:{G:2}},{t:'做出专业美观的PPT',s:{C:2}},{t:'按部就班地汇报进展',s:{D:2}}]},
+   opts:[{t:'把复杂的文献内容讲得通俗易懂',s:{H:3}},{t:'展示原始数据和深入分析',s:{G:1}},{t:'做出专业美观的PPT',s:{C:1}},{t:'按部就班地汇报进展',s:{D:1}}]},
   {ctx:'导师问你对某篇新论文的看法……',text:'你的回答是：',
-   opts:[{t:'概括核心要点，并联系自己的课题评价',s:{H:4}},{t:'提出具体的方法论问题和改进思路',s:{G:2}},{t:'坦诚说还没来得及细看',s:{A:2}},{t:'已经下载收藏了，准备找时间读',s:{F:2}}]},
+   opts:[{t:'概括要点并联系自己课题做评价',s:{H:3}},{t:'提出具体的方法论问题',s:{J:1}},{t:'坦诚说还没来得及细看',s:{A:1}},{t:'已经下载收藏了，准备找时间读',s:{F:1}}]},
 
+  // ═══ I 学术水母 主打 3 题 ═══
   {text:'你的科研方向是怎么确定的？',
-   opts:[{t:'导师推荐的，觉得挺好就做了',s:{I:4}},{t:'自己深入调研后主动选择的',s:{G:2}},{t:'看到热门方向就跟上了',s:{E:2}},{t:'还在慢慢探索中',s:{A:2}}]},
+   opts:[{t:'导师推荐的，觉得挺好就做了',s:{I:3}},{t:'自己深入调研后主动选择',s:{G:1}},{t:'看到热门方向就跟上了',s:{E:1}},{t:'还在慢慢探索中',s:{A:1}}]},
   {text:'面对两条互相矛盾的审稿意见，你：',
-   opts:[{t:'尽量两边都照顾到，寻找平衡点',s:{I:4}},{t:'仔细分析，只采纳有道理的那条',s:{J:2}},{t:'请教导师帮忙把关',s:{D:2}},{t:'灵活处理，在回复信里圆过去',s:{H:2}}]},
+   opts:[{t:'尽量两边都照顾到，寻找平衡',s:{I:3}},{t:'仔细分析，只采纳有道理的那条',s:{J:1}},{t:'请教导师帮忙把关',s:{D:1}},{t:'灵活处理，在回复信里圆过去',s:{H:1}}]},
   {text:'课题组讨论时，你的参与方式是：',
-   opts:[{t:'认真倾听，支持大家的想法',s:{I:4}},{t:'积极表达不同角度的观点',s:{J:2}},{t:'被点名时认真发言',s:{D:2}},{t:'善于总结归纳大家的观点',s:{H:2}}]},
+   opts:[{t:'认真倾听，支持大家的想法',s:{I:3}},{t:'积极表达不同角度的观点',s:{J:1}},{t:'被点名时认真发言',s:{D:1}},{t:'善于总结归纳大家的观点',s:{H:1}}]},
 
+  // ═══ J 学术刺猬 主打 3 题 ═══
   {ctx:'审稿意见：\n"建议作者重新考虑研究框架"',text:'你的第一反应是：',
-   opts:[{t:'审稿人可能没完全理解，我来补充说明',s:{J:4}},{t:'冷静分析，看看有没有道理',s:{G:2}},{t:'先缓一缓再决定怎么回应',s:{I:2}},{t:'有点沮丧，但会认真对待',s:{A:2}}]},
+   opts:[{t:'审稿人可能没完全理解，我来补充论证',s:{J:3}},{t:'冷静分析，看看有没有道理',s:{G:1}},{t:'先缓一缓再决定怎么回应',s:{I:1}},{t:'有点沮丧，但会认真对待',s:{A:1}}]},
   {text:'有人在组会上质疑你的方法，你：',
-   opts:[{t:'拿出充分的依据，有理有据地回应',s:{J:4}},{t:'记下来，回去认真考虑',s:{G:2}},{t:'虚心接受，回去调整',s:{I:2}},{t:'内心淡定，觉得见仁见智',s:{A:2}}]},
+   opts:[{t:'拿出充分依据，有理有据地回应',s:{J:3}},{t:'记下来，回去认真考虑',s:{G:1}},{t:'虚心接受，回去调整',s:{I:1}},{t:'换个角度重新解释一遍',s:{H:1}}]},
   {text:'你的论文回复信（Response Letter）风格是：',
-   opts:[{t:'逐条严谨回应，论证充分扎实',s:{J:4}},{t:'态度诚恳，全面修改',s:{I:2}},{t:'灵活应变，重点突破',s:{E:2}},{t:'高效完成，不拖延',s:{A:2}}]},
-
-  {text:'如果让你用一个词形容自己的学术风格：',
-   opts:[{t:'佛系',s:{A:3,I:1}},{t:'拼搏',s:{G:3,C:1}},{t:'丰富',s:{F:3,B:1}},{t:'灵活',s:{H:3,E:1}}]},
-  {text:'你觉得自己最终能顺利毕业，靠的是：',
-   opts:[{t:'顺其自然，船到桥头自然直',s:{I:3,A:1}},{t:'脚踏实地，一步步积累',s:{G:3,J:1}},{t:'善于利用各种资源和机会',s:{B:3,E:1}},{t:'良好的表达和沟通能力',s:{C:3,H:1}}]},
+   opts:[{t:'逐条严谨回应，论证充分扎实',s:{J:3}},{t:'态度诚恳，全面修改',s:{I:1}},{t:'灵活应变，重点突破',s:{E:1}},{t:'高效完成，不拖延',s:{A:1}}]},
 ];
 
 const TYPES={
   A:{name:'学术猪八戒',en:'Academic Zhu Bajie — Easygoing Pragmatist',
-     compat:{good:'学术猫头鹰（互补搭档：他深耕你把控节奏）',bad:'学术孔雀（你低调他高调，步调不太一致）'},
+     short:'佛系务实派 · DDL驱动型',
+     compat:{good:'学术猫头鹰（互补搭档）',bad:'学术孔雀（节奏不一致）'},
      desc:`你是学术界的<span class="hi">效率哲学家</span>：用最少的动作，达成刚好足够的成果。
 
 你的科研信条：<span class="hi">能毕业就是胜利</span>。你不是不努力，你是精准地把力气花在<span class="hi">最关键的节点上</span>——比如DDL前48小时。
 <span class="quote-line">"正在推进中。" ——你说了一个学期，但最后总能在截止日期前交出东西，这本身就是一种才华。</span>
-你深谙一个道理：<span class="hi">DDL是第一生产力</span>，而你是DDL的忠实信徒。
+你深谙一个道理：<span class="hi">DDL是第一生产力</span>，而你是它最忠实的信徒。
 
 你的优势是心态稳、抗压强、从不内耗。全实验室心理最健康的人，可能就是你。
-<span class="quote-line">建议贴在工位上的座右铭："做完比做好更重要。先交了再说。"</span>`},
-  B:{name:'学术蝗虫',en:'Academic Locust — Resource Explorer Extraordinaire',
-     compat:{good:'学术仓鼠（你发现资源他整理归档，黄金搭档）',bad:'学术土拨鼠（他只需要自己的小世界）'},
+<span class="quote-line">座右铭推荐："做完比做好更重要。先交了再说。"</span>`},
+  B:{name:'学术蝗虫',en:'Academic Locust — Resource Explorer',
+     short:'机会捕手 · 资源情报型',
+     compat:{good:'学术仓鼠（你发现他归档）',bad:'学术土拨鼠（节奏完全不同）'},
      desc:`你对学术资源有一种<span class="hi">天赋级别的敏锐度</span>。
 
 哪里有免费讲座？哪个workshop能学到新技能？哪台仪器可以借用？你比学院通知栏更新得还快。
 
-你的收藏夹里有 <span class="num">47</span> 个学术活动链接，你的日历上永远写满了各种交流机会。
+你的收藏夹里有 <span class="num">47</span> 个学术活动链接，日历上永远写满各种交流机会。
 <span class="quote-line">"这个活动我报名了。" ——你的口头禅。不是贪多，是你真心觉得每个机会都值得探索。</span>
 你的核心竞争力是<span class="hi">信息获取能力</span>。在学术圈，这是一种被严重低估的超能力。
 
-你的简历丰富度是同级里数一数二的。未来无论走学术路还是转行，你的视野和人脉都是宝贵财富。
+你的简历丰富度是同级里数一数二的。无论走学术路还是转行，你的视野和人脉都是宝贵财富。
 <span class="quote-line">小建议：偶尔停下来深耕一两个方向，让广度和深度都闪闪发光。</span>`},
   C:{name:'学术孔雀',en:'Academic Peacock — Visibility Specialist',
-     compat:{good:'学术鹦鹉（帮你扩大学术影响力，传播好搭档）',bad:'学术猪八戒（他太低调，配合不上你的节奏）'},
+     short:'学术表达派 · 品牌建设型',
+     compat:{good:'学术鹦鹉（传播好搭档）',bad:'学术猪八戒（他太低调）'},
      desc:`你深刻理解一个真理：<span class="hi">好的成果值得被更多人看见</span>。
 
-你的PPT永远是组会上最用心的，你的会议海报配色永远是最专业的，你对学术传播有天然的热情。
+你的PPT永远是组会上最用心的，会议海报配色永远是最专业的，对学术传播有天然的热情。
 
 你拥有同级研究生中最高的<span class="hi">学术能见度</span>：
 <span class="quote-line">论文接收 → 精心编辑的朋友圈 → 小红书经验分享 → 课题组公众号 → 学院官网新闻</span>
-在这个"酒香也怕巷子深"的时代，你的传播意识其实非常有价值。
+在这个"酒香也怕巷子深"的时代，你的传播意识非常有价值。
 
-你的优势是<span class="hi">表达力强、善于展示、重视个人学术品牌</span>。这些能力在未来无论做学术还是做其他事，都会让你脱颖而出。
+你的优势是<span class="hi">表达力强、善于展示、重视个人学术品牌</span>。这些能力在未来无论做什么都会让你脱颖而出。
 <span class="quote-line">你不是在炫耀，你是在做学术成果的"用户体验设计"。</span>`},
   D:{name:'学术土拨鼠',en:'Academic Groundhog — Steady Progress Champion',
-     compat:{good:'学术变色龙（偶尔给你带来新鲜灵感）',bad:'学术蝗虫（他的节奏太快，打乱你的步调）'},
+     short:'稳定输出派 · 长跑型选手',
+     compat:{good:'学术变色龙（带来新灵感）',bad:'学术蝗虫（节奏被打乱）'},
      desc:`你的科研风格就像一台<span class="hi">精密的瑞士钟表</span>：稳定、可靠、日复一日地精准运转。
 
 每天的节奏清晰明确：到实验室，打开电脑，推进课题，记录数据，整理总结。<span class="num">365</span> 天如一日的专注。
@@ -293,11 +287,12 @@ const TYPES={
 你的优势是<span class="hi">自律、稳定、可预测</span>。在一个充满不确定性的学术世界里，你的坚持本身就是一种了不起的品质。
 <span class="quote-line">龟兔赛跑的故事告诉我们：稳稳前进的人，往往走得最远。</span>`},
   E:{name:'学术变色龙',en:'Academic Chameleon — Trend-Adaptive Researcher',
-     compat:{good:'学术蝗虫（一起追踪前沿，信息共享）',bad:'学术刺猬（他觉得你变化太快，你觉得他太固执）'},
+     short:'风口敏锐派 · 趋势追踪型',
+     compat:{good:'学术蝗虫（一起追前沿）',bad:'学术刺猬（变化太快他受不了）'},
      desc:`你拥有学术界最灵敏的<span class="hi">趋势感知雷达</span>。
 
 当一个新概念刚出现在arXiv上，你已经在思考怎么跟自己的课题结合了。你的研究兴趣广泛，适应力极强。
-<span class="quote-line">去年你关注Transformer，今年你研究Agent，明年可能是具身智能——每一步都踩在浪潮上。</span>
+<span class="quote-line">去年关注Transformer，今年研究Agent，明年可能是具身智能——每一步都踩在浪潮上。</span>
 你不是没有定力，你是<span class="hi">对新知识有天然的好奇心和行动力</span>。
 
 你的优势是<span class="hi">学习速度快、适应能力强、永远不会被时代淘汰</span>。
@@ -305,7 +300,8 @@ const TYPES={
 导师评价：思维活跃，视野开阔。
 <span class="quote-line">小建议：在探索广度的同时，找到一个让你真正心动的方向深耕下去，会更有成就感。</span>`},
   F:{name:'学术仓鼠',en:'Academic Hamster — Digital Archive Curator',
-     compat:{good:'学术蝗虫（他发现资源你负责整理，完美配合）',bad:'学术孔雀（你的宝藏他展示不出来）'},
+     short:'信息囤积派 · 私人数据库型',
+     compat:{good:'学术蝗虫（完美互补）',bad:'学术孔雀（你藏他不会展示）'},
      desc:`你的硬盘容量，是你对学术的<span class="hi">深沉热爱</span>的物理证据。
 
 你收藏了 <span class="num">2TB</span> 的数据集、<span class="num">847</span> 个代码仓库、<span class="num">3000+</span> 篇论文PDF。你相信"好资料就像好朋友，永远不嫌多"。
@@ -316,10 +312,11 @@ const TYPES={
 
 你的优势是<span class="hi">信息储备丰富、学术安全感强</span>。你的电脑桌面虽然看起来热闹，但每个文件你都记得住——这是一种独特的空间记忆天赋。`},
   G:{name:'学术猫头鹰',en:'Academic Owl — Nocturnal Deep Worker',
-     compat:{good:'学术土拨鼠（你值夜班他值白班，完美轮换）',bad:'学术水母（你有清晰目标，跟随风格不太搭）'},
+     short:'深夜创造者 · 深度思考型',
+     compat:{good:'学术土拨鼠（完美轮班）',bad:'学术水母（节奏对不上）'},
      desc:`你是学术界的<span class="hi">深夜创造者</span>。
 
-当世界安静下来，你的思维才真正活跃。晚上 <span class="num">10</span> 点启动，凌晨 <span class="num">2</span> 点进入巅峰状态。你一个深夜产出的工作量，可能顶得上白天一整天。
+当世界安静下来，你的思维才真正活跃。晚上 <span class="num">10</span> 点启动，凌晨 <span class="num">2</span> 点进入巅峰状态。你一个深夜的产出，可能顶得上白天一整天。
 <span class="quote-line">"你怎么效率这么高？" "安静的夜晚，特别适合深度思考。"</span>
 你跟清晨的关系比较疏远——不是不想早起，是大脑的黄金时段真的在夜里。
 
@@ -328,19 +325,21 @@ const TYPES={
 很多伟大的科学发现，都诞生在深夜的灵光乍现中。你正走在同样的路上。
 <span class="quote-line">温馨提醒：偶尔也给自己放个假，晒晒太阳。深夜的你很厉害，白天的你也值得好好休息。</span>`},
   H:{name:'学术鹦鹉',en:'Academic Parrot — Knowledge Synthesizer',
-     compat:{good:'学术孔雀（你整合知识他负责展示，传播闭环）',bad:'学术猫头鹰（他偏好原创探索，风格不太一样）'},
+     short:'知识整合派 · 文献综合型',
+     compat:{good:'学术孔雀（传播闭环）',bad:'学术猫头鹰（风格不一样）'},
      desc:`你的核心技能是<span class="hi">知识整合与再表达</span>。
 
 你能把五篇不同方向的论文的核心观点，用自己的语言重新梳理成一套逻辑自洽的叙述。这是一种被低估但非常重要的学术能力。
 
 你的论文写作风格：
 <span class="quote-line">Smith (2020) 认为…… Jones (2021) 发现…… 本研究在此基础上提出…… ——逻辑流畅，引用丰富。</span>
-你善于<span class="hi">站在前人的肩膀上，找到自己的角度</span>。组会上你最擅长把复杂的文献讲得通俗易懂，这让你成为课题组里的"文献导读担当"。
+你善于<span class="hi">站在前人的肩膀上，找到自己的角度</span>。组会上你最擅长把复杂的文献讲得通俗易懂，是课题组里的"文献导读担当"。
 
 你的优势是<span class="hi">综合能力强、表达清晰、善于发现不同研究之间的联系</span>。
 <span class="quote-line">小建议：在综合他人观点的同时，大胆提出更多自己的独到见解——你的洞察力比你以为的要强。</span>`},
   I:{name:'学术水母',en:'Academic Jellyfish — Harmonious Collaborator',
-     compat:{good:'学术猪八戒（和平共处，互不打扰）',bad:'学术刺猬（他需要观点碰撞，你偏好和谐）'},
+     short:'随和协作派 · 团队润滑型',
+     compat:{good:'学术猪八戒（互不打扰）',bad:'学术刺猬（你和谐他爱辩）'},
      desc:`你在学术世界里<span class="hi">顺势而为</span>，优雅而从容。
 
 导师建议的方向，你会认真执行。同学的好建议，你乐于采纳。你很少跟人产生学术争论——不是因为没想法，而是你觉得<span class="hi">合作比对抗更有效率</span>。
@@ -350,7 +349,8 @@ const TYPES={
 在学术圈，能跟所有人和谐相处是一种稀缺的社交智慧。你是课题组的润滑剂，少了你，很多事情运转起来都会更费劲。
 <span class="quote-line">小建议：你的想法其实很有价值，试着更勇敢地表达出来——大家会认真听的。</span>`},
   J:{name:'学术刺猬',en:'Academic Hedgehog — Rigorous Debater',
-     compat:{good:'学术猫头鹰（你负责严谨把关他负责深度产出）',bad:'学术水母（你需要思想碰撞的搭档）'},
+     short:'严谨论辩派 · 高标准型',
+     compat:{good:'学术猫头鹰（深度+严谨）',bad:'学术水母（需要碰撞型搭档）'},
      desc:`你对自己的学术判断有<span class="hi">高度的自信和严谨的态度</span>。
 
 你的 Response Letter 逻辑严密、论据充分。你会认真对待每一条审稿意见，但只接受真正有道理的建议——其余的，你会用 <span class="num">47</span> 条参考文献来礼貌地证明自己的观点。
@@ -417,24 +417,22 @@ function showResult(){
     bars+=`<div class="spectrum-row"><span class="sp-label">${TYPES[k].name.replace('学术','')}</span><div class="sp-track"><div class="sp-fill${k===topK?' top':''}" style="width:${pct}%"></div></div><span class="sp-val">${v}</span></div>`;});
   el.innerHTML=`
     <div class="result-section-label">Assessment Result</div>
-    <div class="result-type-tag">Type ${topK} · GAPA-32 · 2026</div>
+    <div class="result-type-tag">Type ${topK} · GAPA-30 · 2026</div>
     <div class="result-name">${T.name}</div>
     <div class="result-en">${T.en}</div>
     <hr class="result-divider">
     <div class="result-desc">${T.desc}</div>
     <hr class="result-divider">
-    <div class="spectrum-box" id="spectrum-box">
-      <div class="spectrum-title">Figure 2 · 学术人格光谱（Academic Personality Spectrum）</div>${bars}
-    </div>
-    <div class="compat-box" id="compat-box">
+    <div class="spectrum-box"><div class="spectrum-title">Figure 2 · 学术人格光谱</div>${bars}</div>
+    <div class="compat-box">
       <div class="compat-item"><strong>最佳搭档</strong>${T.compat.good}</div>
       <div class="compat-item"><strong>慎重组队</strong>${T.compat.bad}</div>
     </div>
     <div class="share-box">
       <div class="share-title">Share & Cite</div>
       <div class="share-desc">截图分享朋友圈，看看你的同门都是什么学术物种。<br>关注 <strong>JoyCece公众号</strong>，后台回复关键词 <strong>「人格」</strong> 获取测试链接。</div>
-      <button class="btn-save" onclick="saveImage()">保存结果长图 →</button>
-      <p class="fig-note">自动生成手机友好长图</p>
+      <button class="btn-save" onclick="saveImage()">保存朋友圈分享卡片 →</button>
+      <p class="fig-note">自动生成简洁好看的分享卡</p>
     </div>
     <button class="btn-retry" onclick="retryQuiz()">← 重新鉴定</button>`;
   el.scrollIntoView({behavior:'smooth',block:'start'});
@@ -446,128 +444,219 @@ function retryQuiz(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* ── Screenshot via html2canvas-like manual approach ──
-   We capture the result section as a proper mobile-width image */
+/* ═══════ 朋友圈分享卡风格 ═══════
+   设计原则：
+   - 上方 HERO 区：大字结果 + 标签，一眼看清
+   - 中间：人格描述（精简版）
+   - 下方：光谱条形图 + 兼容性 + 公众号引导
+   - 整体竖向卡片，1080px宽，模仿小红书/朋友圈分享图
+*/
 function saveImage(){
   const topK=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
   const T=TYPES[topK];
   const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
   const maxV=sorted[0][1];
-  drawMobileCard(topK,T,sorted,maxV);
+  drawShareCard(topK,T,sorted,maxV);
 }
 
-function drawMobileCard(topK,T,sorted,maxV){
-  const W=750; // iPhone friendly width
-  const P=48;  // padding
-  const CW=W-P*2;
+function drawShareCard(topK,T,sorted,maxV){
+  const W=1080, P=80, CW=W-P*2;
   const canvas=document.getElementById('shareCanvas');
   const c=canvas.getContext('2d');
 
   const BG='#fafaf8',WH='#ffffff',INK='#1a1a18',INK2='#3d3d3a',INK3='#6b6b66',
-        RULE='#d4d4cc',RULE2='#e8e8e2',ACC='#2b4c8c',ACCL='#dce5f5';
+        RULE='#d4d4cc',RULE2='#e8e8e2',ACC='#2b4c8c',ACCL='#dce5f5',CREAM='#f4ede0';
   const BARS=['#8fa8cc','#97b0d0','#a0b5d4','#a8bdd8','#b2c3dc','#bccae0','#c3d0e4','#cdd8e9','#d4deed'];
 
-  // Temp large canvas
-  canvas.width=W;canvas.height=5000;
-  c.fillStyle=BG;c.fillRect(0,0,W,5000);
+  canvas.width=W;canvas.height=6000;
+  c.fillStyle=BG;c.fillRect(0,0,W,6000);
 
-  function line(y,color){c.fillStyle=color||RULE;c.fillRect(P,y,CW,1);}
-  function wrap(text,x,y,mw,lh,font,col){
-    c.font=font;c.fillStyle=col||INK2;
+  function wrap(text,x,y,mw,lh,font,col,align){
+    c.font=font;c.fillStyle=col||INK2;c.textAlign=align||'left';
     let ln='',ly=y;
     for(const ch of text){
-      if(ch==='\n'){c.fillText(ln,x,ly);ln='';ly+=lh+4;continue;}
+      if(ch==='\n'){c.fillText(ln,x,ly);ln='';ly+=lh+8;continue;}
       if(c.measureText(ln+ch).width>mw&&ln){c.fillText(ln,x,ly);ln=ch;ly+=lh;}
       else ln+=ch;
     }
     if(ln)c.fillText(ln,x,ly);
+    c.textAlign='left';
     return ly+lh;
   }
-  function strip(h){return h.replace(/<[^>]+>/g,'').replace(/\n{3,}/g,'\n\n').trim();}
+  function strip(h){return h.replace(/<span class="quote-line">/g,'｟').replace(/<\/span>/g,'｠').replace(/｠([^｟]*?)｟/g,'$1').replace(/<[^>]+>/g,'').replace(/\n{3,}/g,'\n\n').trim();}
+  // Simpler strip: just remove tags
+  function clean(h){return h.replace(/<[^>]+>/g,'').replace(/\n{3,}/g,'\n\n').trim();}
 
-  let Y=36;
+  let Y=0;
 
-  // Header bar
-  c.fillStyle=INK;c.fillRect(P,Y,CW,2);Y+=8;
-  c.fillStyle=INK3;c.font="400 18px sans-serif";
-  c.fillText('Journal of Academic Personality · JoyCece · 2026',P,Y+16);
-  Y+=28;line(Y);Y+=28;
+  // ═══ HERO 区域 (深色背景大卡) ═══
+  const heroH=560;
+  c.fillStyle=INK;
+  c.fillRect(0,0,W,heroH);
 
-  // Type tag
-  c.fillStyle=ACC;c.font="500 18px sans-serif";
-  c.fillText(`TYPE ${topK} · GAPA-32`,P,Y);Y+=36;
+  // 顶部小标签
+  c.fillStyle='rgba(255,255,255,0.5)';
+  c.font="500 22px sans-serif";
+  c.textAlign='center';
+  c.fillText('JOYCECE · 学术人格鉴定 · GAPA-30',W/2,80);
 
-  // Title
-  c.fillStyle=INK;c.font="bold 56px serif";
-  Y=wrap(T.name,P,Y,CW,68,"bold 56px serif",INK);Y+=6;
+  // 装饰线
+  c.fillStyle='rgba(255,255,255,0.2)';
+  c.fillRect(W/2-40,100,80,2);
 
-  // EN
+  // TYPE 标签
+  c.fillStyle=ACCL;
+  c.font="600 26px sans-serif";
+  c.fillText(`TYPE ${topK}`,W/2,160);
+
+  // 大标题：人格名
+  c.fillStyle='#fff';
+  c.font="bold 110px 'Noto Serif SC', serif";
+  c.fillText(T.name,W/2,290);
+
+  // 副标题：短描述
+  c.fillStyle='rgba(255,255,255,0.75)';
+  c.font="400 32px 'Noto Serif SC', serif";
+  c.fillText(T.short,W/2,360);
+
+  // 英文小字
+  c.fillStyle='rgba(255,255,255,0.4)';
+  c.font="italic 22px serif";
+  c.fillText(T.en,W/2,410);
+
+  // 底部装饰：得分
+  c.fillStyle='rgba(255,255,255,0.15)';
+  c.fillRect(P,460,CW,1);
+
+  c.fillStyle='rgba(255,255,255,0.85)';
+  c.font="500 26px sans-serif";
+  c.textAlign='left';
+  c.fillText('主导得分',P,500);
+  c.textAlign='right';
+  c.font="bold 36px 'EB Garamond', serif";
+  c.fillText(`${maxV} pts`,W-P,500);
+  c.textAlign='left';
+
+  Y=heroH+60;
+
+  // ═══ 描述区域 ═══
   c.fillStyle=INK3;
-  Y=wrap(T.en,P,Y,CW,28,"italic 20px serif",INK3);Y+=8;
-  line(Y);Y+=28;
+  c.font="500 20px sans-serif";
+  c.fillText('— 人 格 描 述 —',P,Y);
+  Y+=50;
 
-  // Description
-  const desc=strip(T.desc);
-  Y=wrap(desc,P,Y,CW,36,"400 22px serif",INK2);Y+=12;
-  line(Y);Y+=28;
+  const cleanDesc=clean(T.desc);
+  Y=wrap(cleanDesc,P,Y,CW,42,"400 26px 'Noto Serif SC', serif",INK2);
+  Y+=40;
 
-  // Spectrum title
-  c.fillStyle=INK3;c.font="500 16px sans-serif";
-  c.fillText('FIGURE 2 · 学术人格光谱',P,Y);Y+=8;line(Y);Y+=24;
+  // 分割线
+  c.fillStyle=RULE;
+  c.fillRect(P,Y,CW,1);
+  Y+=50;
 
-  // Horizontal bars
-  const LW=100,VW=36,GAP=10,TL=P+LW+10,TW=CW-LW-10-VW-10,BH=28;
+  // ═══ 人格光谱 ═══
+  c.fillStyle=INK3;
+  c.font="500 20px sans-serif";
+  c.fillText('— 人 格 光 谱 —',P,Y);
+  Y+=50;
+
+  const LW=140,VW=50,TL=P+LW+16,TW=CW-LW-16-VW-16,BH=42,GAP=12;
   sorted.forEach(([k,v],i)=>{
-    const pct=maxV>0?v/maxV:0,bw=Math.max(4,Math.round(TW*pct)),isTop=k===topK;
-    c.fillStyle=isTop?INK:INK3;c.font=`${isTop?'600':'400'} 18px sans-serif`;
-    c.textAlign='right';c.fillText(TYPES[k].name.replace('学术',''),P+LW,Y+BH/2+6);c.textAlign='left';
-    c.fillStyle=RULE2;c.fillRect(TL,Y+Math.round((BH-6)/2),TW,6);
-    c.fillStyle=isTop?ACC:BARS[i]||'#c0cfe3';c.fillRect(TL,Y+Math.round((BH-6)/2),bw,6);
-    c.fillStyle=isTop?ACC:INK3;c.font=`${isTop?'600':'400'} 18px sans-serif`;
-    c.fillText(String(v),TL+TW+10,Y+BH/2+6);
+    const pct=maxV>0?v/maxV:0,bw=Math.max(6,Math.round(TW*pct)),isTop=k===topK;
+    c.fillStyle=isTop?INK:INK3;
+    c.font=`${isTop?'600':'400'} 24px sans-serif`;
+    c.textAlign='right';
+    c.fillText(TYPES[k].name.replace('学术',''),P+LW,Y+BH/2+8);
+    c.textAlign='left';
+    c.fillStyle=RULE2;
+    c.fillRect(TL,Y+Math.round((BH-10)/2),TW,10);
+    c.fillStyle=isTop?ACC:BARS[i]||'#c0cfe3';
+    c.fillRect(TL,Y+Math.round((BH-10)/2),bw,10);
+    c.fillStyle=isTop?ACC:INK3;
+    c.font=`${isTop?'600':'400'} 24px sans-serif`;
+    c.fillText(String(v),TL+TW+16,Y+BH/2+8);
     Y+=BH+GAP;
   });
-  Y+=8;line(Y);Y+=28;
+  Y+=20;
 
-  // Compat
-  c.fillStyle=INK3;c.font="500 16px sans-serif";
-  c.fillText('TABLE 1 · 人格兼容性',P,Y);Y+=8;line(Y);Y+=20;
+  c.fillStyle=RULE;c.fillRect(P,Y,CW,1);Y+=50;
 
-  const hW=Math.floor((CW-16)/2),bxH=100;
+  // ═══ 兼容性 ═══
+  c.fillStyle=INK3;
+  c.font="500 20px sans-serif";
+  c.fillText('— 人 格 兼 容 性 —',P,Y);
+  Y+=40;
 
-  // Good
-  c.fillStyle=WH;c.fillRect(P,Y,hW,bxH);c.strokeStyle=RULE;c.lineWidth=1;c.strokeRect(P,Y,hW,bxH);
-  c.fillStyle=ACC;c.fillRect(P,Y,hW,3);
-  c.font="500 14px sans-serif";c.fillText('▲ 最佳搭档',P+14,Y+24);
-  wrap(T.compat.good,P+14,Y+44,hW-28,24,"400 17px sans-serif",INK2);
+  const hW=Math.floor((CW-20)/2),bxH=160;
 
-  // Bad
-  const bX=P+hW+16;
-  c.fillStyle=WH;c.fillRect(bX,Y,hW,bxH);c.strokeStyle=RULE;c.strokeRect(bX,Y,hW,bxH);
-  c.fillStyle=INK3;c.fillRect(bX,Y,hW,3);
-  c.fillStyle=INK3;c.font="500 14px sans-serif";c.fillText('▽ 慎重组队',bX+14,Y+24);
-  wrap(T.compat.bad,bX+14,Y+44,hW-28,24,"400 17px sans-serif",INK2);
-  Y+=bxH+28;
-  line(Y);Y+=28;
+  // 最佳搭档
+  c.fillStyle=WH;
+  c.fillRect(P,Y,hW,bxH);
+  c.strokeStyle=RULE;c.lineWidth=2;
+  c.strokeRect(P,Y,hW,bxH);
+  c.fillStyle=ACC;
+  c.fillRect(P,Y,hW,6);
+  c.fillStyle=ACC;
+  c.font="600 22px sans-serif";
+  c.fillText('▲ 最佳搭档',P+24,Y+44);
+  wrap(T.compat.good,P+24,Y+82,hW-48,32,"400 22px sans-serif",INK2);
 
-  // CTA
-  c.fillStyle=INK2;c.font="600 24px serif";c.fillText('关注 JoyCece 公众号',P,Y);Y+=32;
-  c.fillStyle=INK3;c.font="400 20px sans-serif";c.fillText('后台回复「人格」获取完整测试链接',P,Y);Y+=40;
+  // 慎重组队
+  const bX=P+hW+20;
+  c.fillStyle=WH;
+  c.fillRect(bX,Y,hW,bxH);
+  c.strokeStyle=RULE;
+  c.strokeRect(bX,Y,hW,bxH);
+  c.fillStyle=INK3;
+  c.fillRect(bX,Y,hW,6);
+  c.fillStyle=INK3;
+  c.font="600 22px sans-serif";
+  c.fillText('▽ 慎重组队',bX+24,Y+44);
+  wrap(T.compat.bad,bX+24,Y+82,hW-48,32,"400 22px sans-serif",INK2);
 
-  // Footer
-  line(Y,INK);Y+=4;line(Y,RULE);Y+=20;
-  c.fillStyle=INK3;c.font="400 16px sans-serif";
-  c.fillText('本测试仅供娱乐，不具有任何学术评价功能',P,Y);Y+=24;
-  c.fillText('Journal of Academic Personality · 2026 · JoyCece',P,Y);Y+=36;
+  Y+=bxH+60;
+
+  // ═══ 公众号引导卡片 ═══
+  const ctaH=200;
+  c.fillStyle=CREAM;
+  c.fillRect(P,Y,CW,ctaH);
+
+  c.fillStyle=INK;
+  c.font="600 36px 'Noto Serif SC', serif";
+  c.textAlign='center';
+  c.fillText('关注 JoyCece 公众号',W/2,Y+76);
+
+  c.fillStyle=INK2;
+  c.font="400 26px sans-serif";
+  c.fillText('后台回复「人格」获取完整测试链接',W/2,Y+126);
+
+  c.fillStyle=INK3;
+  c.font="italic 20px serif";
+  c.fillText('· 更多有趣的学术测试，等你来玩 ·',W/2,Y+168);
+  c.textAlign='left';
+
+  Y+=ctaH+50;
+
+  // ═══ FOOTER ═══
+  c.fillStyle=INK3;
+  c.font="400 18px sans-serif";
+  c.textAlign='center';
+  c.fillText('本测试仅供娱乐 · 不具有学术评价功能',W/2,Y);
+  Y+=28;
+  c.fillText('© 2026 Journal of Academic Personality · JoyCece',W/2,Y);
+  c.textAlign='left';
+  Y+=60;
 
   // Crop
   const fH=Y;
   const img=c.getImageData(0,0,W,fH);
-  canvas.height=fH;c.putImageData(img,0,0);
+  canvas.height=fH;
+  c.putImageData(img,0,0);
 
   const a=document.createElement('a');
   a.download=`学术人格_${T.name}.png`;
-  a.href=canvas.toDataURL('image/png');a.click();
+  a.href=canvas.toDataURL('image/png');
+  a.click();
 }
 </script>
 </body>

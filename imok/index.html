@@ -1,1 +1,1286 @@
+cat > /mnt/user-data/outputs/smi_internet_quiz.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>稳定发疯研究所 · 网络依赖程度诊断</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Share+Tech+Mono&display=swap');
 
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#f2f4f0;
+  --paper:#ffffff;
+  --ink:#1a1c18;
+  --ink2:#3a3c38;
+  --ink3:#7a7c78;
+  --rule:#c8cac4;
+  --rule2:#e2e4de;
+  --red:#8b1a1a;
+  --red-light:#fdf0f0;
+  --blue:#1a3a6e;
+  --blue-light:#eef2f8;
+  --green:#1a4a2a;
+  --stamp:#c0392b;
+  --mono:'Share Tech Mono','Courier New',monospace;
+  --sans:'Noto Sans SC','PingFang SC',sans-serif;
+  --serif:'Noto Serif SC',Georgia,serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  min-height:100vh;
+  /* subtle graph paper */
+  background-image:
+    linear-gradient(rgba(0,0,0,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,0,0,0.03) 1px,transparent 1px);
+  background-size:20px 20px;
+}
+
+.page{
+  max-width:680px;
+  margin:0 auto;
+  padding:0 20px 80px;
+}
+
+/* ══ HOSPITAL HEADER ══ */
+.hosp-header{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-top:4px solid var(--ink);
+  padding:16px 20px 12px;
+  margin-top:24px;
+  margin-bottom:0;
+}
+.hosp-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  border-bottom:1px solid var(--rule);
+  padding-bottom:10px;
+  margin-bottom:10px;
+}
+.hosp-name-zh{
+  font-family:var(--sans);
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:3px;
+  color:var(--ink);
+}
+.hosp-name-en{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--ink3);
+  margin-top:3px;
+  letter-spacing:1px;
+}
+.hosp-code{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--ink3);
+  text-align:right;
+  line-height:1.8;
+}
+.hosp-meta{
+  display:flex;
+  justify-content:space-between;
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--ink3);
+}
+
+/* ══ COVER / FORM ══ */
+#cover{margin-top:0}
+
+.form-paper{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-top:none;
+  padding:24px 20px 28px;
+  margin-bottom:16px;
+  position:relative;
+}
+
+/* Red cross watermark */
+.form-paper::before{
+  content:'＋';
+  position:absolute;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:120px;
+  color:rgba(139,26,26,0.04);
+  font-weight:900;
+  pointer-events:none;
+  line-height:1;
+}
+
+.form-title{
+  font-family:var(--sans);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--ink3);
+  border-bottom:1px solid var(--rule2);
+  padding-bottom:8px;
+  margin-bottom:18px;
+}
+
+.form-main-title{
+  font-family:var(--serif);
+  font-size:clamp(22px,5vw,30px);
+  font-weight:600;
+  line-height:1.3;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.form-sub-title{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--ink3);
+  margin-bottom:20px;
+  letter-spacing:0.5px;
+}
+
+.patient-fields{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  border:1px solid var(--rule);
+  margin-bottom:20px;
+  font-family:var(--mono);
+  font-size:12px;
+}
+.pf{
+  padding:8px 12px;
+  border-right:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  color:var(--ink3);
+  line-height:1.6;
+}
+.pf:nth-child(2n){border-right:none}
+.pf:nth-last-child(-n+2){border-bottom:none}
+.pf span{color:var(--ink);font-weight:500}
+
+/* Chief complaint block */
+.complaint-block{
+  border-left:3px solid var(--red);
+  background:var(--red-light);
+  padding:14px 16px;
+  margin-bottom:20px;
+}
+.complaint-label{
+  font-family:var(--mono);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:2px;
+  color:var(--red);
+  margin-bottom:8px;
+}
+.complaint-item{
+  font-family:var(--sans);
+  font-size:14px;
+  color:var(--ink2);
+  line-height:2;
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+}
+.complaint-item::before{
+  content:'·';
+  color:var(--red);
+  font-size:18px;
+  flex-shrink:0;
+  line-height:1;
+}
+
+/* Note block */
+.note-block{
+  border:1px solid var(--rule);
+  padding:14px 16px;
+  margin-bottom:24px;
+  background:var(--paper);
+}
+.note-label{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--ink3);
+  letter-spacing:2px;
+  margin-bottom:8px;
+}
+.note-text{
+  font-family:var(--serif);
+  font-size:16px;
+  color:var(--ink);
+  line-height:1.6;
+  font-weight:500;
+}
+
+.stats-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--rule);
+  margin-bottom:20px;
+  background:var(--paper);
+}
+.stat-cell{
+  text-align:center;
+  padding:14px 8px;
+  border-right:1px solid var(--rule2);
+  font-family:var(--mono);
+}
+.stat-cell:last-child{border-right:none}
+.stat-num{font-size:30px;color:var(--ink);line-height:1}
+.stat-lab{font-size:10px;color:var(--ink3);margin-top:4px;letter-spacing:0.5px}
+
+.btn-start{
+  display:block;
+  width:100%;
+  padding:15px;
+  background:var(--ink);
+  color:#fff;
+  border:none;
+  font-family:var(--mono);
+  font-size:15px;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition:background .15s;
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+.btn-start:hover{background:var(--blue)}
+
+.cover-footnote{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--ink3);
+  text-align:center;
+  line-height:1.9;
+  letter-spacing:0.5px;
+}
+
+/* ══ QUIZ ══ */
+#quiz{display:none}
+
+.prog-wrap{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-top:3px solid var(--ink);
+  padding:10px 16px 10px;
+  margin-bottom:16px;
+}
+.prog-row{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:7px;
+}
+.prog-label{font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:1px}
+.prog-pct{font-family:var(--mono);font-size:11px;color:var(--blue)}
+.prog-track{height:2px;background:var(--rule2)}
+.prog-fill{height:100%;background:var(--blue);transition:width .35s ease}
+
+.q-card{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  padding:22px 20px 24px;
+  animation:fadeUp .2s ease;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.q-num{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--ink3);
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+.q-ctx{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--ink3);
+  background:var(--bg);
+  border:1px solid var(--rule2);
+  padding:8px 12px;
+  margin-bottom:14px;
+  white-space:pre-line;
+  line-height:1.7;
+}
+.q-text{
+  font-family:var(--serif);
+  font-size:20px;
+  font-weight:500;
+  line-height:1.45;
+  margin-bottom:20px;
+  color:var(--ink);
+}
+.options{display:flex;flex-direction:column;gap:6px}
+.opt-btn{
+  background:var(--bg);
+  border:1px solid var(--rule);
+  color:var(--ink);
+  padding:12px 14px;
+  text-align:left;
+  cursor:pointer;
+  font-family:var(--sans);
+  font-size:14px;
+  line-height:1.5;
+  transition:all .12s;
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+}
+.opt-btn:hover{border-color:var(--blue);background:var(--blue-light)}
+.opt-btn.selected{
+  border-color:var(--blue);
+  background:var(--blue-light);
+  color:var(--blue);
+  pointer-events:none;
+}
+.opt-letter{
+  font-family:var(--mono);
+  font-size:10px;
+  font-weight:700;
+  color:var(--ink3);
+  letter-spacing:1px;
+  flex-shrink:0;
+  min-width:14px;
+}
+.opt-btn.selected .opt-letter{color:var(--blue)}
+
+/* ══ RESULT ══ */
+#result{display:none}
+
+/* Diagnosis report sheet */
+.diag-sheet{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-top:4px solid var(--ink);
+  margin-top:20px;
+  padding:0;
+  position:relative;
+}
+
+/* Red stamp */
+.stamp{
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:88px;
+  height:88px;
+  border:3px solid var(--stamp);
+  border-radius:50%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  transform:rotate(-12deg);
+  opacity:0.85;
+}
+.stamp-text{
+  font-family:var(--mono);
+  font-size:9px;
+  color:var(--stamp);
+  letter-spacing:1px;
+  line-height:1.5;
+  text-align:center;
+}
+.stamp-code{
+  font-family:var(--mono);
+  font-size:14px;
+  font-weight:700;
+  color:var(--stamp);
+  letter-spacing:0;
+}
+
+.diag-top{
+  padding:20px 20px 16px;
+  border-bottom:1px solid var(--rule);
+}
+.diag-form-label{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--ink3);
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+.diag-icd{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--ink3);
+  margin-bottom:6px;
+  letter-spacing:1px;
+}
+.diag-icd span{color:var(--blue)}
+.diag-name-zh{
+  font-family:var(--serif);
+  font-size:clamp(24px,5.5vw,36px);
+  font-weight:600;
+  color:var(--ink);
+  line-height:1.2;
+  margin-bottom:4px;
+  padding-right:100px;/* avoid stamp */
+}
+.diag-name-en{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--ink3);
+  letter-spacing:0.5px;
+  margin-bottom:14px;
+}
+.diag-meta-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--rule2);
+  font-family:var(--mono);
+  font-size:11px;
+}
+.diag-meta-cell{
+  padding:7px 10px;
+  border-right:1px solid var(--rule2);
+  color:var(--ink3);
+  line-height:1.5;
+}
+.diag-meta-cell:last-child{border-right:none}
+.diag-meta-cell span{color:var(--ink);display:block;font-size:12px}
+
+/* Section */
+.diag-section{
+  padding:16px 20px;
+  border-bottom:1px solid var(--rule2);
+}
+.diag-section:last-child{border-bottom:none}
+.section-label{
+  font-family:var(--mono);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--ink3);
+  border-bottom:1px solid var(--rule2);
+  padding-bottom:7px;
+  margin-bottom:12px;
+}
+.section-label.red{color:var(--red)}
+.section-label.blue{color:var(--blue)}
+
+/* Symptom checklist */
+.check-item{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  font-family:var(--sans);
+  font-size:14px;
+  color:var(--ink2);
+  line-height:2;
+}
+.check-box{
+  width:13px;
+  height:13px;
+  border:1.5px solid var(--rule);
+  flex-shrink:0;
+  position:relative;
+  top:1px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.check-box.checked{border-color:var(--blue);background:var(--blue-light)}
+.check-box.checked::after{
+  content:'✓';
+  font-size:9px;
+  color:var(--blue);
+  font-weight:700;
+}
+
+/* Prescription block */
+.rx-block{
+  background:var(--bg);
+  border:1px dashed var(--rule);
+  padding:14px 16px;
+  margin-top:6px;
+}
+.rx-label{
+  font-family:var(--mono);
+  font-size:20px;
+  color:var(--ink);
+  margin-bottom:8px;
+  font-style:italic;
+}
+.rx-item{
+  font-family:var(--serif);
+  font-size:14px;
+  color:var(--ink2);
+  line-height:2;
+  display:flex;
+  gap:10px;
+}
+.rx-num{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--ink3);
+  flex-shrink:0;
+  width:18px;
+}
+
+/* Bar chart */
+.chart-area{
+  display:flex;
+  align-items:flex-end;
+  gap:0;
+  height:100px;
+  border-bottom:1px solid var(--rule);
+  margin:4px 0 8px;
+  padding-top:4px;
+}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px;height:100%}
+.bar-val{font-family:var(--mono);font-size:9px;color:var(--ink3)}
+.bar-fill{width:55%;min-height:2px;background:var(--rule)}
+.bar-fill.top{background:var(--blue)}
+.bar-lbl{
+  font-family:var(--mono);
+  font-size:9px;
+  color:var(--ink3);
+  writing-mode:vertical-lr;
+  transform:rotate(180deg);
+  height:44px;
+  display:flex;
+  align-items:center;
+}
+.bar-col.top-col .bar-lbl{color:var(--ink);font-weight:700}
+.chart-caption{font-family:var(--mono);font-size:9px;color:var(--ink3);text-align:center}
+
+/* Compat table */
+.compat-table{
+  width:100%;
+  border-collapse:collapse;
+  font-family:var(--mono);
+  font-size:12px;
+  margin-top:4px;
+}
+.compat-table td{
+  border:1px solid var(--rule2);
+  padding:8px 10px;
+  vertical-align:top;
+  line-height:1.6;
+}
+.compat-table td:first-child{
+  width:80px;
+  color:var(--ink3);
+  background:var(--bg);
+  font-size:10px;
+  letter-spacing:1px;
+}
+.compat-table .pos-label{color:var(--blue)}
+.compat-table .neg-label{color:var(--red)}
+.compat-table td:last-child{color:var(--ink2);font-family:var(--sans);font-size:13px}
+
+/* Doctor sign */
+.doctor-row{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:16px;
+  padding:12px 20px;
+  border-top:1px solid var(--rule2);
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--ink3);
+}
+.sign-line{
+  width:120px;
+  border-bottom:1px solid var(--rule);
+  padding-bottom:2px;
+  text-align:center;
+  font-size:10px;
+}
+
+/* Share + retry */
+.share-sheet{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  padding:18px 20px;
+  margin-top:12px;
+}
+.share-label{font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:2px;margin-bottom:10px}
+.share-text{font-family:var(--sans);font-size:13px;color:var(--ink2);line-height:1.9;margin-bottom:14px}
+.share-text strong{color:var(--ink);font-family:var(--mono)}
+
+.btn-save{
+  display:block;width:100%;padding:13px;
+  background:var(--ink);color:#fff;border:none;
+  font-family:var(--mono);font-size:13px;letter-spacing:2px;
+  cursor:pointer;transition:background .15s;margin-bottom:8px;text-transform:uppercase;
+}
+.btn-save:hover{background:var(--blue)}
+.btn-retry{
+  display:block;width:100%;padding:11px;
+  background:transparent;color:var(--ink3);
+  border:1px solid var(--rule);
+  font-family:var(--mono);font-size:12px;letter-spacing:1px;
+  cursor:pointer;transition:all .12s;margin-top:6px;
+}
+.btn-retry:hover{border-color:var(--ink2);color:var(--ink2)}
+
+.result-footnote{
+  font-family:var(--mono);font-size:9px;color:var(--ink3);
+  text-align:center;line-height:2;margin-top:14px;letter-spacing:0.5px;
+}
+
+#shareCanvas{display:none}
+
+@media(max-width:480px){
+  .patient-fields{grid-template-columns:1fr}
+  .pf{border-right:none}
+  .pf:nth-child(odd){border-right:none}
+  .diag-meta-row{grid-template-columns:1fr 1fr}
+  .diag-meta-cell:nth-child(2){border-right:none}
+  .diag-meta-cell:nth-child(3){border-top:1px solid var(--rule2);grid-column:1/-1;border-right:none}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══ HOSPITAL HEADER ══ -->
+<div class="hosp-header">
+  <div class="hosp-top">
+    <div>
+      <div class="hosp-name-zh">稳定发疯研究所</div>
+      <div class="hosp-name-en">Stable Madness Institute · Digital Dependency Clinic</div>
+    </div>
+    <div class="hosp-code">
+      SMI-NET-2026<br>
+      门诊编号：DDC-001
+    </div>
+  </div>
+  <div class="hosp-meta">
+    <span>科室：网络依赖评估门诊</span>
+    <span>出诊医生：Dr. 互联网</span>
+    <span>就诊日期：2026年</span>
+  </div>
+</div>
+
+<!-- ══ COVER ══ -->
+<div id="cover">
+  <div class="form-paper">
+    <div class="form-title">初诊评估问卷 · Initial Assessment Questionnaire</div>
+
+    <div class="form-main-title">网络依赖程度<br>自我诊断量表</div>
+    <div class="form-sub-title">Internet Dependency Self-Assessment Scale (IDAS-24)</div>
+
+    <div class="patient-fields">
+      <div class="pf">姓名 / Name：<span>___________</span></div>
+      <div class="pf">年龄 / Age：<span>___________</span></div>
+      <div class="pf">日均上网时长：<span>不知道，没算过</span></div>
+      <div class="pf">主要症状：<span>手机没电就焦虑</span></div>
+    </div>
+
+    <div class="complaint-block">
+      <div class="complaint-label">CHIEF COMPLAINT · 主诉</div>
+      <div class="complaint-item">睡前刷手机直到眼睛自动闭上</div>
+      <div class="complaint-item">Wi-Fi断开后不知道手放哪里</div>
+      <div class="complaint-item">发完消息后盯着"已读"等回复</div>
+      <div class="complaint-item">离线一小时如同与世隔绝三天</div>
+    </div>
+
+    <div class="note-block">
+      <div class="note-label">CLINICAL NOTE · 诊疗说明</div>
+      <div class="note-text">本量表不能帮你戒网，但可以帮你知道：你的症状有多少人和你一样。</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-cell">
+        <div class="stat-num">24</div>
+        <div class="stat-lab">评估题目</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">6</div>
+        <div class="stat-lab">诊断类型</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">∞</div>
+        <div class="stat-lab">共鸣症状</div>
+      </div>
+    </div>
+
+    <button class="btn-start" onclick="startQuiz()">[ 开始评估 ]</button>
+    <p class="cover-footnote">
+      免费 · 无需挂号 · 胡说八道认证<br>
+      本量表不具任何临床诊断价值 · SMI · JoyCece
+    </p>
+  </div>
+</div>
+
+<!-- ══ QUIZ ══ -->
+<div id="quiz">
+  <div class="prog-wrap">
+    <div class="prog-row">
+      <span class="prog-label" id="prog-label">ITEM 01 / 24</span>
+      <span class="prog-pct" id="prog-pct">0%</span>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+  <div id="q-area"></div>
+</div>
+
+<!-- ══ RESULT ══ -->
+<div id="result"></div>
+
+<canvas id="shareCanvas"></canvas>
+
+</div>
+<script>
+// ── QUESTIONS (24道，6类型×4题，均衡设计) ──
+const QS=[
+  // ── A型：深度沉浸型（Immersive Scrolling）4题 ──
+  {text:'睡前刷手机，通常：',
+   opts:[{t:'刷到手机自动锁屏才睡',s:{A:4}},{t:'看20分钟就放下',s:{C:2}},{t:'根本不刷，直接睡',s:{D:2}},{t:'刷完又去刷电脑',s:{F:2}}]},
+  {text:'发现一个有趣的视频账号后，你会：',
+   opts:[{t:'从第一条看到最新一条',s:{A:4}},{t:'收藏几个代表作',s:{E:2}},{t:'点个关注就忘了',s:{C:2}},{t:'分享给五个朋友',s:{B:2}}]},
+  {text:'网购时，你通常：',
+   opts:[{t:'比价三小时，最后不买了',s:{A:4}},{t:'看完就下单，从不纠结',s:{D:2}},{t:'只买需要的，效率优先',s:{D:2}},{t:'被推荐算法带走消费',s:{F:2}}]},
+  {text:'看到"共xx章，已更新xx章"，你：',
+   opts:[{t:'全部看完再去睡，哪怕天亮',s:{A:4}},{t:'订阅等更新',s:{C:2}},{t:'放弃，等完结',s:{E:2}},{t:'直接看剧情简介',s:{D:2}}]},
+
+  // ── B型：社交驱动型（Social Validation）4题 ──
+  {text:'发了条朋友圈之后，你会：',
+   opts:[{t:'每隔十分钟查一次点赞',s:{B:4}},{t:'发完就忘了',s:{D:2}},{t:'设置三天可见，不在意',s:{E:2}},{t:'截图留存，以防不测',s:{A:2}}]},
+  {text:'发出消息后对方迟迟没回，你：',
+   opts:[{t:'反复看"已读"标记，开始内耗',s:{B:4}},{t:'无所谓，等他回',s:{D:2}},{t:'再发一条催一下',s:{F:2}},{t:'已读不回就拉黑',s:{E:2}}]},
+  {text:'你发的内容没什么人互动时，你会：',
+   opts:[{t:'悄悄删掉，假装没发过',s:{B:4}},{t:'无所谓，记录给自己看的',s:{D:2}},{t:'再发一遍配个更好看的图',s:{F:2}},{t:'反思是不是时间点不对',s:{A:2}}]},
+  {text:'"XXX刚刚关注了你"这条通知，你会：',
+   opts:[{t:'立刻翻他主页，研究三十分钟',s:{B:4}},{t:'清掉通知就没了',s:{D:2}},{t:'回关，礼尚往来',s:{C:2}},{t:'看看是不是僵尸号',s:{E:2}}]},
+
+  // ── C型：信息囤积型（Info Hoarding）4题 ──
+  {text:'你的浏览器收藏夹里：',
+   opts:[{t:'有几百条，基本没再打开过',s:{C:4}},{t:'定期清理，只留有用的',s:{D:2}},{t:'从来不收藏，用搜索',s:{E:2}},{t:'分了文件夹，很有系统',s:{A:2}}]},
+  {text:'看到感兴趣的文章，你：',
+   opts:[{t:'收藏，等"有空"再看',s:{C:4}},{t:'马上读完',s:{A:2}},{t:'扫一眼就关掉',s:{D:2}},{t:'转发给可能感兴趣的朋友',s:{B:2}}]},
+  {text:'你手机里的App数量：',
+   opts:[{t:'很多，下了不删，以备不时之需',s:{C:4}},{t:'只留常用的，定期卸载',s:{D:2}},{t:'全是同类的，要比较体验',s:{F:2}},{t:'随缘，不管',s:{E:2}}]},
+  {text:'看完一个系列内容（剧/综艺/播客）你：',
+   opts:[{t:'立刻找"类似推荐"接着看',s:{C:4}},{t:'休息一下再看别的',s:{D:2}},{t:'回味很久，不急着看新的',s:{A:2}},{t:'写个短评发出去',s:{B:2}}]},
+
+  // ── D型：佛系在线型（Casual User）4题 ──
+  {text:'Wi-Fi断开时，你：',
+   opts:[{t:'无所谓，正好休息',s:{D:4}},{t:'马上打开手机热点',s:{F:2}},{t:'焦虑，什么都干不了',s:{B:2}},{t:'趁机刷离线缓存',s:{A:2}}]},
+  {text:'你的手机消息通知：',
+   opts:[{t:'全部关掉，想看了再去看',s:{D:4}},{t:'全部开着，第一时间回复',s:{B:2}},{t:'只开重要的几个',s:{E:2}},{t:'开着但从来不看',s:{C:2}}]},
+  {text:'朋友说"你怎么这么难联系到"，你：',
+   opts:[{t:'觉得很正常，离线是自由',s:{D:4}},{t:'愧疚，赶紧回消息',s:{B:2}},{t:'解释自己很忙',s:{A:2}},{t:'根本没看见那条消息',s:{C:2}}]},
+  {text:'你上一次认真刷热搜是：',
+   opts:[{t:'想不起来了，不怎么刷',s:{D:4}},{t:'今天，已经刷了三遍',s:{F:2}},{t:'每天必看，了解实事',s:{B:2}},{t:'刷到半路关掉，太累了',s:{A:2}}]},
+
+  // ── E型：主动断联型（Digital Minimalist）4题 ──
+  {text:'你对"数字排毒"的态度：',
+   opts:[{t:'定期执行，删App卸社交',s:{E:4}},{t:'听起来很好但做不到',s:{A:2}},{t:'没必要，适度就行',s:{D:2}},{t:'怕错过消息，不敢断',s:{B:2}}]},
+  {text:'你卸载过社交App吗：',
+   opts:[{t:'卸了又装，装了又卸，循环至今',s:{E:4}},{t:'从来没卸过',s:{B:2}},{t:'卸了就没再装',s:{D:2}},{t:'卸载什么，加群才是正道',s:{C:2}}]},
+  {text:'遇到让你不舒服的网络内容，你会：',
+   opts:[{t:'直接拉黑屏蔽，眼不见心不烦',s:{E:4}},{t:'忍着看完，气得睡不着',s:{A:2}},{t:'截图发出去讨论',s:{B:2}},{t:'划走，继续刷下一条',s:{F:2}}]},
+  {text:'假期你会主动关闭工作消息通知吗：',
+   opts:[{t:'会，假期就是假期',s:{E:4}},{t:'不会，随时待命',s:{B:2}},{t:'想关但不敢',s:{A:2}},{t:'假期？什么假期',s:{F:2}}]},
+
+  // ── F型：热点追逐型（Trend Chaser）4题 ──
+  {text:'看到热搜新话题，你：',
+   opts:[{t:'必须点进去，不看会难受',s:{F:4}},{t:'瞄一眼关键词就够了',s:{D:2}},{t:'存起来晚点细看',s:{C:2}},{t:'分享给群里，一起讨论',s:{B:2}}]},
+  {text:'一个梗"过时了"，你会：',
+   opts:[{t:'已经在用下一个了',s:{F:4}},{t:'继续用，我喜欢就行',s:{D:2}},{t:'有点难过，那个梗很好笑',s:{A:2}},{t:'整理存档，留作纪念',s:{C:2}}]},
+  {text:'你的消息已读不回的概率是：',
+   opts:[{t:'低，每条都会回，保持在线感',s:{F:4}},{t:'高，回消息这件事很消耗',s:{E:2}},{t:'看情况，看心情',s:{D:2}},{t:'只回重要的，其他已读',s:{C:2}}]},
+  {text:'你每天打开手机的次数大概是：',
+   opts:[{t:'100次以上，我没数过但应该是',s:{F:4}},{t:'30-50次，正常水平',s:{A:2}},{t:'不多，用完就放',s:{D:2}},{t:'不知道，从来没放下过',s:{B:2}}]},
+];
+
+const MAX_SCORES={A:16,B:16,C:16,D:16,E:16,F:16};
+
+const TYPES={
+  A:{
+    code:'NET-A',
+    icd:'F63.801',
+    name:'深度沉浸型',
+    en:'Immersive Scrolling Syndrome',
+    severity:'中度依赖',
+    symptoms:[
+      '刷短视频一抬头发现天亮了',
+      '比价半小时是基本操作',
+      '追完一个系列才有安全感',
+      '"再看最后一个"已经说了两小时',
+    ],
+    rx:['给每个App设置使用时限（不会遵守的）','睡前把手机放到另一个房间（最终还是会去拿）','接受现实：你只是在认真对待内容'],
+    compat:{good:'信息囤积型（一个沉浸，一个收藏，相得益彰）',bad:'佛系在线型（节奏完全不同）'},
+    desc:'你和互联网的关系是认真的。你不是在刷，你是在投入。每一个视频，每一篇文章，你都给予了它应有的尊重。\n\n代价是时间。',
+  },
+  B:{
+    code:'NET-B',
+    icd:'F63.802',
+    name:'社交驱动型',
+    en:'Social Validation Dependency',
+    severity:'中度依赖',
+    symptoms:[
+      '发完朋友圈每隔十分钟查点赞',
+      '"已读"两字能让你内耗一下午',
+      '互动数量直接影响当天心情',
+      '删掉一条没人点赞的动态',
+    ],
+    rx:['发出去就不要再看数据了（做不到）','对方没回可能只是在忙（也可能在分你'),'接受：你只是想确认自己存在于别人的世界里'],
+    compat:{good:'热点追逐型（都很在线，话题不断）',bad:'主动断联型（一个求存在感，一个主动消失）'},
+    desc:'你上网，是因为你在乎别人是否在意你。\n\n这不是毛病，这是人类本能。只是在有通知的地方，本能被放大了一百倍。',
+  },
+  C:{
+    code:'NET-C',
+    icd:'F63.803',
+    name:'信息囤积型',
+    en:'Digital Hoarding Disorder',
+    severity:'轻度依赖',
+    symptoms:[
+      '收藏夹里有800条没打开过的链接',
+      '"以后会用到的"App超过30个',
+      '看到推荐就先存，不存会遗漏',
+      '订阅了17个播客，听完的有2个',
+    ],
+    rx:['每月清理一次收藏夹（不会的）','收藏不等于已阅，但也挺好的','接受：你只是对世界充满好奇'],
+    compat:{good:'深度沉浸型（一个沉浸，一个归档，完美分工）',bad:'佛系在线型（一个囤积，一个清空，价值观冲突）'},
+    desc:'你的收藏夹是一座图书馆。里面的书你有一天都会看的。\n\n那一天暂时还没到，但收藏这个动作本身就让你感到安心。',
+  },
+  D:{
+    code:'NET-D',
+    icd:'F63.804',
+    name:'佛系在线型',
+    en:'Casual Digital Presence',
+    severity:'轻度依赖',
+    symptoms:[
+      'Wi-Fi断了也不着急',
+      '消息几小时后才回是正常操作',
+      '热搜不知道，但睡眠很好',
+      '手机有时候忘在家里，竟然没关系',
+    ],
+    rx:['继续保持','不必戒什么，你已经很健康了','偶尔告诉朋友你还活着就好'],
+    compat:{good:'主动断联型（都不太在乎在线，一拍即合）',bad:'社交驱动型（你的离线会让他内耗）'},
+    desc:'你和互联网的关系是健康的。你用它，但不依赖它。\n\n稳定发疯研究所对你表示遗憾：你可能没有什么共鸣。\n但这说明你活得很好。',
+  },
+  E:{
+    code:'NET-E',
+    icd:'F63.805',
+    name:'主动断联型',
+    en:'Digital Detox Cycling',
+    severity:'矛盾性依赖',
+    symptoms:[
+      '卸了又装，装了又卸，循环三年',
+      '设置了屏幕时间限制但每天解锁',
+      '宣布"不刷了"然后十分钟后出现',
+      '想要安静，但又怕错过',
+    ],
+    rx:['不用完全断联，找到平衡就好','你反复卸装说明你知道自己要什么','接受：这种矛盾很正常，大家都这样'],
+    compat:{good:'佛系在线型（他的平静是你的参照系）',bad:'热点追逐型（一个要逃，一个不停追）'},
+    desc:'你渴望离线，但又不甘心离开。\n\n这不是意志力的问题。这是你同时在乎两件事：安静，和连接。\n\n目前这两件事还在谈判。',
+  },
+  F:{
+    code:'NET-F',
+    icd:'F63.806',
+    name:'热点追逐型',
+    en:'Trend Chasing Syndrome',
+    severity:'中度依赖',
+    symptoms:[
+      '热搜必看，五分钟不刷就落伍感',
+      '上一个梗还没死就换下一个了',
+      '每条消息都及时回，保持在线率',
+      '一天开手机100次，但说不出看了什么',
+    ],
+    rx:['试试一天不看热搜（会很难受的）','快节奏信息是消耗品，可以少消耗','接受：你只是不想和世界脱节'],
+    compat:{good:'社交驱动型（两个人一起追热点，很快乐）',bad:'主动断联型（一个追，一个逃，方向相反）'},
+    desc:'你站在信息洪流的最前端。每一个热点你都没有错过。\n\n代价是：你很少记得昨天的热搜是什么。\n\n但那又怎样，今天还有新的。',
+  },
+};
+
+const LETTERS=['A','B','C','D'];
+let shuffledQ=[],cur=0,scores={A:0,B:0,C:0,D:0,E:0,F:0};
+
+function shuffle(a){
+  const r=[...a];
+  for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}
+  return r;
+}
+
+function startQuiz(){
+  shuffledQ=shuffle(QS).map(q=>({...q,opts:shuffle(q.opts)}));
+  scores={A:0,B:0,C:0,D:0,E:0,F:0};
+  cur=0;
+  document.getElementById('cover').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  renderQ();
+}
+
+function renderQ(){
+  const q=shuffledQ[cur];
+  const total=shuffledQ.length;
+  const pct=Math.round((cur/total)*100);
+  document.getElementById('prog-label').textContent=`ITEM ${String(cur+1).padStart(2,'0')} / ${total}`;
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('prog-fill').style.width=pct+'%';
+
+  let html=`<div class="q-card">`;
+  html+=`<div class="q-num">评估项目 ${String(cur+1).padStart(2,'0')} &nbsp;/&nbsp; ${total} &nbsp;·&nbsp; IDAS-24</div>`;
+  if(q.ctx) html+=`<div class="q-ctx">${q.ctx}</div>`;
+  html+=`<div class="q-text">${q.text}</div><div class="options">`;
+  q.opts.forEach((o,i)=>{
+    html+=`<button class="opt-btn" onclick="choose(${i})"><span class="opt-letter">${LETTERS[i]}</span><span>${o.t}</span></button>`;
+  });
+  html+=`</div></div>`;
+  document.getElementById('q-area').innerHTML=html;
+  document.getElementById('quiz').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function choose(idx){
+  const q=shuffledQ[cur];
+  document.querySelectorAll('.opt-btn')[idx].classList.add('selected');
+  const s=q.opts[idx].s||{};
+  for(const[k,v]of Object.entries(s)) scores[k]=(scores[k]||0)+v;
+  setTimeout(()=>{
+    cur++;
+    if(cur<shuffledQ.length) renderQ(); else showResult();
+  },300);
+}
+
+function showResult(){
+  document.getElementById('quiz').style.display='none';
+  const el=document.getElementById('result');
+  el.style.display='block';
+
+  const norm={};
+  'ABCDEF'.split('').forEach(k=>norm[k]=scores[k]/MAX_SCORES[k]);
+  const sorted=Object.entries(norm).sort((a,b)=>b[1]-a[1]);
+  const topK=sorted[0][0];
+  const T=TYPES[topK];
+  const maxN=sorted[0][1];
+
+  const typeOrder=['A','B','C','D','E','F'];
+  const shortN={A:'深度沉浸',B:'社交驱动',C:'信息囤积',D:'佛系在线',E:'主动断联',F:'热点追逐'};
+
+  const barsHtml=typeOrder.map(k=>{
+    const pct=maxN>0?Math.round((norm[k]/maxN)*100):0;
+    const isTop=k===topK;
+    return `<div class="bar-col${isTop?' top-col':''}">
+      <span class="bar-val">${scores[k]}</span>
+      <div class="bar-fill${isTop?' top':''}" style="height:${pct}%"></div>
+      <span class="bar-lbl">${shortN[k]}</span>
+    </div>`;
+  }).join('');
+
+  const checkHtml=T.symptoms.map(s=>`
+    <div class="check-item">
+      <div class="check-box checked"></div>
+      <span>${s}</span>
+    </div>`).join('');
+
+  const rxHtml=T.rx.map((r,i)=>`
+    <div class="rx-item">
+      <span class="rx-num">${i+1}.</span>
+      <span>${r}</span>
+    </div>`).join('');
+
+  const today=new Date();
+  const dateStr=`${today.getFullYear()}.${String(today.getMonth()+1).padStart(2,'0')}.${String(today.getDate()).padStart(2,'0')}`;
+
+  el.innerHTML=`
+    <div class="diag-sheet">
+      <div class="stamp">
+        <span class="stamp-text">SMI<br>已诊断</span>
+        <span class="stamp-code">${T.code}</span>
+        <span class="stamp-text">${dateStr}</span>
+      </div>
+
+      <div class="diag-top">
+        <div class="diag-form-label">DIAGNOSTIC REPORT · 诊断报告 · IDAS-24</div>
+        <div class="diag-icd">ICD-10：<span>${T.icd}</span> &nbsp;·&nbsp; 严重程度：<span style="color:var(--red)">${T.severity}</span></div>
+        <div class="diag-name-zh">${T.name}</div>
+        <div class="diag-name-en">${T.en}</div>
+        <div class="diag-meta-row">
+          <div class="diag-meta-cell">类型编码<span>${T.code}</span></div>
+          <div class="diag-meta-cell">评估日期<span>${dateStr}</span></div>
+          <div class="diag-meta-cell">出诊科室<span>网络依赖门诊</span></div>
+        </div>
+      </div>
+
+      <div class="diag-section">
+        <div class="section-label red">SYMPTOMS CONFIRMED · 已确认症状</div>
+        ${checkHtml}
+      </div>
+
+      <div class="diag-section">
+        <div class="section-label blue">CLINICAL NOTES · 病情描述</div>
+        <div style="font-family:var(--serif);font-size:15px;color:var(--ink2);line-height:1.9;white-space:pre-line">${T.desc}</div>
+      </div>
+
+      <div class="diag-section">
+        <div class="section-label">PRESCRIPTION · 处方建议</div>
+        <div class="rx-block">
+          <div class="rx-label">Rx</div>
+          ${rxHtml}
+        </div>
+      </div>
+
+      <div class="diag-section">
+        <div class="section-label">FIG.1 · 依赖类型分布（Dependency Spectrum）</div>
+        <div class="chart-area">${barsHtml}</div>
+        <div class="chart-caption">各维度归一化得分 · 蓝色柱为主诊断类型</div>
+      </div>
+
+      <div class="diag-section">
+        <div class="section-label">TABLE 1 · 共病兼容性分析</div>
+        <table class="compat-table">
+          <tr>
+            <td class="pos-label">▲ 共病相宜</td>
+            <td>${T.compat.good}</td>
+          </tr>
+          <tr>
+            <td class="neg-label">▽ 慎重组合</td>
+            <td>${T.compat.bad}</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="doctor-row">
+        <span>主治医生签字：</span>
+        <div class="sign-line">Dr. 互联网&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <span>（盖章有效）</span>
+      </div>
+    </div>
+
+    <div class="share-sheet">
+      <div class="share-label">SHARE · 分享诊断结果</div>
+      <div class="share-text">
+        截图发给朋友，看看他们是哪种网络依赖类型。<br>
+        关注 <strong>JoyCece公众号</strong>，后台回复 <strong>「上网」</strong> 获取测试链接。
+      </div>
+      <button class="btn-save" onclick="saveImage()">[ 保存诊断报告图片 ]</button>
+    </div>
+
+    <button class="btn-retry" onclick="retryQuiz()">[ 重新评估 ]</button>
+
+    <p class="result-footnote">
+      本报告由稳定发疯研究所网络依赖评估门诊出品<br>
+      ICD编码为虚构 · 胡说八道认证 · 不具任何临床诊断价值<br>
+      SMI-NET-2026 · JoyCece
+    </p>
+  `;
+
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function retryQuiz(){
+  document.getElementById('result').style.display='none';
+  document.getElementById('cover').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── SAVE IMAGE ──
+function saveImage(){
+  const norm={};
+  'ABCDEF'.split('').forEach(k=>norm[k]=scores[k]/MAX_SCORES[k]);
+  const sorted=Object.entries(norm).sort((a,b)=>b[1]-a[1]);
+  const topK=sorted[0][0];
+  const T=TYPES[topK];
+  const maxN=sorted[0][1];
+  const qr=new Image();
+  qr.crossOrigin='anonymous';
+  qr.src='JoyCece公众号.jpg';
+  qr.onload=()=>drawCanvas(topK,T,sorted,norm,maxN,qr);
+  qr.onerror=()=>drawCanvas(topK,T,sorted,norm,maxN,null);
+}
+
+function drawCanvas(topK,T,sorted,norm,maxN,qrImg){
+  const W=900,H=1500;
+  const cv=document.getElementById('shareCanvas');
+  cv.width=W;cv.height=H;
+  const c=cv.getContext('2d');
+
+  const BG='#f2f4f0',WHITE='#ffffff',INK='#1a1c18',INK2='#3a3c38',INK3='#7a7c78';
+  const RULE='#c8cac4',RULE2='#e2e4de',BLUE='#1a3a6e',RED='#8b1a1a',STAMP='#c0392b';
+  const BLUE_LIGHT='#eef2f8';
+  const BAR_PAL=['#6a8bbf','#8fa8cc','#b0c3da','#c8d5e5','#dce5ef','#ecf1f7'];
+
+  // graph paper bg
+  c.fillStyle=BG;c.fillRect(0,0,W,H);
+  c.strokeStyle='rgba(0,0,0,0.04)';c.lineWidth=1;
+  for(let x=0;x<W;x+=20){c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke();}
+  for(let y=0;y<H;y+=20){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke();}
+
+  // white paper
+  c.fillStyle=WHITE;c.fillRect(40,40,W-80,H-80);
+  // top border
+  c.fillStyle=INK;c.fillRect(40,40,W-80,4);
+  // outer border
+  c.strokeStyle=RULE;c.lineWidth=1;c.strokeRect(40,44,W-80,H-84);
+
+  function wrapText(text,x,y,maxW,lineH){
+    const chars=text.split('');let line='',ly=y;
+    for(let i=0;i<chars.length;i++){
+      const ch=chars[i];
+      if(ch==='\n'){c.fillText(line,x,ly);line='';ly+=lineH+3;continue;}
+      const t=line+ch;
+      if(c.measureText(t).width>maxW&&line!==''){c.fillText(line,x,ly);line=ch;ly+=lineH;}
+      else line=t;
+    }
+    if(line)c.fillText(line,x,ly);
+    return ly;
+  }
+
+  // ── HEADER ──
+  let y=90;
+  c.fillStyle=INK;c.font="700 20px 'Noto Sans SC',sans-serif";
+  c.fillText('稳定发疯研究所  ·  网络依赖评估门诊',70,y);
+  c.fillStyle=INK3;c.font="400 11px 'Share Tech Mono','Courier New',monospace";
+  c.fillText('Stable Madness Institute · Digital Dependency Clinic · SMI-NET-2026',70,y+20);
+  c.fillStyle=RULE;c.fillRect(70,y+32,W-140,1);
+
+  // ── STAMP (circle) ──
+  const sx=W-70-80,sy=60;
+  c.save();c.translate(sx+40,sy+40);c.rotate(-0.21);
+  c.strokeStyle=STAMP;c.lineWidth=2.5;
+  c.beginPath();c.arc(0,0,40,0,Math.PI*2);c.stroke();
+  c.fillStyle=STAMP;c.font="700 10px 'Share Tech Mono','Courier New',monospace";
+  c.textAlign='center';
+  c.fillText('SMI · 已诊断',0,-10);
+  c.font="700 16px 'Share Tech Mono','Courier New',monospace";
+  c.fillText(T.code,0,8);
+  c.font="400 9px 'Share Tech Mono','Courier New',monospace";
+  const d=new Date();
+  c.fillText(`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`,0,22);
+  c.textAlign='left';c.restore();
+
+  y+=50;
+  // ICD
+  c.fillStyle=INK3;c.font="400 11px 'Share Tech Mono','Courier New',monospace";
+  c.fillText(`ICD-10: ${T.icd}   严重程度: ${T.severity}`,70,y);
+  y+=22;
+  // code
+  c.fillStyle=BLUE;c.font="700 52px 'Noto Serif SC',Georgia,serif";
+  c.fillText(T.code,70,y+50);
+  y+=68;
+  // name
+  c.fillStyle=INK;c.font="600 36px 'Noto Serif SC',Georgia,serif";
+  c.fillText(T.name,70,y);
+  y+=28;
+  c.fillStyle=INK3;c.font="400 13px 'Share Tech Mono','Courier New',monospace";
+  c.fillText(T.en,70,y);
+  y+=24;
+  c.fillStyle=RULE;c.fillRect(70,y,W-140,1);y+=20;
+
+  // ── SYMPTOMS ──
+  c.fillStyle=RED;c.font="700 10px 'Noto Sans SC',sans-serif";
+  c.fillText('SYMPTOMS CONFIRMED · 已确认症状',70,y+12);y+=28;
+  // left red bar
+  c.fillStyle=RED;c.fillRect(70,y,3,T.symptoms.length*30+8);
+  T.symptoms.forEach(s=>{
+    c.fillStyle=BLUE;c.font="500 12px 'Noto Sans SC',sans-serif";c.fillText('✓',82,y+16);
+    c.fillStyle=INK2;c.font="400 15px 'Noto Serif SC',Georgia,serif";
+    c.fillText(s,100,y+16);
+    y+=30;
+  });
+  y+=12;c.fillStyle=RULE;c.fillRect(70,y,W-140,1);y+=18;
+
+  // ── PRESCRIPTION ──
+  c.fillStyle=INK3;c.font="700 10px 'Noto Sans SC',sans-serif";
+  c.fillText('PRESCRIPTION · 处方建议',70,y+12);y+=28;
+  // Rx symbol
+  c.fillStyle=INK;c.font="italic 28px 'EB Garamond',Georgia,serif";
+  c.fillText('Rx',70,y+20);
+  c.fillStyle=RULE;c.fillRect(70,y+26,48,1);
+  y+=10;
+  T.rx.forEach((r,i)=>{
+    c.fillStyle=INK3;c.font="400 11px 'Share Tech Mono','Courier New',monospace";c.fillText(`${i+1}.`,70,y+16);
+    c.fillStyle=INK2;c.font="400 14px 'Noto Serif SC',Georgia,serif";
+    const ry=wrapText(r,94,y+16,W-170,20);
+    y=Math.max(y+26,ry+10);
+  });
+  y+=8;c.fillStyle=RULE;c.fillRect(70,y,W-140,1);y+=18;
+
+  // ── BAR CHART ──
+  c.fillStyle=INK3;c.font="700 10px 'Noto Sans SC',sans-serif";
+  c.fillText('FIG.1 · 依赖类型分布（Dependency Spectrum）',70,y+12);y+=22;
+  c.fillStyle=RULE;c.fillRect(70,y,W-140,1);y+=12;
+
+  const typeOrder=['A','B','C','D','E','F'];
+  const shortN={A:'深度沉浸',B:'社交驱动',C:'信息囤积',D:'佛系在线',E:'主动断联',F:'热点追逐'};
+  const chartH=110,chartL=70,chartW=W-140;
+  const barBaseY=y+chartH;
+  const gW=Math.floor(chartW/6);
+  const bW=Math.floor(gW*0.48);
+
+  [0.25,0.5,0.75,1.0].forEach(f=>{
+    const gy=barBaseY-Math.round(chartH*f);
+    c.fillStyle=RULE2;c.fillRect(chartL,gy,chartW,1);
+  });
+
+  typeOrder.forEach((k,i)=>{
+    const pct=maxN>0?norm[k]/maxN:0;
+    const bH=Math.max(2,Math.round(chartH*pct));
+    const bX=chartL+i*gW+Math.floor((gW-bW)/2);
+    const bY=barBaseY-bH;
+    const isTop=k===topK;
+
+    c.fillStyle=isTop?BLUE:(BAR_PAL[i]||'#dce5ef');
+    c.fillRect(bX,bY,bW,bH);
+
+    c.fillStyle=isTop?BLUE:INK3;
+    c.font=`${isTop?'700':'400'} 11px 'Share Tech Mono','Courier New',monospace`;
+    c.textAlign='center';
+    c.fillText(scores[k],bX+bW/2,bY-6);
+    c.fillStyle=isTop?INK:INK3;
+    c.font=`${isTop?'700':'400'} 10px 'Noto Sans SC',sans-serif`;
+    c.fillText(shortN[k],bX+bW/2,barBaseY+16);
+    c.textAlign='left';
+  });
+  c.fillStyle=RULE;c.fillRect(chartL,barBaseY,chartW,1);
+  y=barBaseY+34;
+  c.fillStyle=INK3;c.font="400 10px 'Share Tech Mono','Courier New',monospace";
+  c.textAlign='center';c.fillText('各维度归一化得分  ·  蓝色柱为主诊断类型',W/2,y);
+  c.textAlign='left';y+=18;
+  c.fillStyle=RULE;c.fillRect(70,y,W-140,1);y+=18;
+
+  // ── QR / CTA ──
+  if(qrImg){
+    const qrSize=110,qrX=W-70-qrSize,qrY=y+16;
+    c.fillStyle=WHITE;c.fillRect(qrX-5,qrY-5,qrSize+10,qrSize+10);
+    c.strokeStyle=RULE;c.lineWidth=1;c.strokeRect(qrX-5,qrY-5,qrSize+10,qrSize+10);
+    c.drawImage(qrImg,qrX,qrY,qrSize,qrSize);
+    c.fillStyle=INK2;c.font="500 15px 'Noto Serif SC',Georgia,serif";
+    wrapText('扫码关注\nJoyCece公众号',70,y+26,qrX-90,22);
+    c.fillStyle=INK3;c.font="400 12px 'Share Tech Mono','Courier New',monospace";
+    wrapText('回复「上网」\n获取完整测试链接',70,y+78,qrX-90,18);
+    c.textAlign='center';c.fillStyle=INK3;c.font="400 10px 'Noto Sans SC',sans-serif";
+    c.fillText('↑ 扫一扫',qrX+qrSize/2,qrY+qrSize+14);c.textAlign='left';
+  } else {
+    c.fillStyle=INK2;c.font="500 14px 'Noto Serif SC',Georgia,serif";
+    c.fillText('关注 JoyCece公众号 · 后台回复「上网」获取测试链接',70,y+40);
+  }
+
+  // ── FOOTER ──
+  const footY=H-80;
+  c.fillStyle=RULE;c.fillRect(40,footY,W-80,1);
+  c.fillStyle=INK3;c.font="400 10px 'Share Tech Mono','Courier New',monospace";
+  c.fillText('本报告由稳定发疯研究所网络依赖评估门诊出品  ·  ICD编码为虚构  ·  胡说八道认证  ·  不具任何临床价值',70,footY+18);
+  c.fillStyle=INK;c.fillRect(40,footY+30,W-80,2);
+  c.fillStyle=RULE;c.fillRect(40,footY+36,W-80,1);
+  c.fillStyle=INK3;c.font="400 10px 'Share Tech Mono','Courier New',monospace";
+  c.fillText('SMI-NET-2026  ·  Digital Dependency Clinic  ·  JoyCece',70,footY+52);
+
+  const link=document.createElement('a');
+  link.download=`SMI_${T.code}_${T.name}.png`;
+  link.href=cv.toDataURL('image/png');
+  link.click();
+}
+</script>
+</body>
+</html>
+HTMLEOF

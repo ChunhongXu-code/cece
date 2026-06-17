@@ -542,27 +542,6 @@ function drawShareCard(topK,T,sorted,maxV){
 
   Y+=bxH+60;
 
-  // ═══ 公众号 CTA ═══
-  const ctaH=200;
-  c.fillStyle=CREAM;
-  c.fillRect(P,Y,CW,ctaH);
-
-  c.fillStyle=INK;
-  c.font="600 36px 'Noto Serif SC', serif";
-  c.textAlign='center';
-  c.fillText('关注 JoyCece 公众号',W/2,Y+76);
-
-  c.fillStyle=INK2;
-  c.font="400 26px sans-serif";
-  c.fillText('后台回复「学术」获取完整测试链接',W/2,Y+126);
-
-  c.fillStyle=INK3;
-  c.font="italic 20px serif";
-  c.fillText('· 更多有趣的研究生测试，等你来玩 ·',W/2,Y+168);
-  c.textAlign='left';
-
-  Y+=ctaH+50;
-
   // ═══ FOOTER ═══
   c.fillStyle=INK3;
   c.font="400 18px sans-serif";

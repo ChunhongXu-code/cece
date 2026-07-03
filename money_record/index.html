@@ -1,182 +1,392 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📒 记账系统 Pro+</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <style>
-        body { font-family: system-ui, -apple-system, sans-serif; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>记账系统 Pro+</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
+    /* 基础重置与背景设定 */
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        margin: 0;
+        padding: 20px 0;
+        /* 色彩丰富的柔和渐变背景 */
+        background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+        min-height: 100vh;
+        color: #333;
+    }
+
+    /* 手机自适应容器 */
+    .container {
+        max-width: 600px;
+        margin: auto;
+        padding: 0 15px;
+    }
+
+    /* 标题样式 */
+    h2 {
+        text-align: center;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    /* 简约大气的卡片样式（毛玻璃效果） */
+    .card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        margin-bottom: 20px;
+    }
+
+    /* 表单输入区 */
+    .input-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+    
+    .input-group > * {
+        flex: 1;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 15px;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        background: #f8fafc;
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        border-color: #8ec5fc;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(142, 197, 252, 0.2);
+    }
+
+    input[type="file"] {
+        padding: 9px;
+        background: #fff;
+        cursor: pointer;
+    }
+
+    /* 按钮样式 */
+    .btn-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 15px;
+    }
+
+    button {
+        flex: 1;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.1s, box-shadow 0.2s;
+    }
+
+    .btn-add {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
+    }
+
+    .btn-export {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        box-shadow: 0 4px 15px rgba(67, 233, 123, 0.3);
+        color: #0b6028;
+    }
+
+    button:active {
+        transform: scale(0.96);
+    }
+
+    /* 统计 */
+    #total {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        color: #fff;
+        margin: 25px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* 记录卡片样式 */
+    .item {
+        background: white;
+        padding: 16px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        transition: transform 0.2s;
+    }
+
+    .item:hover {
+        transform: translateY(-2px);
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .project-name {
+        font-size: 16px;
+        font-weight: bold;
+        color: #2d3748;
+    }
+
+    .cost-value {
+        font-size: 18px;
+        font-weight: bold;
+        color: #e53e3e;
+    }
+
+    .date-text {
+        font-size: 12px;
+        color: #a0aec0;
+    }
+
+    /* 彩色标签 */
+    .type-tag {
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+
+    /* 动态标签颜色 */
+    .tag-发票 { background: #ffe4e6; color: #e11d48; }
+    .tag-收据 { background: #dbeafe; color: #2563eb; }
+    .tag-车票 { background: #fef3c7; color: #d97706; }
+    .tag-餐饮 { background: #dcfce7; color: #16a34a; }
+    .tag-其他 { background: #f3f4f6; color: #4b5563; }
+
+    .item img {
+        height: 40px;
+        width: 40px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #edf2f7;
+    }
+
+    .del-btn {
+        background: #fee2e2;
+        color: #ef4444;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+
+    .del-btn:hover {
+        background: #fca5a5;
+        color: white;
+    }
+
+    .empty-state {
+        text-align: center;
+        color: #fff;
+        opacity: 0.8;
+        margin-top: 30px;
+    }
+</style>
 </head>
-<body class="bg-gray-100 p-6">
-    <div class="max-w-4xl mx-auto">
-        <!-- 标题 -->
-        <div class="flex items-center justify-between mb-6">
-            <h1 class="text-3xl font-bold text-gray-800">📒 记账系统 Pro+</h1>
-            <button onclick="exportToExcel()" 
-                    class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center gap-2">
-                📥 导出 Excel
-            </button>
-        </div>
 
-        <!-- 添加记录区域 -->
-        <div class="bg-white p-6 rounded-xl shadow mb-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <!-- 支付方式 -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">支付方式</label>
-                    <select id="type" class="w-full px-3 py-2 border rounded-lg">
-                        <option value="微信支付">微信支付</option>
-                        <option value="微信转账">微信转账</option>
-                        <option value="发票">发票</option>
-                        <option value="收据">收据</option>
-                        <option value="现金">现金</option>
-                    </select>
-                </div>
+<body>
 
-                <!-- 金额 -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">金额</label>
-                    <input type="number" id="amount" placeholder="0.00" 
-                           class="w-full px-3 py-2 border rounded-lg">
-                </div>
-            </div>
+<div class="container">
 
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-600 mb-1">项目</label>
-                <input type="text" id="note" placeholder="可选备注" 
-                       class="w-full px-3 py-2 border rounded-lg">
-            </div>
+<h2>📒 记账系统 Pro+</h2>
 
-            <button onclick="addRecord()" 
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium flex items-center justify-center gap-2">
-                ➕ 添加记录
-            </button>
-        </div>
-
-        <!-- 统计 -->
-        <div class="bg-white p-4 rounded-xl shadow mb-6 flex items-center justify-between">
-            <span class="text-lg font-medium text-gray-700">总支出</span>
-            <span id="total" class="text-3xl font-bold text-red-500">0</span>
-        </div>
-
-        <!-- 记录列表 -->
-        <div class="bg-white rounded-xl shadow overflow-hidden">
-            <table class="w-full">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">日期</th>
-                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">类型</th>
-                        <th class="px-4 py-3 text-right text-sm font-medium text-gray-600">金额</th>
-                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">备注</th>
-                        <th class="px-4 py-3 text-center text-sm font-medium text-gray-600">操作</th>
-                    </tr>
-                </thead>
-                <tbody id="recordList" class="divide-y"></tbody>
-            </table>
-        </div>
+<div class="card">
+    <div class="input-group">
+        <input id="project" placeholder="项目名称 (如: 打车、午饭)">
+        <input id="cost" type="number" placeholder="花费金额 (¥)" min="0" step="0.01">
+    </div>
+    
+    <div class="input-group">
+        <select id="type">
+            <option>微信转账</option>
+            <option>微信支付</option>
+            <option>发票</option>
+            <option>现金</option>
+            <option>收据</option>
+        </select>
+        <input type="file" id="img" accept="image/*">
     </div>
 
-    <script>
-        let records = [];
+    <div class="btn-group">
+        <button class="btn-add" onclick="add()">➕ 添加记录</button>
+        <button class="btn-export" onclick="exportExcel()">📥 导出 Excel</button>
+    </div>
+</div>
 
-        function addRecord() {
-            const type = document.getElementById('type').value;
-            const amount = parseFloat(document.getElementById('amount').value);
-            const note = document.getElementById('note').value.trim();
+<div id="total">💰 总支出：0.00</div>
 
-            if (!amount || amount <= 0) {
-                alert("请输入有效的金额");
-                return;
-            }
+<div id="list"></div>
 
-            const record = {
-                date: new Date().toLocaleDateString('zh-CN'),
-                type: type,
-                amount: amount,
-                note: note || '-'
-            };
+</div>
 
-            records.push(record);
-            renderRecords();
-            updateTotal();
+<script>
+// 初始化数据
+let data = JSON.parse(localStorage.getItem("money")) || [];
 
-            // 清空输入
-            document.getElementById('amount').value = '';
-            document.getElementById('note').value = '';
+// 保存到本地
+function save() {
+    localStorage.setItem("money", JSON.stringify(data));
+}
+
+// 清空输入框
+function clearInput() {
+    document.getElementById('project').value = "";
+    document.getElementById('cost').value = "";
+    document.getElementById('img').value = "";
+}
+
+// 添加记录
+function add() {
+    let project = document.getElementById('project').value;
+    let cost = document.getElementById('cost').value;
+    let type = document.getElementById('type').value;
+    let file = document.getElementById('img').files[0];
+
+    if (!project || !cost) {
+        alert("请填写项目名称和花费金额！");
+        return;
+    }
+
+    if (file) {
+        let reader = new FileReader();
+        reader.onload = function() {
+            pushData(project, cost, type, reader.result);
         }
+        reader.readAsDataURL(file);
+    } else {
+        pushData(project, cost, type, "");
+    }
+}
 
-        function renderRecords() {
-            const tbody = document.getElementById('recordList');
-            tbody.innerHTML = '';
+// 推入数据（已移除 EXP 编号）
+function pushData(project, cost, type, image) {
+    let now = new Date();
+    // 格式化时间为 YYYY/MM/DD HH:mm
+    let timeStr = now.getFullYear() + '/' + 
+                  String(now.getMonth() + 1).padStart(2, '0') + '/' + 
+                  String(now.getDate()).padStart(2, '0') + ' ' + 
+                  String(now.getHours()).padStart(2, '0') + ':' + 
+                  String(now.getMinutes()).padStart(2, '0');
 
-            records.forEach((record, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="px-4 py-3 text-sm text-gray-600">${record.date}</td>
-                    <td class="px-4 py-3">
-                        <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">${record.type}</span>
-                    </td>
-                    <td class="px-4 py-3 text-right font-medium text-red-500">¥${record.amount}</td>
-                    <td class="px-4 py-3 text-sm text-gray-600">${record.note}</td>
-                    <td class="px-4 py-3 text-center">
-                        <button onclick="deleteRecord(${index})" 
-                                class="text-red-500 hover:text-red-700 text-sm">删除</button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
+    data.unshift({ // 改为 unshift，最新记录显示在最上面
+        date: timeStr,
+        project: project,
+        cost: parseFloat(cost || 0),
+        type: type,
+        img: image
+    });
 
-        function deleteRecord(index) {
-            records.splice(index, 1);
-            renderRecords();
-            updateTotal();
-        }
+    save();
+    clearInput();
+    render();
+}
 
-        function updateTotal() {
-            const total = records.reduce((sum, r) => sum + r.amount, 0);
-            document.getElementById('total').textContent = total.toFixed(2);
-        }
+// 删除记录
+function del(i) {
+    if(confirm("确定要删除这条记录吗？")){
+        data.splice(i, 1);
+        save();
+        render();
+    }
+}
 
-        function exportToExcel() {
-            if (records.length === 0) {
-                alert("暂无记录可导出");
-                return;
-            }
+// 导出 Excel
+function exportExcel() {
+    if (data.length === 0) {
+        alert("当前没有记录可导出！");
+        return;
+    }
 
-            // 准备导出数据
-            const data = records.map(r => ({
-                日期: r.date,
-                类型: r.type,
-                金额: r.amount,
-                备注: r.note
-            }));
+    // 处理导出数据：为了防止 Excel 单元格被巨长的 Base64 图片代码撑爆，我们在导出时过滤掉图片数据
+    let exportData = data.map(d => ({
+        "记录时间": d.date,
+        "项目名称": d.project,
+        "支出分类": d.type,
+        "花费金额(¥)": d.cost
+    }));
 
-            const worksheet = XLSX.utils.json_to_sheet(data);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "支出记录");
+    // 生成工作表并下载
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "记账流水");
+    XLSX.writeFile(workbook, "记账明细_ProPlus.xlsx");
+}
 
-            // 下载文件
-            XLSX.writeFile(workbook, `记账记录_${new Date().toISOString().slice(0,10)}.xlsx`);
-        }
+// 渲染列表
+function render() {
+    let list = document.getElementById("list");
+    list.innerHTML = "";
+    let total = 0;
 
-        // 初始示例数据（可删除）
-        function initDemoData() {
-            records = [
-                { date: "2026/7/3", type: "微信支付", amount: 25.5, note: "午餐" },
-                { date: "2026/7/3", type: "现金", amount: 18, note: "打车" }
-            ];
-            renderRecords();
-            updateTotal();
-        }
+    if (data.length === 0) {
+        list.innerHTML = "<div class='empty-state'>目前还没有任何账单记录哦~</div>";
+    }
 
-        // 启动时加载演示数据（可选）
-        window.onload = function() {
-            initDemoData();
-        }
-    </script>
+    data.forEach((d, i) => {
+        total += d.cost;
+        
+        // 根据不同类型赋予不同的颜色标签样式
+        let tagClass = `tag-${d.type}`;
+
+        list.innerHTML += `
+        <div class="item">
+            <div class="row">
+                <span class="project-name">${d.project}</span>
+                <span class="cost-value">- ¥${d.cost.toFixed(2)}</span>
+            </div>
+
+            <div class="row">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <span class="type-tag ${tagClass}">${d.type}</span>
+                    <span class="date-text">${d.date}</span>
+                </div>
+                ${d.img ? `<img src="${d.img}" alt="凭证">` : "<span></span>"}
+            </div>
+
+            <div class="row" style="margin-top: 4px; justify-content: flex-end;">
+                <button class="del-btn" onclick="del(${i})">删除记录</button>
+            </div>
+        </div>
+        `;
+    });
+
+    document.getElementById("total").innerText = "💰 总支出：" + total.toFixed(2);
+}
+
+// 初始渲染
+render();
+
+</script>
+
 </body>
 </html>

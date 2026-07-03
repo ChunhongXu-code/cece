@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>长武记账系统</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<title>田间试验记账系统</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 <style>
     /* 基础重置与背景设定 */
@@ -228,18 +229,18 @@
     
     <div class="input-group">
         <select id="type">
-            <option>微信转账</option>
-            <option>微信支付</option>
             <option>发票</option>
-            <option>现金</option>
             <option>收据</option>
+            <option>车票</option>
+            <option>餐饮</option>
+            <option>其他</option>
         </select>
         <input type="file" id="img" accept="image/*">
     </div>
 
     <div class="btn-group">
         <button class="btn-add" onclick="add()">➕ 添加记录</button>
-        <button class="btn-export" onclick="exportExcel()">📥 导出 Excel</button>
+        <button class="btn-export" onclick="exportExcel()">📥 导出 Excel (含图片)</button>
     </div>
 </div>
 
@@ -288,17 +289,16 @@ function add() {
     }
 }
 
-// 推入数据（已移除 EXP 编号）
+// 推入数据
 function pushData(project, cost, type, image) {
     let now = new Date();
-    // 格式化时间为 YYYY/MM/DD HH:mm
     let timeStr = now.getFullYear() + '/' + 
                   String(now.getMonth() + 1).padStart(2, '0') + '/' + 
                   String(now.getDate()).padStart(2, '0') + ' ' + 
                   String(now.getHours()).padStart(2, '0') + ':' + 
                   String(now.getMinutes()).padStart(2, '0');
 
-    data.unshift({ // 改为 unshift，最新记录显示在最上面
+    data.unshift({ 
         date: timeStr,
         project: project,
         cost: parseFloat(cost || 0),
@@ -320,26 +320,84 @@ function del(i) {
     }
 }
 
-// 导出 Excel
-function exportExcel() {
+// 🚀 高级导出功能：支持真正将图片嵌入 Excel
+async function exportExcel() {
     if (data.length === 0) {
         alert("当前没有记录可导出！");
         return;
     }
 
-    // 处理导出数据：为了防止 Excel 单元格被巨长的 Base64 图片代码撑爆，我们在导出时过滤掉图片数据
-    let exportData = data.map(d => ({
-        "记录时间": d.date,
-        "项目名称": d.project,
-        "支出分类": d.type,
-        "花费金额(¥)": d.cost
-    }));
+    // 1. 创建工作簿和工作表
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('记账流水');
 
-    // 生成工作表并下载
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "记账流水");
-    XLSX.writeFile(workbook, "记账明细_ProPlus.xlsx");
+    // 2. 设置列名和列宽
+    worksheet.columns = [
+        { header: '记录时间', key: 'date', width: 22 },
+        { header: '项目名称', key: 'project', width: 25 },
+        { header: '支出分类', key: 'type', width: 15 },
+        { header: '花费金额 (¥)', key: 'cost', width: 15 },
+        { header: '图片凭证', key: 'img', width: 18 } // 为图片留出足够宽度
+    ];
+
+    // 💡 表头样式美化 (高贵紫背景 + 白色加粗字体)
+    const headerRow = worksheet.getRow(1);
+    headerRow.height = 25;
+    headerRow.font = { name: 'Arial', bold: true, color: { argb: 'FFFFFF' } };
+    headerRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '764BA2' } };
+    headerRow.alignment = { vertical: 'middle', horizontal: 'center' };
+
+    // 3. 循环添加数据和图片
+    for (let i = 0; i < data.length; i++) {
+        let d = data[i];
+        
+        // 插入文本行
+        let row = worksheet.addRow({
+            date: d.date,
+            project: d.project,
+            type: d.type,
+            cost: d.cost
+        });
+
+        // 居中和垂直对齐设置
+        row.alignment = { vertical: 'middle', horizontal: 'left' };
+        row.getCell('cost').alignment = { vertical: 'middle', horizontal: 'right' };
+        row.getCell('type').alignment = { vertical: 'middle', horizontal: 'center' };
+
+        // 如果有图片，解析并嵌入到最后一列
+        if (d.img) {
+            try {
+                // 提取 base64 数据和图片格式
+                let matches = d.img.match(/^data:image\/(\w+);base64,(.+)$/);
+                if (matches) {
+                    let ext = matches[1];       // png, jpeg 等
+                    let base64Data = matches[2]; // 纯数据部分
+
+                    // 将图片添加到工作簿
+                    const imageId = workbook.addImage({
+                        base64: base64Data,
+                        extension: ext,
+                    });
+
+                    // 动态调整 Excel 该行的高度以容纳图片
+                    row.height = 65; 
+
+                    // 把图片放到当前行、第5列 (col: 4 是 0 索引，代表第 5 列)
+                    worksheet.addImage(imageId, {
+                        tl: { col: 4, row: row.number - 1 },
+                        ext: { width: 75, height: 75 }, // 调整 Excel 中图片的显示长宽
+                        editAs: 'oneCell'
+                    });
+                }
+            } catch (error) {
+                console.error("图片导出到 Excel 失败:", error);
+            }
+        }
+    }
+
+    // 4. 生成并下载 Excel 文件
+    const buffer = await workbook.xlsx.writeBuffer();
+    saveAs(new Blob([buffer]), "记账明细_含图片凭证.xlsx");
 }
 
 // 渲染列表
@@ -354,8 +412,6 @@ function render() {
 
     data.forEach((d, i) => {
         total += d.cost;
-        
-        // 根据不同类型赋予不同的颜色标签样式
         let tagClass = `tag-${d.type}`;
 
         list.innerHTML += `
@@ -385,7 +441,6 @@ function render() {
 
 // 初始渲染
 render();
-
 </script>
 
 </body>

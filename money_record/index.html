@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>记账系统</title>
+
+<style>
+body{
+    font-family: Arial;
+    width:900px;
+    margin:auto;
+    margin-top:30px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th,td{
+    border:1px solid #999;
+    padding:8px;
+    text-align:center;
+}
+
+img{
+    width:80px;
+}
+
+button{
+    padding:5px 12px;
+}
+
+input,select{
+    padding:5px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>简单记账系统</h2>
+
+编号
+<input id="id">
+
+项目
+<input id="project">
+
+花费
+<input id="cost" type="number">
+
+凭据类型
+<select id="type">
+<option>发票</option>
+<option>收据</option>
+<option>车票</option>
+<option>其他</option>
+</select>
+
+图片
+<input type="file" id="image">
+
+<button onclick="add()">添加</button>
+
+<button onclick="download()">导出Excel</button>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>编号</th>
+<th>项目</th>
+<th>花费</th>
+<th>凭据类型</th>
+<th>图片</th>
+<th>删除</th>
+
+</tr>
+
+</thead>
+
+<tbody id="table"></tbody>
+
+</table>
+
+<script>
+
+let data = JSON.parse(localStorage.getItem("expense")) || [];
+
+show();
+
+function add(){
+
+let file=document.getElementById("image").files[0];
+
+if(file){
+
+let reader=new FileReader();
+
+reader.onload=function(){
+
+save(reader.result);
+
+}
+
+reader.readAsDataURL(file);
+
+}
+else{
+
+save("");
+
+}
+
+}
+
+function save(img){
+
+data.push({
+
+id:document.getElementById("id").value,
+
+project:document.getElementById("project").value,
+
+cost:document.getElementById("cost").value,
+
+type:document.getElementById("type").value,
+
+img:img
+
+});
+
+localStorage.setItem("expense",JSON.stringify(data));
+
+show();
+
+document.getElementById("id").value="";
+document.getElementById("project").value="";
+document.getElementById("cost").value="";
+document.getElementById("image").value="";
+
+}
+
+function show(){
+
+let html="";
+
+for(let i=0;i<data.length;i++){
+
+html+=`
+
+<tr>
+
+<td>${data[i].id}</td>
+
+<td>${data[i].project}</td>
+
+<td>${data[i].cost}</td>
+
+<td>${data[i].type}</td>
+
+<td>${data[i].img?'<img src="'+data[i].img+'">':''}</td>
+
+<td>
+
+<button onclick="del(${i})">删除</button>
+
+</td>
+
+</tr>
+
+`;
+
+}
+
+document.getElementById("table").innerHTML=html;
+
+}
+
+function del(i){
+
+data.splice(i,1);
+
+localStorage.setItem("expense",JSON.stringify(data));
+
+show();
+
+}
+
+function download(){
+
+let csv="编号,项目,花费,凭据类型\n";
+
+data.forEach(function(x){
+
+csv+=`${x.id},${x.project},${x.cost},${x.type}\n`;
+
+});
+
+let blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
+
+let a=document.createElement("a");
+
+a.href=URL.createObjectURL(blob);
+
+a.download="记账.xlsx";
+
+a.click();
+
+}
+
+</script>
+
+</body>
+
+</html>

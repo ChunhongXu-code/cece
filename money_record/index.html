@@ -2,56 +2,108 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>记账系统 Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>记账系统 Pro+</title>
 
 <style>
 body{
     font-family: Arial;
-    width: 900px;
-    margin: auto;
-    margin-top: 30px;
+    margin:0;
+    background:#f5f6fa;
 }
 
-input,select,button{
-    padding:6px;
-    margin:4px;
+/* 手机自适应容器 */
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:12px;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:20px;
-}
-
-th,td{
-    border:1px solid #999;
-    padding:8px;
-    text-align:center;
-}
-
-img{
-    width:70px;
-}
-
-.top{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    align-items:center;
-}
-
-#total{
+/* 卡片输入区 */
+.card{
+    background:white;
+    padding:12px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
     margin-top:10px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    margin:6px 0;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    background:#4CAF50;
+    color:white;
+}
+
+button:active{
+    transform:scale(0.98);
+}
+
+/* 统计 */
+#total{
+    font-size:18px;
     font-weight:bold;
+    margin-top:10px;
+    color:#333;
+}
+
+/* 记录卡片 */
+.item{
+    background:white;
+    padding:10px;
+    margin-top:10px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+.item img{
+    width:60px;
+    border-radius:6px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    margin:4px 0;
+}
+
+.del{
+    background:#ff4d4f;
+    padding:6px;
+    border-radius:8px;
+    color:white;
+    font-size:14px;
+    border:none;
+}
+
+.small{
+    font-size:12px;
+    color:#666;
 }
 </style>
 </head>
 
 <body>
 
-<h2>📒 记账系统 Pro</h2>
+<div class="container">
 
-<div class="top">
+<h2>📒 记账系统 Pro+</h2>
+
+<div class="card">
 
 <input id="project" placeholder="项目">
 
@@ -67,30 +119,15 @@ img{
 
 <input type="file" id="img">
 
-<button onclick="add()">添加</button>
-
-<button onclick="exportCSV()">导出Excel</button>
-
-<input id="search" placeholder="搜索项目" oninput="render()">
+<button onclick="add()">➕ 添加记录</button>
 
 </div>
 
 <div id="total">总支出：0</div>
 
-<table>
-<thead>
-<tr>
-<th>编号</th>
-<th>日期</th>
-<th>项目</th>
-<th>花费</th>
-<th>类型</th>
-<th>图片</th>
-<th>操作</th>
-</tr>
-</thead>
-<tbody id="tb"></tbody>
-</table>
+<div id="list"></div>
+
+</div>
 
 <script>
 
@@ -100,11 +137,14 @@ function save(){
     localStorage.setItem("money",JSON.stringify(data));
 }
 
-function getID(){
-    return "EXP" + String(data.length+1).padStart(4,"0");
+function clearInput(){
+    project.value = "";
+    cost.value = "";
+    img.value = "";
 }
 
 function add(){
+
     let file = document.getElementById("img").files[0];
 
     if(file){
@@ -118,18 +158,19 @@ function add(){
     }
 }
 
-function push(img){
-    let item = {
-        id: getID(),
-        date: new Date().toLocaleDateString(),
-        project: project.value,
-        cost: parseFloat(cost.value || 0),
-        type: type.value,
-        img: img
-    };
+function push(image){
 
-    data.push(item);
+    data.push({
+        id:"EXP"+String(data.length+1).padStart(4,"0"),
+        date:new Date().toLocaleString(),
+        project:project.value,
+        cost:parseFloat(cost.value||0),
+        type:type.value,
+        img:image
+    });
+
     save();
+    clearInput();   // ⭐ 添加后自动清空
     render();
 }
 
@@ -141,49 +182,41 @@ function del(i){
 
 function render(){
 
-    let key = search.value || "";
-
-    let tb = document.getElementById("tb");
-    tb.innerHTML = "";
+    let list = document.getElementById("list");
+    list.innerHTML = "";
 
     let total = 0;
 
     data.forEach((d,i)=>{
 
-        if(key && !d.project.includes(key)) return;
-
         total += d.cost;
 
-        tb.innerHTML += `
-        <tr>
-        <td>${d.id}</td>
-        <td>${d.date}</td>
-        <td>${d.project}</td>
-        <td>${d.cost}</td>
-        <td>${d.type}</td>
-        <td>${d.img ? `<img src="${d.img}">` : ""}</td>
-        <td><button onclick="del(${i})">删除</button></td>
-        </tr>
+        list.innerHTML += `
+        <div class="item">
+
+            <div class="row">
+                <b>${d.id}</b>
+                <span class="small">${d.date}</span>
+            </div>
+
+            <div class="row">
+                <span>${d.project}</span>
+                <span>¥${d.cost}</span>
+            </div>
+
+            <div class="row">
+                <span>${d.type}</span>
+                ${d.img ? `<img src="${d.img}">` : ""}
+            </div>
+
+            <button class="del" onclick="del(${i})">删除</button>
+
+        </div>
         `;
     });
 
-    totalDiv = document.getElementById("total");
-    totalDiv.innerText = "总支出：" + total.toFixed(2);
-}
-
-function exportCSV(){
-
-    let csv = "编号,日期,项目,花费,类型\n";
-
-    data.forEach(d=>{
-        csv += `${d.id},${d.date},${d.project},${d.cost},${d.type}\n`;
-    });
-
-    let blob = new Blob(["\ufeff"+csv],{type:"text/csv"});
-    let a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "记账.csv";
-    a.click();
+    document.getElementById("total").innerText =
+        "💰 总支出：" + total.toFixed(2);
 }
 
 render();

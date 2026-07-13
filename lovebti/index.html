@@ -632,12 +632,12 @@ body {
       </div>
       
       <div class="info-card">
-        <div class="info-num">32</div>
+        <div class="info-num">16</div>
         <div class="info-label">题目</div>
       </div>
       
       <div class="info-card">
-        <div class="info-num">3</div>
+        <div class="info-num">2</div>
         <div class="info-label">分钟</div>
       </div>
     </div>
@@ -683,16 +683,7 @@ body {
 <canvas id="shareCanvas"></canvas>
 
 <script>
-/*
-恋爱16型人格测试
-基于四个维度：
-E/I - 表达方式（外向/内向）
-S/N - 感知方式（实感/直觉）
-T/F - 决策方式（理性/感性）
-J/P - 生活方式（计划/随性）
-*/
-
-// 16种恋爱人格定义
+// 16种恋爱人格定义（保持原样）
 const PERSONALITIES = {
   ESTJ: {
     name: '霸总恋爱型',
@@ -865,7 +856,7 @@ const PERSONALITIES = {
 
 你不会玩什么浪漫惊喜，但你会记得每个纪念日，准时接送，从不失约。你的爱藏在每一个细节里：定时提醒吃药、帮忙整理房间、默默做好所有琐碎的事。
 
-<div class="quote-box">"我不太会说甜言蜜语,但我会一直陪着你。"——这就是你的表白。</div>
+<div class="quote-box">"我不太会说甜言蜜语，但我会一直陪着你。"——这就是你的表白。</div>
 
 优点是超级靠谱，值得托付终身。缺点是太木讷，缺少情趣。
 
@@ -947,7 +938,7 @@ const PERSONALITIES = {
 
 <div class="quote-box">"我感觉我们在精神层面有很深的连接。"——这是你的择偶标准。</div>
 
-优点是深刻、有深度，能给对方精神支持。缺点是期待太高,容易失望。
+优点是深刻、有深度，能给对方精神支持。缺点是期待太高，容易失望。
 
 温柔提醒：有时候"普通的快乐"也很珍贵。`,
     strengths: [
@@ -1335,237 +1326,169 @@ const PERSONALITIES = {
   }
 };
 
-// 题目设计（32题，每个维度8题）
+// 优化后的题目（16题，每题4个选项）
 const QUESTIONS = [
-  // E/I 维度 (8题)
+  // E/I 维度 (4题)
   {
-    text: '在恋爱关系中，你更倾向于：',
+    text: '周末突然有空，你的第一反应是：',
     options: [
-      { text: '主动分享生活，希望对方也多说说', dim: 'E' },
-      { text: '享受安静相处，不用时刻都在说话', dim: 'I' }
+      { text: '立刻约朋友或对象出去玩', dim: 'E', weight: 2 },
+      { text: '看情况，有好的活动就去', dim: 'E', weight: 1 },
+      { text: '更想一个人安静待着', dim: 'I', weight: 1 },
+      { text: '终于可以宅在家好好休息了', dim: 'I', weight: 2 }
     ]
   },
+  
   {
-    text: '约会时，你更喜欢：',
+    text: '对方心情不好时，你更倾向于：',
     options: [
-      { text: '热闹的地方，比如游乐园、聚会', dim: 'E' },
-      { text: '安静的地方，比如家里、咖啡馆', dim: 'I' }
+      { text: '马上找TA聊，当面沟通解决', dim: 'E', weight: 2 },
+      { text: '发消息关心，给TA一些建议', dim: 'E', weight: 1 },
+      { text: '默默陪伴，等TA主动说', dim: 'I', weight: 1 },
+      { text: '给TA独处空间，自己会调节好', dim: 'I', weight: 2 }
     ]
   },
+  
   {
-    text: '遇到感情问题时，你会：',
+    text: '关于公开恋情这件事：',
     options: [
-      { text: '找朋友倾诉，寻求建议', dim: 'E' },
-      { text: '自己消化，独自思考', dim: 'I' }
+      { text: '恨不得全世界都知道', dim: 'E', weight: 2 },
+      { text: '会在朋友圈分享，但不高调', dim: 'E', weight: 1 },
+      { text: '只告诉亲近的人', dim: 'I', weight: 1 },
+      { text: '低调就好，两个人知道就够了', dim: 'I', weight: 2 }
     ]
   },
+  
   {
-    text: '对于"谈恋爱要公开朋友圈"这件事：',
+    text: '你的理想约会是：',
     options: [
-      { text: '当然要！恨不得全世界都知道', dim: 'E' },
-      { text: '低调就好，不需要所有人知道', dim: 'I' }
-    ]
-  },
-  {
-    text: '你的社交能量来源：',
-    options: [
-      { text: '和对方一起社交让我充电', dim: 'E' },
-      { text: '独处或两个人安静待着让我充电', dim: 'I' }
-    ]
-  },
-  {
-    text: '吵架后，你更可能：',
-    options: [
-      { text: '马上沟通，当面解决', dim: 'E' },
-      { text: '需要时间冷静，自己消化', dim: 'I' }
-    ]
-  },
-  {
-    text: '你希望伴侣是：',
-    options: [
-      { text: '外向活泼，能带我认识新朋友', dim: 'E' },
-      { text: '安静温柔，能陪我享受独处', dim: 'I' }
-    ]
-  },
-  {
-    text: '你更享受：',
-    options: [
-      { text: '和对方一起参加各种活动', dim: 'E' },
-      { text: '两个人在家窝着看剧', dim: 'I' }
+      { text: '热闹的聚会或活动', dim: 'E', weight: 2 },
+      { text: '人多的地方，比如商场、游乐园', dim: 'E', weight: 1 },
+      { text: '安静的咖啡馆或电影院', dim: 'I', weight: 1 },
+      { text: '在家两个人窝着', dim: 'I', weight: 2 }
     ]
   },
 
-  // S/N 维度 (8题)
+  // S/N 维度 (4题)
   {
-    text: '选择伴侣时，你更看重：',
+    text: '选择伴侣时，你最看重：',
     options: [
-      { text: '实际条件：工作、收入、家庭', dim: 'S' },
-      { text: '精神契合：三观、理想、默契', dim: 'N' }
+      { text: '实际条件（工作、收入、家庭）', dim: 'S', weight: 2 },
+      { text: '性格合得来，生活习惯相近', dim: 'S', weight: 1 },
+      { text: '三观一致，有共同话题', dim: 'N', weight: 1 },
+      { text: '精神契合，灵魂层面的连接', dim: 'N', weight: 2 }
     ]
   },
+  
   {
-    text: '约会时，你更喜欢：',
+    text: '对方送你礼物，你更喜欢：',
     options: [
-      { text: '计划好的行程，知道去哪做什么', dim: 'S' },
-      { text: '随性的探索，看到哪玩到哪', dim: 'N' }
+      { text: '实用的，我正好需要的东西', dim: 'S', weight: 2 },
+      { text: '质量好的，能用很久的', dim: 'S', weight: 1 },
+      { text: '有纪念意义的，代表我们的回忆', dim: 'N', weight: 1 },
+      { text: '有创意的，独一无二的', dim: 'N', weight: 2 }
     ]
   },
+  
   {
-    text: '听到"我们的未来"时，你想到的是：',
+    text: '规划未来时，你会想到：',
     options: [
-      { text: '具体计划：什么时候结婚、买房、生娃', dim: 'S' },
-      { text: '美好画面：一起变老、看世界、实现梦想', dim: 'N' }
+      { text: '具体计划：什么时候结婚、买房', dim: 'S', weight: 2 },
+      { text: '实际问题：收入、存款、生活安排', dim: 'S', weight: 1 },
+      { text: '美好画面：一起旅行、实现梦想', dim: 'N', weight: 1 },
+      { text: '人生意义：成为更好的彼此', dim: 'N', weight: 2 }
     ]
   },
+  
   {
-    text: '送礼物时，你更倾向于：',
+    text: '聊天时你更喜欢：',
     options: [
-      { text: '实用的：TA需要的、能用上的', dim: 'S' },
-      { text: '浪漫的：有纪念意义、象征意义的', dim: 'N' }
-    ]
-  },
-  {
-    text: '你更容易被什么打动：',
-    options: [
-      { text: '实际行动：帮我解决问题、照顾我', dim: 'S' },
-      { text: '精神共鸣：懂我的心思、理解我', dim: 'N' }
-    ]
-  },
-  {
-    text: '对于"仪式感"的态度：',
-    options: [
-      { text: '实际的关心比形式重要', dim: 'S' },
-      { text: '仪式感能让爱情更有意义', dim: 'N' }
-    ]
-  },
-  {
-    text: '你更欣赏的恋爱是：',
-    options: [
-      { text: '稳定踏实，柴米油盐', dim: 'S' },
-      { text: '充满意义，灵魂相伴', dim: 'N' }
-    ]
-  },
-  {
-    text: '聊天时，你更喜欢聊：',
-    options: [
-      { text: '今天发生的事、生活琐碎', dim: 'S' },
-      { text: '人生、梦想、哲学问题', dim: 'N' }
+      { text: '今天发生的具体事情', dim: 'S', weight: 2 },
+      { text: '生活日常和实际问题', dim: 'S', weight: 1 },
+      { text: '有趣的想法和未来计划', dim: 'N', weight: 1 },
+      { text: '人生、梦想、哲学话题', dim: 'N', weight: 2 }
     ]
   },
 
-  // T/F 维度 (8题)
+  // T/F 维度 (4题)
   {
-    text: '对方难过时，你的第一反应：',
+    text: '对方难过时，你的第一句话是：',
     options: [
-      { text: '"发生什么了？我们来解决"', dim: 'T' },
-      { text: '"抱抱，没事的，我陪着你"', dim: 'F' }
+      { text: '发生了什么？我们来分析解决', dim: 'T', weight: 2 },
+      { text: '别担心，我帮你想办法', dim: 'T', weight: 1 },
+      { text: '抱抱，没事的，我在这里', dim: 'F', weight: 1 },
+      { text: '宝贝别哭，我陪着你', dim: 'F', weight: 2 }
     ]
   },
+  
   {
-    text: '做决定时，你更依赖：',
+    text: '吵架时你更在意：',
     options: [
-      { text: '理性分析：利弊、可行性', dim: 'T' },
-      { text: '内心感受：直觉、情感', dim: 'F' }
+      { text: '谁对谁错，把道理讲清楚', dim: 'T', weight: 2 },
+      { text: '找出问题，避免下次再犯', dim: 'T', weight: 1 },
+      { text: '对方的感受，尽快和好', dim: 'F', weight: 1 },
+      { text: '关系修复，谁对谁错不重要', dim: 'F', weight: 2 }
     ]
   },
+  
   {
-    text: '吵架时，你更在意：',
+    text: '做决定时你主要依靠：',
     options: [
-      { text: '谁对谁错，讲清道理', dim: 'T' },
-      { text: '对方的感受，修复关系', dim: 'F' }
+      { text: '理性分析利弊', dim: 'T', weight: 2 },
+      { text: '客观条件和可行性', dim: 'T', weight: 1 },
+      { text: '内心感受和直觉', dim: 'F', weight: 1 },
+      { text: '情感和对方的想法', dim: 'F', weight: 2 }
     ]
   },
+  
   {
     text: '你更认同：',
     options: [
-      { text: '"爱需要理性，冲动会出问题"', dim: 'T' },
-      { text: '"爱就是感觉，讲太多道理没意思"', dim: 'F' }
-    ]
-  },
-  {
-    text: '对方做错事时，你会：',
-    options: [
-      { text: '直接指出问题，帮TA改正', dim: 'T' },
-      { text: '先安慰情绪，再温柔提醒', dim: 'F' }
-    ]
-  },
-  {
-    text: '你更看重：',
-    options: [
-      { text: '说话的逻辑和准确性', dim: 'T' },
-      { text: '说话的语气和情感', dim: 'F' }
-    ]
-  },
-  {
-    text: '评价一段关系时，你更关注：',
-    options: [
-      { text: '是否合适、是否能长久', dim: 'T' },
-      { text: '是否快乐、是否被爱', dim: 'F' }
-    ]
-  },
-  {
-    text: '你的沟通风格是：',
-    options: [
-      { text: '客观理性，就事论事', dim: 'T' },
-      { text: '温柔体贴，照顾感受', dim: 'F' }
+      { text: '爱情需要理性，冲动会出问题', dim: 'T', weight: 2 },
+      { text: '感情要理智，但也要浪漫', dim: 'T', weight: 1 },
+      { text: '爱情需要感觉，太理性没意思', dim: 'F', weight: 1 },
+      { text: '跟着感觉走，爱了就是爱了', dim: 'F', weight: 2 }
     ]
   },
 
-  // J/P 维度 (8题)
+  // J/P 维度 (4题)
   {
-    text: '对于恋爱节奏，你更倾向：',
+    text: '约会前你通常会：',
     options: [
-      { text: '有计划：什么阶段做什么', dim: 'J' },
-      { text: '顺其自然：走一步看一步', dim: 'P' }
+      { text: '提前一周规划好所有细节', dim: 'J', weight: 2 },
+      { text: '前一天确定时间地点', dim: 'J', weight: 1 },
+      { text: '当天早上决定去哪', dim: 'P', weight: 1 },
+      { text: '出门了再看，随便逛逛', dim: 'P', weight: 2 }
     ]
   },
+  
   {
-    text: '约会前，你会：',
+    text: '对方突然说"我们出去走走吧"：',
     options: [
-      { text: '提前计划好时间、地点、行程', dim: 'J' },
-      { text: '临时决定，看当天心情', dim: 'P' }
+      { text: '去哪？几点？我先查查路线', dim: 'J', weight: 2 },
+      { text: '好啊，我看看有什么地方', dim: 'J', weight: 1 },
+      { text: '走！现在就出发', dim: 'P', weight: 1 },
+      { text: '好啊！去哪都行，走着看', dim: 'P', weight: 2 }
     ]
   },
+  
   {
-    text: '对方突然说"我们出去玩吧"：',
+    text: '你更喜欢的生活方式是：',
     options: [
-      { text: '"去哪？几点？我安排一下"', dim: 'J' },
-      { text: '"好啊！走吧！"（什么都没准备）', dim: 'P' }
+      { text: '有详细计划，按部就班', dim: 'J', weight: 2 },
+      { text: '有大致安排，但可以调整', dim: 'J', weight: 1 },
+      { text: '保持弹性，随机应变', dim: 'P', weight: 1 },
+      { text: '完全自由，想到哪做到哪', dim: 'P', weight: 2 }
     ]
   },
+  
   {
-    text: '你更喜欢的生活方式：',
+    text: '关于纪念日：',
     options: [
-      { text: '规律稳定，有计划', dim: 'J' },
-      { text: '自由随性，有惊喜', dim: 'P' }
-    ]
-  },
-  {
-    text: '对于"结婚计划"：',
-    options: [
-      { text: '早就想好了，就等合适的人', dim: 'J' },
-      { text: '还没想过，遇到了再说', dim: 'P' }
-    ]
-  },
-  {
-    text: '你更能接受：',
-    options: [
-      { text: '按部就班的恋爱节奏', dim: 'J' },
-      { text: '充满变数的恋爱体验', dim: 'P' }
-    ]
-  },
-  {
-    text: '你的纪念日风格：',
-    options: [
-      { text: '提前准备，绝不会忘', dim: 'J' },
-      { text: '想起来就过，忘了就补', dim: 'P' }
-    ]
-  },
-  {
-    text: '你更欣赏的伴侣是：',
-    options: [
-      { text: '有计划、有目标、靠谱', dim: 'J' },
-      { text: '随性、有趣、充满惊喜', dim: 'P' }
+      { text: '提前一个月开始准备', dim: 'J', weight: 2 },
+      { text: '会记得，至少提前几天安排', dim: 'J', weight: 1 },
+      { text: '想起来就过，忘了也没关系', dim: 'P', weight: 1 },
+      { text: '随时都可以是纪念日', dim: 'P', weight: 2 }
     ]
   }
 ];
@@ -1637,7 +1560,7 @@ function choose(idx) {
   const selected = q.options[idx];
   
   history.push({ ...answers });
-  answers[selected.dim]++;
+  answers[selected.dim] += selected.weight;
   
   setTimeout(() => {
     currentQ++;
@@ -1662,7 +1585,6 @@ function goBack() {
 function showResult() {
   document.getElementById('quiz').style.display = 'none';
   
-  // 计算类型
   const type = 
     (answers.E >= answers.I ? 'E' : 'I') +
     (answers.S >= answers.N ? 'S' : 'N') +
@@ -1770,7 +1692,7 @@ function saveImage() {
   canvas.width = W;
   canvas.height = H;
   
-  // 背景渐变
+  // 渐变背景
   const grad = ctx.createLinearGradient(0, 0, W, H);
   grad.addColorStop(0, '#fff5f7');
   grad.addColorStop(1, '#fef3ff');
@@ -1817,7 +1739,6 @@ function saveImage() {
   const tagSpacing = 20;
   const tagHeight = 50;
   
-  // 简单排列标签（两行）
   const row1 = tags.slice(0, 2);
   const row2 = tags.slice(2, 4);
   
@@ -1827,7 +1748,6 @@ function saveImage() {
     const currentY = tagY + rowIdx * (tagHeight + tagSpacing);
     
     rowTags.forEach(tag => {
-      // 标签背景
       const tagGrad = ctx.createLinearGradient(x, currentY, x + 160, currentY + tagHeight);
       tagGrad.addColorStop(0, '#ffe8f0');
       tagGrad.addColorStop(1, '#f3e8ff');
@@ -1835,7 +1755,6 @@ function saveImage() {
       roundRect(ctx, x, currentY, 160, tagHeight, 25);
       ctx.fill();
       
-      // 标签文字
       ctx.fillStyle = '#ff6b9d';
       ctx.font = 'bold 20px "Noto Sans SC", sans-serif';
       ctx.fillText(tag, x + 80, currentY + 32);
@@ -1865,7 +1784,6 @@ function saveImage() {
   
   y += 50;
   
-  // 多行文本
   ctx.fillStyle = '#6b5b7a';
   ctx.font = '400 22px "Noto Sans SC", sans-serif';
   wrapText(ctx, personality.loveStyle, 80, y, W - 160, 36);
@@ -1922,17 +1840,17 @@ function roundRect(ctx, x, y, w, h, r) {
 }
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-  const words = text.split('');
+  const chars = text.split('');
   let line = '';
   let currentY = y;
   
-  for (let n = 0; n < words.length; n++) {
-    const testLine = line + words[n];
+  for (let i = 0; i < chars.length; i++) {
+    const testLine = line + chars[i];
     const metrics = ctx.measureText(testLine);
     
-    if (metrics.width > maxWidth && n > 0) {
+    if (metrics.width > maxWidth && i > 0) {
       ctx.fillText(line, x, currentY);
-      line = words[n];
+      line = chars[i];
       currentY += lineHeight;
     } else {
       line = testLine;

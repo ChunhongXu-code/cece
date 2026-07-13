@@ -44,14 +44,14 @@ body {
 .container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 16px;
 }
 
 /* ===== Header ===== */
 .header {
   background: linear-gradient(135deg, #2c5f7c 0%, #4a7c99 100%);
   color: white;
-  padding: 40px 20px 50px;
+  padding: 32px 16px 40px;
   margin-bottom: -30px;
 }
 
@@ -65,7 +65,7 @@ body {
   padding: 6px 14px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -74,14 +74,14 @@ body {
 
 .main-title {
   font-family: 'Noto Serif SC', serif;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 900;
   line-height: 1.3;
   margin-bottom: 12px;
 }
 
 .subtitle {
-  font-size: 15px;
+  font-size: 14px;
   opacity: 0.9;
   line-height: 1.7;
 }
@@ -94,14 +94,14 @@ body {
 .intro-card {
   background: var(--card);
   border-radius: 16px;
-  padding: 32px 28px;
+  padding: 24px 20px;
   box-shadow: var(--shadow-md);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .section-title {
   font-family: 'Noto Serif SC', serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 16px;
@@ -110,10 +110,10 @@ body {
 }
 
 .intro-text {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.8;
   color: var(--text-secondary);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .intro-text strong {
@@ -124,22 +124,22 @@ body {
 .theory-box {
   background: #f0f7fa;
   border-left: 4px solid var(--primary);
-  padding: 20px 24px;
-  margin: 20px 0;
+  padding: 16px 18px;
+  margin: 16px 0;
   border-radius: 8px;
 }
 
 .theory-title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--primary);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .theory-content {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.8;
   color: var(--text-secondary);
 }
@@ -148,12 +148,12 @@ body {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 20px 24px;
-  margin-bottom: 20px;
+  padding: 20px;
+  margin-bottom: 16px;
 }
 
 .reference-title {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--text-tertiary);
   margin-bottom: 12px;
@@ -163,13 +163,13 @@ body {
 
 .reference-list {
   list-style: none;
-  font-size: 13px;
-  line-height: 1.9;
+  font-size: 12px;
+  line-height: 1.8;
   color: var(--text-secondary);
 }
 
 .reference-list li {
-  padding-left: 20px;
+  padding-left: 18px;
   position: relative;
   margin-bottom: 8px;
 }
@@ -190,21 +190,21 @@ body {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .stat-card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 20px 16px;
+  padding: 16px 12px;
   text-align: center;
 }
 
 .stat-num {
   font-family: 'Crimson Pro', serif;
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 700;
   color: var(--primary);
   line-height: 1;
@@ -212,7 +212,7 @@ body {
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -220,14 +220,14 @@ body {
 
 .info-list {
   list-style: none;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .info-list li {
-  padding: 12px 0;
-  padding-left: 32px;
+  padding: 10px 0;
+  padding-left: 28px;
   position: relative;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-secondary);
   border-bottom: 1px solid var(--border);
 }
@@ -245,9 +245,78 @@ body {
   font-size: 16px;
 }
 
+/* 测试模式选择 */
+.mode-selector {
+  background: #fff9f0;
+  border: 2px solid #f5d895;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.mode-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #c77d58;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mode-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mode-option {
+  position: relative;
+}
+
+.mode-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.mode-option label {
+  display: block;
+  padding: 14px 16px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mode-option input:checked ~ label {
+  border-color: var(--primary);
+  background: #f0f7fa;
+}
+
+.mode-option label:hover {
+  border-color: var(--primary-light);
+}
+
+.mode-label-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.mode-label-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
 .btn-primary {
   width: 100%;
-  padding: 18px;
+  padding: 16px;
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
   color: white;
   border: none;
@@ -264,10 +333,15 @@ body {
   box-shadow: none;
 }
 
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .note {
   text-align: center;
-  margin-top: 16px;
-  font-size: 13px;
+  margin-top: 12px;
+  font-size: 12px;
   color: var(--text-tertiary);
 }
 
@@ -279,11 +353,11 @@ body {
 .progress-card {
   background: var(--card);
   border-radius: 16px;
-  padding: 20px 24px;
+  padding: 16px 18px;
   box-shadow: var(--shadow-md);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   position: sticky;
-  top: 20px;
+  top: 16px;
   z-index: 100;
 }
 
@@ -291,17 +365,17 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .progress-label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-secondary);
 }
 
 .progress-pct {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--primary);
 }
@@ -323,9 +397,9 @@ body {
 .question-card {
   background: var(--card);
   border-radius: 16px;
-  padding: 32px 28px;
+  padding: 24px 18px;
   box-shadow: var(--shadow-md);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   animation: fadeIn 0.4s ease;
 }
 
@@ -342,52 +416,55 @@ body {
 
 .q-number {
   display: inline-block;
-  padding: 6px 14px;
+  padding: 5px 12px;
   background: var(--primary);
   color: white;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   letter-spacing: 0.5px;
 }
 
 .q-text {
   font-family: 'Noto Serif SC', serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.7;
   color: var(--text-primary);
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .scale-container {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .scale-labels {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 16px;
-  padding: 0 8px;
+  margin-bottom: 14px;
+  padding: 0 4px;
 }
 
 .scale-label {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-tertiary);
   text-align: center;
-  max-width: 80px;
+  max-width: 70px;
+  line-height: 1.3;
 }
 
 .scale-options {
   display: flex;
   justify-content: space-between;
-  gap: 8px;
+  gap: 4px;
+  margin-bottom: 12px;
 }
 
 .scale-option {
   flex: 1;
   position: relative;
+  min-width: 0;
 }
 
 .scale-option input[type="radio"] {
@@ -396,65 +473,89 @@ body {
   width: 100%;
   height: 100%;
   cursor: pointer;
+  z-index: 10;
 }
 
 .scale-option label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   cursor: pointer;
   user-select: none;
+  pointer-events: none;
 }
 
 .scale-circle {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border: 2px solid var(--border);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text-tertiary);
   background: white;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .scale-option input:checked ~ label .scale-circle {
   background: var(--primary);
   border-color: var(--primary);
   color: white;
-  transform: scale(1.1);
-}
-
-.scale-option input:not(:checked) ~ label:hover .scale-circle {
-  border-color: var(--primary-light);
-  background: #f0f7fa;
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(44, 95, 124, 0.3);
 }
 
 .scale-text {
-  font-size: 11px;
+  font-size: 9px;
   color: var(--text-tertiary);
   text-align: center;
-  min-height: 32px;
+  line-height: 1.2;
+  height: 24px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  word-break: keep-all;
+}
+
+.scale-helper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+  margin-top: 8px;
+}
+
+.scale-helper-item {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.scale-helper-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
 }
 
 .nav-buttons {
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
 
 .btn-back {
-  padding: 12px 24px;
+  padding: 10px 20px;
   background: white;
   color: var(--text-secondary);
   border: 2px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -477,65 +578,65 @@ body {
 .result-header {
   background: var(--card);
   border-radius: 16px;
-  padding: 40px 32px;
+  padding: 32px 24px;
   box-shadow: var(--shadow-md);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   text-align: center;
 }
 
 .result-badge {
   display: inline-block;
-  padding: 6px 14px;
+  padding: 5px 12px;
   background: var(--primary);
   color: white;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .result-type {
   font-family: 'Noto Serif SC', serif;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 900;
   color: var(--text-primary);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   line-height: 1.3;
 }
 
 .result-en {
   font-family: 'Crimson Pro', serif;
-  font-size: 18px;
+  font-size: 16px;
   font-style: italic;
   color: var(--text-tertiary);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .result-scores {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: 24px;
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .score-item {
   background: #f0f7fa;
-  padding: 16px;
+  padding: 14px;
   border-radius: 12px;
   text-align: center;
 }
 
 .score-label {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-tertiary);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .score-value {
   font-family: 'Crimson Pro', serif;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--primary);
 }
@@ -543,26 +644,26 @@ body {
 .result-card {
   background: var(--card);
   border-radius: 16px;
-  padding: 32px 28px;
+  padding: 24px 20px;
   box-shadow: var(--shadow-md);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .card-title {
   font-family: 'Noto Serif SC', serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
   border-bottom: 2px solid var(--primary);
 }
 
 .result-desc {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.9;
   color: var(--text-secondary);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .result-desc strong {
@@ -572,25 +673,26 @@ body {
 
 .result-desc em {
   display: block;
-  margin: 16px 0;
-  padding: 16px 20px;
+  margin: 14px 0;
+  padding: 14px 16px;
   background: #f0f7fa;
   border-left: 4px solid var(--primary);
   border-radius: 6px;
   font-style: normal;
   color: var(--text-secondary);
+  font-size: 13px;
 }
 
 .characteristics-list {
   list-style: none;
-  margin: 20px 0;
+  margin: 16px 0;
 }
 
 .characteristics-list li {
-  padding: 12px 0;
-  padding-left: 28px;
+  padding: 10px 0;
+  padding-left: 24px;
   position: relative;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-secondary);
   border-bottom: 1px solid var(--border);
 }
@@ -602,7 +704,7 @@ body {
 .characteristics-list li:before {
   content: '▸';
   position: absolute;
-  left: 8px;
+  left: 6px;
   color: var(--primary);
   font-weight: 700;
 }
@@ -610,13 +712,13 @@ body {
 .spectrum-card {
   background: var(--card);
   border-radius: 16px;
-  padding: 32px 28px;
+  padding: 24px 20px;
   box-shadow: var(--shadow-md);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .spectrum-item {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .spectrum-item:last-child {
@@ -627,17 +729,17 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .spectrum-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .spectrum-score {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--primary);
 }
@@ -661,31 +763,32 @@ body {
 }
 
 .interpretation {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-tertiary);
-  margin-top: 8px;
+  margin-top: 6px;
   font-style: italic;
+  line-height: 1.5;
 }
 
 .disclaimer-card {
   background: #fff9f0;
   border: 1px solid #f5d895;
   border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 20px;
+  padding: 18px;
+  margin-bottom: 16px;
 }
 
 .disclaimer-title {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   color: #c77d58;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .disclaimer-text {
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.8;
   color: var(--text-secondary);
 }
@@ -693,17 +796,17 @@ body {
 .action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .btn-secondary {
   width: 100%;
-  padding: 16px;
+  padding: 14px;
   background: white;
   color: var(--text-secondary);
   border: 2px solid var(--border);
   border-radius: 12px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -717,42 +820,34 @@ body {
   display: none;
 }
 
-@media (max-width: 600px) {
-  .header {
-    padding: 32px 16px 40px;
-  }
-  
-  .main-title {
-    font-size: 28px;
-  }
-  
-  .intro-card,
-  .question-card,
-  .result-card {
-    padding: 24px 20px;
-  }
-  
-  .stats-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
-  
-  .stat-num {
-    font-size: 28px;
-  }
-  
+/* 超小屏幕优化 */
+@media (max-width: 360px) {
   .scale-circle {
-    width: 40px;
-    height: 40px;
-    font-size: 13px;
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
   }
   
   .scale-text {
+    font-size: 8px;
+  }
+  
+  .scale-label {
     font-size: 10px;
   }
   
-  .result-scores {
-    grid-template-columns: 1fr;
+  .q-text {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 400px) {
+  .main-title {
+    font-size: 24px;
+  }
+  
+  .result-type {
+    font-size: 24px;
   }
 }
 </style>
@@ -852,8 +947,50 @@ body {
         <li>全程匿名，数据仅用于本地计算，不会上传</li>
         <li>建议在安静环境下，根据真实感受作答</li>
       </ul>
+    </div>
+    
+    <!-- 测试模式选择 -->
+    <div class="mode-selector">
+      <div class="mode-title">
+        <span>💡</span>
+        <span>请选择作答参照</span>
+      </div>
       
-      <button class="btn-primary" onclick="startQuiz()">
+      <div class="mode-options">
+        <div class="mode-option">
+          <input type="radio" name="testMode" id="mode-current" value="current" checked>
+          <label for="mode-current">
+            <div class="mode-label-title">基于当前/最近的关系</div>
+            <div class="mode-label-desc">
+              如果你现在有伴侣，或最近（1年内）有过亲密关系，请基于该关系作答
+            </div>
+          </label>
+        </div>
+        
+        <div class="mode-option">
+          <input type="radio" name="testMode" id="mode-past" value="past">
+          <label for="mode-past">
+            <div class="mode-label-title">基于过去的关系经验</div>
+            <div class="mode-label-desc">
+              回忆你过去的恋爱关系，基于总体经验和模式作答
+            </div>
+          </label>
+        </div>
+        
+        <div class="mode-option">
+          <input type="radio" name="testMode" id="mode-general" value="general">
+          <label for="mode-general">
+            <div class="mode-label-title">基于一般倾向</div>
+            <div class="mode-label-desc">
+              即使没有恋爱经验，也可基于你对亲密关系的想象和期待作答
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+    
+    <div class="intro-card">
+      <button class="btn-primary" onclick="startQuiz()" id="btn-start">
         开始评估
       </button>
       
@@ -908,6 +1045,11 @@ Adult Attachment Style Assessment
 - 焦虑型（Preoccupied/Anxious）：高焦虑 + 低回避
 - 回避型（Dismissive-Avoidant）：低焦虑 + 高回避
 - 恐惧型（Fearful-Avoidant）：高焦虑 + 高回避
+
+作答模式说明：
+- current: 基于当前/最近关系，题目使用"伴侣"表述
+- past: 基于过去经验，题目使用"伴侣"表述
+- general: 基于一般倾向，题目使用"亲密关系中的人"表述
 =================================================================
 */
 
@@ -916,232 +1058,364 @@ const QUESTIONS = [
   
   // ===== 依恋焦虑维度题目 (18题) =====
   
-  // 对被抛弃的恐惧
   {
-    text: '我担心会失去伴侣的爱。',
+    text: {
+      current: '我担心会失去伴侣的爱。',
+      past: '我担心会失去伴侣的爱。',
+      general: '我担心会失去亲密关系中那个人的爱。'
+    },
     dimension: 'anxiety',
     reverse: false
   },
   
   {
-    text: '我经常担心伴侣并不是真的爱我。',
+    text: {
+      current: '我经常担心伴侣并不是真的爱我。',
+      past: '我经常担心伴侣并不是真的爱我。',
+      general: '我经常担心对方并不是真的爱我。'
+    },
     dimension: 'anxiety',
     reverse: false
   },
   
   {
-    text: '我担心伴侣不会像我需要他/她那样需要我。',
-    dimension: 'anxiety',
-    reverse: false
-  },
-  
-  // 对关系的过度警觉
-  {
-    text: '我经常希望伴侣的感情能够像我对他/她的感情一样强烈。',
-    dimension: 'anxiety',
-    reverse: false
-  },
-  
-  {
-    text: '我需要大量来自伴侣的保证，以确认他/她爱我。',
+    text: {
+      current: '我担心伴侣不会像我需要他/她那样需要我。',
+      past: '我担心伴侣不会像我需要他/她那样需要我。',
+      general: '我担心对方不会像我需要他/她那样需要我。'
+    },
     dimension: 'anxiety',
     reverse: false
   },
   
   {
-    text: '如果伴侣没有及时回应我，我会感到沮丧或生气。',
-    dimension: 'anxiety',
-    reverse: false
-  },
-  
-  // 对分离的敏感
-  {
-    text: '当伴侣不在身边时，我会担心他/她可能会对别人产生兴趣。',
-    dimension: 'anxiety',
-    reverse: false
-  },
-  
-  {
-    text: '我发现自己常常为人际关系担心。',
+    text: {
+      current: '我经常希望伴侣的感情能够像我对他/她的感情一样强烈。',
+      past: '我经常希望伴侣的感情能够像我对他/她的感情一样强烈。',
+      general: '我希望对方的感情能够像我的感情一样强烈。'
+    },
     dimension: 'anxiety',
     reverse: false
   },
   
   {
-    text: '我害怕一旦伴侣真正了解我，就不会喜欢我了。',
-    dimension: 'anxiety',
-    reverse: false
-  },
-  
-  // 对亲密的渴望
-  {
-    text: '我希望与伴侣完全融为一体。',
-    dimension: 'anxiety',
-    reverse: false
-  },
-  
-  {
-    text: '我对亲密的渴望有时会吓跑别人。',
+    text: {
+      current: '我需要大量来自伴侣的保证，以确认他/她爱我。',
+      past: '我需要大量来自伴侣的保证，以确认他/她爱我。',
+      general: '我需要大量的保证，以确认对方爱我。'
+    },
     dimension: 'anxiety',
     reverse: false
   },
   
   {
-    text: '我很少担心被抛弃。',
+    text: {
+      current: '如果伴侣没有及时回应我，我会感到沮丧或生气。',
+      past: '如果伴侣没有及时回应我，我会感到沮丧或生气。',
+      general: '如果对方没有及时回应我，我会感到沮丧或生气。'
+    },
+    dimension: 'anxiety',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '当伴侣不在身边时，我会担心他/她可能会对别人产生兴趣。',
+      past: '当伴侣不在身边时，我会担心他/她可能会对别人产生兴趣。',
+      general: '当对方不在身边时，我会担心他/她可能对别人产生兴趣。'
+    },
+    dimension: 'anxiety',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '我发现自己常常为人际关系担心。',
+      past: '我发现自己常常为人际关系担心。',
+      general: '我发现自己常常为人际关系担心。'
+    },
+    dimension: 'anxiety',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '我害怕一旦伴侣真正了解我，就不会喜欢我了。',
+      past: '我害怕一旦伴侣真正了解我，就不会喜欢我了。',
+      general: '我害怕一旦对方真正了解我，就不会喜欢我了。'
+    },
+    dimension: 'anxiety',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '我希望与伴侣完全融为一体。',
+      past: '我希望与伴侣完全融为一体。',
+      general: '我希望在亲密关系中能够完全融为一体。'
+    },
+    dimension: 'anxiety',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '我对亲密的渴望有时会吓跑别人。',
+      past: '我对亲密的渴望有时会吓跑别人。',
+      general: '我对亲密的渴望可能会吓跑别人。'
+    },
+    dimension: 'anxiety',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '我很少担心被抛弃。',
+      past: '我很少担心被抛弃。',
+      general: '我很少担心被抛弃。'
+    },
     dimension: 'anxiety',
     reverse: true
   },
   
-  // 对确认的需求
   {
-    text: '当伴侣不在身边时，我会感到有些焦虑和不安。',
+    text: {
+      current: '当伴侣不在身边时，我会感到有些焦虑和不安。',
+      past: '当伴侣不在身边时，我会感到有些焦虑和不安。',
+      general: '当对方不在身边时，我会感到有些焦虑和不安。'
+    },
     dimension: 'anxiety',
     reverse: false
   },
   
   {
-    text: '我需要经常从伴侣那里得到关心的确认。',
+    text: {
+      current: '我需要经常从伴侣那里得到关心的确认。',
+      past: '我需要经常从伴侣那里得到关心的确认。',
+      general: '我需要经常得到关心的确认。'
+    },
     dimension: 'anxiety',
     reverse: false
   },
   
   {
-    text: '我对恋爱关系感到相当自信和安心。',
+    text: {
+      current: '我对恋爱关系感到相当自信和安心。',
+      past: '我对恋爱关系感到相当自信和安心。',
+      general: '我对亲密关系感到相当自信和安心。'
+    },
     dimension: 'anxiety',
     reverse: true
   },
   
-  // 情绪反应
   {
-    text: '当伴侣批评我时，我会感到非常难过。',
+    text: {
+      current: '当伴侣批评我时，我会感到非常难过。',
+      past: '当伴侣批评我时，我会感到非常难过。',
+      general: '当对方批评我时，我会感到非常难过。'
+    },
     dimension: 'anxiety',
     reverse: false
   },
   
   {
-    text: '我很容易因为伴侣的行为而情绪波动。',
+    text: {
+      current: '我很容易因为伴侣的行为而情绪波动。',
+      past: '我很容易因为伴侣的行为而情绪波动。',
+      general: '我很容易因为对方的行为而情绪波动。'
+    },
     dimension: 'anxiety',
     reverse: false
   },
   
   {
-    text: '我能够很好地处理关系中的不确定性。',
+    text: {
+      current: '我能够很好地处理关系中的不确定性。',
+      past: '我能够很好地处理关系中的不确定性。',
+      general: '我能够很好地处理关系中的不确定性。'
+    },
     dimension: 'anxiety',
     reverse: true
   },
   
   // ===== 依恋回避维度题目 (18题) =====
   
-  // 对亲密的不适
   {
-    text: '我更喜欢不向伴侣展示我内心深处的感受。',
+    text: {
+      current: '我更喜欢不向伴侣展示我内心深处的感受。',
+      past: '我更喜欢不向伴侣展示我内心深处的感受。',
+      general: '我更喜欢不向对方展示我内心深处的感受。'
+    },
     dimension: 'avoidance',
     reverse: false
   },
   
   {
-    text: '我觉得与伴侣过于亲密让我感到不舒服。',
+    text: {
+      current: '我觉得与伴侣过于亲密让我感到不舒服。',
+      past: '我觉得与伴侣过于亲密让我感到不舒服。',
+      general: '我觉得过于亲密让我感到不舒服。'
+    },
     dimension: 'avoidance',
     reverse: false
   },
   
   {
-    text: '我很容易与伴侣变得亲密。',
-    dimension: 'avoidance',
-    reverse: true
-  },
-  
-  // 情感独立
-  {
-    text: '我不太习惯向伴侣敞开心扉。',
-    dimension: 'avoidance',
-    reverse: false
-  },
-  
-  {
-    text: '我更喜欢不依赖他人。',
-    dimension: 'avoidance',
-    reverse: false
-  },
-  
-  {
-    text: '我发现依赖伴侣是很自然的事。',
-    dimension: 'avoidance',
-    reverse: true
-  },
-  
-  // 自我依赖
-  {
-    text: '我更愿意独自应对问题，而不是向伴侣求助。',
-    dimension: 'avoidance',
-    reverse: false
-  },
-  
-  {
-    text: '向伴侣寻求帮助或支持对我来说很困难。',
-    dimension: 'avoidance',
-    reverse: false
-  },
-  
-  {
-    text: '当我需要时，我会很自然地向伴侣寻求情感支持。',
-    dimension: 'avoidance',
-    reverse: true
-  },
-  
-  // 对依赖的抗拒
-  {
-    text: '我不喜欢伴侣依赖我。',
-    dimension: 'avoidance',
-    reverse: false
-  },
-  
-  {
-    text: '当伴侣想要更亲密时，我倾向于退缩。',
-    dimension: 'avoidance',
-    reverse: false
-  },
-  
-  {
-    text: '我能够轻松地与伴侣分享我的想法和感受。',
-    dimension: 'avoidance',
-    reverse: true
-  },
-  
-  // 情感距离
-  {
-    text: '我觉得告诉伴侣我的私人想法和感受很困难。',
-    dimension: 'avoidance',
-    reverse: false
-  },
-  
-  {
-    text: '我通常会与伴侣讨论我的问题和担忧。',
+    text: {
+      current: '我很容易与伴侣变得亲密。',
+      past: '我很容易与伴侣变得亲密。',
+      general: '我很容易与人变得亲密。'
+    },
     dimension: 'avoidance',
     reverse: true
   },
   
   {
-    text: '我宁愿不表现出对伴侣深厚的感情。',
-    dimension: 'avoidance',
-    reverse: false
-  },
-  
-  // 独立性偏好
-  {
-    text: '我认为在恋爱关系中保持一定的情感距离是重要的。',
+    text: {
+      current: '我不太习惯向伴侣敞开心扉。',
+      past: '我不太习惯向伴侣敞开心扉。',
+      general: '我不太习惯向人敞开心扉。'
+    },
     dimension: 'avoidance',
     reverse: false
   },
   
   {
-    text: '我很享受与伴侣分享亲密时刻。',
+    text: {
+      current: '我更喜欢不依赖他人。',
+      past: '我更喜欢不依赖他人。',
+      general: '我更喜欢不依赖他人。'
+    },
+    dimension: 'avoidance',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '我发现依赖伴侣是很自然的事。',
+      past: '我发现依赖伴侣是很自然的事。',
+      general: '我发现依赖对方是很自然的事。'
+    },
     dimension: 'avoidance',
     reverse: true
   },
   
   {
-    text: '我更喜欢保持独立，即使在一段关系中。',
+    text: {
+      current: '我更愿意独自应对问题，而不是向伴侣求助。',
+      past: '我更愿意独自应对问题，而不是向伴侣求助。',
+      general: '我更愿意独自应对问题，而不是向人求助。'
+    },
+    dimension: 'avoidance',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '向伴侣寻求帮助或支持对我来说很困难。',
+      past: '向伴侣寻求帮助或支持对我来说很困难。',
+      general: '向人寻求帮助或支持对我来说很困难。'
+    },
+    dimension: 'avoidance',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '当我需要时，我会很自然地向伴侣寻求情感支持。',
+      past: '当我需要时，我会很自然地向伴侣寻求情感支持。',
+      general: '当我需要时，我会很自然地寻求情感支持。'
+    },
+    dimension: 'avoidance',
+    reverse: true
+  },
+  
+  {
+    text: {
+      current: '我不喜欢伴侣依赖我。',
+      past: '我不喜欢伴侣依赖我。',
+      general: '我不喜欢对方依赖我。'
+    },
+    dimension: 'avoidance',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '当伴侣想要更亲密时，我倾向于退缩。',
+      past: '当伴侣想要更亲密时，我倾向于退缩。',
+      general: '当对方想要更亲密时，我倾向于退缩。'
+    },
+    dimension: 'avoidance',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '我能够轻松地与伴侣分享我的想法和感受。',
+      past: '我能够轻松地与伴侣分享我的想法和感受。',
+      general: '我能够轻松地分享我的想法和感受。'
+    },
+    dimension: 'avoidance',
+    reverse: true
+  },
+  
+  {
+    text: {
+      current: '我觉得告诉伴侣我的私人想法和感受很困难。',
+      past: '我觉得告诉伴侣我的私人想法和感受很困难。',
+      general: '我觉得告诉对方我的私人想法和感受很困难。'
+    },
+    dimension: 'avoidance',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '我通常会与伴侣讨论我的问题和担忧。',
+      past: '我通常会与伴侣讨论我的问题和担忧。',
+      general: '我通常会讨论我的问题和担忧。'
+    },
+    dimension: 'avoidance',
+    reverse: true
+  },
+  
+  {
+    text: {
+      current: '我宁愿不表现出对伴侣深厚的感情。',
+      past: '我宁愿不表现出对伴侣深厚的感情。',
+      general: '我宁愿不表现出深厚的感情。'
+    },
+    dimension: 'avoidance',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '我认为在恋爱关系中保持一定的情感距离是重要的。',
+      past: '我认为在恋爱关系中保持一定的情感距离是重要的。',
+      general: '我认为在亲密关系中保持一定的情感距离是重要的。'
+    },
+    dimension: 'avoidance',
+    reverse: false
+  },
+  
+  {
+    text: {
+      current: '我很享受与伴侣分享亲密时刻。',
+      past: '我很享受与伴侣分享亲密时刻。',
+      general: '我很享受与人分享亲密时刻。'
+    },
+    dimension: 'avoidance',
+    reverse: true
+  },
+  
+  {
+    text: {
+      current: '我更喜欢保持独立，即使在一段关系中。',
+      past: '我更喜欢保持独立，即使在一段关系中。',
+      general: '我更喜欢保持独立，即使在一段关系中。'
+    },
     dimension: 'avoidance',
     reverse: false
   }
@@ -1340,9 +1614,19 @@ const ATTACHMENT_TYPES = {
 // 全局变量
 let currentQuestion = 0;
 let answers = [];
+let testMode = 'current'; // current, past, general
 
 // 开始测试
 function startQuiz() {
+  // 获取选中的测试模式
+  const modeRadios = document.querySelectorAll('input[name="testMode"]');
+  for (const radio of modeRadios) {
+    if (radio.checked) {
+      testMode = radio.value;
+      break;
+    }
+  }
+  
   // 随机化题目顺序（保持科学性同时减少顺序效应）
   const shuffled = [...QUESTIONS].sort(() => Math.random() - 0.5);
   window.questionOrder = shuffled;
@@ -1366,6 +1650,11 @@ function renderQuestion() {
   const current = currentQuestion;
   const question = window.questionOrder[current];
   
+  // 根据测试模式选择题目文本
+  const questionText = typeof question.text === 'object' 
+    ? question.text[testMode] 
+    : question.text;
+  
   // 更新进度
   const progress = Math.round((current / total) * 100);
   document.getElementById('prog-label').textContent = `题目 ${current + 1} / ${total}`;
@@ -1377,12 +1666,12 @@ function renderQuestion() {
     <div class="question-card">
       <div class="q-number">第 ${current + 1} 题 / 共 ${total} 题</div>
       
-      <div class="q-text">${question.text}</div>
+      <div class="q-text">${questionText}</div>
       
       <div class="scale-container">
         <div class="scale-labels">
-          <div class="scale-label">完全不符合</div>
-          <div class="scale-label">完全符合</div>
+          <div class="scale-label">完全<br>不符合</div>
+          <div class="scale-label">完全<br>符合</div>
         </div>
         
         <div class="scale-options">
@@ -1406,6 +1695,17 @@ function renderQuestion() {
               </label>
             </div>
           `).join('')}
+        </div>
+        
+        <div class="scale-helper">
+          <div class="scale-helper-item">
+            <div class="scale-helper-dot"></div>
+            <span>1-3 不符合</span>
+          </div>
+          <div class="scale-helper-item">
+            <div class="scale-helper-dot" style="background:#c77d58"></div>
+            <span>5-7 符合</span>
+          </div>
         </div>
       </div>
       
@@ -1508,7 +1808,7 @@ function showResult(type, anxietyScore, avoidanceScore) {
       
       <div class="result-en">${typeData.nameEn}</div>
       
-      <div style="font-size: 14px; color: var(--text-tertiary); margin-bottom: 24px;">
+      <div style="font-size: 13px; color: var(--text-tertiary); margin-bottom: 20px;">
         ${typeData.shortDesc}
       </div>
       
@@ -1622,7 +1922,6 @@ function saveResult() {
   const ctx = canvas.getContext('2d');
   
   // 获取当前结果数据
-  const resultHeader = document.querySelector('.result-header');
   const typeName = document.querySelector('.result-type').textContent;
   const typeEn = document.querySelector('.result-en').textContent;
   const anxietyScore = document.querySelectorAll('.score-value')[0].textContent;

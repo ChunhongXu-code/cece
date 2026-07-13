@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>当代年轻人恋爱状态鉴定 2026</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --serif:'EB Garamond','Noto Serif SC',Georgia,serif;
+  --sans:'Noto Sans SC','PingFang SC',sans-serif;
+
+  --bg:#fbfaf8;
+  --surface:#ffffff;
+
+  --ink:#211d1d;
+  --ink2:#4a4141;
+  --ink3:#766c6c;
+
+  --rule:#d9d0d0;
+  --rule2:#eee8e8;
+
+  --accent:#9b4057;
+  --accent2:#c47b8d;
+  --selected-bg:#f9eef1;
+
+  --dark:#281e21;
+}
+
+body{
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:16px;
+  line-height:1.75;
+}
+
+button{
+  -webkit-tap-highlight-color:transparent;
+}
+
+.page{
+  max-width:700px;
+  margin:0 auto;
+  padding:0 24px 80px;
+}
+
+/* 顶部期刊栏 */
+
+.journal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  padding:18px 0 12px;
+  border-bottom:2px solid var(--ink);
+}
+
+.journal-name{
+  font-family:var(--serif);
+  font-size:13px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--ink2);
+}
+
+.journal-meta{
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:.5px;
+  color:var(--ink3);
+}
+
+/* 封面 */
+
+#cover{
+  padding-top:40px;
+}
+
+.article-type{
+  margin-bottom:16px;
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+.cover-title{
+  padding-bottom:20px;
+  margin-bottom:12px;
+  border-bottom:2px solid var(--ink);
+
+  font-family:var(--serif);
+  font-size:clamp(30px,6.5vw,44px);
+  font-weight:600;
+  line-height:1.2;
+}
+
+.cover-title-en{
+  display:block;
+  margin-top:8px;
+  font-size:.67em;
+  font-style:italic;
+  font-weight:500;
+  color:var(--ink2);
+}
+
+.cover-subtitle{
+  margin-bottom:28px;
+  font-size:15px;
+  font-style:italic;
+  color:var(--ink3);
+}
+
+.author-line{
+  margin-bottom:4px;
+  font-family:var(--sans);
+  font-size:13px;
+  color:var(--ink2);
+}
+
+.affil-line{
+  margin-bottom:24px;
+  font-family:var(--sans);
+  font-size:12px;
+  color:var(--ink3);
+}
+
+.abstract-box{
+  margin-bottom:26px;
+  padding:20px 22px;
+  border:1px solid var(--rule);
+  border-left:3px solid var(--accent);
+  background:var(--surface);
+}
+
+.abstract-label{
+  margin-bottom:10px;
+  font-family:var(--sans);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+.abstract-text{
+  font-size:15px;
+  line-height:1.85;
+  color:var(--ink2);
+}
+
+.abstract-text strong{
+  color:var(--ink);
+  font-weight:600;
+}
+
+.keywords-line{
+  margin-bottom:30px;
+  font-size:13px;
+  color:var(--ink3);
+}
+
+.keywords-line em{
+  font-style:normal;
+  color:var(--ink2);
+}
+
+.cover-fig{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  margin-bottom:28px;
+  padding:22px 0;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+
+.fig-stat{
+  padding:10px 8px;
+  text-align:center;
+}
+
+.fig-stat + .fig-stat{
+  border-left:1px solid var(--rule2);
+}
+
+.fig-num{
+  font-family:var(--serif);
+  font-size:44px;
+  font-weight:600;
+  line-height:1;
+}
+
+.fig-label{
+  margin-top:5px;
+  font-family:var(--sans);
+  font-size:11px;
+  color:var(--ink3);
+}
+
+.fig-caption{
+  grid-column:1 / -1;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid var(--rule2);
+
+  font-family:var(--sans);
+  font-size:11px;
+  color:var(--ink3);
+  text-align:center;
+}
+
+.btn-start{
+  display:block;
+  width:100%;
+  padding:16px;
+
+  border:0;
+  background:var(--dark);
+  color:#fff;
+
+  font-family:var(--serif);
+  font-size:18px;
+  font-weight:500;
+  letter-spacing:1px;
+
+  cursor:pointer;
+  transition:.15s ease;
+}
+
+.btn-start:hover{
+  background:var(--accent);
+}
+
+.cover-note{
+  margin-top:10px;
+  font-family:var(--sans);
+  font-size:11px;
+  color:var(--ink3);
+  text-align:center;
+}
+
+/* 答题区域 */
+
+#quiz{
+  display:none;
+}
+
+.progress-header{
+  position:sticky;
+  top:0;
+  z-index:20;
+
+  margin-bottom:36px;
+  padding:12px 0 10px;
+
+  border-bottom:1px solid var(--rule);
+  background:rgba(251,250,248,.96);
+  backdrop-filter:blur(8px);
+}
+
+.progress-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
+}
+
+.progress-label{
+  font-family:var(--sans);
+  font-size:12px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--ink3);
+}
+
+.progress-pct{
+  font-family:var(--serif);
+  font-size:13px;
+  color:var(--ink2);
+}
+
+.progress-track{
+  height:2px;
+  background:var(--rule2);
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:var(--accent);
+  transition:width .35s ease;
+}
+
+.q-card{
+  animation:fadeUp .22s ease;
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(12px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.q-num{
+  margin-bottom:10px;
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--ink3);
+}
+
+.q-context{
+  margin-bottom:16px;
+  padding:8px 14px;
+  border-left:2px solid var(--rule);
+
+  font-size:14px;
+  font-style:italic;
+  line-height:1.7;
+  color:var(--ink2);
+  white-space:pre-line;
+}
+
+.q-text{
+  margin-bottom:24px;
+  font-family:var(--serif);
+  font-size:22px;
+  font-weight:500;
+  line-height:1.45;
+}
+
+.options{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.opt-btn{
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+
+  width:100%;
+  padding:13px 16px;
+
+  border:1px solid var(--rule);
+  background:var(--surface);
+  color:var(--ink);
+
+  font-family:var(--serif);
+  font-size:15px;
+  line-height:1.55;
+  text-align:left;
+
+  cursor:pointer;
+  transition:.12s ease;
+}
+
+.opt-btn:hover{
+  border-color:var(--ink2);
+  background:var(--rule2);
+}
+
+.opt-btn.selected{
+  border-color:var(--accent);
+  background:var(--selected-bg);
+  color:var(--accent);
+  pointer-events:none;
+}
+
+.opt-letter{
+  min-width:16px;
+  flex-shrink:0;
+  font-family:var(--sans);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:1px;
+  color:var(--ink3);
+}
+
+.opt-btn.selected .opt-letter{
+  color:var(--accent);
+}
+
+.nav-row{
+  display:flex;
+  justify-content:flex-start;
+  margin-top:20px;
+}
+
+.btn-prev{
+  padding:8px 18px;
+  border:1px solid var(--rule);
+  background:transparent;
+  color:var(--ink3);
+
+  font-family:var(--sans);
+  font-size:13px;
+
+  cursor:pointer;
+}
+
+.btn-prev:hover{
+  border-color:var(--ink2);
+  color:var(--ink2);
+}
+
+/* 结果页 */
+
+#result{
+  display:none;
+  padding-top:40px;
+}
+
+.result-section-label{
+  margin-bottom:14px;
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--ink3);
+}
+
+.result-type-tag{
+  margin-bottom:10px;
+  font-family:var(--sans);
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+.result-name{
+  margin-bottom:8px;
+  font-family:var(--serif);
+  font-size:clamp(32px,7vw,48px);
+  font-weight:600;
+  line-height:1.15;
+}
+
+.result-en{
+  margin-bottom:20px;
+  font-size:14px;
+  font-style:italic;
+  color:var(--ink3);
+}
+
+.result-divider{
+  margin:22px 0;
+  border:0;
+  border-top:1px solid var(--rule);
+}
+
+.tie-notice{
+  margin-bottom:20px;
+  padding:14px 16px;
+  border:1px solid var(--rule);
+  border-left:3px solid var(--accent);
+  background:var(--surface);
+
+  font-family:var(--sans);
+  font-size:13px;
+  line-height:1.7;
+  color:var(--ink2);
+}
+
+.result-desc{
+  font-size:15px;
+  line-height:2;
+  color:var(--ink2);
+  white-space:pre-line;
+}
+
+.result-desc .hi{
+  color:var(--ink);
+  font-weight:600;
+}
+
+.result-desc .quote-line{
+  display:block;
+  margin:12px 0;
+  padding:6px 14px;
+  border-left:3px solid var(--rule);
+
+  color:var(--ink3);
+  font-size:14px;
+  font-style:italic;
+}
+
+.multi-result{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.multi-card{
+  padding:18px 20px;
+  border:1px solid var(--rule);
+  background:var(--surface);
+}
+
+.multi-card-title{
+  margin-bottom:5px;
+  font-size:20px;
+  font-weight:600;
+  color:var(--ink);
+}
+
+.multi-card-subtitle{
+  margin-bottom:8px;
+  font-family:var(--sans);
+  font-size:12px;
+  color:var(--accent);
+}
+
+.multi-card-text{
+  font-size:14px;
+  line-height:1.8;
+  color:var(--ink2);
+}
+
+/* 光谱 */
+
+.spectrum-box{
+  margin:20px 0;
+  padding:18px 20px;
+  border:1px solid var(--rule);
+  background:var(--surface);
+}
+
+.spectrum-title{
+  margin-bottom:5px;
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--ink3);
+}
+
+.spectrum-note{
+  margin-bottom:16px;
+  font-family:var(--sans);
+  font-size:11px;
+  color:var(--ink3);
+}
+
+.spectrum-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:9px;
+}
+
+.sp-label{
+  width:96px;
+  flex-shrink:0;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+
+  font-family:var(--sans);
+  font-size:12px;
+  color:var(--ink3);
+}
+
+.sp-track{
+  flex:1;
+  height:4px;
+  background:var(--rule2);
+}
+
+.sp-fill{
+  height:100%;
+  background:#cbb9bd;
+  transition:width .8s ease;
+}
+
+.sp-fill.top{
+  background:var(--accent);
+}
+
+.sp-val{
+  width:42px;
+  font-family:var(--sans);
+  font-size:11px;
+  color:var(--ink3);
+  text-align:right;
+}
+
+/* 搭档 */
+
+.compat-box{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:20px;
+  padding:16px 20px;
+  border:1px solid var(--rule);
+  background:var(--surface);
+}
+
+.compat-item{
+  font-family:var(--sans);
+  font-size:12px;
+  line-height:1.6;
+  color:var(--ink2);
+}
+
+.compat-item strong{
+  display:block;
+  margin-bottom:3px;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--ink3);
+}
+
+/* 分享 */
+
+.share-box{
+  margin-bottom:20px;
+  padding:20px 22px;
+  border:1px solid var(--rule);
+  background:var(--surface);
+}
+
+.share-title{
+  margin-bottom:12px;
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--ink3);
+}
+
+.share-desc{
+  margin-bottom:16px;
+  font-size:14px;
+  line-height:1.8;
+  color:var(--ink2);
+}
+
+.btn-save,
+.btn-retry{
+  display:block;
+  width:100%;
+  cursor:pointer;
+  transition:.15s ease;
+}
+
+.btn-save{
+  margin-bottom:8px;
+  padding:13px;
+  border:0;
+  background:var(--dark);
+  color:#fff;
+  font-family:var(--serif);
+  font-size:15px;
+}
+
+.btn-save:hover{
+  background:var(--accent);
+}
+
+.btn-retry{
+  margin-top:8px;
+  padding:12px;
+  border:1px solid var(--rule);
+  background:transparent;
+  color:var(--ink3);
+  font-family:var(--serif);
+  font-size:14px;
+}
+
+.btn-retry:hover{
+  border-color:var(--ink2);
+  color:var(--ink2);
+}
+
+.fig-note{
+  margin-top:6px;
+  font-family:var(--sans);
+  font-size:11px;
+  text-align:center;
+  color:var(--ink3);
+}
+
+#shareCanvas{
+  display:none;
+}
+
+@media(max-width:520px){
+  .page{
+    padding:0 16px 60px;
+  }
+
+  .journal-header{
+    flex-direction:column;
+    gap:4px;
+  }
+
+  .cover-fig{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .fig-num{
+    font-size:36px;
+  }
+
+  .compat-box{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <div class="journal-header">
+    <span class="journal-name">Journal of Modern Romance</span>
+    <span class="journal-meta">Vol. 2026 · JoyCece 情感观察室</span>
+  </div>
+
+  <!-- 封面 -->
+  <div id="cover">
+
+    <p class="article-type" style="margin-top:28px">
+      Original Research · Open Access · Peer-Loved
+    </p>
+
+    <h1 class="cover-title">
+      当代年轻人恋爱状态鉴定
+      <span class="cover-title-en">
+        A Balanced Assessment of Contemporary Romantic Mentality (CRM-28)
+      </span>
+    </h1>
+
+    <p class="cover-subtitle">
+      基于28项平衡量表的当代亲密关系倾向研究
+    </p>
+
+    <p class="author-line">
+      JoyCece Romance Research Consortium<sup>1</sup>,
+      Institute for Ambiguous Relationships<sup>2</sup>
+    </p>
+
+    <p class="affil-line">
+      <sup>1</sup>JoyCece情感观察室 ·
+      <sup>2</sup>凌晨一点仍然显示“对方正在输入”的聊天框
+    </p>
+
+    <div class="abstract-box">
+      <div class="abstract-label">Abstract</div>
+
+      <div class="abstract-text">
+        本研究针对当代年轻人在心动、暧昧、依恋、独处与关系选择中的行为倾向，
+        开发恋爱状态量表 CRM-28。研究暂时识别出
+        <strong>7种主要恋爱状态</strong>。
+        本量表采用等权计分，每题仅计1分，不设置决定性题目；
+        若多个类型并列，将如实呈现复合结果，而不是强行把你塞进一个标签里。
+      </div>
+    </div>
+
+    <p class="keywords-line">
+      <em>Keywords:</em>
+      恋爱；暧昧；依恋倾向；独处；情感观察；当代亲密关系
+    </p>
+
+    <div class="cover-fig">
+      <div class="fig-stat">
+        <div class="fig-num">28</div>
+        <div class="fig-label">等权题目</div>
+      </div>
+
+      <div class="fig-stat">
+        <div class="fig-num">7</div>
+        <div class="fig-label">恋爱类型</div>
+      </div>
+
+      <div class="fig-stat">
+        <div class="fig-num">1</div>
+        <div class="fig-label">每题最高分</div>
+      </div>
+
+      <div class="fig-caption">
+        Fig. 1 · 每种类型均出现16次，无高权重题，无隐藏决定项
+      </div>
+    </div>
+
+    <button class="btn-start" onclick="startQuiz()">
+      开始测试 →
+    </button>
+
+    <p class="cover-note">
+      免费 · 无需注册 · 仅供娱乐 · 请按真实状态作答
+    </p>
+
+  </div>
+
+  <!-- 问卷 -->
+  <div id="quiz">
+
+    <div class="progress-header">
+      <div class="progress-row">
+        <span class="progress-label" id="prog-label">Item 1 of 28</span>
+        <span class="progress-pct" id="prog-pct">0%</span>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="prog-fill"></div>
+      </div>
+    </div>
+
+    <div id="q-area"></div>
+
+  </div>
+
+  <!-- 结果 -->
+  <div id="result"></div>
+
+  <canvas id="shareCanvas"></canvas>
+
+</div>
+
+<script>
+/*
+==========================================================
+计分公平性说明
+==========================================================
+
+类型：
+A 恋爱脑实验组
+B 心动回避型
+C 恋爱理论家型
+D 缘分玄学派
+E 独立主义者型
+F 反复横跳型
+G 佛系观察者型
+
+规则：
+1. 共28题。
+2. 每题4个选项。
+3. 每个选项只对应一种类型，只加1分。
+4. 每种类型在全部112个选项中恰好出现16次。
+5. 每题权重完全相同，不存在3分题或关键题。
+6. 同分时展示复合型，不使用某一题作为隐藏决胜题。
+
+每7题使用一次循环平衡结构：
+ABCD
+BCDE
+CDEF
+DEFG
+EFGA
+FGAB
+GABC
+
+以上结构循环4次，因此每种类型总曝光次数：
+4个位置 × 4轮 = 16次。
+==========================================================
+*/
+
+const TYPES = {
+  A: {
+    name: '恋爱脑实验组',
+    en: 'Romance-Driven Cognitive Pattern',
+    short: '高投入 · 高共情 · 心动优先',
+    color: '#9b4057',
+    good: '独立主义者型——能帮你保留自己的生活',
+    caution: '反复横跳型——双方情绪可能一起坐过山车',
+    summary: '你在关系中投入真诚、细腻，也很愿意为喜欢的人付出。',
+    desc: `
+你对喜欢这件事，向来不是浅尝辄止。
+
+一旦确认心意，你会认真记住对方的小习惯、情绪变化和随口提过的愿望。别人谈恋爱像打开一个应用，而你更像是<span class="hi">把整个系统切换到了恋爱模式</span>。
+
+<span class="quote-line">“他今天语气不太一样，是不是发生了什么？”</span>
+
+你的优势是热烈、真诚、共情能力强。你愿意表达，也愿意经营关系，这并不是缺点。
+
+只是请记得：<span class="hi">爱一个人不意味着把自己缩小</span>。好的关系应该让你的世界变大，而不是只剩下一个人的消息提示音。
+`
+  },
+
+  B: {
+    name: '心动回避型',
+    en: 'Attachment Avoidance Pattern',
+    short: '慢热谨慎 · 靠近后撤 · 自我保护',
+    color: '#6f607b',
+    good: '佛系观察者型——节奏温和，不会过度逼近',
+    caution: '恋爱脑实验组——投入速度差异可能带来压力',
+    summary: '你不是没有感情，只是需要更长时间确认安全感。',
+    desc: `
+你不是不会心动，而是<span class="hi">心动之后的第一反应可能是后退半步</span>。
+
+当别人靠近时，你会开心；但当关系真的开始变得明确，你又会本能地检查风险、寻找退路，甚至突然想念单身时的自由。
+
+<span class="quote-line">“我好像喜欢他，但我们是不是发展得太快了？”</span>
+
+你的谨慎往往来自对失望、失控或过度依赖的防备。你需要的并不是一个不断催促你的人，而是一个能够尊重边界、稳定表达的人。
+
+你的优势是清醒、有边界感、不容易被一时冲动带走。
+
+你可以慢一点，只是不必在每次心动时，都先替未来的自己拒绝幸福。
+`
+  },
+
+  C: {
+    name: '恋爱理论家型',
+    en: 'Theoretical Romance Scholar',
+    short: '擅长分析 · 理论丰富 · 实践谨慎',
+    color: '#846648',
+    good: '缘分玄学派——一个讲逻辑，一个提供松弛感',
+    caution: '心动回避型——两个人可能一起分析到错过',
+    summary: '你懂很多关系理论，也习惯先理解，再决定是否靠近。',
+    desc: `
+你可能看过依恋理论、沟通模型、人格测试和大量情感分析。
+
+你善于识别红旗、边界、需求与互动模式。朋友恋爱出问题时，你经常能够迅速给出一份<span class="hi">结构完整、逻辑清晰的关系诊断报告</span>。
+
+<span class="quote-line">“从依恋模式来看，他这个行为其实意味着……”</span>
+
+你的优势是理性、善于复盘、不容易被表面情绪迷惑。
+
+但感情偶尔也需要一点不完全确定的体验。理论可以帮助你理解关系，却不能替你完成靠近、表达和信任。
+
+有些答案不会出现在书里，只会出现在两个人真正相处之后。
+`
+  },
+
+  D: {
+    name: '缘分玄学派',
+    en: 'Serendipity Believer Pattern',
+    short: '相信缘分 · 顺其自然 · 浪漫直觉',
+    color: '#9a7654',
+    good: '恋爱理论家型——理性与浪漫互相校准',
+    caution: '反复横跳型——容易把不确定误读为命运信号',
+    summary: '你愿意相信相遇有意义，也相信感情拥有自己的时机。',
+    desc: `
+你相信感情不是完全可以计划的。
+
+对的人可能出现在一次临时聚会、一趟旅行、一次偶然的对视里。你会留意巧合、时机和某些难以解释的感觉。
+
+<span class="quote-line">“如果有缘的话，我们应该还会再见。”</span>
+
+你的优势是浪漫、松弛、愿意对未知保持期待。你不会把恋爱变成一项必须按期完成的任务。
+
+不过，缘分负责创造相遇，关系仍然需要双方行动。
+
+真正适合你的感情，不仅要有“命中注定”的感觉，也要有<span class="hi">清晰表达、稳定投入和现实回应</span>。
+`
+  },
+
+  E: {
+    name: '独立主义者型',
+    en: 'Solitary Contentment Pattern',
+    short: '自我完整 · 边界清晰 · 不急于恋爱',
+    color: '#536f67',
+    good: '恋爱脑实验组——热情与独立可以形成互补',
+    caution: '心动回避型——双方都可能等待对方先靠近',
+    summary: '你享受自己的生活，恋爱对你而言是加分项，而不是必需品。',
+    desc: `
+你并不排斥恋爱，但也不会因为单身而觉得生活缺了一块。
+
+你有自己的节奏、兴趣和目标。一个人吃饭、旅行、看电影或者度过周末，对你来说并不等于孤独。
+
+<span class="quote-line">“如果恋爱不能让我更快乐，那我为什么要打乱现在的生活？”</span>
+
+你的优势是内核稳定、边界清楚、不容易因为关系失去自己。
+
+你需要的不是一个填补空缺的人，而是一个能够进入你的生活，同时尊重你独立空间的人。
+
+你不是不需要爱，你只是希望爱情是<span class="hi">锦上添花，而不是紧急救援</span>。
+`
+  },
+
+  F: {
+    name: '反复横跳型',
+    en: 'Ambivalent Oscillation Pattern',
+    short: '高感受力 · 情绪摆动 · 需要确认',
+    color: '#b05e68',
+    good: '佛系观察者型——稳定节奏有助于降低内耗',
+    caution: '恋爱脑实验组——容易形成高强度情绪循环',
+    summary: '你对关系非常敏锐，容易在期待与担心之间来回切换。',
+    desc: `
+你的恋爱状态有时像实时更新的行情曲线。
+
+对方主动一点，你觉得未来可期；回复慢一点，你又开始思考是不是应该及时止损。你并不是故意反复，而是<span class="hi">对关系信号拥有很高的敏感度</span>。
+
+<span class="quote-line">“我决定不理他了——等等，他刚刚给我发消息了。”</span>
+
+你的优势是感受细腻、重视回应、能够察觉关系中的变化。
+
+你真正需要的，可能不是更多猜测，而是更稳定的信息和更直接的沟通。
+
+当你不再只通过回复速度判断爱意，感情会轻松很多。稳定不是无聊，它有时恰恰是安全感最真实的样子。
+`
+  },
+
+  G: {
+    name: '佛系观察者型',
+    en: 'Detached Romantic Observer',
+    short: '稳定旁观 · 随缘参与 · 情绪松弛',
+    color: '#586879',
+    good: '心动回避型——能够给予充分空间',
+    caution: '独立主义者型——可能彼此都过于被动',
+    summary: '你对感情保持开放，但不会为了恋爱制造不必要的焦虑。',
+    desc: `
+你对恋爱的基本态度是：有很好，没有也可以。
+
+你会观察、感受，也会在合适的时候参与，但很少因为一个聊天框就让整天的情绪失去控制。
+
+<span class="quote-line">“先相处看看，不急着定义，也不急着否定。”</span>
+
+你的优势是稳定、包容、不会过度脑补。你能够接受关系自然发展，也比较擅长给彼此空间。
+
+只是佛系不等于永远不表达。
+
+如果真的遇到了喜欢的人，偶尔主动一次并不会破坏你的从容。毕竟有些缘分需要等待，也有些缘分需要你按下发送键。
+`
+  }
+};
+
+/*
+每题的 k 顺序严格按照平衡矩阵排列。
+请不要随意删除某一个选项的 k，否则会破坏类型曝光平衡。
+*/
+
+const QS = [
+
+  // ===== 第一轮：ABCD / BCDE / CDEF / DEFG / EFGA / FGAB / GABC =====
+
+  {
+    text:'刚认识一个让你有点心动的人，你通常会：',
+    opts:[
+      {t:'很快记住对方的细节，并期待下一次聊天',k:'A'},
+      {t:'有点开心，但会提醒自己不要投入太快',k:'B'},
+      {t:'先观察对方的表达方式和关系倾向',k:'C'},
+      {t:'觉得相遇本身也许就是一种缘分',k:'D'}
+    ]
+  },
+
+  {
+    ctx:'对方发来：“今天和你聊天很开心。”',
+    text:'你更接近哪一种反应？',
+    opts:[
+      {t:'开心，但不知道该不该表现得太明显',k:'B'},
+      {t:'分析这句话是礼貌表达还是明确好感',k:'C'},
+      {t:'觉得宇宙好像在推动一点什么',k:'D'},
+      {t:'开心归开心，还是继续做自己的事情',k:'E'}
+    ]
+  },
+
+  {
+    text:'朋友问你理想的恋爱应该是什么样，你会说：',
+    opts:[
+      {t:'双方了解需求，并具备成熟沟通能力',k:'C'},
+      {t:'两个人在合适的时候自然遇见',k:'D'},
+      {t:'彼此陪伴，但都保留完整的个人生活',k:'E'},
+      {t:'需要明确回应，不要总让我猜',k:'F'}
+    ]
+  },
+
+  {
+    text:'面对一段还没有被定义的暧昧关系，你通常：',
+    opts:[
+      {t:'相信时机到了，关系自然会有答案',k:'D'},
+      {t:'不急着确定，先看它是否影响我的生活',k:'E'},
+      {t:'会因为对方忽冷忽热而反复判断',k:'F'},
+      {t:'保持观察，顺其自然地继续相处',k:'G'}
+    ]
+  },
+
+  {
+    text:'周末突然多出一整天空闲时间，你更想：',
+    opts:[
+      {t:'一个人按自己的节奏安排，非常舒服',k:'E'},
+      {t:'如果喜欢的人约我，计划可以马上调整',k:'F'},
+      {t:'看情况，有合适邀约就去，没有也很好',k:'G'},
+      {t:'第一时间想到可以和喜欢的人见面',k:'A'}
+    ]
+  },
+
+  {
+    text:'对方隔了很久才回复消息，你最可能：',
+    opts:[
+      {t:'在“他很忙”和“他不在意我”之间摇摆',k:'F'},
+      {t:'先不做判断，等更多信息再说',k:'G'},
+      {t:'担心对方是不是遇到了什么事情',k:'A'},
+      {t:'觉得这样也好，正好让我冷静一下',k:'B'}
+    ]
+  },
+
+  {
+    text:'朋友突然说要给你介绍对象，你会：',
+    opts:[
+      {t:'可以认识看看，但不会预设结果',k:'G'},
+      {t:'如果感觉不错，会认真投入了解',k:'A'},
+      {t:'有点想去，又有点想临时取消',k:'B'},
+      {t:'先问清楚性格、经历和匹配情况',k:'C'}
+    ]
+  },
+
+  // ===== 第二轮 =====
+
+  {
+    text:'进入恋爱后，你最自然的状态是：',
+    opts:[
+      {t:'很愿意分享生活，也很关注对方的情绪',k:'A'},
+      {t:'需要亲密，也需要随时可以退回自己的空间',k:'B'},
+      {t:'会思考双方的沟通模式是否健康',k:'C'},
+      {t:'相信很多事情不用规划得太精确',k:'D'}
+    ]
+  },
+
+  {
+    text:'当别人明显向你靠近时，你通常会：',
+    opts:[
+      {t:'感到心动，同时本能地提高警惕',k:'B'},
+      {t:'判断对方的行为是否稳定且具有一致性',k:'C'},
+      {t:'觉得感觉对了就可以多相处看看',k:'D'},
+      {t:'先确认这段关系不会打乱我的核心生活',k:'E'}
+    ]
+  },
+
+  {
+    text:'看到一篇“判断对方是否喜欢你的10个信号”，你会：',
+    opts:[
+      {t:'认真看，并判断里面的逻辑是否可靠',k:'C'},
+      {t:'觉得真正的感觉往往不能完全量化',k:'D'},
+      {t:'扫一眼就关掉，我更相信自己的状态',k:'E'},
+      {t:'逐条对照最近的聊天记录',k:'F'}
+    ]
+  },
+
+  {
+    text:'你对“命中注定”这件事的态度是：',
+    opts:[
+      {t:'愿意相信有些相遇确实很特别',k:'D'},
+      {t:'可以浪漫，但不能牺牲个人边界',k:'E'},
+      {t:'有时很相信，有时又觉得都是错觉',k:'F'},
+      {t:'保持开放，不急着证明或否定',k:'G'}
+    ]
+  },
+
+  {
+    text:'恋爱和个人计划发生冲突时，你更可能：',
+    opts:[
+      {t:'优先保证自己的长期计划不被打乱',k:'E'},
+      {t:'根据对方态度反复调整自己的决定',k:'F'},
+      {t:'具体情况具体处理，不预设谁必须让步',k:'G'},
+      {t:'如果真的喜欢，我愿意主动协调甚至让步',k:'A'}
+    ]
+  },
+
+  {
+    ctx:'你发出一段比较真诚的话，对方只回复：“哈哈，好的。”',
+    text:'你会怎么理解？',
+    opts:[
+      {t:'开始怀疑自己是不是表达得太多了',k:'F'},
+      {t:'暂时不下结论，看之后的实际行动',k:'G'},
+      {t:'有点失落，因为我希望得到认真回应',k:'A'},
+      {t:'立刻想收回情绪，减少后续表达',k:'B'}
+    ]
+  },
+
+  {
+    text:'第一次约会结束后，你通常会：',
+    opts:[
+      {t:'不急着判断，看看自己相处时是否舒服',k:'G'},
+      {t:'回想对方说过的细节，期待下一次见面',k:'A'},
+      {t:'即使心动，也会担心关系发展太快',k:'B'},
+      {t:'复盘互动、价值观和沟通质量',k:'C'}
+    ]
+  },
+
+  // ===== 第三轮 =====
+
+  {
+    text:'喜欢的人情绪低落时，你更可能：',
+    opts:[
+      {t:'马上关心，并想尽可能陪在对方身边',k:'A'},
+      {t:'想靠近，但又担心自己显得太主动',k:'B'},
+      {t:'先判断对方需要倾听、建议还是空间',k:'C'},
+      {t:'相信陪伴和时间会让事情慢慢变好',k:'D'}
+    ]
+  },
+
+  {
+    text:'如果一段关系开始变得非常亲密，你会：',
+    opts:[
+      {t:'感到幸福，但偶尔担心失去自己的空间',k:'B'},
+      {t:'观察双方是否形成了健康的依赖方式',k:'C'},
+      {t:'觉得感情发展到这里自有它的原因',k:'D'},
+      {t:'希望亲密，但不想放弃原本的生活结构',k:'E'}
+    ]
+  },
+
+  {
+    text:'发生矛盾后，你更倾向于：',
+    opts:[
+      {t:'梳理事实、需求和沟通中的具体问题',k:'C'},
+      {t:'先让情绪过去，相信合适的人能磨合',k:'D'},
+      {t:'留出独处时间，恢复自己的节奏',k:'E'},
+      {t:'不断确认对方是不是还在意这段关系',k:'F'}
+    ]
+  },
+
+  {
+    text:'对方说“我们先顺其自然吧”，你会：',
+    opts:[
+      {t:'觉得这可能就是关系应有的节奏',k:'D'},
+      {t:'可以，只要不侵占我的生活边界',k:'E'},
+      {t:'一会儿觉得有希望，一会儿觉得是拒绝',k:'F'},
+      {t:'先观察实际相处，不急着给这句话定性',k:'G'}
+    ]
+  },
+
+  {
+    text:'你如何看待长期单身？',
+    opts:[
+      {t:'可以很好地生活，并不会因此焦虑',k:'E'},
+      {t:'有时享受，有时又很想立刻遇到一个人',k:'F'},
+      {t:'是正常状态，不必特别解释',k:'G'},
+      {t:'如果有喜欢的人，我还是很想认真恋爱',k:'A'}
+    ]
+  },
+
+  {
+    text:'暧昧对象突然变得比以前主动，你会：',
+    opts:[
+      {t:'很开心，但也开始担心这种主动能持续多久',k:'F'},
+      {t:'自然回应，同时继续观察稳定性',k:'G'},
+      {t:'明显增加投入，希望关系可以更进一步',k:'A'},
+      {t:'反而有点想后退，确认自己是否真的准备好',k:'B'}
+    ]
+  },
+
+  {
+    text:'朋友说你“要求太多，所以才单身”，你会：',
+    opts:[
+      {t:'听听就好，单身并不一定需要被修复',k:'G'},
+      {t:'如果遇到喜欢的人，我其实愿意调整很多',k:'A'},
+      {t:'也许吧，但降低防备对我来说并不容易',k:'B'},
+      {t:'先分析这些要求哪些合理、哪些来自恐惧',k:'C'}
+    ]
+  },
+
+  // ===== 第四轮 =====
+
+  {
+    text:'如果确定对方也喜欢你，你最可能：',
+    opts:[
+      {t:'认真投入，希望把这段关系经营好',k:'A'},
+      {t:'开心之余，开始担心以后可能出现的问题',k:'B'},
+      {t:'确认双方对关系的期待是否一致',k:'C'},
+      {t:'觉得时间和缘分终于走到了这里',k:'D'}
+    ]
+  },
+
+  {
+    text:'你最担心恋爱带来的哪一种变化？',
+    opts:[
+      {t:'失去退路，情绪变得过度依赖',k:'B'},
+      {t:'双方无法进行成熟和有效的沟通',k:'C'},
+      {t:'明明有缘，却在错误的时机遇见',k:'D'},
+      {t:'个人时间和生活秩序被过度侵占',k:'E'}
+    ]
+  },
+
+  {
+    text:'你认为判断一段关系是否合适，最重要的是：',
+    opts:[
+      {t:'价值观、沟通方式和长期需求是否匹配',k:'C'},
+      {t:'在一起时是否有难以替代的感觉',k:'D'},
+      {t:'关系是否允许双方继续成为完整的人',k:'E'},
+      {t:'对方是否持续给出明确而稳定的回应',k:'F'}
+    ]
+  },
+
+  {
+    text:'遇到一个条件合适，但没有强烈心动的人，你会：',
+    opts:[
+      {t:'再相处看看，也许感觉会慢慢出现',k:'D'},
+      {t:'不勉强自己，单身也并没有损失',k:'E'},
+      {t:'会在“适合”和“没感觉”之间反复纠结',k:'F'},
+      {t:'保持接触，但不急着推进关系',k:'G'}
+    ]
+  },
+
+  {
+    text:'理想的周末相处模式更接近：',
+    opts:[
+      {t:'可以约会，也可以各自安排自己的事情',k:'E'},
+      {t:'希望对方主动安排，这会让我感到被重视',k:'F'},
+      {t:'临时决定也可以，双方舒服最重要',k:'G'},
+      {t:'想和喜欢的人尽可能多待一会儿',k:'A'}
+    ]
+  },
+
+  {
+    text:'对方突然问：“你觉得我们现在是什么关系？”',
+    opts:[
+      {t:'紧张，脑中瞬间出现很多可能答案',k:'F'},
+      {t:'平静讨论，不急着给出完美定义',k:'G'},
+      {t:'如果喜欢，我愿意坦诚表达自己的期待',k:'A'},
+      {t:'即使喜欢，也可能先给出比较保守的回答',k:'B'}
+    ]
+  },
+
+  {
+    text:'此刻你对恋爱的总体态度更接近：',
+    opts:[
+      {t:'遇到了就认真了解，没遇到也不焦虑',k:'G'},
+      {t:'还是期待一场真诚、热烈的关系',k:'A'},
+      {t:'想靠近，但需要足够的时间和安全感',k:'B'},
+      {t:'希望先理解自己真正需要怎样的关系',k:'C'}
+    ]
+  }
+
+];
+
+const LETTERS = ['A','B','C','D'];
+
+let shuffledQ = [];
+let current = 0;
+let answers = [];
+
+/* Fisher-Yates 洗牌 */
+function shuffle(arr){
+  const result = [...arr];
+
+  for(let i = result.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
+}
+
+/* 验证题库平衡 */
+function validateBalance(){
+  const counts = {
+    A:0, B:0, C:0, D:0, E:0, F:0, G:0
+  };
+
+  QS.forEach(q => {
+    q.opts.forEach(opt => {
+      if(counts[opt.k] === undefined){
+        throw new Error('发现未知类型代码：' + opt.k);
+      }
+      counts[opt.k]++;
+    });
+  });
+
+  const values = Object.values(counts);
+  const balanced = values.every(v => v === values[0]);
+
+  console.table(counts);
+
+  if(!balanced){
+    console.warn('题库类型曝光次数不平衡，请检查题目配置。');
+  }else{
+    console.info(
+      '计分平衡验证通过：每种类型均出现 ' +
+      values[0] +
+      ' 次。'
+    );
+  }
+
+  return balanced;
+}
+
+validateBalance();
+
+/* 开始答题 */
+function startQuiz(){
+
+  shuffledQ = shuffle(QS).map((q, questionIndex) => {
+    return {
+      ...q,
+      originalIndex:questionIndex,
+      opts:shuffle(q.opts)
+    };
+  });
+
+  current = 0;
+  answers = new Array(shuffledQ.length).fill(null);
+
+  document.getElementById('cover').style.display = 'none';
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+
+  renderQuestion();
+}
+
+/* 渲染问题 */
+function renderQuestion(){
+
+  const q = shuffledQ[current];
+  const total = shuffledQ.length;
+  const completed = answers.filter(Boolean).length;
+  const pct = Math.round((completed / total) * 100);
+
+  document.getElementById('prog-label').textContent =
+    `Item ${current + 1} of ${total}`;
+
+  document.getElementById('prog-pct').textContent =
+    `${pct}%`;
+
+  document.getElementById('prog-fill').style.width =
+    `${pct}%`;
+
+  let html = `
+    <div class="q-card">
+      <div class="q-num">
+        Q${String(current + 1).padStart(2,'0')} / ${total}
+      </div>
+  `;
+
+  if(q.ctx){
+    html += `<div class="q-context">${q.ctx}</div>`;
+  }
+
+  html += `
+      <div class="q-text">${q.text}</div>
+      <div class="options">
+  `;
+
+  q.opts.forEach((opt,index) => {
+    const selected =
+      answers[current] &&
+      answers[current].k === opt.k &&
+      answers[current].t === opt.t;
+
+    html += `
+      <button
+        class="opt-btn ${selected ? 'selected' : ''}"
+        onclick="chooseOption(${index})"
+      >
+        <span class="opt-letter">${LETTERS[index]}</span>
+        <span>${opt.t}</span>
+      </button>
+    `;
+  });
+
+  html += `</div>`;
+
+  if(current > 0){
+    html += `
+      <div class="nav-row">
+        <button class="btn-prev" onclick="goBack()">
+          ← 上一题
+        </button>
+      </div>
+    `;
+  }
+
+  html += `</div>`;
+
+  document.getElementById('q-area').innerHTML = html;
+
+  document.getElementById('quiz').scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+}
+
+/* 选择答案 */
+function chooseOption(index){
+
+  const buttons = document.querySelectorAll('.opt-btn');
+
+  buttons.forEach(btn => {
+    btn.style.pointerEvents = 'none';
+  });
+
+  buttons[index].classList.add('selected');
+
+  const selected = shuffledQ[current].opts[index];
+
+  answers[current] = {
+    k:selected.k,
+    t:selected.t
+  };
+
+  setTimeout(() => {
+    current++;
+
+    if(current < shuffledQ.length){
+      renderQuestion();
+    }else{
+      showResult();
+    }
+  }, 280);
+}
+
+/* 返回上一题 */
+function goBack(){
+
+  if(current <= 0) return;
+
+  current--;
+
+  /*
+  返回后清空上一题答案，让用户重新选择。
+  因为最终分数根据 answers 统一计算，
+  不存在重复加分问题。
+  */
+  answers[current] = null;
+
+  renderQuestion();
+}
+
+/* 计算分数 */
+function calculateScores(){
+
+  const scores = {
+    A:0, B:0, C:0, D:0, E:0, F:0, G:0
+  };
+
+  answers.forEach(answer => {
+    if(answer && scores[answer.k] !== undefined){
+      scores[answer.k] += 1;
+    }
+  });
+
+  return scores;
+}
+
+/* 显示结果 */
+function showResult(){
+
+  document.getElementById('quiz').style.display = 'none';
+
+  const scores = calculateScores();
+
+  const sorted = Object.entries(scores).sort((a,b) => {
+    if(b[1] !== a[1]){
+      return b[1] - a[1];
+    }
+    return a[0].localeCompare(b[0]);
+  });
+
+  const topScore = sorted[0][1];
+
+  /*
+  不使用隐藏决胜题。
+  所有最高分类型均保留。
+  */
+  const leaders = sorted
+    .filter(([,score]) => score === topScore)
+    .map(([key]) => key);
+
+  const mainKey = leaders[0];
+  const mainType = TYPES[mainKey];
+
+  let resultName = '';
+  let resultEn = '';
+  let resultTag = '';
+  let descriptionHTML = '';
+  let tieNotice = '';
+
+  if(leaders.length === 1){
+
+    resultName = mainType.name;
+    resultEn = mainType.en;
+    resultTag = `Type ${mainKey} · CRM-28 · 2026`;
+    descriptionHTML = `
+      <div class="result-desc">${mainType.desc}</div>
+    `;
+
+  }else if(leaders.length === 2){
+
+    const t1 = TYPES[leaders[0]];
+    const t2 = TYPES[leaders[1]];
+
+    resultName = `${t1.name.replace('型','')} × ${t2.name}`;
+    resultEn = `${t1.en} × ${t2.en}`;
+    resultTag = `Hybrid Type ${leaders.join(' × ')} · CRM-28`;
+
+    tieNotice = `
+      <div class="tie-notice">
+        你的最高分出现并列，因此结果如实显示为
+        <strong>双主型</strong>。本测试不会通过某一道隐藏题，
+        强行决定你属于其中哪一种。
+      </div>
+    `;
+
+    descriptionHTML = buildMultiResult(leaders);
+
+  }else{
+
+    resultName = '多重混合恋爱型';
+    resultEn = 'Multi-Pattern Romantic Profile';
+    resultTag = `Mixed Type ${leaders.join(' / ')} · CRM-28`;
+
+    tieNotice = `
+      <div class="tie-notice">
+        你有 ${leaders.length} 个类型并列最高分。
+        这通常意味着你的恋爱状态具有较强的情境适应性：
+        面对不同的人和不同关系阶段，你可能表现出不同倾向。
+      </div>
+    `;
+
+    descriptionHTML = buildMultiResult(leaders);
+  }
+
+  const bars = buildSpectrum(sorted,leaders);
+
+  let compatHTML = '';
+
+  if(leaders.length === 1){
+    compatHTML = `
+      <div class="compat-box">
+        <div class="compat-item">
+          <strong>可能互补</strong>
+          ${mainType.good}
+        </div>
+
+        <div class="compat-item">
+          <strong>需要沟通</strong>
+          ${mainType.caution}
+        </div>
+      </div>
+    `;
+  }
+
+  const result = document.getElementById('result');
+
+  result.innerHTML = `
+    <div class="result-section-label">
+      Assessment Result
+    </div>
+
+    <div class="result-type-tag">
+      ${resultTag}
+    </div>
+
+    <div class="result-name">
+      ${resultName}
+    </div>
+
+    <div class="result-en">
+      ${resultEn}
+    </div>
+
+    <hr class="result-divider">
+
+    ${tieNotice}
+    ${descriptionHTML}
+
+    <hr class="result-divider">
+
+    <div class="spectrum-box">
+      <div class="spectrum-title">
+        Figure 2 · 恋爱状态光谱
+      </div>
+
+      <div class="spectrum-note">
+        每种类型理论最高16分；进度条按16分计算，而非按最高类型相对计算。
+      </div>
+
+      ${bars}
+    </div>
+
+    ${compatHTML}
+
+    <div class="share-box">
+      <div class="share-title">
+        Share & Cite
+      </div>
+
+      <div class="share-desc">
+        保存你的恋爱状态研究报告，也可以发给朋友比较彼此的恋爱光谱。
+      </div>
+
+      <button class="btn-save" onclick="saveImage()">
+        保存朋友圈分享卡片 →
+      </button>
+
+      <p class="fig-note">
+        自动生成PNG图片
+      </p>
+    </div>
+
+    <button class="btn-retry" onclick="retryQuiz()">
+      ← 重新测试
+    </button>
+  `;
+
+  result.style.display = 'block';
+
+  result.scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+}
+
+/* 生成并列类型说明 */
+function buildMultiResult(leaders){
+
+  let html = `<div class="multi-result">`;
+
+  leaders.forEach(key => {
+    const type = TYPES[key];
+
+    html += `
+      <div class="multi-card">
+        <div class="multi-card-title">
+          ${type.name}
+        </div>
+
+        <div class="multi-card-subtitle">
+          ${type.short}
+        </div>
+
+        <div class="multi-card-text">
+          ${type.summary}
+        </div>
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+
+  return html;
+}
+
+/* 光谱图 */
+function buildSpectrum(sorted,leaders){
+
+  const MAX_SCORE = 16;
+
+  return sorted.map(([key,value]) => {
+
+    const pct = Math.round((value / MAX_SCORE) * 100);
+    const isTop = leaders.includes(key);
+
+    return `
+      <div class="spectrum-row">
+        <span class="sp-label">
+          ${TYPES[key].name.replace('型','')}
+        </span>
+
+        <div class="sp-track">
+          <div
+            class="sp-fill ${isTop ? 'top' : ''}"
+            style="width:${pct}%"
+          ></div>
+        </div>
+
+        <span class="sp-val">
+          ${value}/16
+        </span>
+      </div>
+    `;
+
+  }).join('');
+}
+
+/* 重新测试 */
+function retryQuiz(){
+
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('cover').style.display = 'block';
+
+  shuffledQ = [];
+  current = 0;
+  answers = [];
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+}
+
+/* 清除HTML标签 */
+function stripHTML(html){
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.textContent || div.innerText || '';
+}
+
+/* 文字自动换行 */
+function drawWrappedText(
+  ctx,
+  text,
+  x,
+  y,
+  maxWidth,
+  lineHeight,
+  font,
+  color
+){
+  ctx.font = font;
+  ctx.fillStyle = color;
+  ctx.textAlign = 'left';
+
+  const paragraphs = text.split('\n');
+  let currentY = y;
+
+  paragraphs.forEach(paragraph => {
+
+    if(!paragraph.trim()){
+      currentY += lineHeight * 0.6;
+      return;
+    }
+
+    let line = '';
+
+    for(const char of paragraph){
+
+      const testLine = line + char;
+      const width = ctx.measureText(testLine).width;
+
+      if(width > maxWidth && line){
+        ctx.fillText(line,x,currentY);
+        line = char;
+        currentY += lineHeight;
+      }else{
+        line = testLine;
+      }
+    }
+
+    if(line){
+      ctx.fillText(line,x,currentY);
+      currentY += lineHeight;
+    }
+
+    currentY += 8;
+  });
+
+  return currentY;
+}
+
+/* 保存分享图 */
+function saveImage(){
+
+  const scores = calculateScores();
+
+  const sorted = Object.entries(scores).sort((a,b) => {
+    if(b[1] !== a[1]){
+      return b[1] - a[1];
+    }
+    return a[0].localeCompare(b[0]);
+  });
+
+  const topScore = sorted[0][1];
+
+  const leaders = sorted
+    .filter(([,score]) => score === topScore)
+    .map(([key]) => key);
+
+  drawShareCard(scores,sorted,leaders);
+}
+
+/* 绘制分享卡 */
+function drawShareCard(scores,sorted,leaders){
+
+  const canvas = document.getElementById('shareCanvas');
+  const ctx = canvas.getContext('2d');
+
+  const W = 1080;
+  const H = 1680;
+  const P = 80;
+  const contentW = W - P * 2;
+
+  canvas.width = W;
+  canvas.height = H;
+
+  const BG = '#fbfaf8';
+  const WHITE = '#ffffff';
+  const INK = '#211d1d';
+  const INK2 = '#4a4141';
+  const INK3 = '#766c6c';
+  const RULE = '#d9d0d0';
+  const RULE2 = '#eee8e8';
+  const ACCENT = '#9b4057';
+  const DARK = '#281e21';
+
+  ctx.fillStyle = BG;
+  ctx.fillRect(0,0,W,H);
+
+  /* 顶部深色区域 */
+  ctx.fillStyle = DARK;
+  ctx.fillRect(0,0,W,520);
+
+  ctx.textAlign = 'center';
+
+  ctx.fillStyle = 'rgba(255,255,255,.55)';
+  ctx.font = '500 21px sans-serif';
+  ctx.fillText(
+    'JOURNAL OF MODERN ROMANCE · CRM-28',
+    W / 2,
+    72
+  );
+
+  ctx.fillStyle = 'rgba(255,255,255,.18)';
+  ctx.fillRect(W / 2 - 45,100,90,2);
+
+  const title = leaders.length === 1
+    ? TYPES[leaders[0]].name
+    : leaders.length === 2
+      ? `${TYPES[leaders[0]].name.replace('型','')} × ${TYPES[leaders[1]].name}`
+      : '多重混合恋爱型';
+
+  const typeCode = leaders.length === 1
+    ? `TYPE ${leaders[0]}`
+    : `HYBRID ${leaders.join(' × ')}`;
+
+  ctx.fillStyle = '#e9bdc8';
+  ctx.font = '600 26px sans-serif';
+  ctx.fillText(typeCode,W / 2,160);
+
+  ctx.fillStyle = WHITE;
+
+  const titleFont =
+    title.length > 14
+      ? "bold 62px 'Noto Serif SC', serif"
+      : "bold 82px 'Noto Serif SC', serif";
+
+  ctx.font = titleFont;
+  ctx.fillText(title,W / 2,285);
+
+  ctx.fillStyle = 'rgba(255,255,255,.72)';
+  ctx.font = "400 28px 'Noto Serif SC', serif";
+
+  let subtitle = '';
+
+  if(leaders.length === 1){
+    subtitle = TYPES[leaders[0]].short;
+  }else{
+    subtitle = '你的恋爱状态不止一种标准答案';
+  }
+
+  ctx.fillText(subtitle,W / 2,350);
+
+  ctx.fillStyle = 'rgba(255,255,255,.18)';
+  ctx.fillRect(P,405,contentW,1);
+
+  ctx.textAlign = 'left';
+
+  ctx.fillStyle = 'rgba(255,255,255,.7)';
+  ctx.font = '500 22px sans-serif';
+  ctx.fillText('主导得分',P,455);
+
+  ctx.textAlign = 'right';
+  ctx.fillStyle = WHITE;
+  ctx.font = "bold 36px 'EB Garamond', serif";
+  ctx.fillText(`${sorted[0][1]} / 16`,W - P,455);
+
+  ctx.textAlign = 'left';
+
+  /* 结果摘要 */
+  let y = 590;
+
+  ctx.fillStyle = INK3;
+  ctx.font = '500 20px sans-serif';
+  ctx.fillText('— 恋 爱 状 态 摘 要 —',P,y);
+
+  y += 52;
+
+  let summary = '';
+
+  if(leaders.length === 1){
+    summary = TYPES[leaders[0]].summary;
+  }else{
+    summary =
+      '你的最高分出现并列，因此结果保留为复合类型。你可能会根据关系阶段、对象特征与安全感水平，表现出不同的恋爱倾向。';
+  }
+
+  y = drawWrappedText(
+    ctx,
+    summary,
+    P,
+    y,
+    contentW,
+    42,
+    "400 27px 'Noto Serif SC', serif",
+    INK2
+  );
+
+  y += 30;
+
+  ctx.fillStyle = RULE;
+  ctx.fillRect(P,y,contentW,1);
+
+  y += 52;
+
+  /* 光谱 */
+  ctx.fillStyle = INK3;
+  ctx.font = '500 20px sans-serif';
+  ctx.fillText('— 恋 爱 状 态 光 谱 —',P,y);
+
+  y += 52;
+
+  const labelW = 210;
+  const valueW = 80;
+  const trackX = P + labelW;
+  const trackW = contentW - labelW - valueW;
+  const maxScore = 16;
+
+  sorted.forEach(([key,value]) => {
+
+    const isTop = leaders.includes(key);
+    const width = Math.max(
+      4,
+      Math.round(trackW * value / maxScore)
+    );
+
+    ctx.fillStyle = isTop ? INK : INK3;
+    ctx.font = `${isTop ? '600' : '400'} 23px sans-serif`;
+    ctx.textAlign = 'right';
+
+    ctx.fillText(
+      TYPES[key].name.replace('型',''),
+      trackX - 20,
+      y + 8
+    );
+
+    ctx.textAlign = 'left';
+
+    ctx.fillStyle = RULE2;
+    ctx.fillRect(trackX,y,trackW,10);
+
+    ctx.fillStyle = isTop ? ACCENT : '#cabdc0';
+    ctx.fillRect(trackX,y,width,10);
+
+    ctx.fillStyle = isTop ? ACCENT : INK3;
+    ctx.font = `${isTop ? '600' : '400'} 22px sans-serif`;
+
+    ctx.fillText(
+      `${value}/16`,
+      trackX + trackW + 18,
+      y + 8
+    );
+
+    y += 64;
+  });
+
+  y += 10;
+
+  ctx.fillStyle = RULE;
+  ctx.fillRect(P,y,contentW,1);
+
+  y += 50;
+
+  /* 说明框 */
+  ctx.fillStyle = WHITE;
+  ctx.fillRect(P,y,contentW,180);
+
+  ctx.strokeStyle = RULE;
+  ctx.lineWidth = 2;
+  ctx.strokeRect(P,y,contentW,180);
+
+  ctx.fillStyle = ACCENT;
+  ctx.fillRect(P,y,7,180);
+
+  ctx.fillStyle = ACCENT;
+  ctx.font = '600 22px sans-serif';
+  ctx.fillText('BALANCED SCORING',P + 30,y + 45);
+
+  ctx.fillStyle = INK2;
+  ctx.font = '400 22px sans-serif';
+
+  ctx.fillText(
+    '28道题全部等权，每题只计1分。',
+    P + 30,
+    y + 88
+  );
+
+  ctx.fillText(
+    '无决定性题目；最高分并列时保留复合结果。',
+    P + 30,
+    y + 126
+  );
+
+  ctx.fillText(
+    '本测试仅供娱乐，不构成情感或心理诊断。',
+    P + 30,
+    y + 164
+  );
+
+  /* Footer */
+  ctx.textAlign = 'center';
+
+  ctx.fillStyle = INK3;
+  ctx.font = '400 18px sans-serif';
+
+  ctx.fillText(
+    '© 2026 Journal of Modern Romance · JoyCece',
+    W / 2,
+    H - 70
+  );
+
+  ctx.fillText(
+    '愿你既拥有爱人的能力，也拥有不弄丢自己的能力',
+    W / 2,
+    H - 38
+  );
+
+  ctx.textAlign = 'left';
+
+  /* 下载 */
+  const link = document.createElement('a');
+
+  link.download =
+    `恋爱状态鉴定_${title.replace(/[×/\\:*?"<>|]/g,'_')}.png`;
+
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+</script>
+
+</body>
+</html>

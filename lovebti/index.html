@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>恋爱16型人格测试 | 看看你是哪种恋爱选手</title>
+<title>恋爱16型人格测试 💕 你是哪种恋爱体质？</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
 
 * {
   margin: 0;
@@ -15,33 +15,33 @@
 }
 
 :root {
-  --primary: #4a90e2;
-  --primary-dark: #2e5c8a;
-  --accent: #f5a623;
+  --primary: #ff6b9d;
+  --primary-light: #ffb4d1;
+  --secondary: #a78bfa;
+  --accent: #fbbf24;
   
-  --bg: #f8f9fa;
-  --card: #ffffff;
-  --border: #e1e4e8;
+  --bg-start: #fff5f7;
+  --bg-end: #fef3ff;
   
-  --text-dark: #24292e;
-  --text-medium: #586069;
-  --text-light: #6a737d;
+  --text-dark: #2d1b3d;
+  --text-medium: #6b5b7a;
+  --text-light: #9d8baa;
   
-  --shadow: 0 2px 8px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+  --card-bg: #ffffff;
+  --shadow: 0 8px 32px rgba(167, 139, 250, 0.15);
+  --shadow-hover: 0 12px 48px rgba(255, 107, 157, 0.25);
 }
 
 body {
   min-height: 100vh;
-  background: var(--bg);
-  font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text-dark);
-  line-height: 1.6;
   padding-bottom: 40px;
 }
 
 .container {
-  max-width: 680px;
+  max-width: 640px;
   margin: 0 auto;
   padding: 20px 16px;
 }
@@ -52,22 +52,31 @@ body {
 }
 
 .logo {
-  width: 64px;
-  height: 64px;
-  margin: 24px auto 20px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  border-radius: 16px;
+  width: 80px;
+  height: 80px;
+  margin: 20px auto;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 42px;
   box-shadow: var(--shadow);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
 .main-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text-dark);
+  font-size: 32px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin: 16px 0 8px;
   line-height: 1.3;
 }
@@ -76,50 +85,55 @@ body {
   font-size: 15px;
   color: var(--text-medium);
   margin-bottom: 24px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .info-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 24px;
 }
 
 .info-card {
-  background: var(--card);
-  padding: 16px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  background: var(--card-bg);
+  padding: 16px 12px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
 }
 
 .info-num {
   font-size: 28px;
-  font-weight: 700;
-  color: var(--primary);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 4px;
 }
 
 .info-label {
   font-size: 12px;
   color: var(--text-light);
-  font-weight: 500;
 }
 
 .feature-box {
-  background: var(--card);
+  background: var(--card-bg);
   padding: 20px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
   margin-bottom: 24px;
   text-align: left;
 }
 
 .feature-title {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--text-dark);
+  font-weight: 700;
+  color: var(--primary);
   margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .feature-list {
@@ -135,30 +149,29 @@ body {
 }
 
 .feature-list li:before {
-  content: '•';
+  content: '✓';
   position: absolute;
-  left: 6px;
+  left: 0;
   color: var(--primary);
   font-weight: 700;
 }
 
 .btn-start {
   width: 100%;
-  padding: 16px;
-  background: var(--primary);
+  padding: 18px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   color: white;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
   cursor: pointer;
   box-shadow: var(--shadow);
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .btn-start:active {
-  transform: translateY(1px);
-  box-shadow: none;
+  transform: scale(0.98);
 }
 
 .note {
@@ -173,10 +186,10 @@ body {
 }
 
 .progress-bar {
-  background: var(--card);
+  background: var(--card-bg);
   padding: 16px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
   margin-bottom: 20px;
   position: sticky;
   top: 16px;
@@ -193,29 +206,29 @@ body {
 }
 
 .progress-info-left {
-  font-weight: 600;
-  color: var(--text-dark);
+  font-weight: 700;
+  color: var(--primary);
 }
 
 .progress-track {
-  height: 6px;
-  background: var(--border);
+  height: 8px;
+  background: #f0e6f6;
   border-radius: 10px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: var(--primary);
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
   border-radius: 10px;
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .question-card {
-  background: var(--card);
+  background: var(--card-bg);
   padding: 24px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
   margin-bottom: 16px;
   animation: slideIn 0.3s ease;
 }
@@ -233,18 +246,18 @@ body {
 
 .q-num {
   display: inline-block;
-  padding: 4px 10px;
-  background: #f0f4f8;
-  color: var(--text-medium);
-  border-radius: 6px;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, var(--primary-light) 0%, #e9d5ff 100%);
+  color: var(--text-dark);
+  border-radius: 20px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 16px;
 }
 
 .q-text {
-  font-size: 17px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   line-height: 1.5;
   margin-bottom: 20px;
   color: var(--text-dark);
@@ -259,9 +272,9 @@ body {
 .option-btn {
   width: 100%;
   padding: 16px;
-  background: #f6f8fa;
+  background: #f8f5fc;
   border: 2px solid transparent;
-  border-radius: 10px;
+  border-radius: 16px;
   font-size: 15px;
   line-height: 1.5;
   text-align: left;
@@ -269,6 +282,7 @@ body {
   transition: all 0.2s ease;
   color: var(--text-dark);
   font-weight: 500;
+  position: relative;
 }
 
 .option-btn:active {
@@ -276,15 +290,25 @@ body {
 }
 
 .option-btn:hover {
-  background: #e8eef3;
-  border-color: var(--primary);
+  background: #f0e6f6;
+  border-color: var(--primary-light);
 }
 
 .option-btn.selected {
-  background: #e3f2fd;
+  background: linear-gradient(135deg, #ffe8f0 0%, #f3e8ff 100%);
   border-color: var(--primary);
   color: var(--primary);
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.option-btn.selected:after {
+  content: '✓';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--primary);
 }
 
 .nav-area {
@@ -294,14 +318,14 @@ body {
 }
 
 .btn-back {
-  padding: 10px 18px;
+  padding: 10px 20px;
   background: white;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: 2px solid #e9d5ff;
+  border-radius: 12px;
   font-size: 14px;
   color: var(--text-medium);
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.2s ease;
 }
 
@@ -315,42 +339,40 @@ body {
 }
 
 .result-header {
-  background: var(--card);
+  background: var(--card-bg);
   padding: 32px 24px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
   margin-bottom: 16px;
   text-align: center;
 }
 
 .result-emoji {
-  font-size: 64px;
+  font-size: 72px;
   margin-bottom: 16px;
+  animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .result-type {
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--text-dark);
+  font-size: 28px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 8px;
   line-height: 1.3;
 }
 
-.result-code {
-  display: inline-block;
-  padding: 4px 10px;
-  background: #f0f4f8;
-  color: var(--text-medium);
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
 .result-subtitle {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-medium);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .result-tags {
@@ -358,37 +380,39 @@ body {
   flex-wrap: wrap;
   gap: 8px;
   justify-content: center;
+  margin-top: 16px;
 }
 
 .tag {
   padding: 6px 12px;
-  background: #f0f4f8;
-  border-radius: 6px;
+  background: linear-gradient(135deg, #ffe8f0 0%, #f3e8ff 100%);
+  border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
-  color: var(--text-dark);
+  color: var(--primary);
 }
 
 .result-card {
-  background: var(--card);
+  background: var(--card-bg);
   padding: 24px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
   margin-bottom: 16px;
 }
 
 .card-title {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-dark);
   margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .result-text {
   font-size: 14px;
-  line-height: 1.8;
+  line-height: 1.9;
   color: var(--text-medium);
   margin-bottom: 12px;
 }
@@ -399,14 +423,15 @@ body {
 }
 
 .quote-box {
-  background: #f6f8fa;
-  border-left: 3px solid var(--primary);
-  padding: 12px 16px;
+  background: #f0f7fa;
+  border-left: 4px solid var(--primary);
+  padding: 14px 16px;
   margin: 14px 0;
-  border-radius: 4px;
-  font-size: 14px;
-  line-height: 1.7;
+  border-radius: 8px;
+  font-style: italic;
   color: var(--text-medium);
+  font-size: 13px;
+  line-height: 1.7;
 }
 
 .trait-list {
@@ -420,7 +445,7 @@ body {
   position: relative;
   font-size: 14px;
   color: var(--text-medium);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #f0e6f6;
 }
 
 .trait-list li:last-child {
@@ -428,12 +453,10 @@ body {
 }
 
 .trait-list li:before {
-  content: '·';
+  content: '💖';
   position: absolute;
-  left: 8px;
-  color: var(--primary);
-  font-size: 20px;
-  font-weight: 700;
+  left: 0;
+  font-size: 14px;
 }
 
 .match-grid {
@@ -444,19 +467,17 @@ body {
 }
 
 .match-card {
-  padding: 16px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
+  padding: 14px;
+  border-radius: 12px;
+  text-align: center;
 }
 
 .match-card.good {
-  background: #f0f9f4;
-  border-color: #34d399;
+  background: #d1fae5;
 }
 
 .match-card.avoid {
-  background: #fef3f2;
-  border-color: #f87171;
+  background: #fee2e2;
 }
 
 .match-label {
@@ -468,11 +489,11 @@ body {
 }
 
 .match-card.good .match-label {
-  color: #059669;
+  color: #065f46;
 }
 
 .match-card.avoid .match-label {
-  color: #dc2626;
+  color: #991b1b;
 }
 
 .match-type {
@@ -495,69 +516,70 @@ body {
 }
 
 .match-card.good .match-desc {
-  color: #059669;
+  color: #10b981;
 }
 
 .match-card.avoid .match-desc {
-  color: #dc2626;
+  color: #f87171;
 }
 
 .share-card {
-  background: var(--card);
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  padding: 24px 20px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-hover);
   margin-bottom: 16px;
+  color: white;
   text-align: center;
 }
 
 .share-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
 }
 
 .share-text {
   font-size: 14px;
-  line-height: 1.6;
-  color: var(--text-medium);
-  margin-bottom: 16px;
+  line-height: 1.7;
+  opacity: 0.95;
+  margin-bottom: 20px;
 }
 
 .btn-share {
   width: 100%;
-  padding: 14px;
-  background: var(--primary);
-  color: white;
+  padding: 16px;
+  background: white;
+  color: var(--primary);
   border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
   transition: all 0.2s ease;
 }
 
 .btn-share:active {
-  transform: translateY(1px);
+  transform: scale(0.98);
 }
 
 .btn-retry {
   width: 100%;
-  padding: 14px;
+  padding: 16px;
   background: white;
   color: var(--text-medium);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-size: 15px;
+  border: 2px solid #e9d5ff;
+  border-radius: 14px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .btn-retry:active {
-  transform: translateY(1px);
+  transform: scale(0.98);
 }
 
 #shareCanvas {
@@ -566,7 +588,7 @@ body {
 
 @media (max-width: 400px) {
   .main-title {
-    font-size: 24px;
+    font-size: 28px;
   }
   
   .info-cards {
@@ -574,11 +596,15 @@ body {
   }
   
   .info-card {
-    padding: 12px;
+    padding: 12px 8px;
   }
   
   .info-num {
     font-size: 24px;
+  }
+  
+  .q-text {
+    font-size: 16px;
   }
 }
 </style>
@@ -590,18 +616,19 @@ body {
 
   <!-- 封面 -->
   <div id="cover">
-    <div class="logo">💬</div>
+    <div class="logo">💕</div>
     
-    <h1 class="main-title">恋爱16型人格测试</h1>
+    <h1 class="main-title">恋爱16型人格</h1>
     
     <p class="subtitle">
+      测测你的恋爱体质<br>
       看看你是哪种恋爱选手
     </p>
     
     <div class="info-cards">
       <div class="info-card">
         <div class="info-num">16</div>
-        <div class="info-label">人格类型</div>
+        <div class="info-label">恋爱人格</div>
       </div>
       
       <div class="info-card">
@@ -616,21 +643,21 @@ body {
     </div>
     
     <div class="feature-box">
-      <div class="feature-title">你将了解</div>
+      <div class="feature-title">✨ 你将了解</div>
       <ul class="feature-list">
-        <li>你在恋爱中的性格特点</li>
-        <li>你的优势和需要注意的地方</li>
-        <li>适合你的伴侣类型</li>
-        <li>具体的改进建议</li>
+        <li>你的恋爱性格和行为模式</li>
+        <li>你在感情中的优势和盲区</li>
+        <li>最适合你的伴侣类型</li>
+        <li>温柔吐槽你的恋爱小毛病</li>
       </ul>
     </div>
     
     <button class="btn-start" onclick="startQuiz()">
-      开始测试
+      开始测试 💫
     </button>
     
     <p class="note">
-      基于MBTI理论改编 · 仅供参考
+      温柔吐槽 · 价值观正 · 仅供娱乐
     </p>
   </div>
 
@@ -657,650 +684,659 @@ body {
 <canvas id="shareCanvas"></canvas>
 
 <script>
+/*
+恋爱16型人格测试
+基于四个维度：
+E/I - 表达方式（外向/内向）
+S/N - 感知方式（实感/直觉）
+T/F - 决策方式（理性/感性）
+J/P - 生活方式（计划/随性）
+*/
+
 // 16种恋爱人格定义
 const PERSONALITIES = {
   ESTJ: {
-    name: '执行官型',
-    emoji: '📋',
-    subtitle: '实干派恋人，说到做到',
-    keywords: ['可靠', '务实', '有计划', '直接'],
-    description: `你是典型的行动派。
+    name: '霸总恋爱型',
+    emoji: '👔',
+    subtitle: '我说了算，但我会对你好',
+    keywords: ['掌控全局', '有责任感', '直来直去', '实干派'],
+    description: `你就是传说中的"霸道总裁式恋爱"。
 
-<strong>核心特质：可靠、务实、有执行力。</strong>
+<strong>你的恋爱关键词：掌控感、责任心、执行力。</strong>
 
-你习惯在感情里扮演主导角色，从约会安排到未来规划，你都希望能掌控全局。不是因为控制欲，而是你觉得"我负责安排，你负责享受"是最高效的方式。
+你习惯在感情里主导一切，从约会地点到未来规划，你都喜欢掌握主动权。不是因为你不尊重对方，而是你觉得"我安排好了，你负责开心就好"。
 
-<div class="quote-box">"我已经订好餐厅了，7点见。"——这是你的常规操作。</div>
+<div class="quote-box">"我已经订好餐厅了，你就负责打扮漂亮。"——这是你的日常操作。</div>
 
-优点是靠谱、有责任感，说到做到。缺点是有时太强势，容易忽略对方想法。
+优点是超级靠谱，说到做到，有担当。缺点是有时候过于强势，容易忽略对方的想法。
 
-建议：适当放手，让对方也参与决策。强势不等于不尊重。`,
+温柔提醒：偶尔问问对方"你想怎么样"，会让感情更甜蜜哦。`,
     strengths: [
-      '执行力强，说爱你就立刻行动',
-      '有责任感，不玩暧昧',
-      '目标明确，不拖泥带水',
-      '保护欲强，给人安全感'
+      '超强执行力，说爱你就立刻行动',
+      '有责任感，不会玩暧昧耍心机',
+      '目标明确，想结婚就直奔主题',
+      '保护欲强，给伴侣满满安全感'
     ],
     weaknesses: [
-      '容易过于强势',
-      '不够浪漫，重实际轻情调',
-      '可能显得控制欲强',
-      '情感表达较为直接生硬'
+      '太强势，容易变成"我都是为你好"',
+      '不够浪漫，觉得实际行动胜过花言巧语',
+      '控制欲强，可能让对方感到窒息',
+      '不爱表达情感，总是用"做"代替"说"'
     ],
-    loveStyle: '行动派恋人，用实际行动证明爱。',
+    loveStyle: '你是"行动派恋人"，用实际行动证明爱，但偶尔也需要说点甜言蜜语。',
     bestMatch: {
-      type: 'ISFP',
-      reason: '互补性强，一个规划一个配合'
+      type: 'ISFP 温柔艺术家',
+      reason: '你负责规划人生，TA负责温柔体贴'
     },
     avoid: {
-      type: 'ENTP',
-      reason: '都很强势，容易冲突'
+      type: 'ENTP 脑洞辩论家',
+      reason: '你俩都太强势，容易变成辩论赛'
     },
-    advice: '学会倾听和妥协，恋爱不是项目管理。'
+    advice: '学会倾听和妥协，爱情不是项目管理，有时候"乱七八糟"也挺美好的。'
   },
 
   ESFJ: {
-    name: '照顾者型',
+    name: '暖心守护型',
     emoji: '🤗',
-    subtitle: '体贴入微的守护者',
-    keywords: ['体贴', '敏感', '社交', '付出'],
-    description: `你天生擅长照顾人。
+    subtitle: '我的快乐就是你的快乐',
+    keywords: ['体贴入微', '情绪敏感', '社交达人', '付出型'],
+    description: `你是人间小太阳，走到哪里都在散发温暖。
 
-<strong>核心特质：体贴、共情、重视关系。</strong>
+<strong>你的恋爱关键词：照顾、共情、在乎评价。</strong>
 
-你会记住对方的所有细节：喜欢的食物、过敏源、重要日期。你的手机备忘录里全是关于对方的提醒。
+你会记住对方的所有小习惯：TA喜欢喝什么奶茶、对什么过敏、最近在担心什么。你的手机备忘录里都是"记得提醒TA吃药""下周是TA妈妈生日"。
 
-<div class="quote-box">"你今天看起来不太对，发生什么了？"——你总能察觉情绪变化。</div>
+<div class="quote-box">"你今天怎么了？是不是不开心？跟我说说？"——你永远能察觉到对方的情绪变化。</div>
 
-优点是贴心、让人感觉被重视。缺点是太在意别人看法，容易委屈自己。
+优点是超级贴心，让人感觉被爱包围。缺点是太在意别人的看法，容易委屈自己。
 
-建议：爱别人的同时，也要好好爱自己。`,
+温柔提醒：爱别人之前，也要好好爱自己呀。`,
     strengths: [
-      '共情能力强',
-      '照顾周到',
-      '社交能力好',
-      '重视仪式感'
+      '共情能力MAX，永远懂对方在想什么',
+      '贴心细致，把对方照顾得无微不至',
+      '社交能力强，搞定对方的朋友和家人',
+      '重视仪式感，纪念日绝不会忘'
     ],
     weaknesses: [
-      '过分在意他人评价',
-      '容易过度付出',
-      '情绪敏感',
-      '不善于拒绝'
+      '太在意他人评价，容易患得患失',
+      '付出过多，容易变成"保姆式恋爱"',
+      '情绪敏感，对方一句话能想半天',
+      '不敢拒绝，总是委屈自己成全别人'
     ],
-    loveStyle: '守护型恋人，愿意全心付出。',
+    loveStyle: '你是"守护型恋人"，愿意为爱付出一切，但别忘了你也值得被好好对待。',
     bestMatch: {
-      type: 'ISTP',
-      reason: '你温暖，TA务实'
+      type: 'ISTP 冷静技术宅',
+      reason: '你负责温暖，TA负责实际问题'
     },
     avoid: {
-      type: 'INTJ',
-      reason: 'TA太理性，难以感受你的付出'
+      type: 'INTJ 冷漠策划师',
+      reason: 'TA太理性，可能感受不到你的付出'
     },
-    advice: '学会表达需求，别总是委屈自己。'
+    advice: '学会适度表达需求，真正爱你的人不会觉得你"麻烦"。'
   },
 
   ENFJ: {
-    name: '引导者型',
+    name: '恋爱导师型',
     emoji: '🌟',
-    subtitle: '理想主义的陪伴者',
-    keywords: ['理想', '引导', '共情', '愿景'],
-    description: `你对感情有很高的期待。
+    subtitle: '我会让你成为更好的自己',
+    keywords: ['理想主义', '有感染力', '引导者', '完美恋人'],
+    description: `你不仅谈恋爱，你还顺便"教育"对方。
 
-<strong>核心特质：理想主义、善于引导、有感染力。</strong>
+<strong>你的恋爱关键词：成长、引导、理想。</strong>
 
-你相信爱情能让两个人都变得更好。你会鼓励对方成长，帮助TA实现目标。
+你对感情有很高的期待，你相信爱情能让两个人都变得更好。你会鼓励对方追求梦想、改掉坏习惯、建立健康的生活方式。
 
-<div class="quote-box">"我觉得你可以试试……"——你习惯温柔地提出建议。</div>
+<div class="quote-box">"宝贝，我觉得你可以试试……"——你总是温柔地提出建议。</div>
 
-优点是有格局、能带动对方成长。缺点是期待太高，容易失望。
+优点是有格局、有眼光，能带着对方一起成长。缺点是期待太高，容易失望。
 
-建议：接纳不完美，理想和现实需要平衡。`,
+温柔提醒：爱情不是改造工程，接纳不完美也是一种爱。`,
     strengths: [
-      '有理想有格局',
-      '善于沟通',
-      '能鼓励对方',
-      '有魅力'
+      '有理想有格局，让恋爱充满意义',
+      '善于沟通，能化解各种矛盾',
+      '鼓励对方成长，是最好的人生导师',
+      '有魅力，走到哪都是焦点'
     ],
     weaknesses: [
-      '期待过高',
-      '有时显得说教',
-      '过度理想化',
-      '太在意意义'
+      '期待太高，容易对现实失望',
+      '爱"教育"对方，有时显得说教',
+      '过度理想化，忽略实际问题',
+      '太在意关系的"意义"，累'
     ],
-    loveStyle: '导师型恋人，追求共同成长。',
+    loveStyle: '你是"导师型恋人"，希望和对方一起成为更好的人，但别忘了享受当下。',
     bestMatch: {
-      type: 'INFP',
-      reason: '都追求理想，但TA更柔软'
+      type: 'INFP 温柔梦想家',
+      reason: '你们都追求理想，但TA更柔软'
     },
     avoid: {
-      type: 'ESTP',
-      reason: 'TA活在当下，你想得太远'
+      type: 'ESTP 及时行乐派',
+      reason: 'TA只想快乐，你想得太深远'
     },
-    advice: '降低期待，享受当下的真实。'
+    advice: '降低期待，享受"普通但真实"的幸福。'
   },
 
   ENTJ: {
-    name: '统帅型',
+    name: '战略恋爱型',
     emoji: '🎯',
-    subtitle: '目标明确的规划师',
-    keywords: ['理性', '目标', '领导', '效率'],
-    description: `你用战略思维谈恋爱。
+    subtitle: '爱情也需要战略规划',
+    keywords: ['目标导向', '理性决策', '领导力', '效率至上'],
+    description: `你谈恋爱就像带团队做项目。
 
-<strong>核心特质：目标导向、理性、执行力强。</strong>
+<strong>你的恋爱关键词：目标、效率、战略。</strong>
 
-你会设定明确的关系目标，并按计划推进。你的恋爱笔记可能比工作计划还详细。
+你会设定恋爱目标："半年内确认关系，一年内见家长，三年内结婚。"你的恋爱笔记比工作计划还详细。
 
-<div class="quote-box">"我们需要聊聊这段关系的发展方向。"——你常说的话。</div>
+<div class="quote-box">"我们需要谈一谈这段关系的发展方向。"——你最常说的话。</div>
 
-优点是目标明确、执行力强。缺点是太理性，缺少浪漫。
+优点是目标明确，不浪费时间，执行力强。缺点是太理性，容易忽略情感需求。
 
-建议：爱情不是商业计划，偶尔可以不讲效率。`,
+温柔提醒：爱情不是商业合作，偶尔可以不讲效率。`,
     strengths: [
-      '目标明确',
-      '理性决策',
-      '有领导力',
-      '执行力强'
+      '目标明确，不玩暧昧不耗时间',
+      '理性决策，不会被情绪冲昏头',
+      '有领导力，能带着对方一起进步',
+      '执行力强，说结婚就真的会结'
     ],
     weaknesses: [
-      '过于理性',
-      '控制欲强',
-      '不够温柔',
-      '追求完美'
+      '太理性，缺少浪漫和惊喜',
+      '控制欲强，容易变成"人生规划师"',
+      '不够温柔，有时显得强硬',
+      '追求完美，对方压力很大'
     ],
-    loveStyle: 'CEO型恋人，把恋爱当事业经营。',
+    loveStyle: '你是"CEO型恋人"，把恋爱当事业经营，但别忘了恋爱的本质是快乐。',
     bestMatch: {
-      type: 'INFP',
-      reason: 'TA能软化你的强势'
+      type: 'INFP 温柔梦想家',
+      reason: 'TA能软化你的刚硬，给你温暖'
     },
     avoid: {
-      type: 'ESFP',
-      reason: 'TA太随性，你受不了'
+      type: 'ESFP 快乐享乐派',
+      reason: 'TA太随性，你受不了没规划'
     },
-    advice: '学会放松，享受失控的浪漫。'
+    advice: '学会放下控制，享受"失控"的浪漫。'
   },
 
   ISTJ: {
-    name: '检查员型',
-    emoji: '⚙️',
-    subtitle: '可靠的长期主义者',
-    keywords: ['踏实', '传统', '细致', '稳定'],
-    description: `你是恋爱中的"定海神针"。
+    name: '靠谱稳定型',
+    emoji: '📋',
+    subtitle: '我可能不浪漫但绝对可靠',
+    keywords: ['踏实可靠', '传统稳重', '细节控', '长期主义'],
+    description: `你是恋爱界的"国债"——收益不高但绝对稳健。
 
-<strong>核心特质：可靠、传统、注重细节。</strong>
+<strong>你的恋爱关键词：稳定、靠谱、传统。</strong>
 
-你可能不够浪漫，但你会记得所有重要日期，准时接送，从不失约。你的爱藏在细节里。
+你不会玩什么浪漫惊喜，但你会记得每个纪念日，准时接送，从不失约。你的爱藏在每一个细节里：定时提醒吃药、帮忙整理房间、默默做好所有琐碎的事。
 
-<div class="quote-box">"我不太会说甜言蜜语，但我会一直在。"——这是你的承诺。</div>
+<div class="quote-box">"我不太会说甜言蜜语,但我会一直陪着你。"——这就是你的表白。</div>
 
-优点是极度可靠，值得托付。缺点是太传统，缺少情趣。
+优点是超级靠谱，值得托付终身。缺点是太木讷，缺少情趣。
 
-建议：偶尔来点浪漫惊喜，生活会更有趣。`,
+温柔提醒：偶尔来点小浪漫，生活会更有趣。`,
     strengths: [
-      '极度可靠',
-      '忠诚专一',
-      '注重细节',
-      '有耐心'
+      '靠谱到极致，说到做到',
+      '忠诚专一，绝不脚踏两船',
+      '注重细节，把生活安排得井井有条',
+      '有耐心，愿意陪对方慢慢成长'
     ],
     weaknesses: [
-      '过于传统',
-      '不够浪漫',
-      '表达能力弱',
-      '固执'
+      '太传统，不够灵活变通',
+      '不浪漫，觉得实用>浪漫',
+      '表达能力差，不会说情话',
+      '固执己见，很难改变习惯'
     ],
-    loveStyle: '长期主义恋人，用陪伴证明爱。',
+    loveStyle: '你是"长期主义恋人"，用一辈子的陪伴证明爱，但偶尔也需要点仪式感。',
     bestMatch: {
-      type: 'ESFP',
-      reason: 'TA能给你的生活带来乐趣'
+      type: 'ESFP 快乐享乐派',
+      reason: 'TA能给你的生活带来欢乐'
     },
     avoid: {
-      type: 'ENFP',
+      type: 'ENFP 自由梦想家',
       reason: 'TA太跳脱，你接受不了'
     },
-    advice: '适当增加生活情趣，不只有责任。'
+    advice: '学点浪漫小技巧，生活不只有柴米油盐。'
   },
 
   ISFJ: {
-    name: '守卫者型',
-    emoji: '🛡️',
-    subtitle: '默默付出的守护者',
-    keywords: ['温柔', '记忆', '守护', '传统'],
-    description: `你是那种会记住一切的人。
+    name: '默默守护型',
+    emoji: '🕊️',
+    subtitle: '我的爱藏在细节里',
+    keywords: ['温柔体贴', '默默付出', '记忆力好', '传统恋人'],
+    description: `你是那种会默默记住对方所有喜好的人。
 
-<strong>核心特质：温柔、记忆力好、默默付出。</strong>
+<strong>你的恋爱关键词：体贴、记忆、守护。</strong>
 
-你会记得对方随口说过的话，然后在某个普通日子里默默实现。
+你会记得对方随口说过的话："我喜欢这个牌子的酸奶""我想去那个地方"。然后在某个普通的日子里，突然实现TA的小愿望。
 
-<div class="quote-box">"这是你上次说想吃的，我买了。"——你总是这样。</div>
+<div class="quote-box">"这是你上次说想吃的，我买回来了。"——你总是这样默默付出。</div>
 
-优点是温柔体贴，让人感到被珍视。缺点是太容易委屈自己。
+优点是超级温柔，让人感觉被珍视。缺点是太委屈自己，不懂拒绝。
 
-建议：你的需求也很重要，学会表达。`,
+温柔提醒：你的需求也很重要，别总是委屈自己。`,
     strengths: [
-      '记忆力惊人',
-      '温柔体贴',
-      '默默付出',
-      '忠诚可靠'
+      '记忆力惊人，记得所有重要的小事',
+      '温柔体贴，让人如沐春风',
+      '默默付出，不求回报',
+      '忠诚可靠，值得信赖'
     ],
     weaknesses: [
-      '容易受伤',
-      '不敢表达需求',
-      '过度付出',
-      '太传统'
+      '太容易受伤，玻璃心',
+      '不敢表达需求，总是压抑自己',
+      '过度付出，容易累坏自己',
+      '太传统，难以接受新事物'
     ],
-    loveStyle: '守护天使型，默默守护不求回报。',
+    loveStyle: '你是"守护天使型恋人"，默默付出不求回报，但也要学会被爱。',
     bestMatch: {
-      type: 'ESTP',
+      type: 'ESTP 及时行乐派',
       reason: 'TA能带你走出舒适区'
     },
     avoid: {
-      type: 'ENTP',
-      reason: 'TA太跳跃，你跟不上'
+      type: 'ENTP 脑洞辩论家',
+      reason: 'TA太跳跃，你跟不上节奏'
     },
-    advice: '学会说出需求，别总是压抑自己。'
+    advice: '学会表达需求，真正爱你的人会很乐意满足你。'
   },
 
   INFJ: {
-    name: '提倡者型',
+    name: '灵魂伴侣型',
     emoji: '🔮',
-    subtitle: '追求灵魂契合的理想主义者',
-    keywords: ['深度', '理想', '洞察', '完美'],
-    description: `你追求灵魂层面的连接。
+    subtitle: '我在寻找灵魂层面的共鸣',
+    keywords: ['理想主义', '深度连接', '神秘感', '完美主义'],
+    description: `你谈恋爱追求的是"灵魂契合"。
 
-<strong>核心特质：理想主义、洞察力强、追求深度。</strong>
+<strong>你的恋爱关键词：深度、理想、神秘。</strong>
 
-你不满足于表面的甜蜜，你想要深入灵魂的对话。肤浅的恋爱你看不上。
+你不满足于表面的甜蜜，你想要深入灵魂的对话。你希望和对方聊人生、聊梦想、聊存在的意义。肤浅的恋爱你看不上。
 
-<div class="quote-box">"我觉得我们在精神层面有很深的连接。"——你的标准。</div>
+<div class="quote-box">"我感觉我们在精神层面有很深的连接。"——这是你的择偶标准。</div>
 
-优点是深刻、有深度。缺点是期待太高，容易失望。
+优点是深刻、有深度，能给对方精神支持。缺点是期待太高,容易失望。
 
-建议：接受"普通的快乐"也很珍贵。`,
+温柔提醒：有时候"普通的快乐"也很珍贵。`,
     strengths: [
-      '洞察力强',
-      '追求深度',
-      '有理想',
-      '忠诚专一'
+      '洞察力强，能看透对方的内心',
+      '追求深度，让恋爱充满意义',
+      '有理想，能激励对方成长',
+      '忠诚专一，认定了就是一辈子'
     ],
     weaknesses: [
-      '期待过高',
-      '过于神秘',
-      '容易受伤',
-      '想太多'
+      '期待太高，现实中很难找到"完美伴侣"',
+      '太神秘，让人捉摸不透',
+      '容易受伤，对背叛零容忍',
+      '想太多，容易陷入自我怀疑'
     ],
-    loveStyle: '灵魂伴侣型，追求精神契合。',
+    loveStyle: '你是"灵魂伴侣型恋人"，追求精神契合，但也要接受"不完美"。',
     bestMatch: {
-      type: 'ENTP',
-      reason: '能进行高质量对话'
+      type: 'ENTP 脑洞辩论家',
+      reason: '你们能进行高质量的精神交流'
     },
     avoid: {
-      type: 'ESTP',
+      type: 'ESTP 及时行乐派',
       reason: 'TA太肤浅，你看不上'
     },
-    advice: '降低标准，接受不完美。'
+    advice: '降低期待，享受"普通但真实"的爱情。'
   },
 
   INTJ: {
-    name: '建筑师型',
-    emoji: '🧩',
-    subtitle: '理性独立的策略家',
-    keywords: ['理性', '独立', '完美', '战略'],
-    description: `你用逻辑分析爱情。
+    name: '冷静策划师型',
+    emoji: '🧊',
+    subtitle: '爱情也需要精密计算',
+    keywords: ['理性冷静', '独立自主', '完美主义', '战略思维'],
+    description: `你的恋爱观可以总结为："高效、理性、有计划"。
 
-<strong>核心特质：理性、独立、有标准。</strong>
+<strong>你的恋爱关键词：独立、理性、标准。</strong>
 
-你有一套完整的择偶标准，不符合的直接pass。你不会为了恋爱降低标准。
+你有一套完整的择偶标准，符合的才考虑，不符合的直接pass。你不会为了恋爱降低自己的标准，也不会因为孤独就随便找个人。
 
-<div class="quote-box">"我们需要分析一下这段关系的可行性。"——你的发言。</div>
+<div class="quote-box">"我觉得我们需要冷静分析一下这段关系的可行性。"——你的日常发言。</div>
 
-优点是理性、独立、有主见。缺点是太冷淡，缺少温度。
+优点是理性、独立、有主见。缺点是太冷淡，缺少情感温度。
 
-建议：爱情不是数学题，有时感性也不错。`,
+温柔提醒：爱情不是数学题，有时候"不讲道理"也挺好。`,
     strengths: [
-      '理性决策',
-      '独立自主',
-      '有计划',
-      '忠诚可靠'
+      '理性决策，不会被激情冲昏头',
+      '独立自主，不依赖对方',
+      '有计划，目标明确',
+      '忠诚可靠，认真对待感情'
     ],
     weaknesses: [
-      '过于冷淡',
-      '标准太高',
-      '不够浪漫',
-      '太独立'
+      '太冷淡，缺少情感表达',
+      '标准太高，很难找到合适的人',
+      '不够浪漫，觉得浪漫很无聊',
+      '太独立，让对方觉得"不被需要"'
     ],
-    loveStyle: '理性主义恋人，用逻辑经营感情。',
+    loveStyle: '你是"理性主义恋人"，用逻辑经营感情，但偶尔也需要点感性。',
     bestMatch: {
-      type: 'ENFP',
+      type: 'ENFP 自由梦想家',
       reason: 'TA能融化你的冰山'
     },
     avoid: {
-      type: 'ESFJ',
+      type: 'ESFJ 暖心守护型',
       reason: 'TA太情绪化，你受不了'
     },
-    advice: '学会表达情感，说句"我爱你"。'
+    advice: '学会表达情感，偶尔说句"我爱你"不会掉价。'
   },
 
   ISTP: {
-    name: '鉴赏家型',
+    name: '冷静技术宅型',
     emoji: '🔧',
-    subtitle: '少说多做的实干家',
-    keywords: ['实际', '冷静', '独立', '解决'],
-    description: `你信奉"行动胜于语言"。
+    subtitle: '我不太会说但我会做',
+    keywords: ['实际行动', '冷静理性', '独立空间', '问题解决者'],
+    description: `你的爱情观：少说多做，有事说事。
 
-<strong>核心特质：实际、冷静、独立。</strong>
+<strong>你的恋爱关键词：独立、实际、冷静。</strong>
 
-你不会说甜言蜜语，但你会默默修好对方的电脑、解决各种实际问题。
+你不太会说甜言蜜语，但你会默默修好对方的电脑、组装家具、解决各种实际问题。你觉得"我帮你修好了"比"我爱你"更有说服力。
 
 <div class="quote-box">"别哭了，我帮你看看怎么解决。"——你的安慰方式。</div>
 
-优点是超级实用，能解决问题。缺点是太冷淡，情商不高。
+优点是超级实用，能解决一切技术问题。缺点是太冷淡，情商感人。
 
-建议：有时对方要的不是解决方案，而是拥抱。`,
+温柔提醒：有时候对方要的不是"解决方案"，而是"抱抱"。`,
     strengths: [
-      '动手能力强',
-      '冷静理性',
-      '给足空间',
-      '务实'
+      '动手能力强，什么都能修',
+      '冷静理性，不会情绪化',
+      '给对方充分的独立空间',
+      '低调务实，不玩虚的'
     ],
     weaknesses: [
-      '情商较低',
-      '太独立',
-      '不爱交流',
-      '冷淡'
+      '情商低，不懂浪漫',
+      '太独立，让对方觉得"不被需要"',
+      '不爱交流，有事憋着不说',
+      '冷淡，缺少情感回应'
     ],
-    loveStyle: '技术宅型，用行动表达爱。',
+    loveStyle: '你是"技术宅型恋人"，用行动表达爱，但也要学会语言表达。',
     bestMatch: {
-      type: 'ESFJ',
-      reason: 'TA能温暖你'
+      type: 'ESFJ 暖心守护型',
+      reason: 'TA能温暖你的冷漠'
     },
     avoid: {
-      type: 'ENFJ',
+      type: 'ENFJ 恋爱导师型',
       reason: 'TA话太多，你受不了'
     },
-    advice: '学会语言表达，"我爱你"不难说。'
+    advice: '学会语言表达，"我爱你"三个字不难说。'
   },
 
   ISFP: {
-    name: '探险家型',
+    name: '温柔艺术家型',
     emoji: '🎨',
-    subtitle: '温柔自由的艺术家',
-    keywords: ['温柔', '艺术', '自由', '感性'],
-    description: `你追求温柔且自由的爱。
+    subtitle: '我想要温柔且自由的爱',
+    keywords: ['温柔感性', '艺术气质', '活在当下', '自由灵魂'],
+    description: `你对爱情的期待是：温柔、自由、美好。
 
-<strong>核心特质：温柔、感性、需要自由。</strong>
+<strong>你的恋爱关键词：温柔、感性、自由。</strong>
 
-你不喜欢被约束，你希望恋爱像春风一样自然。你会用自己的方式表达爱。
+你不喜欢被约束，你希望恋爱像春风一样温柔自然。你会用自己的方式表达爱：画画、写信、做手工、唱歌……
 
-<div class="quote-box">"我给你画了一幅画。"——你的表白方式。</div>
+<div class="quote-box">"我给你画了一幅画，希望你喜欢。"——你的表白方式。</div>
 
-优点是温柔浪漫，有艺术气息。缺点是太敏感，容易受伤。
+优点是温柔浪漫，充满艺术气息。缺点是太敏感，容易玻璃心。
 
-建议：别太在意别人看法，做自己就好。`,
+温柔提醒：别太在意别人的看法，做自己就好。`,
     strengths: [
-      '温柔体贴',
-      '有艺术气质',
-      '活在当下',
-      '包容性强'
+      '温柔体贴，让人如沐春风',
+      '有艺术气质，浪漫满分',
+      '活在当下，享受每个瞬间',
+      '包容性强，不会强迫对方'
     ],
     weaknesses: [
-      '过于敏感',
-      '逃避冲突',
-      '缺乏规划',
-      '依赖情绪'
+      '太敏感，容易受伤',
+      '逃避冲突，有事不说',
+      '缺乏规划，过于随性',
+      '依赖情绪，不够理性'
     ],
-    loveStyle: '艺术家型，用温柔经营爱情。',
+    loveStyle: '你是"艺术家型恋人"，用温柔和美感经营爱情，但也要学会面对现实。',
     bestMatch: {
-      type: 'ESTJ',
-      reason: 'TA能给你安全感'
+      type: 'ESTJ 霸总恋爱型',
+      reason: 'TA能给你安全感和稳定'
     },
     avoid: {
-      type: 'ENTJ',
+      type: 'ENTJ 战略恋爱型',
       reason: 'TA太强势，会压制你'
     },
-    advice: '学会表达需求，别总委屈自己。'
+    advice: '学会表达需求，别总是委屈自己迁就对方。'
   },
 
   INFP: {
-    name: '调停者型',
+    name: '温柔梦想家型',
     emoji: '🌙',
-    subtitle: '理想主义的梦想家',
-    keywords: ['理想', '真诚', '深情', '浪漫'],
-    description: `你对爱情有完美的幻想。
+    subtitle: '我在等一个懂我的人',
+    keywords: ['理想主义', '情感丰富', '真诚纯粹', '浪漫幻想'],
+    description: `你对爱情有近乎完美的幻想。
 
-<strong>核心特质：理想主义、真诚、深情。</strong>
+<strong>你的恋爱关键词：理想、真诚、深情。</strong>
 
-你在等一个能真正懂你的人。你不愿将就，宁愿单身也不凑合。
+你相信童话般的爱情，你在等一个能懂你、理解你、欣赏你的人。你不愿意将就，宁愿单身也不要凑合。
 
-<div class="quote-box">"我想要的是灵魂伴侣，不是一段关系。"——你的宣言。</div>
+<div class="quote-box">"我想要的不是一段关系，而是一个灵魂伴侣。"——你的择偶宣言。</div>
 
-优点是真诚深情，全心全意。缺点是太理想化，容易失望。
+优点是真诚深情，遇到对的人会全心全意。缺点是太理想化，容易失望。
 
-建议：完美的人不存在，接纳不完美。`,
+温柔提醒：完美的人不存在，接纳不完美也是一种成熟。`,
     strengths: [
-      '真诚纯粹',
-      '情感丰富',
-      '理想主义',
-      '忠诚专一'
+      '真诚纯粹，不玩套路',
+      '情感丰富，能给对方深度陪伴',
+      '理想主义，追求精神契合',
+      '忠诚专一，认定了就不会变'
     ],
     weaknesses: [
-      '过于理想化',
-      '玻璃心',
-      '逃避现实',
-      '不够主动'
+      '太理想化，对现实失望',
+      '玻璃心，容易受伤',
+      '逃避现实，活在幻想里',
+      '不够主动，总是等待'
     ],
-    loveStyle: '梦想家型，追求完美的爱情。',
+    loveStyle: '你是"梦想家型恋人"，追求完美的爱情，但也要学会接受不完美。',
     bestMatch: {
-      type: 'ENTJ',
-      reason: 'TA能帮你落地梦想'
+      type: 'ENTJ 战略恋爱型',
+      reason: 'TA能帮你把梦想落地'
     },
     avoid: {
-      type: 'ESTP',
+      type: 'ESTP 及时行乐派',
       reason: 'TA太现实，你受不了'
     },
-    advice: '降低期待，享受真实的幸福。'
+    advice: '降低期待，享受"不完美但真实"的幸福。'
   },
 
   INTP: {
-    name: '逻辑学家型',
+    name: '逻辑分析师型',
     emoji: '🤔',
-    subtitle: '理性思考的分析师',
-    keywords: ['理性', '思考', '独立', '逻辑'],
-    description: `你用逻辑理解爱情。
+    subtitle: '我需要先理解爱情的运作机制',
+    keywords: ['理性思考', '独立思考', '好奇探索', '逻辑至上'],
+    description: `你谈恋爱就像做科研。
 
-<strong>核心特质：理性、独立思考、好奇。</strong>
+<strong>你的恋爱关键词：逻辑、分析、独立。</strong>
 
-你会分析恋爱的运作机制，研究两个人的兼容性。你的脑子永远在思考"为什么"。
+你会分析恋爱关系的运作机制，研究两个人的兼容性，甚至会用理论模型解释感情问题。你的脑子里永远在思考"为什么"。
 
 <div class="quote-box">"从逻辑上讲，我们应该……"——你的口头禅。</div>
 
-优点是理性、独立、有趣。缺点是太理性，缺少温度。
+优点是理性、独立、有趣。缺点是太理性，缺少情感温度。
 
-建议:爱情不是实验，有时不讲逻辑也好。`,
+温柔提醒：爱情不是实验，有时候"不讲逻辑"也挺好。`,
     strengths: [
-      '理性分析',
-      '独立思考',
-      '好奇心强',
-      '尊重空间'
+      '理性分析，不会盲目冲动',
+      '独立思考，有主见',
+      '好奇心强，充满趣味',
+      '尊重对方，给足空间'
     ],
     weaknesses: [
-      '过于理性',
-      '活在脑子里',
-      '社交恐惧',
-      '拖延症'
+      '太理性，缺少情感表达',
+      '活在脑子里，不够实际',
+      '社交恐惧，不爱见人',
+      '拖延症，什么都想等等看'
     ],
-    loveStyle: '学者型，用逻辑理解爱情。',
+    loveStyle: '你是"学者型恋人"，用逻辑理解爱情，但也要学会用心感受。',
     bestMatch: {
-      type: 'ENFJ',
-      reason: 'TA能带你感受世界'
+      type: 'ENFJ 恋爱导师型',
+      reason: 'TA能带你走出脑子，感受世界'
     },
     avoid: {
-      type: 'ESFP',
+      type: 'ESFP 快乐享乐派',
       reason: 'TA太感性，你理解不了'
     },
-    advice: '学会表达情感，跟着感觉走。'
+    advice: '学会表达情感，偶尔放下逻辑，跟着感觉走。'
   },
 
   ESTP: {
-    name: '企业家型',
-    emoji: '⚡',
-    subtitle: '活在当下的行动派',
-    keywords: ['当下', '冒险', '直接', '行动'],
-    description: `你享受恋爱的激情。
+    name: '及时行乐派型',
+    emoji: '🎉',
+    subtitle: '人生得意须尽欢',
+    keywords: ['活在当下', '冒险刺激', '直接爽快', '行动派'],
+    description: `你的恋爱观：开心就好，不想那么多。
 
-<strong>核心特质：活在当下、冒险、直接。</strong>
+<strong>你的恋爱关键词：快乐、刺激、当下。</strong>
 
-你喜欢新鲜刺激的约会，你觉得恋爱就是要开心。你不喜欢想太远。
+你享受恋爱的激情和快乐，你喜欢新鲜刺激的约会，你觉得恋爱就是要开心。你不喜欢想太远，活在当下最重要。
 
-<div class="quote-box">"走，带你去个好玩的地方！"——你的日常。</div>
+<div class="quote-box">"走，带你去个好玩的地方！"——你的约会日常。</div>
 
-优点是有趣、有活力。缺点是太冲动，缺少规划。
+优点是有趣、活力四射、充满激情。缺点是太冲动，缺少长远规划。
 
-建议：享受当下的同时，偶尔想想未来。`,
+温柔提醒：享受当下的同时，偶尔也想想未来。`,
     strengths: [
-      '有趣好玩',
-      '行动力强',
-      '活在当下',
-      '直接爽快'
+      '有趣好玩，永远不无聊',
+      '行动力强，说走就走',
+      '活在当下，不纠结过去',
+      '直接爽快，不玩心机'
     ],
     weaknesses: [
-      '过于冲动',
-      '缺乏规划',
-      '容易厌倦',
-      '不够稳定'
+      '太冲动，容易做错决定',
+      '缺乏规划，走一步看一步',
+      '喜新厌旧，容易腻',
+      '不够稳定，让人没安全感'
     ],
-    loveStyle: '快乐主义恋人，享受激情。',
+    loveStyle: '你是"快乐主义恋人"，享受恋爱的激情，但也要学会承诺和稳定。',
     bestMatch: {
-      type: 'ISFJ',
-      reason: 'TA能给你稳定'
+      type: 'ISFJ 默默守护型',
+      reason: 'TA能给你稳定和温暖'
     },
     avoid: {
-      type: 'INFJ',
+      type: 'INFJ 灵魂伴侣型',
       reason: 'TA想太多，你受不了'
     },
-    advice: '学会规划，给对方安全感。'
+    advice: '学会规划未来，给对方一点安全感。'
   },
 
   ESFP: {
-    name: '表演者型',
-    emoji: '🎭',
-    subtitle: '快乐的制造机',
-    keywords: ['开朗', '热情', '享受', '社交'],
-    description: `你是行走的快乐源泉。
+    name: '快乐制造机型',
+    emoji: '🎊',
+    subtitle: '和我在一起你会很快乐',
+    keywords: ['开朗活泼', '情感外露', '享受生活', '社交蝴蝶'],
+    description: `你就是行走的快乐源泉。
 
-<strong>核心特质：开朗、热情、享受生活。</strong>
+<strong>你的恋爱关键词：快乐、热情、分享。</strong>
 
-你的恋爱就像派对，充满欢笑。你会带对方体验各种新鲜事物。
+你的恋爱就像一场派对，充满欢声笑语。你会带着对方吃喝玩乐，体验各种新鲜事物。你觉得恋爱最重要的就是开心。
 
-<div class="quote-box">"哈哈笑死我了，你看这个！"——你的日常。</div>
+<div class="quote-box">"哈哈哈笑死我了，你看这个！"——你的日常。</div>
 
 优点是开朗热情，感染力强。缺点是太情绪化，缺少深度。
 
-建议：快乐之外，也需要深度交流。`,
+温柔提醒：快乐很重要，但深度交流也很重要。`,
     strengths: [
-      '超级开朗',
-      '热情大方',
-      '享受生活',
-      '社交能力强'
+      '超级开朗，能带动气氛',
+      '热情大方，让人感到被重视',
+      '享受生活，懂得制造浪漫',
+      '社交能力强，朋友多'
     ],
     weaknesses: [
-      '情绪化',
-      '缺少深度',
-      '注意力分散',
-      '不够稳定'
+      '太情绪化，喜怒无常',
+      '缺少深度，只追求表面快乐',
+      '注意力分散，容易分心',
+      '不够稳定，让人没安全感'
     ],
-    loveStyle: '快乐天使型，用欢笑填满生活。',
+    loveStyle: '你是"快乐天使型恋人"，用欢笑填满生活，但也要学会深度交流。',
     bestMatch: {
-      type: 'ISTJ',
-      reason: 'TA能给你稳定生活'
+      type: 'ISTJ 靠谱稳定型',
+      reason: 'TA能给你稳定的生活'
     },
     avoid: {
-      type: 'INTJ',
+      type: 'INTJ 冷静策划师型',
       reason: 'TA太冷，你热不起来'
     },
-    advice: '学会安静，享受深度交流。'
+    advice: '学会安静下来，享受深度交流的美好。'
   },
 
   ENFP: {
-    name: '竞选者型',
+    name: '自由梦想家型',
     emoji: '🦋',
-    subtitle: '自由热情的梦想家',
-    keywords: ['热情', '自由', '想象', '真诚'],
-    description: `你像一只彩色蝴蝶。
+    subtitle: '我想要自由且深情的爱',
+    keywords: ['热情洋溢', '自由灵魂', '充满想象', '真诚可爱'],
+    description: `你就像一只彩色的蝴蝶，自由又美丽。
 
-<strong>核心特质：热情、自由、充满想象。</strong>
+<strong>你的恋爱关键词：自由、热情、真诚。</strong>
 
-你对爱情充满幻想，你需要一个能理解你、支持你的人。
+你对爱情充满幻想，你希望和对方一起探索世界、体验人生。你不喜欢被束缚，你需要一个能理解你、支持你、和你一起疯的人。
 
-<div class="quote-box">"我们一起去看世界吧！"——你的宣言。</div>
+<div class="quote-box">"我们一起去看世界吧！"——你的恋爱宣言。</div>
 
-优点是热情真诚，充满活力。缺点是太跳脱，缺少稳定。
+优点是热情真诚，充满活力。缺点是太跳脱，缺少稳定性。
 
-建议：自由重要，但承诺也重要。`,
+温柔提醒：自由很重要，但承诺也很重要。`,
     strengths: [
-      '热情洋溢',
-      '真诚可爱',
-      '充满想象',
-      '善于沟通'
+      '热情洋溢，感染力强',
+      '真诚可爱，让人喜欢',
+      '充满想象，浪漫满分',
+      '善于沟通，能理解对方'
     ],
     weaknesses: [
-      '太跳脱',
-      '三分钟热度',
-      '逃避责任',
-      '理想化'
+      '太跳脱，缺少规划',
+      '三分钟热度，容易腻',
+      '逃避责任，不想被束缚',
+      '理想化，对现实失望'
     ],
-    loveStyle: '自由精灵型，追求自由和激情。',
+    loveStyle: '你是"自由精灵型恋人"，追求自由和激情，但也要学会承诺和稳定。',
     bestMatch: {
-      type: 'INTJ',
-      reason: 'TA能帮你落地梦想'
+      type: 'INTJ 冷静策划师型',
+      reason: 'TA能帮你把梦想落地'
     },
     avoid: {
-      type: 'ISTJ',
-      reason: 'TA太传统，限制你'
+      type: 'ISTJ 靠谱稳定型',
+      reason: 'TA太传统，限制你的自由'
     },
     advice: '学会承诺，自由和责任可以并存。'
   },
 
   ENTP: {
-    name: '辩论家型',
+    name: '脑洞辩论家型',
     emoji: '💡',
-    subtitle: '聪明机智的挑战者',
-    keywords: ['聪明', '辩论', '创意', '挑战'],
-    description: `你的恋爱像辩论赛。
+    subtitle: '我们可以辩论一整夜',
+    keywords: ['聪明机智', '辩论成瘾', '创意无限', '挑战权威'],
+    description: `你的恋爱就像一场永不停歇的辩论赛。
 
-<strong>核心特质：聪明、爱辩论、有创意。</strong>
+<strong>你的恋爱关键词：智慧、辩论、创意。</strong>
 
-你享受思想碰撞，你喜欢辩论、讨论。你觉得"能聊得来"最重要。
+你享受和对方的思想碰撞，你喜欢辩论、讨论、交流各种观点。你觉得"能和我聊得来"是择偶的首要标准。
 
-<div class="quote-box">"我觉得你这个观点有问题，来辩论一下！"——你的日常。</div>
+<div class="quote-box">"我觉得你这个观点有问题，我们来辩论一下！"——你的日常。</div>
 
-优点是聪明有趣，充满创意。缺点是太爱杠，容易伤人。
+优点是聪明有趣，充满创意。缺点是太爱杠，容易把天聊死。
 
-建议：恋爱不是辩论赛，适可而止。`,
+温柔提醒：恋爱不是辩论赛，偶尔认个怂也挺好。`,
     strengths: [
-      '聪明机智',
-      '充满创意',
-      '善于沟通',
-      '勇于挑战'
+      '聪明机智，思维敏捷',
+      '充满创意，永远有新点子',
+      '善于沟通，能聊各种话题',
+      '不墨守成规，勇于挑战'
     ],
     weaknesses: [
-      '太爱辩论',
-      '不够稳定',
-      '缺少耐心',
-      '不够温柔'
+      '太爱辩论，容易吵架',
+      '不够稳定，总想尝试新的',
+      '缺少耐心，容易厌倦',
+      '不够温柔，容易伤人'
     ],
-    loveStyle: '辩论家型，享受思想碰撞。',
+    loveStyle: '你是"辩论家型恋人"，享受思想碰撞，但也要学会倾听和认同。',
     bestMatch: {
-      type: 'INFJ',
+      type: 'INFJ 灵魂伴侣型',
       reason: 'TA能跟上你的思维'
     },
     avoid: {
-      type: 'ISFJ',
+      type: 'ISFJ 默默守护型',
       reason: 'TA太温柔，你太强势'
     },
-    advice: '学会适可而止，不是所有事都要辩论。'
+    advice: '学会适可而止，不是所有事都需要辩论。'
   }
 };
 
-// 题目（保持之前的32题）
+// 题目设计（32题，每个维度8题）
 const QUESTIONS = [
   // E/I 维度 (8题)
   {
@@ -1627,6 +1663,7 @@ function goBack() {
 function showResult() {
   document.getElementById('quiz').style.display = 'none';
   
+  // 计算类型
   const type = 
     (answers.E >= answers.I ? 'E' : 'I') +
     (answers.S >= answers.N ? 'S' : 'N') +
@@ -1639,7 +1676,6 @@ function showResult() {
     <div class="result-header">
       <div class="result-emoji">${personality.emoji}</div>
       <div class="result-type">${personality.name}</div>
-      <div class="result-code">${type}</div>
       <div class="result-subtitle">${personality.subtitle}</div>
       <div class="result-tags">
         ${personality.keywords.map(k => `<span class="tag">${k}</span>`).join('')}
@@ -1647,39 +1683,39 @@ function showResult() {
     </div>
     
     <div class="result-card">
-      <div class="card-title">性格特征</div>
+      <div class="card-title">💝 你的恋爱画像</div>
       <div class="result-text">${personality.description}</div>
     </div>
     
     <div class="result-card">
-      <div class="card-title">优势</div>
+      <div class="card-title">✨ 你的恋爱优势</div>
       <ul class="trait-list">
         ${personality.strengths.map(s => `<li>${s}</li>`).join('')}
       </ul>
     </div>
     
     <div class="result-card">
-      <div class="card-title">需要注意</div>
+      <div class="card-title">🌱 需要注意的小毛病</div>
       <ul class="trait-list">
         ${personality.weaknesses.map(w => `<li>${w}</li>`).join('')}
       </ul>
     </div>
     
     <div class="result-card">
-      <div class="card-title">恋爱风格</div>
+      <div class="card-title">💕 你的恋爱风格</div>
       <div class="result-text">${personality.loveStyle}</div>
     </div>
     
     <div class="result-card">
-      <div class="card-title">关系匹配</div>
+      <div class="card-title">💑 恋爱匹配度</div>
       <div class="match-grid">
         <div class="match-card good">
-          <div class="match-label">建议搭配</div>
+          <div class="match-label">最佳CP</div>
           <div class="match-type">${personality.bestMatch.type}</div>
           <div class="match-desc">${personality.bestMatch.reason}</div>
         </div>
         <div class="match-card avoid">
-          <div class="match-label">谨慎考虑</div>
+          <div class="match-label">慎重考虑</div>
           <div class="match-type">${personality.avoid.type}</div>
           <div class="match-desc">${personality.avoid.reason}</div>
         </div>
@@ -1687,22 +1723,23 @@ function showResult() {
     </div>
     
     <div class="result-card">
-      <div class="card-title">建议</div>
+      <div class="card-title">💌 温柔小建议</div>
       <div class="quote-box">${personality.advice}</div>
     </div>
     
     <div class="share-card">
-      <div class="share-title">分享你的测试结果</div>
+      <div class="share-title">分享你的恋爱人格 💕</div>
       <div class="share-text">
-        生成结果卡片，分享给朋友
+        生成专属结果卡片<br>
+        看看你的朋友都是什么人格
       </div>
       <button class="btn-share" onclick="saveImage()">
-        保存分享卡片
+        📸 保存分享卡片
       </button>
     </div>
     
     <button class="btn-retry" onclick="retry()">
-      重新测试
+      🔄 重新测试
     </button>
   `;
   
@@ -1734,69 +1771,112 @@ function saveImage() {
   canvas.width = W;
   canvas.height = H;
   
-  // 简洁背景
-  ctx.fillStyle = '#f8f9fa';
+  // 背景渐变
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, '#fff5f7');
+  grad.addColorStop(1, '#fef3ff');
+  ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
+  
+  // 装饰圆点
+  ctx.fillStyle = 'rgba(255, 107, 157, 0.08)';
+  for (let i = 0; i < 20; i++) {
+    const x = Math.random() * W;
+    const y = Math.random() * H;
+    const r = 20 + Math.random() * 60;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
   
   let y = 100;
   
   // Emoji
-  ctx.font = 'bold 100px Arial';
+  ctx.font = 'bold 120px Arial';
   ctx.textAlign = 'center';
   ctx.fillText(personality.emoji, W/2, y);
   
-  y += 120;
+  y += 140;
   
   // 类型名称
-  ctx.fillStyle = '#24292e';
-  ctx.font = 'bold 52px "Noto Sans SC", sans-serif';
+  ctx.fillStyle = '#2d1b3d';
+  ctx.font = 'bold 56px "Noto Sans SC", sans-serif';
   ctx.fillText(personality.name, W/2, y);
   
-  y += 60;
-  
-  // 类型代码
-  ctx.fillStyle = '#586069';
-  ctx.font = '400 32px Inter, sans-serif';
-  ctx.fillText(type, W/2, y);
-  
-  y += 80;
+  y += 70;
   
   // 副标题
-  ctx.fillStyle = '#6a737d';
-  ctx.font = '400 26px "Noto Sans SC", sans-serif';
+  ctx.fillStyle = '#6b5b7a';
+  ctx.font = '400 28px "Noto Sans SC", sans-serif';
   ctx.fillText(personality.subtitle, W/2, y);
   
-  y += 100;
+  y += 90;
+  
+  // 关键词标签
+  const tags = personality.keywords;
+  const tagY = y;
+  const tagSpacing = 20;
+  const tagHeight = 50;
+  
+  // 简单排列标签（两行）
+  const row1 = tags.slice(0, 2);
+  const row2 = tags.slice(2, 4);
+  
+  [row1, row2].forEach((rowTags, rowIdx) => {
+    const totalWidth = rowTags.length * 160 + (rowTags.length - 1) * tagSpacing;
+    let x = (W - totalWidth) / 2;
+    const currentY = tagY + rowIdx * (tagHeight + tagSpacing);
+    
+    rowTags.forEach(tag => {
+      // 标签背景
+      const tagGrad = ctx.createLinearGradient(x, currentY, x + 160, currentY + tagHeight);
+      tagGrad.addColorStop(0, '#ffe8f0');
+      tagGrad.addColorStop(1, '#f3e8ff');
+      ctx.fillStyle = tagGrad;
+      roundRect(ctx, x, currentY, 160, tagHeight, 25);
+      ctx.fill();
+      
+      // 标签文字
+      ctx.fillStyle = '#ff6b9d';
+      ctx.font = 'bold 20px "Noto Sans SC", sans-serif';
+      ctx.fillText(tag, x + 80, currentY + 32);
+      
+      x += 160 + tagSpacing;
+    });
+  });
+  
+  y += 140;
   
   // 白色卡片
   ctx.fillStyle = 'white';
-  roundRect(ctx, 50, y, W - 100, 500, 16);
-  ctx.shadowColor = 'rgba(0,0,0,0.1)';
+  roundRect(ctx, 50, y, W - 100, 450, 24);
+  ctx.shadowColor = 'rgba(167, 139, 250, 0.2)';
   ctx.shadowBlur = 20;
-  ctx.shadowOffsetY = 4;
+  ctx.shadowOffsetY = 10;
   ctx.fill();
   ctx.shadowColor = 'transparent';
   
   y += 50;
   
   // 恋爱风格
-  ctx.fillStyle = '#24292e';
-  ctx.font = 'bold 28px "Noto Sans SC", sans-serif';
+  ctx.fillStyle = '#2d1b3d';
+  ctx.font = 'bold 26px "Noto Sans SC", sans-serif';
   ctx.textAlign = 'left';
-  ctx.fillText('恋爱风格', 80, y);
+  ctx.fillText('💕 你的恋爱风格', 80, y);
   
   y += 50;
   
-  ctx.fillStyle = '#586069';
+  // 多行文本
+  ctx.fillStyle = '#6b5b7a';
   ctx.font = '400 22px "Noto Sans SC", sans-serif';
   wrapText(ctx, personality.loveStyle, 80, y, W - 160, 36);
   
-  y += 150;
+  y += 200;
   
-  // 建议搭配
-  ctx.fillStyle = '#24292e';
-  ctx.font = 'bold 28px "Noto Sans SC", sans-serif';
-  ctx.fillText('建议搭配', 80, y);
+  // 最佳CP
+  ctx.fillStyle = '#2d1b3d';
+  ctx.font = 'bold 26px "Noto Sans SC", sans-serif';
+  ctx.fillText('💑 最佳CP', 80, y);
   
   y += 50;
   
@@ -1806,21 +1886,24 @@ function saveImage() {
   
   y += 40;
   
-  ctx.fillStyle = '#059669';
+  ctx.fillStyle = '#10b981';
   ctx.font = '400 20px "Noto Sans SC", sans-serif';
   wrapText(ctx, personality.bestMatch.reason, 80, y, W - 160, 32);
   
-  y += 200;
+  y += 160;
   
   // 底部信息
-  ctx.fillStyle = '#6a737d';
+  ctx.fillStyle = '#9d8baa';
   ctx.font = '400 20px "Noto Sans SC", sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('恋爱16型人格测试 · 长按保存', W/2, y);
+  ctx.fillText('恋爱16型人格测试 · 长按保存分享', W/2, y);
+  
+  y += 40;
+  ctx.fillText('温柔吐槽 · 价值观正 · 仅供娱乐', W/2, y);
   
   // 下载
   const link = document.createElement('a');
-  link.download = `恋爱人格_${type}_${personality.name}.png`;
+  link.download = `恋爱人格_${personality.name}.png`;
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
@@ -1840,17 +1923,17 @@ function roundRect(ctx, x, y, w, h, r) {
 }
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-  const chars = text.split('');
+  const words = text.split('');
   let line = '';
   let currentY = y;
   
-  for (let i = 0; i < chars.length; i++) {
-    const testLine = line + chars[i];
+  for (let n = 0; n < words.length; n++) {
+    const testLine = line + words[n];
     const metrics = ctx.measureText(testLine);
     
-    if (metrics.width > maxWidth && i > 0) {
+    if (metrics.width > maxWidth && n > 0) {
       ctx.fillText(line, x, currentY);
-      line = chars[i];
+      line = words[n];
       currentY += lineHeight;
     } else {
       line = testLine;

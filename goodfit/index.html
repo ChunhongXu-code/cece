@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>活力运动日志 🌿</title>
+    <style>
+        :root {
+            /* 低饱和度色彩调色板 */
+            --bg-color: #F7F5F0;        /* 暖白背景 */
+            --text-main: #5C5855;       /* 柔和深灰文字 */
+            --text-light: #8C8681;      /* 浅灰文字 */
+            
+            --card-mood: #FDE2E4;       /* 柔粉 - 心情 */
+            --card-sleep: #D9E2E8;      /* 灰蓝 - 睡眠 */
+            --card-weight: #E2ECE9;     /* 豆沙绿 - 体重 */
+            --card-arms: #FFE5D9;       /* 浅桃红 - 手臂 */
+            --card-legs: #DFE7FD;       /* 薰衣草蓝 - 腿部 */
+            --card-waist: #F9E2CD;      /* 奶黄 - 腰围 */
+            
+            --btn-color: #C8B6E6;       /* 柔紫 - 提交按钮 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", sans-serif;
+            padding: 20px;
+            padding-bottom: 60px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+            margin-top: 10px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #4A4643;
+        }
+
+        header p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-top: 6px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+        }
+
+        .card:active {
+            transform: scale(0.98);
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 个性化卡片背景色 */
+        .c-mood { background-color: var(--card-mood); }
+        .c-sleep { background-color: var(--card-sleep); }
+        .c-weight { background-color: var(--card-weight); }
+        .c-arms { background-color: var(--card-arms); }
+        .c-legs { background-color: var(--card-legs); }
+        .c-waist { background-color: var(--card-waist); }
+
+        /* 选项组样式 (心情 & 睡眠) */
+        .options-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .option-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            border-radius: 14px;
+            padding: 10px 0;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .option-btn span {
+            font-size: 12px;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .option-btn.active {
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
+        }
+
+        /* 输入框布局 (网格) */
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .input-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-item label {
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: var(--text-main);
+            opacity: 0.8;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 30px 12px 12px;
+            font-size: 16px;
+            color: var(--text-main);
+            font-weight: 600;
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        .input-wrapper input:focus {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .input-wrapper .unit {
+            position: absolute;
+            right: 12px;
+            font-size: 13px;
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        /* 提交按钮 */
+        .submit-btn {
+            width: 100%;
+            background-color: var(--btn-color);
+            color: #fff;
+            border: none;
+            border-radius: 24px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(200, 182, 230, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 8px rgba(200, 182, 230, 0.4);
+        }
+
+        /* 隐藏原生数字输入框的上下箭头 */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>✨ 运动后身体手账</h1>
+        <p>记录今天的汗水与改变，拥抱更好的自己</p>
+    </header>
+
+    <form id="trackerForm">
+        
+        <!-- 心情记录 -->
+        <div class="card c-mood">
+            <div class="card-title">🫧 练后心情</div>
+            <div class="options-group" id="moodGroup">
+                <button type="button" class="option-btn" data-val="tired">😫<span>累瘫了</span></button>
+                <button type="button" class="option-btn" data-val="calm">😌<span>平静</span></button>
+                <button type="button" class="option-btn" data-val="good">😊<span>舒服</span></button>
+                <button type="button" class="option-btn" data-val="awesome">🤩<span>充满活力</span></button>
+            </div>
+            <input type="hidden" id="moodValue" name="mood">
+        </div>
+
+        <!-- 睡眠记录 -->
+        <div class="card c-sleep">
+            <div class="card-title">🌙 昨晚睡眠质量</div>
+            <div class="options-group" id="sleepGroup">
+                <button type="button" class="option-btn" data-val="1">🥱<span>很差</span></button>
+                <button type="button" class="option-btn" data-val="2">😐<span>一般</span></button>
+                <button type="button" class="option-btn" data-val="3">😴<span>还不错</span></button>
+                <button type="button" class="option-btn" data-val="4">🔋<span>满血复活</span></button>
+            </div>
+            <input type="hidden" id="sleepValue" name="sleep">
+        </div>
+
+        <!-- 体重 -->
+        <div class="card c-weight">
+            <div class="card-title">⚖️ 今日体重</div>
+            <div class="input-wrapper">
+                <input type="number" step="0.1" inputmode="decimal" placeholder="输入体重..." id="weight" name="weight">
+                <span class="unit">kg</span>
+            </div>
+        </div>
+
+        <!-- 上肢围度 -->
+        <div class="card c-arms">
+            <div class="card-title">💪 上肢围度</div>
+            <div class="input-grid">
+                <div class="input-item">
+                    <label>大臂围</label>
+                    <div class="input-wrapper">
+                        <input type="number" step="0.1" inputmode="decimal" placeholder="0.0" name="upper_arm">
+                        <span class="unit">cm</span>
+                    </div>
+                </div>
+                <div class="input-item">
+                    <label>小臂围</label>
+                    <div class="input-wrapper">
+                        <input type="number" step="0.1" inputmode="decimal" placeholder="0.0" name="lower_arm">
+                        <span class="unit">cm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 腰围 -->
+        <div class="card c-waist">
+            <div class="card-title">📏 核心腰围</div>
+            <div class="input-wrapper">
+                <input type="number" step="0.1" inputmode="decimal" placeholder="腰部最细处..." name="waist">
+                <span class="unit">cm</span>
+            </div>
+        </div>
+
+        <!-- 下肢围度 -->
+        <div class="card c-legs">
+            <div class="card-title">🦵 下肢围度</div>
+            <div class="input-grid">
+                <div class="input-item">
+                    <label>大腿围</label>
+                    <div class="input-wrapper">
+                        <input type="number" step="0.1" inputmode="decimal" placeholder="0.0" name="thigh">
+                        <span class="unit">cm</span>
+                    </div>
+                </div>
+                <div class="input-item">
+                    <label>小腿围</label>
+                    <div class="input-wrapper">
+                        <input type="number" step="0.1" inputmode="decimal" placeholder="0.0" name="calf">
+                        <span class="unit">cm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">💌 保存今日记录</button>
+    </form>
+
+    <script>
+        // 处理选项按钮的高亮互斥逻辑
+        function setupButtonGroup(groupId, inputId) {
+            const group = document.getElementById(groupId);
+            const buttons = group.querySelectorAll('.option-btn');
+            const hiddenInput = document.getElementById(inputId);
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 移除同组所有 active 状态
+                    buttons.forEach(b => b.classList.remove('active'));
+                    // 为当前按钮添加 active
+                    btn.classList.add('active');
+                    // 赋值给隐藏的表单字段
+                    hiddenInput.value = btn.getAttribute('data-val');
+                });
+            });
+        }
+
+        // 初始化心情和睡眠的选择
+        setupButtonGroup('moodGroup', 'moodValue');
+        setupButtonGroup('sleepGroup', 'sleepValue');
+
+        // 处理表单提交的反馈
+        document.getElementById('trackerForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // 阻止实际提交刷新页面
+            
+            // 简单的动画和提示
+            const btn = document.querySelector('.submit-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = "✨ 记录成功！";
+            btn.style.backgroundColor = "#B2CECA"; // 变绿一点表示成功
+            
+            // 收集数据示例（在控制台可以看到）
+            const formData = new FormData(this);
+            const dataObj = Object.fromEntries(formData.entries());
+            console.log('保存的数据:', dataObj);
+
+            // 1.5秒后恢复按钮状态
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.backgroundColor = "var(--btn-color)";
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

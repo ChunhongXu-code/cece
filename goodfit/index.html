@@ -4,21 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>活力运动日志 🌿</title>
+    <!-- 引入 Chart.js 用于绘制折线图 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             /* 低饱和度色彩调色板 */
-            --bg-color: #F7F5F0;        /* 暖白背景 */
-            --text-main: #5C5855;       /* 柔和深灰文字 */
-            --text-light: #8C8681;      /* 浅灰文字 */
+            --bg-color: #F7F5F0;
+            --text-main: #5C5855;
+            --text-light: #8C8681;
             
-            --card-mood: #FDE2E4;       /* 柔粉 - 心情 */
-            --card-sleep: #D9E2E8;      /* 灰蓝 - 睡眠 */
-            --card-weight: #E2ECE9;     /* 豆沙绿 - 体重 */
-            --card-arms: #FFE5D9;       /* 浅桃红 - 手臂 */
-            --card-legs: #DFE7FD;       /* 薰衣草蓝 - 腿部 */
-            --card-waist: #F9E2CD;      /* 奶黄 - 腰围 */
+            --card-mood: #FDE2E4;
+            --card-sleep: #D9E2E8;
+            --card-weight: #E2ECE9;
+            --card-arms: #FFE5D9;
+            --card-legs: #DFE7FD;
+            --card-waist: #F9E2CD;
+            --card-chart: #FFFFFF;
             
-            --btn-color: #C8B6E6;       /* 柔紫 - 提交按钮 */
+            --btn-color: #C8B6E6;
         }
 
         * {
@@ -31,7 +34,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
             padding: 20px;
             padding-bottom: 60px;
         }
@@ -45,7 +48,6 @@
         header h1 {
             font-size: 24px;
             font-weight: 600;
-            letter-spacing: 1px;
             color: #4A4643;
         }
 
@@ -61,12 +63,7 @@
             padding: 18px;
             margin-bottom: 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-            border: 2px solid transparent;
             transition: transform 0.2s;
-        }
-
-        .card:active {
-            transform: scale(0.98);
         }
 
         .card-title {
@@ -75,18 +72,17 @@
             margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
         }
 
-        /* 个性化卡片背景色 */
         .c-mood { background-color: var(--card-mood); }
         .c-sleep { background-color: var(--card-sleep); }
         .c-weight { background-color: var(--card-weight); }
         .c-arms { background-color: var(--card-arms); }
         .c-legs { background-color: var(--card-legs); }
         .c-waist { background-color: var(--card-waist); }
+        .c-chart { background-color: var(--card-chart); border: 2px solid #F0EEE9;}
 
-        /* 选项组样式 (心情 & 睡眠) */
         .options-group {
             display: flex;
             justify-content: space-between;
@@ -120,16 +116,10 @@
             transform: translateY(-2px);
         }
 
-        /* 输入框布局 (网格) */
         .input-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-        }
-
-        .input-item {
-            display: flex;
-            flex-direction: column;
         }
 
         .input-item label {
@@ -137,6 +127,7 @@
             margin-bottom: 6px;
             color: var(--text-main);
             opacity: 0.8;
+            display: block;
         }
 
         .input-wrapper {
@@ -155,7 +146,6 @@
             color: var(--text-main);
             font-weight: 600;
             outline: none;
-            transition: background 0.3s;
         }
 
         .input-wrapper input:focus {
@@ -170,7 +160,6 @@
             pointer-events: none;
         }
 
-        /* 提交按钮 */
         .submit-btn {
             width: 100%;
             background-color: var(--btn-color);
@@ -181,27 +170,46 @@
             font-size: 16px;
             font-weight: 600;
             letter-spacing: 2px;
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 24px;
             box-shadow: 0 4px 15px rgba(200, 182, 230, 0.4);
             cursor: pointer;
-            transition: all 0.3s;
         }
 
         .submit-btn:active {
             transform: scale(0.96);
-            box-shadow: 0 2px 8px rgba(200, 182, 230, 0.4);
         }
 
-        /* 隐藏原生数字输入框的上下箭头 */
+        /* 下拉菜单样式 */
+        .metric-select {
+            background-color: #F7F5F0;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 14px;
+            color: var(--text-main);
+            font-weight: 500;
+            outline: none;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 220px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .empty-tips {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 13px;
+            margin-top: 30px;
+            display: none;
+        }
+
         input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type="number"] { -moz-appearance: textfield; }
     </style>
 </head>
 <body>
@@ -211,42 +219,58 @@
         <p>记录今天的汗水与改变，拥抱更好的自己</p>
     </header>
 
+    <!-- 趋势图表区 -->
+    <div class="card c-chart">
+        <div class="card-title">
+            <span>📈 数据趋势</span>
+            <select id="chartMetric" class="metric-select">
+                <option value="weight">体重 (kg)</option>
+                <option value="waist">腰围 (cm)</option>
+                <option value="upper_arm">大臂围 (cm)</option>
+                <option value="lower_arm">小臂围 (cm)</option>
+                <option value="thigh">大腿围 (cm)</option>
+                <option value="calf">小腿围 (cm)</option>
+            </select>
+        </div>
+        <div class="chart-container">
+            <canvas id="trendChart"></canvas>
+            <div class="empty-tips" id="emptyTips">还没有足够的数据，快去打卡吧~</div>
+        </div>
+    </div>
+
     <form id="trackerForm">
-        
-        <!-- 心情记录 -->
+        <!-- 心情与睡眠区 -->
         <div class="card c-mood">
             <div class="card-title">🫧 练后心情</div>
             <div class="options-group" id="moodGroup">
                 <button type="button" class="option-btn" data-val="tired">😫<span>累瘫了</span></button>
                 <button type="button" class="option-btn" data-val="calm">😌<span>平静</span></button>
                 <button type="button" class="option-btn" data-val="good">😊<span>舒服</span></button>
-                <button type="button" class="option-btn" data-val="awesome">🤩<span>充满活力</span></button>
+                <button type="button" class="option-btn" data-val="awesome">🤩<span>活力</span></button>
             </div>
             <input type="hidden" id="moodValue" name="mood">
         </div>
 
-        <!-- 睡眠记录 -->
         <div class="card c-sleep">
-            <div class="card-title">🌙 昨晚睡眠质量</div>
+            <div class="card-title">🌙 昨晚睡眠</div>
             <div class="options-group" id="sleepGroup">
-                <button type="button" class="option-btn" data-val="1">🥱<span>很差</span></button>
-                <button type="button" class="option-btn" data-val="2">😐<span>一般</span></button>
-                <button type="button" class="option-btn" data-val="3">😴<span>还不错</span></button>
-                <button type="button" class="option-btn" data-val="4">🔋<span>满血复活</span></button>
+                <button type="button" class="option-btn" data-val="poor">🥱<span>很差</span></button>
+                <button type="button" class="option-btn" data-val="fair">😐<span>一般</span></button>
+                <button type="button" class="option-btn" data-val="good">😴<span>不错</span></button>
+                <button type="button" class="option-btn" data-val="great">🔋<span>满血</span></button>
             </div>
             <input type="hidden" id="sleepValue" name="sleep">
         </div>
 
-        <!-- 体重 -->
+        <!-- 身体数据区 -->
         <div class="card c-weight">
             <div class="card-title">⚖️ 今日体重</div>
             <div class="input-wrapper">
-                <input type="number" step="0.1" inputmode="decimal" placeholder="输入体重..." id="weight" name="weight">
+                <input type="number" step="0.1" inputmode="decimal" placeholder="输入体重..." name="weight">
                 <span class="unit">kg</span>
             </div>
         </div>
 
-        <!-- 上肢围度 -->
         <div class="card c-arms">
             <div class="card-title">💪 上肢围度</div>
             <div class="input-grid">
@@ -267,7 +291,6 @@
             </div>
         </div>
 
-        <!-- 腰围 -->
         <div class="card c-waist">
             <div class="card-title">📏 核心腰围</div>
             <div class="input-wrapper">
@@ -276,7 +299,6 @@
             </div>
         </div>
 
-        <!-- 下肢围度 -->
         <div class="card c-legs">
             <div class="card-title">🦵 下肢围度</div>
             <div class="input-grid">
@@ -301,7 +323,7 @@
     </form>
 
     <script>
-        // 处理选项按钮的高亮互斥逻辑
+        // === 1. UI 交互：选项按钮互斥 ===
         function setupButtonGroup(groupId, inputId) {
             const group = document.getElementById(groupId);
             const buttons = group.querySelectorAll('.option-btn');
@@ -309,42 +331,161 @@
 
             buttons.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // 移除同组所有 active 状态
                     buttons.forEach(b => b.classList.remove('active'));
-                    // 为当前按钮添加 active
                     btn.classList.add('active');
-                    // 赋值给隐藏的表单字段
                     hiddenInput.value = btn.getAttribute('data-val');
                 });
             });
         }
-
-        // 初始化心情和睡眠的选择
         setupButtonGroup('moodGroup', 'moodValue');
         setupButtonGroup('sleepGroup', 'sleepValue');
 
-        // 处理表单提交的反馈
-        document.getElementById('trackerForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // 阻止实际提交刷新页面
+        // === 2. 数据处理与图表渲染 ===
+        let chartInstance = null;
+        const storageKey = 'workout_diary_data';
+        
+        // 颜色映射配置（匹配UI主题）
+        const chartColors = {
+            weight: '#84A98C',     // 豆沙绿
+            waist: '#E5989B',      // 柔粉红
+            upper_arm: '#FDB833',  // 奶黄橘
+            lower_arm: '#FDB833',
+            thigh: '#BDB2FF',      // 薰衣草紫
+            calf: '#BDB2FF'
+        };
+
+        // 获取历史数据
+        function getRecords() {
+            return JSON.parse(localStorage.getItem(storageKey)) || [];
+        }
+
+        // 渲染图表
+        function renderChart() {
+            const metric = document.getElementById('chartMetric').value;
+            const records = getRecords();
             
-            // 简单的动画和提示
+            // 过滤出当前指标有值的数据
+            const validRecords = records.filter(r => r[metric] && !isNaN(parseFloat(r[metric])));
+            
+            const canvas = document.getElementById('trendChart');
+            const emptyTips = document.getElementById('emptyTips');
+
+            if (validRecords.length === 0) {
+                canvas.style.display = 'none';
+                emptyTips.style.display = 'block';
+                if(chartInstance) chartInstance.destroy();
+                return;
+            }
+
+            canvas.style.display = 'block';
+            emptyTips.style.display = 'none';
+
+            // 准备 Chart.js 数据
+            const labels = validRecords.map(r => r.date);
+            const data = validRecords.map(r => parseFloat(r[metric]));
+            const color = chartColors[metric] || '#C8B6E6';
+
+            if (chartInstance) {
+                chartInstance.destroy(); // 销毁旧图表
+            }
+
+            const ctx = canvas.getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: document.querySelector(`option[value="${metric}"]`).text,
+                        data: data,
+                        borderColor: color,
+                        backgroundColor: color + '20', // 添加 20(hex) 透明度
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: color,
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        fill: true,
+                        tension: 0.4 // 贝塞尔曲线，使线条平滑
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }, // 隐藏自带图例
+                        tooltip: {
+                            backgroundColor: 'rgba(92, 88, 85, 0.9)',
+                            padding: 10,
+                            cornerRadius: 8,
+                            displayColors: false
+                        }
+                    },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { 
+                            grid: { color: '#F0EEE9', borderDash: [5, 5] },
+                            beginAtZero: false // 自适应范围
+                        }
+                    }
+                }
+            });
+        }
+
+        // === 3. 表单提交逻辑 ===
+        document.getElementById('trackerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const formData = new FormData(this);
+            const newRecord = {
+                id: Date.now(),
+                // 格式化当前日期为 "7/22 14:30" 格式
+                date: new Date().toLocaleDateString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+            };
+            
+            let hasData = false;
+            for (let [key, value] of formData.entries()) {
+                newRecord[key] = value;
+                if(value.trim() !== '') hasData = true; // 检查是否为空提交
+            }
+
+            if(!hasData) {
+                alert('请至少填写一项数据哦！');
+                return;
+            }
+
+            // 保存到 LocalStorage
+            const records = getRecords();
+            records.push(newRecord);
+            localStorage.setItem(storageKey, JSON.stringify(records));
+
+            // UI 反馈
             const btn = document.querySelector('.submit-btn');
             const originalText = btn.innerHTML;
-            
-            btn.innerHTML = "✨ 记录成功！";
-            btn.style.backgroundColor = "#B2CECA"; // 变绿一点表示成功
-            
-            // 收集数据示例（在控制台可以看到）
-            const formData = new FormData(this);
-            const dataObj = Object.fromEntries(formData.entries());
-            console.log('保存的数据:', dataObj);
+            btn.innerHTML = "✨ 保存成功，棒棒哒！";
+            btn.style.backgroundColor = "#84A98C"; // 变绿
 
-            // 1.5秒后恢复按钮状态
+            // 刷新图表
+            renderChart();
+
+            // 清空表单与状态
+            this.reset();
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('moodValue').value = '';
+            document.getElementById('sleepValue').value = '';
+
             setTimeout(() => {
                 btn.innerHTML = originalText;
                 btn.style.backgroundColor = "var(--btn-color)";
             }, 1500);
         });
+
+        // 下拉菜单切换时重新渲染图表
+        document.getElementById('chartMetric').addEventListener('change', renderChart);
+
+        // 页面加载时初始化图表
+        renderChart();
+
     </script>
 </body>
 </html>

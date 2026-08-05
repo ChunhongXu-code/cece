@@ -1,65 +1,1037 @@
+
+Gemini
+发起新对话
+搜索对话内容
+视频
+库
+新建笔记本
+修改叶面积测定应用功能
+古装情景喜剧分镜脚本
+战斗爆发：赤鳞的攻势
+转基因作物产量品质Meta分析
+卫星地图标注乡镇边界代码
+R语言或网站标注中国乡镇
+中英文摘要内容严重不符
+搭建个人数字图书馆
+间作扩增子数据检索策略
+same_near等的定义
+PRJNA号无数据原因与解决
+SRR文件夹与列表比对脚本
+Meta分析 StudyID 与观测ID
+氮肥用量与NCBI数据
+论文摘要与专刊选择
+运动身体指标记录网页设计
+西农超算 SRR 文件解压教程
+Sample Name与试验处理对应关系
+文献取样、处理与NCBI样品
+Seeking Guidance on Phyllosphere Research
+Chinese Social Media Cover Design
+Chinese Social Media Style Cover
+小红书风格测试宣传图指令
+成人依恋类型与自测
+16 恋爱人格图标设计提示词
+顶尖学者期刊发表分析
+Microbiome Response to Human Footprint
+
+活动记录
+德国美因河畔法兰克福
+根据 IP 地址确定
+更新位置信息
+与 Gemini 对话
+我想修改下1.输出的csv，sheet1就是处理名+总的叶面积指数，sheet2再放现在分的，2.同时色系改成大气的蓝色渐变；3.enter键盘和空格键都能起到enter键的作用；4."完成本株“在当前株叶片的上方，方便按<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+
+  <title>玉米叶面积测定</title>
+
+  <style>
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f0f4f0;color:#222;padding-bottom:40px}
+
+    .container{max-width:460px;margin:0 auto;padding:10px}
+
+    .header{background:linear-gradient(135deg,#2d6a4f,#40916c);color:#fff;text-align:center;padding:12px;border-radius:12px;margin-bottom:10px}
+
+    .header h1{font-size:18px}
+
+    .card{background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+
+    .card h3{font-size:14px;color:#2d6a4f;margin-bottom:8px;border-left:3px solid #2d6a4f;padding-left:7px}
+
+    .form-row{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+
+    .form-row label{font-size:14px;font-weight:600;white-space:nowrap;min-width:50px}
+
+    .form-row input{flex:1;padding:10px 12px;border:1.5px solid #d0d7de;border-radius:9px;font-size:16px;outline:none;background:#fafcff;min-width:0}
+
+    .form-row input:focus{border-color:#2d6a4f;background:#fff}
+
+
+
+    /* 处理+重复同一行 */
+
+    .tr-row{display:flex;gap:6px;margin-bottom:8px;align-items:center}
+
+    .tr-row label{font-size:14px;font-weight:600;white-space:nowrap;min-width:50px}
+
+    .tr-row .treat-input{flex:1.2;padding:10px 12px;border:1.5px solid #d0d7de;border-radius:9px;font-size:16px;outline:none;background:#fafcff;min-width:0}
+
+    .tr-row .rep-label{font-size:14px;font-weight:600;color:#666;padding-left:4px}
+
+    .tr-row .rep-input{width:48px;padding:10px 6px;border:1.5px solid #d0d7de;border-radius:9px;font-size:16px;outline:none;background:#fafcff;text-align:center}
+
+    .tr-row .treat-input:focus,.tr-row .rep-input:focus{border-color:#2d6a4f;background:#fff}
+
+    .rep-btns{display:flex;gap:4px;margin-bottom:8px;padding-left:58px}
+
+    .rep-btn{padding:4px 12px;border-radius:8px;font-size:13px;border:1.5px solid #b7e4c7;background:#fff;color:#2d6a4f;cursor:pointer;font-weight:600;flex:none;min-width:auto}
+
+    .rep-btn.active{background:#2d6a4f;color:#fff;border-color:#2d6a4f}
+
+
+
+    .btn-row{display:flex;gap:8px;flex-wrap:wrap}
+
+    button{flex:1;min-width:80px;padding:11px 8px;border:none;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s}
+
+    button:active{opacity:.7}
+
+    .btn-green{background:#2d6a4f;color:#fff}
+
+    .btn-orange{background:#e76f51;color:#fff}
+
+    .btn-teal{background:#40916c;color:#fff}
+
+    .btn-red{background:#d90429;color:#fff}
+
+    .btn-gray{background:#e9ecef;color:#333}
+
+    .btn-small{flex:none;min-width:auto;padding:5px 10px;font-size:12px;border-radius:7px}
+
+    .leaf-item{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:#f0faf4;border-radius:8px;margin-bottom:5px;font-size:14px}
+
+    .leaf-item .area{font-weight:700;color:#2d6a4f}
+
+    .leaf-item .del{color:#d00;font-weight:700;cursor:pointer;padding:2px 8px}
+
+    .current-total{text-align:center;padding:9px;background:#d8f3dc;border-radius:9px;margin:8px 0;font-size:14px}
+
+    .current-total strong{font-size:20px;color:#1b4332}
+
+    .summary{display:flex;justify-content:space-around;text-align:center}
+
+    .summary .num{font-size:18px;font-weight:700;color:#2d6a4f}
+
+    .summary .lab{font-size:11px;color:#666;margin-top:2px}
+
+    .record{border:1px solid #e8ecf0;border-radius:10px;padding:10px;margin-bottom:7px;background:#fafcff}
+
+    .record-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+
+    .record-head .idx{font-weight:700;font-size:14px}
+
+    .record-head .badge{background:#b7e4c7;color:#1b4332;padding:2px 10px;border-radius:11px;font-size:12px;font-weight:600}
+
+    .record-head .rep-badge{background:#ffe5d0;color:#9c4221;padding:2px 10px;border-radius:11px;font-size:12px;font-weight:600;margin-left:4px}
+
+    .record-body{font-size:13px;color:#555;line-height:1.7}
+
+    .record-body .total-line{font-size:14px;color:#2d6a4f;font-weight:700;margin-top:3px}
+
+    .record-foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+
+    .record-foot .time{font-size:11px;color:#999}
+
+    .record-foot .btns{display:flex;gap:5px}
+
+    .filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+
+    .filter-btn{padding:4px 12px;border-radius:18px;font-size:12px;border:1.5px solid #b7e4c7;background:#fff;color:#2d6a4f;cursor:pointer;font-weight:600;flex:none;min-width:auto}
+
+    .filter-btn.active{background:#2d6a4f;color:#fff;border-color:#2d6a4f}
+
+    .hint{font-size:11px;color:#999;text-align:center;margin-top:5px}
+
+    .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1b4332;color:#fff;padding:10px 20px;border-radius:8px;font-size:14px;z-index:1000;opacity:0;transition:opacity .3s;pointer-events:none}
+
+    .toast.show{opacity:.95}
+
+    .modal-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:100;justify-content:center;align-items:center}
+
+    .modal-mask.show{display:flex}
+
+    .modal{background:#fff;border-radius:14px;padding:18px;width:90%;max-width:380px;max-height:80vh;overflow-y:auto}
+
+    .modal h3{margin-bottom:12px}
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+
+  <div class="header">
+
+    <h1>🌽 玉米叶面积测定</h1>
+
+  </div>
+
+
+
+  <!-- 输入区 -->
+
+  <div class="card">
+
+    <!-- 处理 + 重复 同一行 -->
+
+    <div class="tr-row">
+
+      <label>处理</label>
+
+      <input type="text" id="treatment" class="treat-input" placeholder="如 CK、N1" />
+
+      <span class="rep-label">重复</span>
+
+      <input type="text" id="repeat" class="rep-input" placeholder="" inputmode="numeric" />
+
+    </div>
+
+    <!-- 重复快捷按钮 -->
+
+    <div class="rep-btns">
+
+      <button class="rep-btn" onclick="setRep(1)">1</button>
+
+      <button class="rep-btn" onclick="setRep(2)">2</button>
+
+      <button class="rep-btn" onclick="setRep(3)">3</button>
+
+    </div>
+
+
+
+    <div class="form-row">
+
+      <label>系数</label>
+
+      <input type="number" id="inputK" value="0.75" step="0.01" />
+
+    </div>
+
+    <div style="height:1px;background:#eee;margin:6px 0"></div>
+
+    <div class="form-row">
+
+      <label>叶长</label>
+
+      <input type="number" id="inputL" placeholder="cm" step="0.01" inputmode="decimal"
+
+        onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('inputW').focus()}" />
+
+    </div>
+
+    <div class="form-row">
+
+      <label>叶宽</label>
+
+      <input type="number" id="inputW" placeholder="cm" step="0.01" inputmode="decimal"
+
+        onkeydown="if(event.key==='Enter'){event.preventDefault();addLeaf()}" />
+
+    </div>
+
+    <div class="btn-row">
+
+      <button class="btn-green" onclick="addLeaf()">➕ 添加此叶</button>
+
+    </div>
+
+    <div class="hint">叶长回车→跳叶宽→回车→自动添加</div>
+
+  </div>
+
+
+
+  <!-- 当前株 -->
+
+  <div class="card">
+
+    <h3>🌿 当前株 <span id="leafCount" style="color:#e76f51">(0片)</span></h3>
+
+    <div id="leafList"></div>
+
+    <div class="hint" id="leafEmpty">还没录入叶片</div>
+
+    <div class="current-total" id="currentTotal" style="display:none">
+
+      本株总叶面积：<strong id="currentSum">0.00</strong> cm²
+
+    </div>
+
+    <div class="btn-row" style="margin-top:8px">
+
+      <button class="btn-orange" onclick="finishPlant()">✅ 完成本株</button>
+
+      <button class="btn-gray" onclick="clearLeaves()">🔄 清空</button>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- 汇总 -->
+
+  <div class="card">
+
+    <h3>📊 汇总</h3>
+
+    <div class="filter-row" id="filterRow"></div>
+
+    <div class="summary">
+
+      <div><div class="num" id="sPlants">0</div><div class="lab">株数</div></div>
+
+      <div><div class="num" id="sTotal">0.00</div><div class="lab">总面积 cm²</div></div>
+
+      <div><div class="num" id="sAvg">0.00</div><div class="lab">株均 cm²</div></div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- 操作 -->
+
+  <div class="card">
+
+    <div class="btn-row">
+
+      <button class="btn-teal" onclick="exportCSV()">📥 导出CSV</button>
+
+      <button class="btn-red" onclick="clearAll()">🗑 清空全部</button>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- 历史 -->
+
+  <div class="card">
+
+    <h3>📋 历史记录</h3>
+
+    <div id="recordList"></div>
+
+    <div class="hint" id="recordEmpty">暂无记录</div>
+
+  </div>
+
+</div>
+
+
+
+<div class="toast" id="toast"></div>
+
+
+
+<!-- 编辑弹窗 -->
+
+<div class="modal-mask" id="editModal">
+
+  <div class="modal">
+
+    <h3>✏️ 编辑本株</h3>
+
+    <div class="tr-row">
+
+      <label>处理</label>
+
+      <input type="text" id="editTreat" class="treat-input" />
+
+      <span class="rep-label">重复</span>
+
+      <input type="text" id="editRep" class="rep-input" />
+
+    </div>
+
+    <div id="editLeafList"></div>
+
+    <div class="btn-row" style="margin-top:12px">
+
+      <button class="btn-green" onclick="saveEdit()">保存</button>
+
+      <button class="btn-gray" onclick="closeEdit()">取消</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<script>
+
+  let records = JSON.parse(localStorage.getItem('mz4_records')) || [];
+
+  let currentLeaves = [];
+
+  let filterTreat = '全部';
+
+  let editId = -1;
+
+
+
+  // 系数记住上次的
+
+  document.getElementById('inputK').value = localStorage.getItem('mz4_lastK') || '0.75';
+
+
+
+  function save() {
+
+    localStorage.setItem('mz4_records', JSON.stringify(records));
+
+  }
+
+
+
+  function toast(msg) {
+
+    const t = document.getElementById('toast');
+
+    t.textContent = msg;
+
+    t.classList.add('show');
+
+    clearTimeout(t._timer);
+
+    t._timer = setTimeout(() => t.classList.remove('show'), 1500);
+
+  }
+
+
+
+  // 选择重复
+
+  function setRep(n) {
+
+    document.getElementById('repeat').value = n;
+
+    updateRepBtns();
+
+  }
+
+
+
+  function updateRepBtns() {
+
+    const val = document.getElementById('repeat').value;
+
+    document.querySelectorAll('.rep-btn').forEach(btn => {
+
+      btn.classList.toggle('active', btn.textContent === val);
+
+    });
+
+  }
+
+
+
+  // 重复输入框变化时也更新按钮高亮
+
+  document.getElementById('repeat').addEventListener('input', updateRepBtns);
+
+
+
+  // ===== 添加叶片 =====
+
+  function addLeaf() {
+
+    const L = parseFloat(document.getElementById('inputL').value);
+
+    const W = parseFloat(document.getElementById('inputW').value);
+
+    const K = parseFloat(document.getElementById('inputK').value);
+
+    if (isNaN(L) || isNaN(W) || isNaN(K) || L <= 0 || W <= 0) {
+
+      toast('请输入有效的叶长叶宽'); return;
+
+    }
+
+    currentLeaves.push({ l: L, w: W, area: L * W * K });
+
+    document.getElementById('inputL').value = '';
+
+    document.getElementById('inputW').value = '';
+
+    document.getElementById('inputL').focus();
+
+    renderCurrentLeaves();
+
+  }
+
+
+
+  function removeLeaf(i) {
+
+    currentLeaves.splice(i, 1);
+
+    renderCurrentLeaves();
+
+  }
+
+
+
+  function renderCurrentLeaves() {
+
+    const list = document.getElementById('leafList');
+
+    const hint = document.getElementById('leafEmpty');
+
+    const totalDiv = document.getElementById('currentTotal');
+
+    document.getElementById('leafCount').textContent = `(${currentLeaves.length}片)`;
+
+    if (currentLeaves.length === 0) {
+
+      list.innerHTML = ''; hint.style.display = 'block'; totalDiv.style.display = 'none'; return;
+
+    }
+
+    hint.style.display = 'none'; totalDiv.style.display = 'block';
+
+    let sum = 0;
+
+    list.innerHTML = currentLeaves.map((lf, i) => {
+
+      sum += lf.area;
+
+      return `<div class="leaf-item">
+
+        <span>叶${i+1}：${lf.l} × ${lf.w}</span>
+
+        <span class="area">${lf.area.toFixed(2)}</span>
+
+        <span class="del" onclick="removeLeaf(${i})">✕</span>
+
+      </div>`;
+
+    }).join('');
+
+    document.getElementById('currentSum').textContent = sum.toFixed(2);
+
+  }
+
+
+
+  function clearLeaves() {
+
+    if (currentLeaves.length === 0) return;
+
+    currentLeaves = [];
+
+    renderCurrentLeaves();
+
+    toast('已清空当前株');
+
+  }
+
+
+
+  // ===== 完成本株 =====
+
+  function finishPlant() {
+
+    if (currentLeaves.length === 0) {
+
+      toast('还没录入叶片'); return;
+
+    }
+
+    const treat = document.getElementById('treatment').value.trim() || '未命名';
+
+    const rep = document.getElementById('repeat').value.trim() || '';
+
+    const coef = parseFloat(document.getElementById('inputK').value);
+
+    let totalArea = 0;
+
+    currentLeaves.forEach(l => totalArea += l.area);
+
+
+
+    records.push({
+
+      id: Date.now(),
+
+      treat, rep, coef,
+
+      leaves: JSON.parse(JSON.stringify(currentLeaves)),
+
+      totalArea,
+
+      leafCount: currentLeaves.length,
+
+      time: new Date().toISOString()
+
+    });
+
+
+
+    localStorage.setItem('mz4_lastK', coef);
+
+
+
+    save();
+
+    toast(`✅ 已保存 ${treat}${rep?'-重复'+rep:''}：${totalArea.toFixed(2)} cm²`);
+
+
+
+    // 清空：叶片、处理、重复
+
+    currentLeaves = [];
+
+    document.getElementById('treatment').value = '';
+
+    document.getElementById('repeat').value = '';
+
+    updateRepBtns();
+
+    renderCurrentLeaves();
+
+    renderRecords();
+
+    document.getElementById('treatment').focus();
+
+  }
+
+
+
+  // ===== 筛选 =====
+
+  function renderFilter() {
+
+    const treats = [...new Set(records.map(r => r.treat))];
+
+    const row = document.getElementById('filterRow');
+
+    let html = `<span class="filter-btn ${filterTreat==='全部'?'active':''}" onclick="setFilter('全部')">全部</span>`;
+
+    treats.forEach(t => {
+
+      html += `<span class="filter-btn ${filterTreat===t?'active':''}" onclick="setFilter('${t}')">${t}</span>`;
+
+    });
+
+    row.innerHTML = html;
+
+  }
+
+
+
+  function setFilter(t) {
+
+    filterTreat = t;
+
+    renderFilter();
+
+    renderRecords();
+
+  }
+
+
+
+  // ===== 历史 =====
+
+  function fmtTime(d) {
+
+    const o = new Date(d);
+
+    return `${o.getMonth()+1}/${o.getDate()} ${String(o.getHours()).padStart(2,'0')}:${String(o.getMinutes()).padStart(2,'0')}`;
+
+  }
+
+
+
+  function renderRecords() {
+
+    const list = document.getElementById('recordList');
+
+    const hint = document.getElementById('recordEmpty');
+
+    const filtered = filterTreat === '全部' ? records : records.filter(r => r.treat === filterTreat);
+
+
+
+    if (filtered.length === 0) {
+
+      list.innerHTML = ''; hint.style.display = 'block';
+
+    } else {
+
+      hint.style.display = 'none';
+
+      list.innerHTML = filtered.slice().reverse().map(p => {
+
+        const realIdx = records.indexOf(p) + 1;
+
+        const leafDetail = p.leaves.map((lf, i) =>
+
+          `叶${i+1}：${lf.l}×${lf.w}=${lf.area.toFixed(2)}`
+
+        ).join('<br>');
+
+        return `<div class="record">
+
+          <div class="record-head">
+
+            <span class="idx">株 #${realIdx}</span>
+
+            <div>
+
+              <span class="badge">${p.treat}</span>
+
+              ${p.rep ? `<span class="rep-badge">重复 ${p.rep}</span>` : ''}
+
+            </div>
+
+          </div>
+
+          <div class="record-body">
+
+            ${leafDetail}
+
+            <div class="total-line">共 ${p.leafCount} 片 ｜ ${p.totalArea.toFixed(2)} cm²</div>
+
+          </div>
+
+          <div class="record-foot">
+
+            <span class="time">${fmtTime(p.time)}</span>
+
+            <div class="btns">
+
+              <button class="btn-teal btn-small" onclick="openEdit(${p.id})">编辑</button>
+
+              <button class="btn-red btn-small" onclick="delRecord(${p.id})">删除</button>
+
+            </div>
+
+          </div>
+
+        </div>`;
+
+      }).join('');
+
+    }
+
+
+
+    let total = 0;
+
+    filtered.forEach(r => total += r.totalArea);
+
+    document.getElementById('sPlants').textContent = filtered.length;
+
+    document.getElementById('sTotal').textContent = total.toFixed(2);
+
+    document.getElementById('sAvg').textContent = filtered.length ? (total / filtered.length).toFixed(2) : '0.00';
+
+
+
+    renderFilter();
+
+  }
+
+
+
+  function delRecord(id) {
+
+    if (!confirm('删除这株记录？')) return;
+
+    records = records.filter(r => r.id !== id);
+
+    save();
+
+    renderRecords();
+
+  }
+
+
+
+  // ===== 编辑 =====
+
+  function openEdit(id) {
+
+    editId = id;
+
+    const p = records.find(r => r.id === id);
+
+    if (!p) return;
+
+    document.getElementById('editTreat').value = p.treat;
+
+    document.getElementById('editRep').value = p.rep || '';
+
+    document.getElementById('editLeafList').innerHTML = p.leaves.map((lf, i) => `
+
+      <div class="form-row">
+
+        <label>叶${i+1}</label>
+
+        <input type="number" class="edit-l" value="${lf.l}" step="0.01" style="max-width:35%" />
+
+        <span style="color:#999">×</span>
+
+        <input type="number" class="edit-w" value="${lf.w}" step="0.01" style="max-width:35%" />
+
+      </div>
+
+    `).join('');
+
+    document.getElementById('editModal').classList.add('show');
+
+  }
+
+
+
+  function closeEdit() {
+
+    document.getElementById('editModal').classList.remove('show');
+
+    editId = -1;
+
+  }
+
+
+
+  function saveEdit() {
+
+    const p = records.find(r => r.id === editId);
+
+    if (!p) return;
+
+    const treat = document.getElementById('editTreat').value.trim() || '未命名';
+
+    const rep = document.getElementById('editRep').value.trim() || '';
+
+    const ls = document.querySelectorAll('.edit-l');
+
+    const ws = document.querySelectorAll('.edit-w');
+
+    const leaves = [];
+
+    let totalArea = 0;
+
+    for (let i = 0; i < ls.length; i++) {
+
+      const l = parseFloat(ls[i].value);
+
+      const w = parseFloat(ws[i].value);
+
+      if (isNaN(l) || isNaN(w)) { toast(`叶${i+1} 数据有误`); return; }
+
+      const area = l * w * p.coef;
+
+      leaves.push({ l, w, area });
+
+      totalArea += area;
+
+    }
+
+    p.treat = treat;
+
+    p.rep = rep;
+
+    p.leaves = leaves;
+
+    p.totalArea = totalArea;
+
+    p.leafCount = leaves.length;
+
+    save();
+
+    renderRecords();
+
+    closeEdit();
+
+    toast('已保存修改');
+
+  }
+
+
+
+  // ===== 导出 =====
+
+  function exportCSV() {
+
+    const filtered = filterTreat === '全部' ? records : records.filter(r => r.treat === filterTreat);
+
+    if (filtered.length === 0) { toast('无数据'); return; }
+
+    let csv = '\uFEFF株号,处理,重复,叶位,叶长(cm),叶宽(cm),系数,单叶面积(cm²),株总面积(cm²),时间\n';
+
+    filtered.forEach(r => {
+
+      const idx = records.indexOf(r) + 1;
+
+      r.leaves.forEach((lf, i) => {
+
+        csv += `${idx},${r.treat},${r.rep||''},${i+1},${lf.l},${lf.w},${r.coef},${lf.area.toFixed(2)},${i===0 ? r.totalArea.toFixed(2) : ''},${i===0 ? fmtTime(r.time) : ''}\n`;
+
+      });
+
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+
+    const a = document.createElement('a');
+
+    a.href = URL.createObjectURL(blob);
+
+    a.download = `玉米叶面积_${filterTreat}_${new Date().toLocaleDateString()}.csv`;
+
+    a.click();
+
+  }
+
+
+
+  function clearAll() {
+
+    if (!confirm('确定清空全部历史？不可恢复！')) return;
+
+    records = [];
+
+    save();
+
+    renderRecords();
+
+    toast('已清空全部');
+
+  }
+
+
+
+  renderCurrentLeaves();
+
+  renderRecords();
+
+</script>
+
+</body>
+
+</html>
+
+Your HTML file is ready
+
+HTML 图标
+modified_corn_leaf_app
+ HTML 
+打开
+我已经根据您的需求对代码进行了修改，主要更新如下：
+
+导出功能升级为 Excel：因为标准的 CSV 文件不支持多个工作表（Sheet），我引入了 SheetJS 库，将原来的“导出CSV”改为了“导出Excel”。导出的 .xlsx 文件包含两个 Sheet：
+
+Sheet1 (总面积)：包含株号、处理名、重复、系数、株总面积和时间。
+
+Sheet2 (分叶数据)：包含当前每一片叶子的详细分叶数据（叶长、叶宽、单叶面积等）。
+
+色系修改：将原本的绿色系改为了大气的深蓝色渐变（#1e3c72 到 #2a5298），按钮、徽章和背景框的颜色也都同步进行了协调和调整。
+
+回车和空格键支持：在录入“叶长”和“叶宽”时，现在按下 Enter 键或 空格键 (Space) 都可以起到触发跳转或添加叶片的作用。
+
+按钮位置调整：将“当前株”卡片里的“✅ 完成本株”和“🔄 清空”按钮移动到了叶片列表的上方，方便在录入多片叶子时无需向下滑动即可直接点击完成。
+
+您可以下载上面的 HTML 文件在浏览器中打开并直接使用。
+
+
+
+
+Gemini 是一款 AI 工具，其回答（包括与人相关的信息）未必正确无误。你的隐私权与 Gemini在新窗口中打开
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>玉米叶面积测定</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f0f4f0;color:#222;padding-bottom:40px}
+    body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f0f4f8;color:#222;padding-bottom:40px}
     .container{max-width:460px;margin:0 auto;padding:10px}
-    .header{background:linear-gradient(135deg,#2d6a4f,#40916c);color:#fff;text-align:center;padding:12px;border-radius:12px;margin-bottom:10px}
+    /* 大气蓝色渐变 */
+    .header{background:linear-gradient(135deg,#1e3c72,#2a5298);color:#fff;text-align:center;padding:12px;border-radius:12px;margin-bottom:10px}
     .header h1{font-size:18px}
     .card{background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-    .card h3{font-size:14px;color:#2d6a4f;margin-bottom:8px;border-left:3px solid #2d6a4f;padding-left:7px}
+    .card h3{font-size:14px;color:#1e3c72;margin-bottom:8px;border-left:3px solid #1e3c72;padding-left:7px}
     .form-row{display:flex;gap:8px;margin-bottom:8px;align-items:center}
     .form-row label{font-size:14px;font-weight:600;white-space:nowrap;min-width:50px}
     .form-row input{flex:1;padding:10px 12px;border:1.5px solid #d0d7de;border-radius:9px;font-size:16px;outline:none;background:#fafcff;min-width:0}
-    .form-row input:focus{border-color:#2d6a4f;background:#fff}
+    .form-row input:focus{border-color:#1e3c72;background:#fff}
 
-    /* 处理+重复同一行 */
     .tr-row{display:flex;gap:6px;margin-bottom:8px;align-items:center}
     .tr-row label{font-size:14px;font-weight:600;white-space:nowrap;min-width:50px}
     .tr-row .treat-input{flex:1.2;padding:10px 12px;border:1.5px solid #d0d7de;border-radius:9px;font-size:16px;outline:none;background:#fafcff;min-width:0}
     .tr-row .rep-label{font-size:14px;font-weight:600;color:#666;padding-left:4px}
     .tr-row .rep-input{width:48px;padding:10px 6px;border:1.5px solid #d0d7de;border-radius:9px;font-size:16px;outline:none;background:#fafcff;text-align:center}
-    .tr-row .treat-input:focus,.tr-row .rep-input:focus{border-color:#2d6a4f;background:#fff}
+    .tr-row .treat-input:focus,.tr-row .rep-input:focus{border-color:#1e3c72;background:#fff}
     .rep-btns{display:flex;gap:4px;margin-bottom:8px;padding-left:58px}
-    .rep-btn{padding:4px 12px;border-radius:8px;font-size:13px;border:1.5px solid #b7e4c7;background:#fff;color:#2d6a4f;cursor:pointer;font-weight:600;flex:none;min-width:auto}
-    .rep-btn.active{background:#2d6a4f;color:#fff;border-color:#2d6a4f}
+    .rep-btn{padding:4px 12px;border-radius:8px;font-size:13px;border:1.5px solid #a1c4fd;background:#fff;color:#1e3c72;cursor:pointer;font-weight:600;flex:none;min-width:auto}
+    .rep-btn.active{background:#1e3c72;color:#fff;border-color:#1e3c72}
 
     .btn-row{display:flex;gap:8px;flex-wrap:wrap}
     button{flex:1;min-width:80px;padding:11px 8px;border:none;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s}
     button:active{opacity:.7}
-    .btn-green{background:#2d6a4f;color:#fff}
+    .btn-green{background:#1e3c72;color:#fff}
     .btn-orange{background:#e76f51;color:#fff}
-    .btn-teal{background:#40916c;color:#fff}
+    .btn-teal{background:#2a5298;color:#fff}
     .btn-red{background:#d90429;color:#fff}
     .btn-gray{background:#e9ecef;color:#333}
     .btn-small{flex:none;min-width:auto;padding:5px 10px;font-size:12px;border-radius:7px}
-    .leaf-item{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:#f0faf4;border-radius:8px;margin-bottom:5px;font-size:14px}
-    .leaf-item .area{font-weight:700;color:#2d6a4f}
+    .leaf-item{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:#f0f8ff;border-radius:8px;margin-bottom:5px;font-size:14px}
+    .leaf-item .area{font-weight:700;color:#1e3c72}
     .leaf-item .del{color:#d00;font-weight:700;cursor:pointer;padding:2px 8px}
-    .current-total{text-align:center;padding:9px;background:#d8f3dc;border-radius:9px;margin:8px 0;font-size:14px}
-    .current-total strong{font-size:20px;color:#1b4332}
+    .current-total{text-align:center;padding:9px;background:#c2e9fb;border-radius:9px;margin:8px 0;font-size:14px}
+    .current-total strong{font-size:20px;color:#0b1a30}
     .summary{display:flex;justify-content:space-around;text-align:center}
-    .summary .num{font-size:18px;font-weight:700;color:#2d6a4f}
+    .summary .num{font-size:18px;font-weight:700;color:#1e3c72}
     .summary .lab{font-size:11px;color:#666;margin-top:2px}
     .record{border:1px solid #e8ecf0;border-radius:10px;padding:10px;margin-bottom:7px;background:#fafcff}
     .record-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
     .record-head .idx{font-weight:700;font-size:14px}
-    .record-head .badge{background:#b7e4c7;color:#1b4332;padding:2px 10px;border-radius:11px;font-size:12px;font-weight:600}
+    .record-head .badge{background:#a1c4fd;color:#0b1a30;padding:2px 10px;border-radius:11px;font-size:12px;font-weight:600}
     .record-head .rep-badge{background:#ffe5d0;color:#9c4221;padding:2px 10px;border-radius:11px;font-size:12px;font-weight:600;margin-left:4px}
     .record-body{font-size:13px;color:#555;line-height:1.7}
-    .record-body .total-line{font-size:14px;color:#2d6a4f;font-weight:700;margin-top:3px}
+    .record-body .total-line{font-size:14px;color:#1e3c72;font-weight:700;margin-top:3px}
     .record-foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
     .record-foot .time{font-size:11px;color:#999}
     .record-foot .btns{display:flex;gap:5px}
     .filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
-    .filter-btn{padding:4px 12px;border-radius:18px;font-size:12px;border:1.5px solid #b7e4c7;background:#fff;color:#2d6a4f;cursor:pointer;font-weight:600;flex:none;min-width:auto}
-    .filter-btn.active{background:#2d6a4f;color:#fff;border-color:#2d6a4f}
+    .filter-btn{padding:4px 12px;border-radius:18px;font-size:12px;border:1.5px solid #a1c4fd;background:#fff;color:#1e3c72;cursor:pointer;font-weight:600;flex:none;min-width:auto}
+    .filter-btn.active{background:#1e3c72;color:#fff;border-color:#1e3c72}
     .hint{font-size:11px;color:#999;text-align:center;margin-top:5px}
-    .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1b4332;color:#fff;padding:10px 20px;border-radius:8px;font-size:14px;z-index:1000;opacity:0;transition:opacity .3s;pointer-events:none}
+    .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#0b1a30;color:#fff;padding:10px 20px;border-radius:8px;font-size:14px;z-index:1000;opacity:0;transition:opacity .3s;pointer-events:none}
     .toast.show{opacity:.95}
     .modal-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:100;justify-content:center;align-items:center}
     .modal-mask.show{display:flex}
@@ -76,14 +1048,12 @@
 
   <!-- 输入区 -->
   <div class="card">
-    <!-- 处理 + 重复 同一行 -->
     <div class="tr-row">
       <label>处理</label>
       <input type="text" id="treatment" class="treat-input" placeholder="如 CK、N1" />
       <span class="rep-label">重复</span>
       <input type="text" id="repeat" class="rep-input" placeholder="" inputmode="numeric" />
     </div>
-    <!-- 重复快捷按钮 -->
     <div class="rep-btns">
       <button class="rep-btn" onclick="setRep(1)">1</button>
       <button class="rep-btn" onclick="setRep(2)">2</button>
@@ -98,30 +1068,32 @@
     <div class="form-row">
       <label>叶长</label>
       <input type="number" id="inputL" placeholder="cm" step="0.01" inputmode="decimal"
-        onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('inputW').focus()}" />
+        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('inputW').focus()}" />
     </div>
     <div class="form-row">
       <label>叶宽</label>
       <input type="number" id="inputW" placeholder="cm" step="0.01" inputmode="decimal"
-        onkeydown="if(event.key==='Enter'){event.preventDefault();addLeaf()}" />
+        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();addLeaf()}" />
     </div>
     <div class="btn-row">
       <button class="btn-green" onclick="addLeaf()">➕ 添加此叶</button>
     </div>
-    <div class="hint">叶长回车→跳叶宽→回车→自动添加</div>
+    <div class="hint">叶长回车/空格→跳叶宽→回车/空格→自动添加</div>
   </div>
 
   <!-- 当前株 -->
   <div class="card">
     <h3>🌿 当前株 <span id="leafCount" style="color:#e76f51">(0片)</span></h3>
+    <!-- 将完成本株移动到上方 -->
+    <div class="btn-row" style="margin-bottom:10px">
+      <button class="btn-orange" onclick="finishPlant()">✅ 完成本株</button>
+      <button class="btn-gray" onclick="clearLeaves()">🔄 清空</button>
+    </div>
+    
     <div id="leafList"></div>
     <div class="hint" id="leafEmpty">还没录入叶片</div>
     <div class="current-total" id="currentTotal" style="display:none">
       本株总叶面积：<strong id="currentSum">0.00</strong> cm²
-    </div>
-    <div class="btn-row" style="margin-top:8px">
-      <button class="btn-orange" onclick="finishPlant()">✅ 完成本株</button>
-      <button class="btn-gray" onclick="clearLeaves()">🔄 清空</button>
     </div>
   </div>
 
@@ -139,7 +1111,7 @@
   <!-- 操作 -->
   <div class="card">
     <div class="btn-row">
-      <button class="btn-teal" onclick="exportCSV()">📥 导出CSV</button>
+      <button class="btn-teal" onclick="exportExcel()">📥 导出Excel</button>
       <button class="btn-red" onclick="clearAll()">🗑 清空全部</button>
     </div>
   </div>
@@ -178,7 +1150,6 @@
   let filterTreat = '全部';
   let editId = -1;
 
-  // 系数记住上次的
   document.getElementById('inputK').value = localStorage.getItem('mz4_lastK') || '0.75';
 
   function save() {
@@ -193,7 +1164,6 @@
     t._timer = setTimeout(() => t.classList.remove('show'), 1500);
   }
 
-  // 选择重复
   function setRep(n) {
     document.getElementById('repeat').value = n;
     updateRepBtns();
@@ -206,10 +1176,8 @@
     });
   }
 
-  // 重复输入框变化时也更新按钮高亮
   document.getElementById('repeat').addEventListener('input', updateRepBtns);
 
-  // ===== 添加叶片 =====
   function addLeaf() {
     const L = parseFloat(document.getElementById('inputL').value);
     const W = parseFloat(document.getElementById('inputW').value);
@@ -257,7 +1225,6 @@
     toast('已清空当前株');
   }
 
-  // ===== 完成本株 =====
   function finishPlant() {
     if (currentLeaves.length === 0) {
       toast('还没录入叶片'); return;
@@ -282,7 +1249,6 @@
     save();
     toast(`✅ 已保存 ${treat}${rep?'-重复'+rep:''}：${totalArea.toFixed(2)} cm²`);
 
-    // 清空：叶片、处理、重复
     currentLeaves = [];
     document.getElementById('treatment').value = '';
     document.getElementById('repeat').value = '';
@@ -292,7 +1258,6 @@
     document.getElementById('treatment').focus();
   }
 
-  // ===== 筛选 =====
   function renderFilter() {
     const treats = [...new Set(records.map(r => r.treat))];
     const row = document.getElementById('filterRow');
@@ -309,7 +1274,6 @@
     renderRecords();
   }
 
-  // ===== 历史 =====
   function fmtTime(d) {
     const o = new Date(d);
     return `${o.getMonth()+1}/${o.getDate()} ${String(o.getHours()).padStart(2,'0')}:${String(o.getMinutes()).padStart(2,'0')}`;
@@ -368,7 +1332,6 @@
     renderRecords();
   }
 
-  // ===== 编辑 =====
   function openEdit(id) {
     editId = id;
     const p = records.find(r => r.id === id);
@@ -419,22 +1382,38 @@
     toast('已保存修改');
   }
 
-  // ===== 导出 =====
-  function exportCSV() {
+  function exportExcel() {
+    if (typeof XLSX === 'undefined') {
+      toast('Excel库未加载完成，请检查网络');
+      return;
+    }
     const filtered = filterTreat === '全部' ? records : records.filter(r => r.treat === filterTreat);
     if (filtered.length === 0) { toast('无数据'); return; }
-    let csv = '\uFEFF株号,处理,重复,叶位,叶长(cm),叶宽(cm),系数,单叶面积(cm²),株总面积(cm²),时间\n';
+    
+    // Sheet1: 处理名+总的叶面积
+    const sheet1Data = [['株号', '处理', '重复', '系数', '株总面积(cm²)', '时间']];
+    filtered.forEach((r) => {
+      const idx = records.indexOf(r) + 1;
+      sheet1Data.push([idx, r.treat, r.rep || '', r.coef, r.totalArea.toFixed(2), fmtTime(r.time)]);
+    });
+
+    // Sheet2: 分叶数据
+    const sheet2Data = [['株号', '处理', '重复', '叶位', '叶长(cm)', '叶宽(cm)', '系数', '单叶面积(cm²)']];
     filtered.forEach(r => {
       const idx = records.indexOf(r) + 1;
       r.leaves.forEach((lf, i) => {
-        csv += `${idx},${r.treat},${r.rep||''},${i+1},${lf.l},${lf.w},${r.coef},${lf.area.toFixed(2)},${i===0 ? r.totalArea.toFixed(2) : ''},${i===0 ? fmtTime(r.time) : ''}\n`;
+        sheet2Data.push([idx, r.treat, r.rep || '', i + 1, lf.l, lf.w, r.coef, lf.area.toFixed(2)]);
       });
     });
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `玉米叶面积_${filterTreat}_${new Date().toLocaleDateString()}.csv`;
-    a.click();
+
+    const wb = XLSX.utils.book_new();
+    const ws1 = XLSX.utils.aoa_to_sheet(sheet1Data);
+    const ws2 = XLSX.utils.aoa_to_sheet(sheet2Data);
+    
+    XLSX.utils.book_append_sheet(wb, ws1, "总面积");
+    XLSX.utils.book_append_sheet(wb, ws2, "分叶数据");
+
+    XLSX.writeFile(wb, `玉米叶面积_${filterTreat}_${new Date().toLocaleDateString()}.xlsx`);
   }
 
   function clearAll() {
@@ -450,3 +1429,5 @@
 </script>
 </body>
 </html>
+modified_corn_leaf_app.html
+目前显示的是“modified_corn_leaf_app.html”。

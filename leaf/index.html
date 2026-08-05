@@ -19,15 +19,16 @@
     .form-row input{flex:1;padding:10px 10px;border:1.5px solid #d0d7de;border-radius:9px;font-size:16px;outline:none;background:#fafcff;min-width:0}
     .form-row input:focus{border-color:#1e3c72;background:#fff}
 
-    /* 处理与重复同一行，缩紧间距 */
+    /* 处理与重复同一行，调整宽度比例 */
     .tr-row{display:flex;gap:4px;margin-bottom:10px;align-items:center}
     .tr-row label{font-size:14px;font-weight:600;white-space:nowrap}
-    .tr-row .treat-input{flex:1;min-width:50px;padding:8px 6px;border:1.5px solid #d0d7de;border-radius:9px;font-size:15px;outline:none;background:#fafcff}
+    .tr-row .treat-input{flex:1;min-width:0;padding:8px 6px;border:1.5px solid #d0d7de;border-radius:9px;font-size:15px;outline:none;background:#fafcff}
     .tr-row .rep-label{font-size:14px;font-weight:600;color:#666;white-space:nowrap}
     .tr-row .rep-input{width:40px;padding:8px 2px;border:1.5px solid #d0d7de;border-radius:9px;font-size:15px;outline:none;background:#fafcff;text-align:center}
     .tr-row .treat-input:focus,.tr-row .rep-input:focus{border-color:#1e3c72;background:#fff}
     
-    .rep-btn{padding:7px 10px;border-radius:8px;font-size:13px;border:1.5px solid #a1c4fd;background:#fff;color:#1e3c72;cursor:pointer;font-weight:600;flex:none;line-height:1}
+    /* 缩小 123 按钮宽度 */
+    .rep-btn{width:26px;padding:6px 0;border-radius:8px;font-size:13px;border:1.5px solid #a1c4fd;background:#fff;color:#1e3c72;cursor:pointer;font-weight:600;flex:none;line-height:1;text-align:center;}
     .rep-btn.active{background:#1e3c72;color:#fff;border-color:#1e3c72}
 
     .btn-row{display:flex;gap:8px;flex-wrap:wrap}
@@ -96,12 +97,12 @@
     <div class="form-row">
       <label>叶长</label>
       <input type="number" id="inputL" placeholder="cm" step="0.01" inputmode="decimal"
-        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('inputW').focus()}" />
+        onkeydown="handleKeyL(event)" />
     </div>
     <div class="form-row">
       <label>叶宽</label>
       <input type="number" id="inputW" placeholder="cm" step="0.01" inputmode="decimal"
-        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();addLeaf()}" />
+        onkeydown="handleKeyW(event)" />
     </div>
     <div class="btn-row">
       <button class="btn-green" onclick="addLeaf()">➕ 添加此叶</button>
@@ -164,7 +165,10 @@
       <span class="rep-label">重复</span>
       <input type="text" id="editRep" class="rep-input" />
     </div>
+    
     <div id="editLeafList"></div>
+    <button class="btn-green btn-small" onclick="addEditLeafRow()" style="margin:8px 0; width:100%; padding:10px; border-radius:8px;">➕ 新增一叶</button>
+    
     <div class="btn-row" style="margin-top:12px">
       <button class="btn-green" onclick="saveEdit()">保存</button>
       <button class="btn-gray" onclick="closeEdit()">取消</button>
@@ -190,6 +194,25 @@
     t.classList.add('show');
     clearTimeout(t._timer);
     t._timer = setTimeout(() => t.classList.remove('show'), 1500);
+  }
+  
+  // 强化空格和回车键判定
+  function isActionKey(e) {
+    return e.key === 'Enter' || e.key === ' ' || e.code === 'Space' || e.keyCode === 13 || e.keyCode === 32;
+  }
+
+  function handleKeyL(e) {
+    if (isActionKey(e)) {
+      e.preventDefault();
+      document.getElementById('inputW').focus();
+    }
+  }
+
+  function handleKeyW(e) {
+    if (isActionKey(e)) {
+      e.preventDefault();
+      addLeaf();
+    }
   }
 
   function setRep(n) {
@@ -360,20 +383,33 @@
     renderRecords();
   }
 
+  function addEditLeafRow(l = '', w = '') {
+    const list = document.getElementById('editLeafList');
+    const div = document.createElement('div');
+    div.className = 'form-row edit-leaf-row';
+    div.style.marginBottom = '6px';
+    div.innerHTML = `
+      <label style="min-width:30px">叶</label>
+      <input type="number" class="edit-l" value="${l}" step="0.01" style="width:40%" placeholder="长" />
+      <span style="color:#999; margin:0 2px;">×</span>
+      <input type="number" class="edit-w" value="${w}" step="0.01" style="width:40%" placeholder="宽" />
+      <span class="del" onclick="this.parentElement.remove()" style="color:#d00; cursor:pointer; padding:6px; font-weight:bold;">✕</span>
+    `;
+    list.appendChild(div);
+  }
+
   function openEdit(id) {
     editId = id;
     const p = records.find(r => r.id === id);
     if (!p) return;
     document.getElementById('editTreat').value = p.treat;
     document.getElementById('editRep').value = p.rep || '';
-    document.getElementById('editLeafList').innerHTML = p.leaves.map((lf, i) => `
-      <div class="form-row">
-        <label>叶${i+1}</label>
-        <input type="number" class="edit-l" value="${lf.l}" step="0.01" style="max-width:35%" />
-        <span style="color:#999">×</span>
-        <input type="number" class="edit-w" value="${lf.w}" step="0.01" style="max-width:35%" />
-      </div>
-    `).join('');
+    
+    // 清空编辑列表并重新渲染
+    const list = document.getElementById('editLeafList');
+    list.innerHTML = '';
+    p.leaves.forEach(lf => addEditLeafRow(lf.l, lf.w));
+    
     document.getElementById('editModal').classList.add('show');
   }
 
@@ -387,18 +423,28 @@
     if (!p) return;
     const treat = document.getElementById('editTreat').value.trim() || '未命名';
     const rep = document.getElementById('editRep').value.trim() || '';
-    const ls = document.querySelectorAll('.edit-l');
-    const ws = document.querySelectorAll('.edit-w');
+    
+    const rows = document.querySelectorAll('.edit-leaf-row');
     const leaves = [];
     let totalArea = 0;
-    for (let i = 0; i < ls.length; i++) {
-      const l = parseFloat(ls[i].value);
-      const w = parseFloat(ws[i].value);
-      if (isNaN(l) || isNaN(w)) { toast(`叶${i+1} 数据有误`); return; }
+    
+    for (let i = 0; i < rows.length; i++) {
+      const lVal = rows[i].querySelector('.edit-l').value;
+      const wVal = rows[i].querySelector('.edit-w').value;
+      // 如果长宽均为空则跳过该行
+      if (!lVal && !wVal) continue;
+      
+      const l = parseFloat(lVal);
+      const w = parseFloat(wVal);
+      if (isNaN(l) || isNaN(w)) { 
+        toast(`某行叶片数据有误，请检查！`); 
+        return; 
+      }
       const area = l * w * p.coef;
       leaves.push({ l, w, area });
       totalArea += area;
     }
+    
     p.treat = treat;
     p.rep = rep;
     p.leaves = leaves;
@@ -418,14 +464,12 @@
     const filtered = filterTreat === '全部' ? records : records.filter(r => r.treat === filterTreat);
     if (filtered.length === 0) { toast('无数据'); return; }
     
-    // Sheet1: 处理名+总的叶面积
     const sheet1Data = [['株号', '处理', '重复', '系数', '株总面积(cm²)', '时间']];
     filtered.forEach((r) => {
       const idx = records.indexOf(r) + 1;
       sheet1Data.push([idx, r.treat, r.rep || '', r.coef, r.totalArea.toFixed(2), fmtTime(r.time)]);
     });
 
-    // Sheet2: 分叶数据
     const sheet2Data = [['株号', '处理', '重复', '叶位', '叶长(cm)', '叶宽(cm)', '系数', '单叶面积(cm²)']];
     filtered.forEach(r => {
       const idx = records.indexOf(r) + 1;

@@ -19,16 +19,17 @@
     .form-row input{flex:1;padding:10px 10px;border:1.5px solid #d0d7de;border-radius:9px;font-size:16px;outline:none;background:#fafcff;min-width:0}
     .form-row input:focus{border-color:#1e3c72;background:#fff}
 
-    /* 处理与重复同一行，调整宽度比例 */
+    /* 处理与重复同一行，处理输入框自动撑满剩余空间 */
     .tr-row{display:flex;gap:4px;margin-bottom:10px;align-items:center}
     .tr-row label{font-size:14px;font-weight:600;white-space:nowrap}
-    .tr-row .treat-input{flex:1;min-width:0;padding:8px 6px;border:1.5px solid #d0d7de;border-radius:9px;font-size:15px;outline:none;background:#fafcff}
+    .tr-row .treat-input{flex:1;min-width:60px;padding:8px 8px;border:1.5px solid #d0d7de;border-radius:9px;font-size:15px;outline:none;background:#fafcff}
     .tr-row .rep-label{font-size:14px;font-weight:600;color:#666;white-space:nowrap}
-    .tr-row .rep-input{width:40px;padding:8px 2px;border:1.5px solid #d0d7de;border-radius:9px;font-size:15px;outline:none;background:#fafcff;text-align:center}
+    /* 重复输入框大小固定 */
+    .tr-row .rep-input{width:42px;min-width:42px;padding:8px 2px;border:1.5px solid #d0d7de;border-radius:9px;font-size:15px;outline:none;background:#fafcff;text-align:center;flex:none}
     .tr-row .treat-input:focus,.tr-row .rep-input:focus{border-color:#1e3c72;background:#fff}
     
-    /* 缩小 123 按钮宽度 */
-    .rep-btn{width:26px;padding:6px 0;border-radius:8px;font-size:13px;border:1.5px solid #a1c4fd;background:#fff;color:#1e3c72;cursor:pointer;font-weight:600;flex:none;line-height:1;text-align:center;}
+    /* 极致缩小 123 按钮宽度，覆盖全局 button 的 min-width: 80px 限制 */
+    .rep-btn{width:28px;min-width:28px;height:28px;padding:0;border-radius:6px;font-size:13px;border:1.5px solid #a1c4fd;background:#fff;color:#1e3c72;cursor:pointer;font-weight:600;flex:none;line-height:1;display:flex;justify-content:center;align-items:center}
     .rep-btn.active{background:#1e3c72;color:#fff;border-color:#1e3c72}
 
     .btn-row{display:flex;gap:8px;flex-wrap:wrap}
@@ -96,13 +97,13 @@
     <div style="height:1px;background:#eee;margin:6px 0"></div>
     <div class="form-row">
       <label>叶长</label>
-      <input type="number" id="inputL" placeholder="cm" step="0.01" inputmode="decimal"
-        onkeydown="handleKeyL(event)" />
+      <input type="text" id="inputL" placeholder="cm" inputmode="decimal"
+        onkeydown="handleKeyL(event)" oninput="handleInputL(this)" />
     </div>
     <div class="form-row">
       <label>叶宽</label>
-      <input type="number" id="inputW" placeholder="cm" step="0.01" inputmode="decimal"
-        onkeydown="handleKeyW(event)" />
+      <input type="text" id="inputW" placeholder="cm" inputmode="decimal"
+        onkeydown="handleKeyW(event)" oninput="handleInputW(this)" />
     </div>
     <div class="btn-row">
       <button class="btn-green" onclick="addLeaf()">➕ 添加此叶</button>
@@ -113,7 +114,6 @@
   <!-- 当前株 -->
   <div class="card">
     <h3>🌿 当前株 <span id="leafCount" style="color:#e76f51">(0片)</span></h3>
-    <!-- 将完成本株移动到上方 -->
     <div class="btn-row" style="margin-bottom:10px">
       <button class="btn-orange" onclick="finishPlant()">✅ 完成本株</button>
       <button class="btn-gray" onclick="clearLeaves()">🔄 清空</button>
@@ -196,7 +196,6 @@
     t._timer = setTimeout(() => t.classList.remove('show'), 1500);
   }
   
-  // 强化空格和回车键判定
   function isActionKey(e) {
     return e.key === 'Enter' || e.key === ' ' || e.code === 'Space' || e.keyCode === 13 || e.keyCode === 32;
   }
@@ -212,6 +211,24 @@
     if (isActionKey(e)) {
       e.preventDefault();
       addLeaf();
+    }
+  }
+
+  function handleInputL(el) {
+    if (el.value.includes(' ') || el.value.includes('　')) {
+      el.value = el.value.replace(/\s/g, ''); 
+      if(el.value !== '') { 
+         document.getElementById('inputW').focus();
+      }
+    }
+  }
+
+  function handleInputW(el) {
+    if (el.value.includes(' ') || el.value.includes('　')) {
+      el.value = el.value.replace(/\s/g, ''); 
+      if(el.value !== '') {
+         addLeaf();
+      }
     }
   }
 
@@ -390,9 +407,9 @@
     div.style.marginBottom = '6px';
     div.innerHTML = `
       <label style="min-width:30px">叶</label>
-      <input type="number" class="edit-l" value="${l}" step="0.01" style="width:40%" placeholder="长" />
+      <input type="text" inputmode="decimal" class="edit-l" value="${l}" style="width:40%" placeholder="长" />
       <span style="color:#999; margin:0 2px;">×</span>
-      <input type="number" class="edit-w" value="${w}" step="0.01" style="width:40%" placeholder="宽" />
+      <input type="text" inputmode="decimal" class="edit-w" value="${w}" style="width:40%" placeholder="宽" />
       <span class="del" onclick="this.parentElement.remove()" style="color:#d00; cursor:pointer; padding:6px; font-weight:bold;">✕</span>
     `;
     list.appendChild(div);
@@ -405,7 +422,6 @@
     document.getElementById('editTreat').value = p.treat;
     document.getElementById('editRep').value = p.rep || '';
     
-    // 清空编辑列表并重新渲染
     const list = document.getElementById('editLeafList');
     list.innerHTML = '';
     p.leaves.forEach(lf => addEditLeafRow(lf.l, lf.w));
@@ -431,7 +447,6 @@
     for (let i = 0; i < rows.length; i++) {
       const lVal = rows[i].querySelector('.edit-l').value;
       const wVal = rows[i].querySelector('.edit-w').value;
-      // 如果长宽均为空则跳过该行
       if (!lVal && !wVal) continue;
       
       const l = parseFloat(lVal);

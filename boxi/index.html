@@ -13,7 +13,7 @@
             align-items: center;
             width: 100vw;
             height: 100vh;
-            font-family: 'Times New Roman', sans-serif;
+            font-family: 'Times New Roman', 'Microsoft YaHei', sans-serif;
             overflow: hidden;
             touch-action: none; 
         }
@@ -45,7 +45,6 @@
         }
         .hidden { display: none !important; }
         
-        /* 定制化标题样式，支持图文混排 */
         .title-container {
             display: flex;
             align-items: center;
@@ -105,11 +104,10 @@
         }
         #wordDisplay {
             position: absolute;
-            top: 25%;
+            top: 20%;
             left: 0;
             width: 100%;
             text-align: center;
-            font-size: 70px;
             font-weight: bold;
             color: #ff9aa2;
             text-shadow: 4px 4px 0 #fff;
@@ -117,7 +115,13 @@
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
+        .word-en { font-size: 65px; }
+        .word-zh { font-size: 40px; color: #ffb7b2; }
+        
         #sleepScreen {
             background: #2c3e50;
             color: #ecf0f1;
@@ -128,7 +132,10 @@
     <div id="game-wrapper">
         <canvas id="gameCanvas"></canvas>
         <div id="timeBarContainer"><div id="timeBar"></div></div>
-        <div id="wordDisplay">Dog!</div>
+        <div id="wordDisplay">
+            <span class="word-en" id="textEn">Dog</span>
+            <span class="word-zh" id="textZh">小狗</span>
+        </div>
 
         <div id="startScreen" class="overlay">
             <div class="title-container">
@@ -177,59 +184,63 @@
         let activeWordTimer = 0;
         let currentSessionVocab = []; 
 
+        // 引入中文翻译的双语词库
         const vocabCategories = {
             animal: [
-                { emoji: '🐶', word: 'Dog' }, { emoji: '🐱', word: 'Cat' },
-                { emoji: '🐷', word: 'Pig' }, { emoji: '🐞', word: 'Bug' },
-                { emoji: '🐝', word: 'Bee' }, { emoji: '🐻', word: 'Bear' },
-                { emoji: '🦆', word: 'Duck' }, { emoji: '🦊', word: 'Fox' }
+                { emoji: '🐶', word: 'Dog', zh: '小狗' }, { emoji: '🐱', word: 'Cat', zh: '小猫' },
+                { emoji: '🐷', word: 'Pig', zh: '小猪' }, { emoji: '🐞', word: 'Bug', zh: '小虫' },
+                { emoji: '🐝', word: 'Bee', zh: '蜜蜂' }, { emoji: '🐻', word: 'Bear', zh: '小熊' },
+                { emoji: '🦆', word: 'Duck', zh: '鸭子' }, { emoji: '🦊', word: 'Fox', zh: '狐狸' }
             ],
             fruit: [
-                { emoji: '🍎', word: 'Apple' }, { emoji: '🍌', word: 'Banana' },
-                { emoji: '🥝', word: 'Kiwi' }, { emoji: '🍑', word: 'Peach' },
-                { emoji: '🍐', word: 'Pear' }, { emoji: '🟣', word: 'Plum' }
+                { emoji: '🍎', word: 'Apple', zh: '苹果' }, { emoji: '🍌', word: 'Banana', zh: '香蕉' },
+                { emoji: '🥝', word: 'Kiwi', zh: '猕猴桃' }, { emoji: '🍑', word: 'Peach', zh: '桃子' },
+                { emoji: '🍐', word: 'Pear', zh: '梨子' }, { emoji: '🟣', word: 'Plum', zh: '李子' }
             ],
             clothes: [
-                { emoji: '🧢', word: 'Hat' }, { emoji: '🧢', word: 'Cap' },
-                { emoji: '👜', word: 'Bag' }, { emoji: '🧥', word: 'Coat' },
-                { emoji: '👔', word: 'Tie' }, { emoji: '👕', word: 'Top' }
+                { emoji: '🧢', word: 'Hat', zh: '帽子' }, { emoji: '🧢', word: 'Cap', zh: '鸭舌帽' },
+                { emoji: '👜', word: 'Bag', zh: '包包' }, { emoji: '🧥', word: 'Coat', zh: '外套' },
+                { emoji: '👔', word: 'Tie', zh: '领带' }, { emoji: '👕', word: 'Top', zh: '上衣' }
             ],
             object: [
-                { emoji: '🍵', word: 'Cup' }, { emoji: '📖', word: 'Book' },
-                { emoji: '⚽', word: 'Ball' }, { emoji: '🛏️', word: 'Bed' },
-                { emoji: '🧸', word: 'Toy' }, { emoji: '📦', word: 'Box' }
+                { emoji: '🍵', word: 'Cup', zh: '杯子' }, { emoji: '📖', word: 'Book', zh: '书本' },
+                { emoji: '⚽', word: 'Ball', zh: '皮球' }, { emoji: '🛏️', word: 'Bed', zh: '小床' },
+                { emoji: '🧸', word: 'Toy', zh: '玩具' }, { emoji: '📦', word: 'Box', zh: '盒子' }
             ],
             vehicle: [
-                { emoji: '🚗', word: 'Car' }, { emoji: '🚌', word: 'Bus' },
-                { emoji: '🚐', word: 'Van' }, { emoji: '⛵', word: 'Boat' },
-                { emoji: '🚀', word: 'Jet' }, { emoji: '🚲', word: 'Bike' }
+                { emoji: '🚗', word: 'Car', zh: '汽车' }, { emoji: '🚌', word: 'Bus', zh: '公交车' },
+                { emoji: '🚐', word: 'Van', zh: '面包车' }, { emoji: '⛵', word: 'Boat', zh: '小船' },
+                { emoji: '🚀', word: 'Jet', zh: '飞机' }, { emoji: '🚲', word: 'Bike', zh: '自行车' }
             ]
         };
 
-        const pipImg = new Image();
-        pipImg.src = 'pip.png';
-        let pipLoaded = false;
-        pipImg.onload = () => { pipLoaded = true; };
+        const pipImg = new Image(); pipImg.src = 'pip.png';
+        let pipLoaded = false; pipImg.onload = () => { pipLoaded = true; };
 
-        const posyImg = new Image();
-        posyImg.src = 'posy.png';
-        let posyLoaded = false;
-        posyImg.onload = () => { posyLoaded = true; };
+        const posyImg = new Image(); posyImg.src = 'posy.png';
+        let posyLoaded = false; posyImg.onload = () => { posyLoaded = true; };
 
+        // 终极防哑火：静音状态标记
+        let audioUnlocked = false;
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
 
         function forceUnlockAudio() {
+            if (audioUnlocked) return;
             if (!audioCtx) audioCtx = new AudioContext();
             if (audioCtx.state === 'suspended') audioCtx.resume();
             
             if ('speechSynthesis' in window) {
-                let utter = new SpeechSynthesisUtterance(' ');
+                // 播放一个无声音的空白符，强制手机分配音频通道
+                let utter = new SpeechSynthesisUtterance('');
                 utter.volume = 0;
                 window.speechSynthesis.speak(utter);
             }
+            audioUnlocked = true;
         }
-        document.addEventListener('touchstart', forceUnlockAudio, {once: true, passive: false});
+
+        // 绑定到所有可能的全局触摸事件上
+        document.addEventListener('touchstart', forceUnlockAudio, {once: true, passive: true});
         document.addEventListener('click', forceUnlockAudio, {once: true});
 
         function playTapSound() {
@@ -258,18 +269,23 @@
             osc.start(); osc.stop(audioCtx.currentTime + 0.3);
         }
 
-        function speakWord(text) {
-            if ('speechSynthesis' in window) {
-                if (window.speechSynthesis.speaking) {
-                    window.speechSynthesis.cancel(); 
-                }
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.6;  
-                utterance.pitch = 1.4; 
-                utterance.volume = 1.0; 
-                window.speechSynthesis.speak(utterance);
-            }
+        // 双语连续发音机制：移除 cancel() 避免 iOS 队列崩溃
+        function speakWord(enText, zhText) {
+            if (!window.speechSynthesis) return;
+
+            // 英语发音
+            const utterEn = new SpeechSynthesisUtterance(enText);
+            utterEn.lang = 'en-US';
+            utterEn.rate = 0.7; // 减速
+            
+            // 中文发音
+            const utterZh = new SpeechSynthesisUtterance(zhText);
+            utterZh.lang = 'zh-CN';
+            utterZh.rate = 0.8; 
+
+            // 按顺序推入系统队列
+            window.speechSynthesis.speak(utterEn);
+            window.speechSynthesis.speak(utterZh);
         }
 
         const pip = {
@@ -277,14 +293,10 @@
             velocity: 0, gravity: 0.08, jumpForce: -4,    
             draw() {
                 if (pipLoaded) {
-                    const aspectRatio = pipImg.width / pipImg.height;
-                    const drawW = this.baseHeight * aspectRatio;
-                    const drawH = this.baseHeight;
-                    ctx.drawImage(pipImg, this.x - drawW/2, this.y - drawH/2, drawW, drawH);
+                    const drawW = this.baseHeight * (pipImg.width / pipImg.height);
+                    ctx.drawImage(pipImg, this.x - drawW/2, this.y - this.baseHeight/2, drawW, this.baseHeight);
                 } else {
-                    ctx.font = `80px Arial`;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
+                    ctx.font = `80px Arial`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
                     ctx.fillText('🐰', this.x, this.y);
                 }
             },
@@ -307,18 +319,13 @@
             isCheering: false, cheerTimer: 0,
             draw(frameCount) {
                 let base_Y = height - groundHeight - this.baseHeight/2; 
-                if (this.isCheering) {
-                    base_Y -= Math.abs(Math.sin(frameCount * 0.15) * 15);
-                }
+                if (this.isCheering) base_Y -= Math.abs(Math.sin(frameCount * 0.15) * 15);
+                
                 if (posyLoaded) {
-                    const aspectRatio = posyImg.width / posyImg.height;
-                    const drawW = this.baseHeight * aspectRatio;
-                    const drawH = this.baseHeight;
-                    ctx.drawImage(posyImg, this.x - drawW/2, base_Y - drawH/2, drawW, drawH);
+                    const drawW = this.baseHeight * (posyImg.width / posyImg.height);
+                    ctx.drawImage(posyImg, this.x - drawW/2, base_Y - this.baseHeight/2, drawW, this.baseHeight);
                 } else {
-                    ctx.font = `90px Arial`;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
+                    ctx.font = `90px Arial`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
                     ctx.fillText('🐭', this.x, base_Y);
                 }
             },
@@ -346,16 +353,14 @@
         ];
 
         function drawBackground() {
-            ctx.fillStyle = '#b5ead7';
-            ctx.fillRect(0, 0, width, height);
+            ctx.fillStyle = '#b5ead7'; ctx.fillRect(0, 0, width, height);
             ctx.font = '50px Arial';
             clouds.forEach(cloud => {
                 ctx.fillText('☁️', cloud.x, cloud.y);
                 cloud.x -= cloud.speed;
                 if (cloud.x < -100) cloud.x = width + 50;
             });
-            ctx.fillStyle = '#c7ceea'; 
-            ctx.fillRect(0, height - groundHeight, width, groundHeight);
+            ctx.fillStyle = '#c7ceea'; ctx.fillRect(0, height - groundHeight, width, groundHeight);
         }
 
         let frameCount = 0;
@@ -382,7 +387,7 @@
                     
                     if (Math.hypot(pip.x - item.x, pip.y - item.y) < 70) { 
                         item.collected = true;
-                        triggerWordFeedback(item.vocab.word);
+                        triggerWordFeedback(item.vocab);
                     }
                 }
                 if (item.x < -100) items.splice(i, 1);
@@ -390,24 +395,27 @@
             requestAnimationFrame(gameLoop);
         }
 
-        function triggerWordFeedback(word) {
+        function triggerWordFeedback(vocabObj) {
             playSuccessSound(); 
-            speakWord(word);    
+            speakWord(vocabObj.word, vocabObj.zh); // 双语发音
             posy.cheer(); 
+            
             const wordEl = document.getElementById('wordDisplay');
-            wordEl.innerText = word;
+            document.getElementById('textEn').innerText = vocabObj.word;
+            document.getElementById('textZh').innerText = vocabObj.zh; // 同步显示中文
+            
             wordEl.style.opacity = '1';
             clearTimeout(activeWordTimer);
-            activeWordTimer = setTimeout(() => { wordEl.style.opacity = '0'; }, 2500); 
+            activeWordTimer = setTimeout(() => { wordEl.style.opacity = '0'; }, 3000); 
         }
 
         function startGame(categoryKey) {
             forceUnlockAudio(); 
             const fullList = [...vocabCategories[categoryKey]];
             fullList.sort(() => 0.5 - Math.random());
-            currentSessionVocab = fullList.slice(0, 4); // 每次随机抽取4个作为核心巩固词汇
+            currentSessionVocab = fullList.slice(0, 4); 
             
-            setTimeout(() => { speakWord("Let's go!"); }, 100); 
+            speakWord("Let's go!", "开始吧"); 
             gameState = 'playing';
             gameEndTime = Date.now() + GAME_TIME_MS;
             items = []; pip.y = height / 2;
@@ -421,11 +429,12 @@
                 pip.velocity = pip.jumpForce;
                 playTapSound();
                 
+                // 触摸屏幕瞬间的强制碰撞检测（百分百触发手机发音）
                 for (let i = items.length - 1; i >= 0; i--) {
                     let item = items[i];
                     if (!item.collected && Math.hypot(pip.x - item.x, pip.y - item.y) < 140) {
                         item.collected = true;
-                        triggerWordFeedback(item.vocab.word);
+                        triggerWordFeedback(item.vocab);
                     }
                 }
             }

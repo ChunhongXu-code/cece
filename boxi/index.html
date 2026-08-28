@@ -2,7 +2,6 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <!-- 彻底禁用手机端双击放大和缩放，完美适配移动端满屏 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>波西和皮普的英语派对</title>
     <style>
@@ -16,7 +15,7 @@
             height: 100vh;
             font-family: 'Times New Roman', sans-serif;
             overflow: hidden;
-            touch-action: none; /* 禁用系统默认手势 */
+            touch-action: none; 
         }
         #game-wrapper {
             position: relative;
@@ -45,35 +44,40 @@
             text-align: center;
         }
         .hidden { display: none !important; }
-        h1 { font-size: 36px; margin-bottom: 15px; color: #ff9aa2; }
-        p { font-size: 20px; margin-bottom: 30px; color: #666; font-weight: bold; line-height: 1.5;}
+        h1 { font-size: 34px; margin-bottom: 10px; color: #ff9aa2; }
+        p { font-size: 18px; margin-bottom: 25px; color: #666; font-weight: bold; line-height: 1.5;}
         
-        .btn-group {
-            display: flex;
-            flex-direction: column;
+        /* 响应式网格布局，适合5个按钮 */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
             width: 100%;
-            max-width: 250px;
+            max-width: 320px;
         }
         button {
-            padding: 15px 30px;
-            font-size: 22px;
+            padding: 12px 10px;
+            font-size: 20px;
             font-weight: bold;
-            background: #ffdac1; 
             color: #555;
             border: 4px solid #fff;
-            border-radius: 20px;
+            border-radius: 18px;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.1s;
         }
         button:active { transform: scale(0.9); }
-        .btn-animal { background: #ffb7b2; } 
-        .btn-fruit { background: #e2f0cb; } 
+        
+        /* 马卡龙色系分类按钮 */
+        .btn-animal { background: #ffb7b2; } /* 桃粉 */
+        .btn-fruit { background: #e2f0cb; }  /* 嫩绿 */
+        .btn-clothes { background: #c7ceea; }/* 柔紫 */
+        .btn-object { background: #ffdac1; } /* 杏黄 */
+        .btn-vehicle { background: #b5ead7; grid-column: span 2; } /* 薄荷绿，占满整行 */
 
         #timeBarContainer {
             position: absolute;
-            top: env(safe-area-inset-top, 20px); /* 适配刘海屏 */
+            top: env(safe-area-inset-top, 20px); 
             left: 20px;
             width: calc(100% - 40px);
             height: 15px;
@@ -117,17 +121,20 @@
 
         <div id="startScreen" class="overlay">
             <h1>🐰 波西和皮普 🐭</h1>
-            <p>点屏幕让皮普飞起来<br>请选择今天的主题！</p>
-            <div class="btn-group">
-                <button id="btnAnimal" class="btn-animal">🐶 动物园</button>
-                <button id="btnFruit" class="btn-fruit">🍎 水果园</button>
+            <p>选一个主题，学英语吧！</p>
+            <div class="btn-grid">
+                <button id="btnAnimal" class="btn-animal">🐶 动物篇</button>
+                <button id="btnFruit" class="btn-fruit">🍎 水果篇</button>
+                <button id="btnClothes" class="btn-clothes">🧢 衣服篇</button>
+                <button id="btnObject" class="btn-object">⚽ 物品篇</button>
+                <button id="btnVehicle" class="btn-vehicle">🚗 交通工具</button>
             </div>
         </div>
 
         <div id="sleepScreen" class="overlay hidden">
             <h1 style="font-size: 60px; margin-bottom: 10px;">👋</h1>
             <p style="color: #ecf0f1; font-size: 24px;">Time is up!<br>挥挥小手，说拜拜啦！</p>
-            <button id="lockBtn" style="background:#555; color:#fff; border-color:#888;">再见 (熄灭屏幕)</button>
+            <button id="lockBtn" style="background:#555; color:#fff; border-color:#888; padding: 15px 40px;">再见 (熄灭屏幕)</button>
         </div>
     </div>
 
@@ -135,14 +142,13 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         let width, height;
-        const groundHeight = 70; // 统一草地高度
+        const groundHeight = 70; 
 
         function resizeCanvas() {
             const wrapper = document.getElementById('game-wrapper');
             const dpr = window.devicePixelRatio || 1;
             width = wrapper.clientWidth;
             height = wrapper.clientHeight;
-            
             canvas.width = width * dpr;
             canvas.height = height * dpr;
             ctx.scale(dpr, dpr);
@@ -154,21 +160,37 @@
         let gameEndTime = 0;
         let gameState = 'start'; 
         let activeWordTimer = 0;
-        let currentVocabList = []; 
+        let currentSessionVocab = []; 
 
-        const animalVocab = [
-            { emoji: '🐶', word: 'Dog' }, { emoji: '🐱', word: 'Cat' },
-            { emoji: '🐷', word: 'Pig' }, { emoji: '🐮', word: 'Cow' },
-            { emoji: '🦆', word: 'Duck' }, { emoji: '🐻', word: 'Bear' },
-            { emoji: '🐦', word: 'Bird' }, { emoji: '🐟', word: 'Fish' }
-        ];
-
-        const fruitVocab = [
-            { emoji: '🍎', word: 'Apple' }, { emoji: '🍌', word: 'Banana' },
-            { emoji: '🍑', word: 'Peach' }, { emoji: '🍇', word: 'Grape' },
-            { emoji: '🍐', word: 'Pear' }, { emoji: '🍈', word: 'Melon' },
-            { emoji: '🥝', word: 'Kiwi' }
-        ];
+        // 全新扩充的5大认知词库
+        const vocabCategories = {
+            animal: [
+                { emoji: '🐶', word: 'Dog' }, { emoji: '🐱', word: 'Cat' },
+                { emoji: '🐷', word: 'Pig' }, { emoji: '🐮', word: 'Cow' },
+                { emoji: '🦆', word: 'Duck' }, { emoji: '🐸', word: 'Frog' },
+                { emoji: '🐦', word: 'Bird' }, { emoji: '🐟', word: 'Fish' }
+            ],
+            fruit: [
+                { emoji: '🍎', word: 'Apple' }, { emoji: '🍌', word: 'Banana' },
+                { emoji: '🍑', word: 'Peach' }, { emoji: '🍇', word: 'Grape' },
+                { emoji: '🍐', word: 'Pear' }, { emoji: '🍊', word: 'Orange' }
+            ],
+            clothes: [
+                { emoji: '🧢', word: 'Hat' }, { emoji: '👟', word: 'Shoes' },
+                { emoji: '🧦', word: 'Socks' }, { emoji: '🧥', word: 'Coat' },
+                { emoji: '👖', word: 'Pants' }, { emoji: '👕', word: 'Shirt' }
+            ],
+            object: [
+                { emoji: '🍵', word: 'Cup' }, { emoji: '📖', word: 'Book' },
+                { emoji: '⚽', word: 'Ball' }, { emoji: '🛏️', word: 'Bed' },
+                { emoji: '🪑', word: 'Chair' }, { emoji: '🧸', word: 'Toy' }
+            ],
+            vehicle: [
+                { emoji: '🚗', word: 'Car' }, { emoji: '🚌', word: 'Bus' },
+                { emoji: '🚂', word: 'Train' }, { emoji: '⛵', word: 'Boat' },
+                { emoji: '✈️', word: 'Plane' }, { emoji: '🚲', word: 'Bike' }
+            ]
+        };
 
         const pipImg = new Image();
         pipImg.src = 'pip.png';
@@ -180,18 +202,15 @@
         let posyLoaded = false;
         posyImg.onload = () => { posyLoaded = true; };
 
-        // ======== 核心修复：移动端音频引擎暴力唤醒 ========
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
         let ttsUnlocked = false;
 
         function forceUnlockAudio() {
             if (ttsUnlocked) return;
-            // 唤醒气泡音效
             if (!audioCtx) audioCtx = new AudioContext();
             if (audioCtx.state === 'suspended') audioCtx.resume();
             
-            // 唤醒发音 TTS (关键：播放一段极短的静音，强行占用手机音频通道)
             if ('speechSynthesis' in window) {
                 let utter = new SpeechSynthesisUtterance('');
                 utter.volume = 0;
@@ -200,7 +219,6 @@
             ttsUnlocked = true;
         }
 
-        // 无论用户点哪里，第一时间唤醒音频
         document.addEventListener('touchstart', forceUnlockAudio, {once: true, passive: false});
         document.addEventListener('click', forceUnlockAudio, {once: true});
 
@@ -221,7 +239,7 @@
 
         function speakWord(text) {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // 必须清除队列，防止iOS卡死
+                window.speechSynthesis.cancel(); 
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
                 utterance.rate = 0.6;  
@@ -230,15 +248,10 @@
                 window.speechSynthesis.speak(utterance);
             }
         }
-        // ===============================================
 
         const pip = {
-            x: 80,
-            y: 300,
-            baseHeight: 120,  // 皮普大小保持完美
-            velocity: 0,
-            gravity: 0.08,    
-            jumpForce: -4,    
+            x: 80, y: 300, baseHeight: 120,
+            velocity: 0, gravity: 0.08, jumpForce: -4,    
             draw() {
                 if (pipLoaded) {
                     const aspectRatio = pipImg.width / pipImg.height;
@@ -271,14 +284,10 @@
         };
 
         const posy = {
-            x: 60,
-            baseHeight: 150, // 【放大1.5倍】原先是100，现在150
-            isCheering: false,
-            cheerTimer: 0,
+            x: 60, baseHeight: 150,
+            isCheering: false, cheerTimer: 0,
             draw(frameCount) {
-                // 精准贴地计算：屏幕高度 - 草地高度 - 半个身位
                 let base_Y = height - groundHeight - this.baseHeight/2; 
-                
                 if (this.isCheering) {
                     base_Y -= Math.abs(Math.sin(frameCount * 0.15) * 15);
                 }
@@ -297,21 +306,17 @@
             cheer() {
                 this.isCheering = true;
                 clearTimeout(this.cheerTimer);
-                this.cheerTimer = setTimeout(() => {
-                    this.isCheering = false;
-                }, 2000);
+                this.cheerTimer = setTimeout(() => { this.isCheering = false; }, 2000);
             }
         };
 
         let items = [];
         function spawnItem() {
-            const vocab = currentVocabList[Math.floor(Math.random() * currentVocabList.length)];
+            const vocab = currentSessionVocab[Math.floor(Math.random() * currentSessionVocab.length)];
             items.push({
                 x: width + 50,
                 y: Math.random() * (height - 350) + 150, 
-                vocab: vocab,
-                size: 70, 
-                collected: false
+                vocab: vocab, size: 70, collected: false
             });
         }
 
@@ -338,71 +343,54 @@
 
         function gameLoop() {
             if (gameState !== 'playing') return;
-
             const timeLeft = gameEndTime - Date.now();
             if (timeLeft <= 0) {
-                endGame();
-                return;
+                endGame(); return;
             }
-            const percent = (timeLeft / GAME_TIME_MS) * 100;
-            document.getElementById('timeBar').style.width = percent + '%';
-
+            document.getElementById('timeBar').style.width = ((timeLeft / GAME_TIME_MS) * 100) + '%';
             ctx.clearRect(0, 0, width, height);
             drawBackground();
-
-            pip.update();
-            pip.draw();
-            posy.draw(frameCount);
+            pip.update(); pip.draw(); posy.draw(frameCount);
 
             frameCount++;
-            if (frameCount % 200 === 0) { 
-                spawnItem();
-            }
+            if (frameCount % 200 === 0) spawnItem();
 
             for (let i = items.length - 1; i >= 0; i--) {
                 let item = items[i];
                 item.x -= width > 400 ? 2 : 1.5; 
-                
                 if (!item.collected) {
                     ctx.font = `${item.size}px Arial`;
                     ctx.fillText(item.vocab.emoji, item.x, item.y);
-
-                    const dist = Math.hypot(pip.x - item.x, pip.y - item.y);
-                    if (dist < 90) { 
+                    if (Math.hypot(pip.x - item.x, pip.y - item.y) < 90) { 
                         item.collected = true;
                         triggerWordFeedback(item.vocab.word);
                     }
                 }
-
-                if (item.x < -100) {
-                    items.splice(i, 1);
-                }
+                if (item.x < -100) items.splice(i, 1);
             }
             requestAnimationFrame(gameLoop);
         }
 
         function triggerWordFeedback(word) {
-            speakWord(word);
-            posy.cheer(); 
+            speakWord(word); posy.cheer(); 
             const wordEl = document.getElementById('wordDisplay');
             wordEl.innerText = word;
             wordEl.style.opacity = '1';
             clearTimeout(activeWordTimer);
-            activeWordTimer = setTimeout(() => {
-                wordEl.style.opacity = '0';
-            }, 2500); 
+            activeWordTimer = setTimeout(() => { wordEl.style.opacity = '0'; }, 2500); 
         }
 
-        function startGame(category) {
-            forceUnlockAudio(); // 双重保险
-            currentVocabList = category === 'animal' ? animalVocab : fruitVocab;
+        function startGame(categoryKey) {
+            forceUnlockAudio(); 
+            // 核心记忆法机制：洗牌并抽出4个单词作为本局专注内容
+            const fullList = [...vocabCategories[categoryKey]];
+            fullList.sort(() => 0.5 - Math.random());
+            currentSessionVocab = fullList.slice(0, 4);
             
             speakWord("Let's go!"); 
-            
             gameState = 'playing';
             gameEndTime = Date.now() + GAME_TIME_MS;
-            items = [];
-            pip.y = height / 2;
+            items = []; pip.y = height / 2;
             document.getElementById('startScreen').classList.add('hidden');
             gameLoop();
         }
@@ -415,21 +403,18 @@
 
         function handleInput(e) {
             if (e.type === 'touchstart') e.preventDefault(); 
-            if (gameState === 'playing') {
-                pip.flap();
-            }
+            if (gameState === 'playing') pip.flap();
         }
 
         canvas.addEventListener('touchstart', handleInput, { passive: false });
         canvas.addEventListener('mousedown', handleInput);
 
-        document.getElementById('btnAnimal').addEventListener('click', (e) => {
-            e.preventDefault();
-            startGame('animal');
-        });
-        document.getElementById('btnFruit').addEventListener('click', (e) => {
-            e.preventDefault();
-            startGame('fruit');
+        // 按钮事件绑定
+        ['Animal', 'Fruit', 'Clothes', 'Object', 'Vehicle'].forEach(key => {
+            document.getElementById('btn' + key).addEventListener('click', (e) => {
+                e.preventDefault();
+                startGame(key.toLowerCase());
+            });
         });
 
         document.getElementById('lockBtn').addEventListener('click', () => {

@@ -50,7 +50,7 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         .title-img {
             height: 60px;
@@ -58,7 +58,8 @@
             border-radius: 10px;
         }
         h1 { font-size: 34px; color: #ff9aa2; margin: 0; }
-        p { font-size: 18px; margin-bottom: 25px; color: #666; font-weight: bold; line-height: 1.5;}
+        p { font-size: 18px; margin-bottom: 10px; color: #666; font-weight: bold; line-height: 1.5;}
+        .warning-text { font-size: 14px; color: #e74c3c; margin-bottom: 25px; font-weight: bold; }
         
         .btn-grid {
             display: grid;
@@ -104,7 +105,7 @@
         }
         #wordDisplay {
             position: absolute;
-            top: 20%;
+            top: 18%;
             left: 0;
             width: 100%;
             text-align: center;
@@ -120,7 +121,7 @@
             gap: 5px;
         }
         .word-en { font-size: 65px; }
-        .word-zh { font-size: 40px; color: #ffb7b2; }
+        .word-zh { font-size: 35px; color: #ffb7b2; }
         
         #sleepScreen {
             background: #2c3e50;
@@ -144,6 +145,9 @@
                 <img src="posy.png" alt="Posy" class="title-img" onerror="this.style.display='none'">
             </div>
             <p>点屏幕让皮普飞起来<br>请选择今天的主题！</p>
+            <!-- 增加静音开关提醒 -->
+            <div class="warning-text">🔔 苹果手机请务必关闭侧边静音键</div>
+            
             <div class="btn-grid">
                 <button id="btnAnimal" class="btn-animal">🐶 动物篇</button>
                 <button id="btnFruit" class="btn-fruit">🍎 水果篇</button>
@@ -184,7 +188,6 @@
         let activeWordTimer = 0;
         let currentSessionVocab = []; 
 
-        // 引入中文翻译的双语词库
         const vocabCategories = {
             animal: [
                 { emoji: '🐶', word: 'Dog', zh: '小狗' }, { emoji: '🐱', word: 'Cat', zh: '小猫' },
@@ -220,28 +223,36 @@
         const posyImg = new Image(); posyImg.src = 'posy.png';
         let posyLoaded = false; posyImg.onload = () => { posyLoaded = true; };
 
-        // 终极防哑火：静音状态标记
-        let audioUnlocked = false;
+        // ======== 终极音频引擎替换 ========
+        // 使用标准的 HTML5 Audio，彻底绕开手机 speechSynthesis 的 Bug
+        const voicePlayer = new Audio();
+        
+        // 效果音效上下文
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
 
         function forceUnlockAudio() {
-            if (audioUnlocked) return;
             if (!audioCtx) audioCtx = new AudioContext();
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            
-            if ('speechSynthesis' in window) {
-                // 播放一个无声音的空白符，强制手机分配音频通道
-                let utter = new SpeechSynthesisUtterance('');
-                utter.volume = 0;
-                window.speechSynthesis.speak(utter);
-            }
-            audioUnlocked = true;
         }
 
-        // 绑定到所有可能的全局触摸事件上
-        document.addEventListener('touchstart', forceUnlockAudio, {once: true, passive: true});
-        document.addEventListener('click', forceUnlockAudio, {once: true});
+        // 调用有道词典官方 API，type=1 代表纯正英式发音（清脆辅音，不吞音）
+        function speakWord(enText, zhText) {
+            voicePlayer.onended = null; // 清除之前的回调队列
+            
+            // 播放英语 (英式口音)
+            voicePlayer.src = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(enText)}&type=1`;
+            voicePlayer.play().catch(e => console.log("Audio play prevented:", e));
+
+            // 英语播报完后，无缝衔接中文播报
+            voicePlayer.onended = () => {
+                voicePlayer.onended = null;
+                setTimeout(() => {
+                    voicePlayer.src = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(zhText)}&le=zh`;
+                    voicePlayer.play().catch(e => {});
+                }, 400); // 停顿0.4秒，符合认知规律
+            };
+        }
 
         function playTapSound() {
             if (!audioCtx) return;
@@ -268,25 +279,7 @@
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.start(); osc.stop(audioCtx.currentTime + 0.3);
         }
-
-        // 双语连续发音机制：移除 cancel() 避免 iOS 队列崩溃
-        function speakWord(enText, zhText) {
-            if (!window.speechSynthesis) return;
-
-            // 英语发音
-            const utterEn = new SpeechSynthesisUtterance(enText);
-            utterEn.lang = 'en-US';
-            utterEn.rate = 0.7; // 减速
-            
-            // 中文发音
-            const utterZh = new SpeechSynthesisUtterance(zhText);
-            utterZh.lang = 'zh-CN';
-            utterZh.rate = 0.8; 
-
-            // 按顺序推入系统队列
-            window.speechSynthesis.speak(utterEn);
-            window.speechSynthesis.speak(utterZh);
-        }
+        // ===================================
 
         const pip = {
             x: 80, y: 300, baseHeight: 120,
@@ -397,12 +390,12 @@
 
         function triggerWordFeedback(vocabObj) {
             playSuccessSound(); 
-            speakWord(vocabObj.word, vocabObj.zh); // 双语发音
+            speakWord(vocabObj.word, vocabObj.zh); 
             posy.cheer(); 
             
             const wordEl = document.getElementById('wordDisplay');
             document.getElementById('textEn').innerText = vocabObj.word;
-            document.getElementById('textZh').innerText = vocabObj.zh; // 同步显示中文
+            document.getElementById('textZh').innerText = vocabObj.zh; 
             
             wordEl.style.opacity = '1';
             clearTimeout(activeWordTimer);
@@ -415,7 +408,9 @@
             fullList.sort(() => 0.5 - Math.random());
             currentSessionVocab = fullList.slice(0, 4); 
             
+            // 开始时利用用户的点击，强行解锁音频管道
             speakWord("Let's go!", "开始吧"); 
+            
             gameState = 'playing';
             gameEndTime = Date.now() + GAME_TIME_MS;
             items = []; pip.y = height / 2;
@@ -429,7 +424,6 @@
                 pip.velocity = pip.jumpForce;
                 playTapSound();
                 
-                // 触摸屏幕瞬间的强制碰撞检测（百分百触发手机发音）
                 for (let i = items.length - 1; i >= 0; i--) {
                     let item = items[i];
                     if (!item.collected && Math.hypot(pip.x - item.x, pip.y - item.y) < 140) {

@@ -47,7 +47,6 @@
         h1 { font-size: 34px; margin-bottom: 10px; color: #ff9aa2; }
         p { font-size: 18px; margin-bottom: 25px; color: #666; font-weight: bold; line-height: 1.5;}
         
-        /* 响应式网格布局，适合5个按钮 */
         .btn-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -67,13 +66,11 @@
             transition: transform 0.1s;
         }
         button:active { transform: scale(0.9); }
-        
-        /* 马卡龙色系分类按钮 */
-        .btn-animal { background: #ffb7b2; } /* 桃粉 */
-        .btn-fruit { background: #e2f0cb; }  /* 嫩绿 */
-        .btn-clothes { background: #c7ceea; }/* 柔紫 */
-        .btn-object { background: #ffdac1; } /* 杏黄 */
-        .btn-vehicle { background: #b5ead7; grid-column: span 2; } /* 薄荷绿，占满整行 */
+        .btn-animal { background: #ffb7b2; }
+        .btn-fruit { background: #e2f0cb; }
+        .btn-clothes { background: #c7ceea; }
+        .btn-object { background: #ffdac1; }
+        .btn-vehicle { background: #b5ead7; grid-column: span 2; } 
 
         #timeBarContainer {
             position: absolute;
@@ -162,7 +159,6 @@
         let activeWordTimer = 0;
         let currentSessionVocab = []; 
 
-        // 全新扩充的5大认知词库
         const vocabCategories = {
             animal: [
                 { emoji: '🐶', word: 'Dog' }, { emoji: '🐱', word: 'Cat' },
@@ -202,23 +198,21 @@
         let posyLoaded = false;
         posyImg.onload = () => { posyLoaded = true; };
 
+        // 强力解除手机静音限制模块
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
-        let ttsUnlocked = false;
 
         function forceUnlockAudio() {
-            if (ttsUnlocked) return;
             if (!audioCtx) audioCtx = new AudioContext();
             if (audioCtx.state === 'suspended') audioCtx.resume();
             
+            // 播放一段无声空白占位，强行打通手机语音通道
             if ('speechSynthesis' in window) {
-                let utter = new SpeechSynthesisUtterance('');
+                let utter = new SpeechSynthesisUtterance(' ');
                 utter.volume = 0;
                 window.speechSynthesis.speak(utter);
             }
-            ttsUnlocked = true;
         }
-
         document.addEventListener('touchstart', forceUnlockAudio, {once: true, passive: false});
         document.addEventListener('click', forceUnlockAudio, {once: true});
 
@@ -227,19 +221,34 @@
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(500, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
-            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        // 新增的“叮咚”魔法音效（兜底反馈）
+        function playSuccessSound() {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(660, audioCtx.currentTime);
+            osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.3);
         }
 
         function speakWord(text) {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); 
+                // 仅当正在播报其他词时才取消，避免在iOS上卡死
+                if (window.speechSynthesis.speaking) {
+                    window.speechSynthesis.cancel(); 
+                }
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
                 utterance.rate = 0.6;  
@@ -276,10 +285,6 @@
                     this.y = height - groundHeight - this.baseHeight/2;
                     this.velocity = this.jumpForce * 0.8; 
                 }
-            },
-            flap() {
-                this.velocity = this.jumpForce;
-                playTapSound();
             }
         };
 
@@ -344,10 +349,9 @@
         function gameLoop() {
             if (gameState !== 'playing') return;
             const timeLeft = gameEndTime - Date.now();
-            if (timeLeft <= 0) {
-                endGame(); return;
-            }
+            if (timeLeft <= 0) { endGame(); return; }
             document.getElementById('timeBar').style.width = ((timeLeft / GAME_TIME_MS) * 100) + '%';
+            
             ctx.clearRect(0, 0, width, height);
             drawBackground();
             pip.update(); pip.draw(); posy.draw(frameCount);
@@ -361,7 +365,9 @@
                 if (!item.collected) {
                     ctx.font = `${item.size}px Arial`;
                     ctx.fillText(item.vocab.emoji, item.x, item.y);
-                    if (Math.hypot(pip.x - item.x, pip.y - item.y) < 90) { 
+                    
+                    // 兜底判定：如果宝宝没按屏幕，但东西碰到了皮普，依然算收集成功
+                    if (Math.hypot(pip.x - item.x, pip.y - item.y) < 70) { 
                         item.collected = true;
                         triggerWordFeedback(item.vocab.word);
                     }
@@ -372,7 +378,9 @@
         }
 
         function triggerWordFeedback(word) {
-            speakWord(word); posy.cheer(); 
+            playSuccessSound(); // 必定能响的魔法音效
+            speakWord(word);    // 尝试呼叫手机语音
+            posy.cheer(); 
             const wordEl = document.getElementById('wordDisplay');
             wordEl.innerText = word;
             wordEl.style.opacity = '1';
@@ -382,12 +390,11 @@
 
         function startGame(categoryKey) {
             forceUnlockAudio(); 
-            // 核心记忆法机制：洗牌并抽出4个单词作为本局专注内容
             const fullList = [...vocabCategories[categoryKey]];
             fullList.sort(() => 0.5 - Math.random());
             currentSessionVocab = fullList.slice(0, 4);
             
-            speakWord("Let's go!"); 
+            setTimeout(() => { speakWord("Let's go!"); }, 100); 
             gameState = 'playing';
             gameEndTime = Date.now() + GAME_TIME_MS;
             items = []; pip.y = height / 2;
@@ -395,21 +402,26 @@
             gameLoop();
         }
 
-        function endGame() {
-            gameState = 'sleep';
-            document.getElementById('sleepScreen').classList.remove('hidden');
-            speakWord("Bye-bye, see you next time!");
-        }
-
         function handleInput(e) {
             if (e.type === 'touchstart') e.preventDefault(); 
-            if (gameState === 'playing') pip.flap();
+            if (gameState === 'playing') {
+                pip.velocity = pip.jumpForce;
+                playTapSound();
+                
+                // 核心修复：宝宝点击屏幕的瞬间（直接用户交互），强行检查大范围收集，100%突破手机语音限制
+                for (let i = items.length - 1; i >= 0; i--) {
+                    let item = items[i];
+                    if (!item.collected && Math.hypot(pip.x - item.x, pip.y - item.y) < 140) {
+                        item.collected = true;
+                        triggerWordFeedback(item.vocab.word);
+                    }
+                }
+            }
         }
 
         canvas.addEventListener('touchstart', handleInput, { passive: false });
         canvas.addEventListener('mousedown', handleInput);
 
-        // 按钮事件绑定
         ['Animal', 'Fruit', 'Clothes', 'Object', 'Vehicle'].forEach(key => {
             document.getElementById('btn' + key).addEventListener('click', (e) => {
                 e.preventDefault();

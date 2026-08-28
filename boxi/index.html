@@ -104,10 +104,10 @@
             transition: width 1s linear;
         }
         
-        /* 单词显示区域优化：移到顶部安全区，采用横向排版，动态调整字体大小 */
+        /* 核心修改：通过 calc 函数确保文字永远在进度条下方 40px 处，绝不遮挡 */
         #wordDisplay {
             position: absolute;
-            top: env(safe-area-inset-top, 45px); 
+            top: calc(env(safe-area-inset-top, 20px) + 40px); 
             left: 0;
             width: 100%;
             text-align: center;
@@ -121,7 +121,6 @@
             justify-content: center;
             align-items: baseline;
             gap: 15px;
-            /* 增加更厚的白色描边，防止看不清 */
             text-shadow: 3px 3px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
         }
         .word-en { color: #ff9aa2; font-size: clamp(35px, 12vw, 60px); }
@@ -138,7 +137,6 @@
         <canvas id="gameCanvas"></canvas>
         <div id="timeBarContainer"><div id="timeBar"></div></div>
         
-        <!-- 横向排版的双语显示区 -->
         <div id="wordDisplay">
             <span class="word-en" id="textEn">Dog</span>
             <span class="word-zh" id="textZh">小狗</span>
@@ -227,7 +225,6 @@
         const posyImg = new Image(); posyImg.src = 'posy.png';
         let posyLoaded = false; posyImg.onload = () => { posyLoaded = true; };
 
-        // ======== 终极音频引擎：双通道预激技术 ========
         const audioEn = new Audio();
         const audioZh = new Audio();
         
@@ -237,12 +234,9 @@
 
         function forceUnlockAudio() {
             if (audioUnlocked) return;
-            
-            // 1. 解锁音效 API
             if (!audioCtx) audioCtx = new AudioContext();
             if (audioCtx.state === 'suspended') audioCtx.resume();
             
-            // 2. 解锁 HTML5 Audio（关键：在用户点击瞬间播放并立刻暂停，骗过系统）
             audioEn.play().catch(()=>{}); audioEn.pause();
             audioZh.play().catch(()=>{}); audioZh.pause();
             
@@ -253,13 +247,12 @@
         document.addEventListener('click', forceUnlockAudio, {once: true});
 
         function speakWord(enText, zhText) {
-            // 设置有道纯正英音 (type=1) 和标准中文 (le=zh)
+            audioEn.onended = null;
+            audioZh.src = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(zhText)}&le=zh`;
             audioEn.src = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(enText)}&type=1`;
+            
             audioEn.play().catch(e => console.log(e));
-
-            // 监听英文播放结束，无缝触发中文
             audioEn.onended = () => {
-                audioZh.src = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(zhText)}&le=zh`;
                 audioZh.play().catch(e => console.log(e));
             };
         }
@@ -289,7 +282,6 @@
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.start(); osc.stop(audioCtx.currentTime + 0.3);
         }
-        // ===============================================
 
         const pip = {
             x: 80, y: 300, baseHeight: 120,
@@ -344,7 +336,6 @@
             const vocab = currentSessionVocab[Math.floor(Math.random() * currentSessionVocab.length)];
             items.push({
                 x: width + 50,
-                // 为了避开顶部的单词显示区，将物品的最高出现位置往下压 (原来是150，现在是 220)
                 y: Math.random() * (height - 400) + 220, 
                 vocab: vocab, size: 70, collected: false
             });
@@ -380,11 +371,12 @@
             pip.update(); pip.draw(); posy.draw(frameCount);
 
             frameCount++;
-            if (frameCount % 200 === 0) spawnItem();
+            if (frameCount % 320 === 0) spawnItem();
 
             for (let i = items.length - 1; i >= 0; i--) {
                 let item = items[i];
-                item.x -= width > 400 ? 2 : 1.5; 
+                item.x -= width > 400 ? 1.5 : 1.0; 
+                
                 if (!item.collected) {
                     ctx.font = `${item.size}px Arial`;
                     ctx.fillText(item.vocab.emoji, item.x, item.y);
@@ -410,7 +402,7 @@
             
             wordEl.style.opacity = '1';
             clearTimeout(activeWordTimer);
-            activeWordTimer = setTimeout(() => { wordEl.style.opacity = '0'; }, 3000); 
+            activeWordTimer = setTimeout(() => { wordEl.style.opacity = '0'; }, 3500); 
         }
 
         function startGame(categoryKey) {

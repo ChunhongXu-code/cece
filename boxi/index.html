@@ -103,25 +103,29 @@
             background: #ffb7b2;
             transition: width 1s linear;
         }
+        
+        /* 单词显示区域优化：移到顶部安全区，采用横向排版，动态调整字体大小 */
         #wordDisplay {
             position: absolute;
-            top: 18%;
+            top: env(safe-area-inset-top, 45px); 
             left: 0;
             width: 100%;
             text-align: center;
             font-weight: bold;
-            color: #ff9aa2;
-            text-shadow: 4px 4px 0 #fff;
             z-index: 4;
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
             display: flex;
-            flex-direction: column;
-            gap: 5px;
+            flex-direction: row;
+            justify-content: center;
+            align-items: baseline;
+            gap: 15px;
+            /* 增加更厚的白色描边，防止看不清 */
+            text-shadow: 3px 3px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
         }
-        .word-en { font-size: 65px; }
-        .word-zh { font-size: 35px; color: #ffb7b2; }
+        .word-en { color: #ff9aa2; font-size: clamp(35px, 12vw, 60px); }
+        .word-zh { color: #ffb7b2; font-size: clamp(20px, 7vw, 35px); }
         
         #sleepScreen {
             background: #2c3e50;
@@ -133,6 +137,8 @@
     <div id="game-wrapper">
         <canvas id="gameCanvas"></canvas>
         <div id="timeBarContainer"><div id="timeBar"></div></div>
+        
+        <!-- 横向排版的双语显示区 -->
         <div id="wordDisplay">
             <span class="word-en" id="textEn">Dog</span>
             <span class="word-zh" id="textZh">小狗</span>
@@ -145,9 +151,7 @@
                 <img src="posy.png" alt="Posy" class="title-img" onerror="this.style.display='none'">
             </div>
             <p>点屏幕让皮普飞起来<br>请选择今天的主题！</p>
-            <!-- 增加静音开关提醒 -->
             <div class="warning-text">🔔 苹果手机请务必关闭侧边静音键</div>
-            
             <div class="btn-grid">
                 <button id="btnAnimal" class="btn-animal">🐶 动物篇</button>
                 <button id="btnFruit" class="btn-fruit">🍎 水果篇</button>
@@ -223,34 +227,40 @@
         const posyImg = new Image(); posyImg.src = 'posy.png';
         let posyLoaded = false; posyImg.onload = () => { posyLoaded = true; };
 
-        // ======== 终极音频引擎替换 ========
-        // 使用标准的 HTML5 Audio，彻底绕开手机 speechSynthesis 的 Bug
-        const voicePlayer = new Audio();
+        // ======== 终极音频引擎：双通道预激技术 ========
+        const audioEn = new Audio();
+        const audioZh = new Audio();
         
-        // 效果音效上下文
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
+        let audioUnlocked = false;
 
         function forceUnlockAudio() {
+            if (audioUnlocked) return;
+            
+            // 1. 解锁音效 API
             if (!audioCtx) audioCtx = new AudioContext();
             if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            // 2. 解锁 HTML5 Audio（关键：在用户点击瞬间播放并立刻暂停，骗过系统）
+            audioEn.play().catch(()=>{}); audioEn.pause();
+            audioZh.play().catch(()=>{}); audioZh.pause();
+            
+            audioUnlocked = true;
         }
 
-        // 调用有道词典官方 API，type=1 代表纯正英式发音（清脆辅音，不吞音）
-        function speakWord(enText, zhText) {
-            voicePlayer.onended = null; // 清除之前的回调队列
-            
-            // 播放英语 (英式口音)
-            voicePlayer.src = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(enText)}&type=1`;
-            voicePlayer.play().catch(e => console.log("Audio play prevented:", e));
+        document.addEventListener('touchstart', forceUnlockAudio, {once: true, passive: true});
+        document.addEventListener('click', forceUnlockAudio, {once: true});
 
-            // 英语播报完后，无缝衔接中文播报
-            voicePlayer.onended = () => {
-                voicePlayer.onended = null;
-                setTimeout(() => {
-                    voicePlayer.src = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(zhText)}&le=zh`;
-                    voicePlayer.play().catch(e => {});
-                }, 400); // 停顿0.4秒，符合认知规律
+        function speakWord(enText, zhText) {
+            // 设置有道纯正英音 (type=1) 和标准中文 (le=zh)
+            audioEn.src = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(enText)}&type=1`;
+            audioEn.play().catch(e => console.log(e));
+
+            // 监听英文播放结束，无缝触发中文
+            audioEn.onended = () => {
+                audioZh.src = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(zhText)}&le=zh`;
+                audioZh.play().catch(e => console.log(e));
             };
         }
 
@@ -279,7 +289,7 @@
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.start(); osc.stop(audioCtx.currentTime + 0.3);
         }
-        // ===================================
+        // ===============================================
 
         const pip = {
             x: 80, y: 300, baseHeight: 120,
@@ -334,7 +344,8 @@
             const vocab = currentSessionVocab[Math.floor(Math.random() * currentSessionVocab.length)];
             items.push({
                 x: width + 50,
-                y: Math.random() * (height - 350) + 150, 
+                // 为了避开顶部的单词显示区，将物品的最高出现位置往下压 (原来是150，现在是 220)
+                y: Math.random() * (height - 400) + 220, 
                 vocab: vocab, size: 70, collected: false
             });
         }
@@ -408,9 +419,7 @@
             fullList.sort(() => 0.5 - Math.random());
             currentSessionVocab = fullList.slice(0, 4); 
             
-            // 开始时利用用户的点击，强行解锁音频管道
             speakWord("Let's go!", "开始吧"); 
-            
             gameState = 'playing';
             gameEndTime = Date.now() + GAME_TIME_MS;
             items = []; pip.y = height / 2;

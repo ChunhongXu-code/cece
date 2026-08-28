@@ -44,7 +44,21 @@
             text-align: center;
         }
         .hidden { display: none !important; }
-        h1 { font-size: 34px; margin-bottom: 10px; color: #ff9aa2; }
+        
+        /* 定制化标题样式，支持图文混排 */
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .title-img {
+            height: 60px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        h1 { font-size: 34px; color: #ff9aa2; margin: 0; }
         p { font-size: 18px; margin-bottom: 25px; color: #666; font-weight: bold; line-height: 1.5;}
         
         .btn-grid {
@@ -117,8 +131,12 @@
         <div id="wordDisplay">Dog!</div>
 
         <div id="startScreen" class="overlay">
-            <h1>🐰 波西和皮普 🐭</h1>
-            <p>选一个主题，学英语吧！</p>
+            <div class="title-container">
+                <img src="pip.png" alt="Pip" class="title-img" onerror="this.style.display='none'">
+                <h1>波西和皮普</h1>
+                <img src="posy.png" alt="Posy" class="title-img" onerror="this.style.display='none'">
+            </div>
+            <p>点屏幕让皮普飞起来<br>请选择今天的主题！</p>
             <div class="btn-grid">
                 <button id="btnAnimal" class="btn-animal">🐶 动物篇</button>
                 <button id="btnFruit" class="btn-fruit">🍎 水果篇</button>
@@ -162,29 +180,29 @@
         const vocabCategories = {
             animal: [
                 { emoji: '🐶', word: 'Dog' }, { emoji: '🐱', word: 'Cat' },
-                { emoji: '🐷', word: 'Pig' }, { emoji: '🐮', word: 'Cow' },
-                { emoji: '🦆', word: 'Duck' }, { emoji: '🐸', word: 'Frog' },
-                { emoji: '🐦', word: 'Bird' }, { emoji: '🐟', word: 'Fish' }
+                { emoji: '🐷', word: 'Pig' }, { emoji: '🐞', word: 'Bug' },
+                { emoji: '🐝', word: 'Bee' }, { emoji: '🐻', word: 'Bear' },
+                { emoji: '🦆', word: 'Duck' }, { emoji: '🦊', word: 'Fox' }
             ],
             fruit: [
                 { emoji: '🍎', word: 'Apple' }, { emoji: '🍌', word: 'Banana' },
-                { emoji: '🍑', word: 'Peach' }, { emoji: '🍇', word: 'Grape' },
-                { emoji: '🍐', word: 'Pear' }, { emoji: '🍊', word: 'Orange' }
+                { emoji: '🥝', word: 'Kiwi' }, { emoji: '🍑', word: 'Peach' },
+                { emoji: '🍐', word: 'Pear' }, { emoji: '🟣', word: 'Plum' }
             ],
             clothes: [
-                { emoji: '🧢', word: 'Hat' }, { emoji: '👟', word: 'Shoes' },
-                { emoji: '🧦', word: 'Socks' }, { emoji: '🧥', word: 'Coat' },
-                { emoji: '👖', word: 'Pants' }, { emoji: '👕', word: 'Shirt' }
+                { emoji: '🧢', word: 'Hat' }, { emoji: '🧢', word: 'Cap' },
+                { emoji: '👜', word: 'Bag' }, { emoji: '🧥', word: 'Coat' },
+                { emoji: '👔', word: 'Tie' }, { emoji: '👕', word: 'Top' }
             ],
             object: [
                 { emoji: '🍵', word: 'Cup' }, { emoji: '📖', word: 'Book' },
                 { emoji: '⚽', word: 'Ball' }, { emoji: '🛏️', word: 'Bed' },
-                { emoji: '🪑', word: 'Chair' }, { emoji: '🧸', word: 'Toy' }
+                { emoji: '🧸', word: 'Toy' }, { emoji: '📦', word: 'Box' }
             ],
             vehicle: [
                 { emoji: '🚗', word: 'Car' }, { emoji: '🚌', word: 'Bus' },
-                { emoji: '🚂', word: 'Train' }, { emoji: '⛵', word: 'Boat' },
-                { emoji: '✈️', word: 'Plane' }, { emoji: '🚲', word: 'Bike' }
+                { emoji: '🚐', word: 'Van' }, { emoji: '⛵', word: 'Boat' },
+                { emoji: '🚀', word: 'Jet' }, { emoji: '🚲', word: 'Bike' }
             ]
         };
 
@@ -198,7 +216,6 @@
         let posyLoaded = false;
         posyImg.onload = () => { posyLoaded = true; };
 
-        // 强力解除手机静音限制模块
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
 
@@ -206,7 +223,6 @@
             if (!audioCtx) audioCtx = new AudioContext();
             if (audioCtx.state === 'suspended') audioCtx.resume();
             
-            // 播放一段无声空白占位，强行打通手机语音通道
             if ('speechSynthesis' in window) {
                 let utter = new SpeechSynthesisUtterance(' ');
                 utter.volume = 0;
@@ -229,7 +245,6 @@
             osc.start(); osc.stop(audioCtx.currentTime + 0.1);
         }
 
-        // 新增的“叮咚”魔法音效（兜底反馈）
         function playSuccessSound() {
             if (!audioCtx) return;
             const osc = audioCtx.createOscillator();
@@ -245,7 +260,6 @@
 
         function speakWord(text) {
             if ('speechSynthesis' in window) {
-                // 仅当正在播报其他词时才取消，避免在iOS上卡死
                 if (window.speechSynthesis.speaking) {
                     window.speechSynthesis.cancel(); 
                 }
@@ -366,7 +380,6 @@
                     ctx.font = `${item.size}px Arial`;
                     ctx.fillText(item.vocab.emoji, item.x, item.y);
                     
-                    // 兜底判定：如果宝宝没按屏幕，但东西碰到了皮普，依然算收集成功
                     if (Math.hypot(pip.x - item.x, pip.y - item.y) < 70) { 
                         item.collected = true;
                         triggerWordFeedback(item.vocab.word);
@@ -378,8 +391,8 @@
         }
 
         function triggerWordFeedback(word) {
-            playSuccessSound(); // 必定能响的魔法音效
-            speakWord(word);    // 尝试呼叫手机语音
+            playSuccessSound(); 
+            speakWord(word);    
             posy.cheer(); 
             const wordEl = document.getElementById('wordDisplay');
             wordEl.innerText = word;
@@ -392,7 +405,7 @@
             forceUnlockAudio(); 
             const fullList = [...vocabCategories[categoryKey]];
             fullList.sort(() => 0.5 - Math.random());
-            currentSessionVocab = fullList.slice(0, 4);
+            currentSessionVocab = fullList.slice(0, 4); // 每次随机抽取4个作为核心巩固词汇
             
             setTimeout(() => { speakWord("Let's go!"); }, 100); 
             gameState = 'playing';
@@ -408,7 +421,6 @@
                 pip.velocity = pip.jumpForce;
                 playTapSound();
                 
-                // 核心修复：宝宝点击屏幕的瞬间（直接用户交互），强行检查大范围收集，100%突破手机语音限制
                 for (let i = items.length - 1; i >= 0; i--) {
                     let item = items[i];
                     if (!item.collected && Math.hypot(pip.x - item.x, pip.y - item.y) < 140) {

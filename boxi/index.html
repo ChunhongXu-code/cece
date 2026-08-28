@@ -2,10 +2,11 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- 彻底禁用手机端双击放大和缩放，完美适配移动端满屏 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>波西和皮普的英语派对</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
         body {
             background: #e2f0cb; 
             display: flex;
@@ -15,15 +16,13 @@
             height: 100vh;
             font-family: 'Times New Roman', sans-serif;
             overflow: hidden;
-            touch-action: none;
+            touch-action: none; /* 禁用系统默认手势 */
         }
         #game-wrapper {
             position: relative;
             width: 100%;
             max-width: 480px;
             height: 100%;
-            max-height: 850px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
             background: #b5ead7; 
             overflow: hidden;
         }
@@ -74,7 +73,7 @@
 
         #timeBarContainer {
             position: absolute;
-            top: 20px;
+            top: env(safe-area-inset-top, 20px); /* 适配刘海屏 */
             left: 20px;
             width: calc(100% - 40px);
             height: 15px;
@@ -104,7 +103,6 @@
             transition: opacity 0.3s;
             pointer-events: none;
         }
-
         #sleepScreen {
             background: #2c3e50;
             color: #ecf0f1;
@@ -121,7 +119,6 @@
             <h1>🐰 波西和皮普 🐭</h1>
             <p>点屏幕让皮普飞起来<br>请选择今天的主题！</p>
             <div class="btn-group">
-                <!-- 取消 onclick，改用底层 JS 绑定以突破浏览器的静音限制 -->
                 <button id="btnAnimal" class="btn-animal">🐶 动物园</button>
                 <button id="btnFruit" class="btn-fruit">🍎 水果园</button>
             </div>
@@ -138,6 +135,7 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         let width, height;
+        const groundHeight = 70; // 统一草地高度
 
         function resizeCanvas() {
             const wrapper = document.getElementById('game-wrapper');
@@ -182,13 +180,30 @@
         let posyLoaded = false;
         posyImg.onload = () => { posyLoaded = true; };
 
-        // 音效引擎
+        // ======== 核心修复：移动端音频引擎暴力唤醒 ========
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
-        function initAudio() {
+        let ttsUnlocked = false;
+
+        function forceUnlockAudio() {
+            if (ttsUnlocked) return;
+            // 唤醒气泡音效
             if (!audioCtx) audioCtx = new AudioContext();
             if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            // 唤醒发音 TTS (关键：播放一段极短的静音，强行占用手机音频通道)
+            if ('speechSynthesis' in window) {
+                let utter = new SpeechSynthesisUtterance('');
+                utter.volume = 0;
+                window.speechSynthesis.speak(utter);
+            }
+            ttsUnlocked = true;
         }
+
+        // 无论用户点哪里，第一时间唤醒音频
+        document.addEventListener('touchstart', forceUnlockAudio, {once: true, passive: false});
+        document.addEventListener('click', forceUnlockAudio, {once: true});
+
         function playTapSound() {
             if (!audioCtx) return;
             const osc = audioCtx.createOscillator();
@@ -204,27 +219,26 @@
             osc.stop(audioCtx.currentTime + 0.1);
         }
 
-        // 语音引擎：使用全局变量防止被浏览器意外回收导致静音
-        let currentUtterance = null; 
         function speakWord(text) {
             if ('speechSynthesis' in window) {
-                // 先取消当前可能卡住的语音
-                window.speechSynthesis.cancel(); 
-                currentUtterance = new SpeechSynthesisUtterance(text);
-                currentUtterance.lang = 'en-US';
-                currentUtterance.rate = 0.6;  
-                currentUtterance.pitch = 1.4; 
-                window.speechSynthesis.speak(currentUtterance);
+                window.speechSynthesis.cancel(); // 必须清除队列，防止iOS卡死
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.6;  
+                utterance.pitch = 1.4; 
+                utterance.volume = 1.0; 
+                window.speechSynthesis.speak(utterance);
             }
         }
+        // ===============================================
 
         const pip = {
             x: 80,
             y: 300,
-            baseHeight: 120,  // 【放大尺寸】原本80，现改为120，看得更清楚
+            baseHeight: 120,  // 皮普大小保持完美
             velocity: 0,
-            gravity: 0.08,    // 【降低难度】原本0.15，现在坠落极其缓慢
-            jumpForce: -4,    // 【降低难度】跳跃高度更柔和可控
+            gravity: 0.08,    
+            jumpForce: -4,    
             draw() {
                 if (pipLoaded) {
                     const aspectRatio = pipImg.width / pipImg.height;
@@ -245,8 +259,8 @@
                     this.y = this.baseHeight/2;
                     this.velocity = 1; 
                 }
-                if (this.y > height - 70 - this.baseHeight/2) {
-                    this.y = height - 70 - this.baseHeight/2;
+                if (this.y > height - groundHeight - this.baseHeight/2) {
+                    this.y = height - groundHeight - this.baseHeight/2;
                     this.velocity = this.jumpForce * 0.8; 
                 }
             },
@@ -258,24 +272,26 @@
 
         const posy = {
             x: 60,
-            baseHeight: 100, // 【放大尺寸】原本70，现改为100
+            baseHeight: 150, // 【放大1.5倍】原先是100，现在150
             isCheering: false,
             cheerTimer: 0,
             draw(frameCount) {
-                let drawY = height - 60; // 调整贴地位置
+                // 精准贴地计算：屏幕高度 - 草地高度 - 半个身位
+                let base_Y = height - groundHeight - this.baseHeight/2; 
+                
                 if (this.isCheering) {
-                    drawY -= Math.abs(Math.sin(frameCount * 0.15) * 15);
+                    base_Y -= Math.abs(Math.sin(frameCount * 0.15) * 15);
                 }
                 if (posyLoaded) {
                     const aspectRatio = posyImg.width / posyImg.height;
                     const drawW = this.baseHeight * aspectRatio;
                     const drawH = this.baseHeight;
-                    ctx.drawImage(posyImg, this.x - drawW/2, drawY - drawH/2, drawW, drawH);
+                    ctx.drawImage(posyImg, this.x - drawW/2, base_Y - drawH/2, drawW, drawH);
                 } else {
-                    ctx.font = `75px Arial`;
+                    ctx.font = `90px Arial`;
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
-                    ctx.fillText('🐭', this.x, drawY);
+                    ctx.fillText('🐭', this.x, base_Y);
                 }
             },
             cheer() {
@@ -292,10 +308,9 @@
             const vocab = currentVocabList[Math.floor(Math.random() * currentVocabList.length)];
             items.push({
                 x: width + 50,
-                // 【降低难度】让物品出现的位置更靠近屏幕中间，避免太高或太低接不到
                 y: Math.random() * (height - 350) + 150, 
                 vocab: vocab,
-                size: 70, // 物品也稍微放大一点
+                size: 70, 
                 collected: false
             });
         }
@@ -316,7 +331,7 @@
                 if (cloud.x < -100) cloud.x = width + 50;
             });
             ctx.fillStyle = '#c7ceea'; 
-            ctx.fillRect(0, height - 70, width, 70);
+            ctx.fillRect(0, height - groundHeight, width, groundHeight);
         }
 
         let frameCount = 0;
@@ -353,7 +368,6 @@
                     ctx.fillText(item.vocab.emoji, item.x, item.y);
 
                     const dist = Math.hypot(pip.x - item.x, pip.y - item.y);
-                    // 【降低难度】放宽判定距离，现在不需要对得很准，靠近就能吃到
                     if (dist < 90) { 
                         item.collected = true;
                         triggerWordFeedback(item.vocab.word);
@@ -380,10 +394,9 @@
         }
 
         function startGame(category) {
-            initAudio(); 
+            forceUnlockAudio(); // 双重保险
             currentVocabList = category === 'animal' ? animalVocab : fruitVocab;
             
-            // 确保在用户交互的这一瞬间立即唤醒发声引擎
             speakWord("Let's go!"); 
             
             gameState = 'playing';
@@ -410,7 +423,6 @@
         canvas.addEventListener('touchstart', handleInput, { passive: false });
         canvas.addEventListener('mousedown', handleInput);
 
-        // 使用 JS 直接绑定事件，提升唤醒语音引擎的成功率
         document.getElementById('btnAnimal').addEventListener('click', (e) => {
             e.preventDefault();
             startGame('animal');

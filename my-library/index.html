@@ -1,285 +1,207 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>乐溪的图书馆</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>我的图书馆</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<header class="top-bar">
+  <h1 id="page-title">书架</h1>
+  <button class="icon-btn" id="btn-search-toggle"><i class="fas fa-search"></i></button>
+</header>
+<div class="search-bar" id="search-bar">
+  <input type="text" id="searchInput" placeholder="搜索书架…">
+</div>
+<main class="main-content">
 
-  <header class="top-bar">
-    <h1 id="page-title">书架</h1>
-    <button class="icon-btn" id="btn-search-toggle"><i class="fas fa-search"></i></button>
-  </header>
-
-  <div class="search-bar" id="search-bar">
-    <input type="text" id="searchInput" placeholder="搜索书名、内容、课题…">
-  </div>
-
-  <main class="main-content">
-
-    <!-- ===== 书架 ===== -->
-    <section id="view-books" class="view active">
-      <div class="filter-chips">
-        <button class="chip active" data-filter="all">全部</button>
-        <button class="chip" data-filter="reading">在读</button>
-        <button class="chip" data-filter="finished">已读</button>
-        <button class="chip" data-filter="wishlist">想读</button>
-      </div>
-      <div id="books-grid" class="books-grid"></div>
-    </section>
-
-    <!-- ===== 书库搜索 ===== -->
-    <section id="view-explore" class="view">
-      <div class="explore-search">
-        <div class="explore-input-row">
-          <input type="text" id="explore-query" placeholder="搜书名、作者、ISBN…">
-          <button class="btn-sm" id="btn-explore-search"><i class="fas fa-search"></i> 搜索书库</button>
-        </div>
-        <div class="explore-tips">
-          <span class="explore-tip" data-q="生命不能承受之轻">生命不能承受之轻</span>
-          <span class="explore-tip" data-q="荆棘鸟">荆棘鸟</span>
-          <span class="explore-tip" data-q="百年孤独">百年孤独</span>
-          <span class="explore-tip" data-q="活着 余华">活着</span>
-          <span class="explore-tip" data-q="挪威的森林">挪威的森林</span>
-          <span class="explore-tip" data-q="卡拉马佐夫兄弟">卡拉马佐夫兄弟</span>
-          <span class="explore-tip" data-q="追忆似水年华">追忆似水年华</span>
-          <span class="explore-tip" data-q="The Great Gatsby">Gatsby</span>
-        </div>
-      </div>
-      <div id="explore-status" class="explore-status"></div>
-      <div id="explore-results" class="explore-results"></div>
-    </section>
-
-    <!-- ===== 人生课题 ===== -->
-    <section id="view-topics" class="view">
-      <div class="topics-header">
-        <p class="topics-subtitle">每一本书都在回答某个课题</p>
-        <button class="btn-new-topic" id="btn-new-topic"><i class="fas fa-plus"></i> 新建课题</button>
-      </div>
-      <div id="topics-list" class="topics-list"></div>
-      <div id="topic-detail" class="topic-detail" style="display:none;"></div>
-    </section>
-
-    <!-- ===== 设置 ===== -->
-    <section id="view-settings" class="view">
-      <div class="settings-group">
-        <h3>数据管理</h3>
-        <button class="settings-btn" id="btn-export"><i class="fas fa-download"></i> 导出备份</button>
-        <button class="settings-btn" id="btn-import"><i class="fas fa-upload"></i> 导入恢复</button>
-        <input type="file" id="import-file" accept=".json" hidden>
-        <button class="settings-btn danger" id="btn-clear"><i class="fas fa-trash"></i> 清空数据</button>
-      </div>
-      <div class="settings-group">
-        <h3>统计</h3>
-        <div class="stats-row"><span>书籍</span><strong id="s-books">0</strong></div>
-        <div class="stats-row"><span>笔记</span><strong id="s-notes">0</strong></div>
-        <div class="stats-row"><span>人生课题</span><strong id="s-topics">0</strong></div>
-      </div>
-    </section>
-  </main>
-
-  <!-- 底部导航 -->
-  <nav class="bottom-nav">
-    <button class="nav-item active" data-view="books"><i class="fas fa-book"></i><span>书架</span></button>
-    <button class="nav-item" data-view="explore"><i class="fas fa-compass"></i><span>书库</span></button>
-    <button class="nav-item fab" id="btn-add"><i class="fas fa-plus"></i></button>
-    <button class="nav-item" data-view="topics"><i class="fas fa-tags"></i><span>课题</span></button>
-    <button class="nav-item" data-view="settings"><i class="fas fa-cog"></i><span>设置</span></button>
-  </nav>
-
-  <!-- FAB 菜单 -->
-  <div class="fab-menu" id="fab-menu">
-    <button class="fab-option" data-action="add-book"><span>手动添加</span><i class="fas fa-pen"></i></button>
-    <button class="fab-option" data-action="add-note"><span>添加笔记</span><i class="fas fa-pen-fancy"></i></button>
-  </div>
-  <div class="overlay" id="overlay"></div>
-
-  <!-- ===== 手动添加/编辑书籍 ===== -->
-  <div class="modal" id="modal-book">
-    <div class="modal-sheet">
-      <div class="sheet-handle"></div>
-      <h2 id="modal-book-title">手动添加书籍</h2>
-      <form id="form-book">
-        <div class="form-group">
-          <label>书名 *</label>
-          <input type="text" id="book-title" required>
-        </div>
-        <div class="form-group">
-          <label>作者</label>
-          <input type="text" id="book-author">
-        </div>
-        <div class="form-group">
-          <label>封面 URL</label>
-          <input type="url" id="book-cover" placeholder="https://...">
-          <div id="cover-preview" class="cover-preview"></div>
-        </div>
-        <div class="form-group">
-          <label>简介</label>
-          <textarea id="book-desc" rows="3"></textarea>
-        </div>
-        <div class="form-row">
-          <div class="form-group flex-1">
-            <label>状态</label>
-            <select id="book-status">
-              <option value="reading">在读</option>
-              <option value="finished">已读</option>
-              <option value="wishlist">想读</option>
-            </select>
-          </div>
-          <div class="form-group flex-1">
-            <label>评分</label>
-            <select id="book-rating">
-              <option value="5">★★★★★</option>
-              <option value="4">★★★★☆</option>
-              <option value="3">★★★☆☆</option>
-              <option value="2">★★☆☆☆</option>
-              <option value="1">★☆☆☆☆</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" id="book-edit-id">
-        <div class="form-actions">
-          <button type="button" class="btn-cancel" onclick="closeModal('modal-book')">取消</button>
-          <button type="submit" class="btn-primary">保存</button>
-        </div>
-      </form>
+  <!-- 书架 -->
+  <section id="view-books" class="view active">
+    <div class="filter-chips">
+      <button class="chip active" data-filter="all">全部</button>
+      <button class="chip" data-filter="reading">在读</button>
+      <button class="chip" data-filter="finished">已读</button>
+      <button class="chip" data-filter="wishlist">想读</button>
     </div>
-  </div>
+    <div id="books-grid" class="books-grid"></div>
+  </section>
 
-  <!-- ===== 快速加入书架（从书库搜索结果） ===== -->
-  <div class="modal" id="modal-quick-add">
-    <div class="modal-sheet">
-      <div class="sheet-handle"></div>
-      <h2>加入书架</h2>
-      <div id="quick-add-preview" class="quick-add-preview"></div>
-      <form id="form-quick-add">
-        <div class="form-group">
-          <label>阅读状态</label>
-          <div class="status-toggle">
-            <button type="button" class="status-btn active" data-status="wishlist">
-              <i class="fas fa-bookmark"></i> 想读
-            </button>
-            <button type="button" class="status-btn" data-status="reading">
-              <i class="fas fa-book-open"></i> 在读
-            </button>
-            <button type="button" class="status-btn" data-status="finished">
-              <i class="fas fa-check-circle"></i> 已读
-            </button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>评分（已读时可评）</label>
-          <div class="star-picker" id="star-picker">
-            <span class="star" data-v="1">★</span>
-            <span class="star" data-v="2">★</span>
-            <span class="star" data-v="3">★</span>
-            <span class="star" data-v="4">★</span>
-            <span class="star" data-v="5">★</span>
-          </div>
-          <input type="hidden" id="quick-rating" value="0">
-        </div>
-        <input type="hidden" id="quick-book-data">
-        <div class="form-actions">
-          <button type="button" class="btn-cancel" onclick="closeModal('modal-quick-add')">取消</button>
-          <button type="submit" class="btn-primary">确认加入</button>
-        </div>
-      </form>
+  <!-- 书库 -->
+  <section id="view-explore" class="view">
+    <div class="explore-search">
+      <div class="explore-input-row">
+        <input type="text" id="explore-query" placeholder="搜书名、作者、ISBN…">
+        <button class="btn-sm" id="btn-explore"><i class="fas fa-search"></i> 搜</button>
+      </div>
+      <div class="explore-tips">
+        <span class="etag" data-q="生命不能承受之轻">生命不能承受之轻</span>
+        <span class="etag" data-q="荆棘鸟">荆棘鸟</span>
+        <span class="etag" data-q="百年孤独">百年孤独</span>
+        <span class="etag" data-q="活着 余华">活着</span>
+        <span class="etag" data-q="挪威的森林">挪威的森林</span>
+        <span class="etag" data-q="卡拉马佐夫兄弟">卡拉马佐夫</span>
+        <span class="etag" data-q="追忆似水年华">追忆似水年华</span>
+        <span class="etag" data-q="红楼梦">红楼梦</span>
+      </div>
     </div>
-  </div>
+    <div id="explore-status"></div>
+    <div id="explore-results" class="explore-results"></div>
+  </section>
 
-  <!-- ===== 添加/编辑笔记 ===== -->
-  <div class="modal" id="modal-note">
-    <div class="modal-sheet">
-      <div class="sheet-handle"></div>
-      <h2>添加笔记</h2>
-      <form id="form-note">
-        <div class="form-group">
-          <label>选择书籍 *</label>
-          <select id="note-book" required><option value="">— 请选择 —</option></select>
-        </div>
-        <div class="form-group">
-          <label>类型</label>
-          <div class="type-toggle">
-            <button type="button" class="type-btn active" data-type="quote"><i class="fas fa-quote-left"></i> 摘抄</button>
-            <button type="button" class="type-btn" data-type="thought"><i class="fas fa-lightbulb"></i> 感悟</button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>内容 *</label>
-          <textarea id="note-content" rows="4" placeholder="摘抄原文或你的感悟…" required></textarea>
-        </div>
-        <div class="form-group">
-          <label>我的想法</label>
-          <textarea id="note-comment" rows="2" placeholder="对这段话的理解（可选）"></textarea>
-        </div>
-        <div class="form-group">
-          <label>关联人生课题</label>
-          <div id="topic-picker" class="topic-picker"></div>
-        </div>
-        <div class="form-group">
-          <label>页码</label>
-          <input type="number" id="note-page" placeholder="可选" min="1">
-        </div>
-        <input type="hidden" id="note-type" value="quote">
-        <input type="hidden" id="note-edit-id">
-        <div class="form-actions">
-          <button type="button" class="btn-cancel" onclick="closeModal('modal-note')">取消</button>
-          <button type="submit" class="btn-primary">保存</button>
-        </div>
-      </form>
+  <!-- 课题 -->
+  <section id="view-topics" class="view">
+    <div class="topics-header">
+      <p class="topics-sub">每本书都在回答某个课题</p>
+      <button class="btn-new" id="btn-new-topic"><i class="fas fa-plus"></i> 新建课题</button>
     </div>
-  </div>
+    <div id="topics-list" class="topics-list"></div>
+    <div id="topic-detail" style="display:none"></div>
+  </section>
 
-  <!-- ===== 新建课题 ===== -->
-  <div class="modal" id="modal-topic">
-    <div class="modal-sheet">
-      <div class="sheet-handle"></div>
-      <h2>新建人生课题</h2>
-      <form id="form-topic">
-        <div class="form-group">
-          <label>课题名称 *</label>
-          <input type="text" id="topic-name" placeholder="如：如何面对孤独" required>
-        </div>
-        <div class="form-group">
-          <label>描述</label>
-          <textarea id="topic-desc" rows="2" placeholder="这个课题对你意味着什么？"></textarea>
-        </div>
-        <div class="form-group">
-          <label>颜色</label>
-          <div class="color-picker" id="color-picker">
-            <span class="color-dot active" data-color="#6c63ff" style="background:#6c63ff"></span>
-            <span class="color-dot" data-color="#ff6b9d" style="background:#ff6b9d"></span>
-            <span class="color-dot" data-color="#4ecdc4" style="background:#4ecdc4"></span>
-            <span class="color-dot" data-color="#ffe66d" style="background:#ffe66d"></span>
-            <span class="color-dot" data-color="#ff8a5c" style="background:#ff8a5c"></span>
-            <span class="color-dot" data-color="#a8e6cf" style="background:#a8e6cf"></span>
-            <span class="color-dot" data-color="#dda0dd" style="background:#dda0dd"></span>
-            <span class="color-dot" data-color="#87ceeb" style="background:#87ceeb"></span>
-          </div>
-        </div>
-        <input type="hidden" id="topic-color" value="#6c63ff">
-        <input type="hidden" id="topic-edit-id">
-        <div class="form-actions">
-          <button type="button" class="btn-cancel" onclick="closeModal('modal-topic')">取消</button>
-          <button type="submit" class="btn-primary">保存</button>
-        </div>
-      </form>
+  <!-- 设置 -->
+  <section id="view-settings" class="view">
+    <div class="sg">
+      <h3>数据</h3>
+      <button class="sb" id="btn-export"><i class="fas fa-download"></i> 导出备份</button>
+      <button class="sb" id="btn-import"><i class="fas fa-upload"></i> 导入恢复</button>
+      <input type="file" id="import-file" accept=".json" hidden>
+      <button class="sb danger" id="btn-clear"><i class="fas fa-trash"></i> 清空数据</button>
     </div>
-  </div>
-
-  <!-- ===== 书籍详情 ===== -->
-  <div class="modal" id="modal-detail">
-    <div class="modal-sheet modal-sheet-lg">
-      <div class="sheet-handle"></div>
-      <button class="modal-close-btn" onclick="closeModal('modal-detail')"><i class="fas fa-times"></i></button>
-      <div id="detail-content"></div>
+    <div class="sg">
+      <h3>统计</h3>
+      <div class="sr"><span>书籍</span><strong id="s-books">0</strong></div>
+      <div class="sr"><span>笔记</span><strong id="s-notes">0</strong></div>
+      <div class="sr"><span>课题</span><strong id="s-topics">0</strong></div>
     </div>
-  </div>
+  </section>
+</main>
 
-  <script src="app.js"></script>
+<nav class="bottom-nav">
+  <button class="ni active" data-view="books"><i class="fas fa-book"></i><span>书架</span></button>
+  <button class="ni" data-view="explore"><i class="fas fa-compass"></i><span>书库</span></button>
+  <button class="ni fab" id="btn-add"><i class="fas fa-plus"></i></button>
+  <button class="ni" data-view="topics"><i class="fas fa-tags"></i><span>课题</span></button>
+  <button class="ni" data-view="settings"><i class="fas fa-cog"></i><span>设置</span></button>
+</nav>
+
+<div class="fab-menu" id="fab-menu">
+  <button class="fo" data-action="add-book"><span>添加书籍</span><i class="fas fa-book-medical"></i></button>
+  <button class="fo" data-action="add-note"><span>添加笔记</span><i class="fas fa-pen-fancy"></i></button>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<!-- 添加书籍 -->
+<div class="modal" id="modal-book">
+  <div class="ms">
+    <div class="sh"></div>
+    <h2 id="mb-title">添加书籍</h2>
+    <form id="form-book">
+      <div class="fg"><label>搜索（书名/ISBN）</label>
+        <div class="ir">
+          <input type="text" id="bq" placeholder="如：百年孤独">
+          <button type="button" class="btn-sm" id="btn-fetch"><i class="fas fa-search"></i> 搜</button>
+        </div>
+        <div id="fetch-results"></div>
+      </div>
+      <div class="fd"><span>或手动填写</span></div>
+      <div class="fg"><label>书名 *</label><input type="text" id="bt" required></div>
+      <div class="fg"><label>作者</label><input type="text" id="ba"></div>
+      <div class="fg"><label>封面URL</label><input type="url" id="bc"><div id="cpv"></div></div>
+      <div class="fg"><label>简介</label><textarea id="bd" rows="2"></textarea></div>
+      <div class="fr">
+        <div class="fg f1"><label>状态</label><select id="bs"><option value="reading">在读</option><option value="finished">已读</option><option value="wishlist">想读</option></select></div>
+        <div class="fg f1"><label>评分</label><select id="br"><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select></div>
+      </div>
+      <input type="hidden" id="beid">
+      <div class="fa"><button type="button" class="bc-btn" onclick="CM('modal-book')">取消</button><button type="submit" class="bp">保存</button></div>
+    </form>
+  </div>
+</div>
+
+<!-- 快速加入 -->
+<div class="modal" id="modal-quick">
+  <div class="ms">
+    <div class="sh"></div>
+    <h2>加入书架</h2>
+    <div id="q-preview" class="qp"></div>
+    <form id="form-quick">
+      <div class="fg"><label>状态</label>
+        <div class="st">
+          <button type="button" class="stb active" data-s="wishlist"><i class="fas fa-bookmark"></i>想读</button>
+          <button type="button" class="stb" data-s="reading"><i class="fas fa-book-open"></i>在读</button>
+          <button type="button" class="stb" data-s="finished"><i class="fas fa-check"></i>已读</button>
+        </div>
+      </div>
+      <input type="hidden" id="q-data">
+      <input type="hidden" id="q-status" value="wishlist">
+      <div class="fa"><button type="button" class="bc-btn" onclick="CM('modal-quick')">取消</button><button type="submit" class="bp">确认</button></div>
+    </form>
+  </div>
+</div>
+
+<!-- 笔记 -->
+<div class="modal" id="modal-note">
+  <div class="ms">
+    <div class="sh"></div>
+    <h2>添加笔记</h2>
+    <form id="form-note">
+      <div class="fg"><label>选择书籍 *</label><select id="nb" required><option value="">— 选择 —</option></select></div>
+      <div class="fg"><label>类型</label>
+        <div class="tt">
+          <button type="button" class="tb active" data-type="quote"><i class="fas fa-quote-left"></i> 摘抄</button>
+          <button type="button" class="tb" data-type="thought"><i class="fas fa-lightbulb"></i> 感悟</button>
+        </div>
+      </div>
+      <div class="fg"><label>内容 *</label><textarea id="nc" rows="4" required></textarea></div>
+      <div class="fg"><label>我的想法</label><textarea id="nm" rows="2"></textarea></div>
+      <div class="fg"><label>关联课题</label><div id="tp" class="tp"></div></div>
+      <div class="fg"><label>页码</label><input type="number" id="np" min="1"></div>
+      <input type="hidden" id="nt" value="quote">
+      <input type="hidden" id="neid">
+      <div class="fa"><button type="button" class="bc-btn" onclick="CM('modal-note')">取消</button><button type="submit" class="bp">保存</button></div>
+    </form>
+  </div>
+</div>
+
+<!-- 课题 -->
+<div class="modal" id="modal-topic">
+  <div class="ms">
+    <div class="sh"></div>
+    <h2>新建课题</h2>
+    <form id="form-topic">
+      <div class="fg"><label>名称 *</label><input type="text" id="tn" placeholder="如：如何面对孤独" required></div>
+      <div class="fg"><label>描述</label><textarea id="td" rows="2"></textarea></div>
+      <div class="fg"><label>颜色</label>
+        <div class="cpk" id="cpk">
+          <span class="cd active" data-c="#6c63ff" style="background:#6c63ff"></span>
+          <span class="cd" data-c="#ff6b9d" style="background:#ff6b9d"></span>
+          <span class="cd" data-c="#4ecdc4" style="background:#4ecdc4"></span>
+          <span class="cd" data-c="#ffe66d" style="background:#ffe66d"></span>
+          <span class="cd" data-c="#ff8a5c" style="background:#ff8a5c"></span>
+          <span class="cd" data-c="#a8e6cf" style="background:#a8e6cf"></span>
+          <span class="cd" data-c="#dda0dd" style="background:#dda0dd"></span>
+          <span class="cd" data-c="#87ceeb" style="background:#87ceeb"></span>
+        </div>
+      </div>
+      <input type="hidden" id="tc" value="#6c63ff">
+      <input type="hidden" id="teid">
+      <div class="fa"><button type="button" class="bc-btn" onclick="CM('modal-topic')">取消</button><button type="submit" class="bp">保存</button></div>
+    </form>
+  </div>
+</div>
+
+<!-- 详情 -->
+<div class="modal" id="modal-detail">
+  <div class="ms msl">
+    <div class="sh"></div>
+    <button class="mcb" onclick="CM('modal-detail')"><i class="fas fa-times"></i></button>
+    <div id="dc"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>

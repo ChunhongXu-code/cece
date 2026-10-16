@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>乐溪的精神世界</title>
+  <title>乐溪的图书馆</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -32,13 +32,33 @@
       <div id="books-grid" class="books-grid"></div>
     </section>
 
+    <!-- ===== 书库搜索 ===== -->
+    <section id="view-explore" class="view">
+      <div class="explore-search">
+        <div class="explore-input-row">
+          <input type="text" id="explore-query" placeholder="搜书名、作者、ISBN…">
+          <button class="btn-sm" id="btn-explore-search"><i class="fas fa-search"></i> 搜索书库</button>
+        </div>
+        <div class="explore-tips">
+          <span class="explore-tip" data-q="生命不能承受之轻">生命不能承受之轻</span>
+          <span class="explore-tip" data-q="荆棘鸟">荆棘鸟</span>
+          <span class="explore-tip" data-q="百年孤独">百年孤独</span>
+          <span class="explore-tip" data-q="活着 余华">活着</span>
+          <span class="explore-tip" data-q="挪威的森林">挪威的森林</span>
+          <span class="explore-tip" data-q="卡拉马佐夫兄弟">卡拉马佐夫兄弟</span>
+          <span class="explore-tip" data-q="追忆似水年华">追忆似水年华</span>
+          <span class="explore-tip" data-q="The Great Gatsby">Gatsby</span>
+        </div>
+      </div>
+      <div id="explore-status" class="explore-status"></div>
+      <div id="explore-results" class="explore-results"></div>
+    </section>
+
     <!-- ===== 人生课题 ===== -->
     <section id="view-topics" class="view">
       <div class="topics-header">
         <p class="topics-subtitle">每一本书都在回答某个课题</p>
-        <button class="btn-new-topic" id="btn-new-topic">
-          <i class="fas fa-plus"></i> 新建课题
-        </button>
+        <button class="btn-new-topic" id="btn-new-topic"><i class="fas fa-plus"></i> 新建课题</button>
       </div>
       <div id="topics-list" class="topics-list"></div>
       <div id="topic-detail" class="topic-detail" style="display:none;"></div>
@@ -65,33 +85,25 @@
   <!-- 底部导航 -->
   <nav class="bottom-nav">
     <button class="nav-item active" data-view="books"><i class="fas fa-book"></i><span>书架</span></button>
-    <button class="nav-item" data-view="topics"><i class="fas fa-compass"></i><span>课题</span></button>
+    <button class="nav-item" data-view="explore"><i class="fas fa-compass"></i><span>书库</span></button>
     <button class="nav-item fab" id="btn-add"><i class="fas fa-plus"></i></button>
+    <button class="nav-item" data-view="topics"><i class="fas fa-tags"></i><span>课题</span></button>
     <button class="nav-item" data-view="settings"><i class="fas fa-cog"></i><span>设置</span></button>
   </nav>
 
   <!-- FAB 菜单 -->
   <div class="fab-menu" id="fab-menu">
-    <button class="fab-option" data-action="add-book"><span>添加书籍</span><i class="fas fa-book-medical"></i></button>
+    <button class="fab-option" data-action="add-book"><span>手动添加</span><i class="fas fa-pen"></i></button>
     <button class="fab-option" data-action="add-note"><span>添加笔记</span><i class="fas fa-pen-fancy"></i></button>
   </div>
   <div class="overlay" id="overlay"></div>
 
-  <!-- ===== 添加/编辑书籍 ===== -->
+  <!-- ===== 手动添加/编辑书籍 ===== -->
   <div class="modal" id="modal-book">
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
-      <h2 id="modal-book-title">添加书籍</h2>
+      <h2 id="modal-book-title">手动添加书籍</h2>
       <form id="form-book">
-        <div class="form-group">
-          <label>搜索书籍（书名 / ISBN）</label>
-          <div class="input-row">
-            <input type="text" id="book-query" placeholder="如：百年孤独 或 9787544270878">
-            <button type="button" class="btn-sm" id="btn-fetch-book"><i class="fas fa-search"></i> 搜索</button>
-          </div>
-          <div id="search-results" class="search-results"></div>
-        </div>
-        <div class="form-divider"><span>或手动填写</span></div>
         <div class="form-group">
           <label>书名 *</label>
           <input type="text" id="book-title" required>
@@ -101,7 +113,7 @@
           <input type="text" id="book-author">
         </div>
         <div class="form-group">
-          <label>封面图片 URL</label>
+          <label>封面 URL</label>
           <input type="url" id="book-cover" placeholder="https://...">
           <div id="cover-preview" class="cover-preview"></div>
         </div>
@@ -133,6 +145,47 @@
         <div class="form-actions">
           <button type="button" class="btn-cancel" onclick="closeModal('modal-book')">取消</button>
           <button type="submit" class="btn-primary">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== 快速加入书架（从书库搜索结果） ===== -->
+  <div class="modal" id="modal-quick-add">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <h2>加入书架</h2>
+      <div id="quick-add-preview" class="quick-add-preview"></div>
+      <form id="form-quick-add">
+        <div class="form-group">
+          <label>阅读状态</label>
+          <div class="status-toggle">
+            <button type="button" class="status-btn active" data-status="wishlist">
+              <i class="fas fa-bookmark"></i> 想读
+            </button>
+            <button type="button" class="status-btn" data-status="reading">
+              <i class="fas fa-book-open"></i> 在读
+            </button>
+            <button type="button" class="status-btn" data-status="finished">
+              <i class="fas fa-check-circle"></i> 已读
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>评分（已读时可评）</label>
+          <div class="star-picker" id="star-picker">
+            <span class="star" data-v="1">★</span>
+            <span class="star" data-v="2">★</span>
+            <span class="star" data-v="3">★</span>
+            <span class="star" data-v="4">★</span>
+            <span class="star" data-v="5">★</span>
+          </div>
+          <input type="hidden" id="quick-rating" value="0">
+        </div>
+        <input type="hidden" id="quick-book-data">
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeModal('modal-quick-add')">取消</button>
+          <button type="submit" class="btn-primary">确认加入</button>
         </div>
       </form>
     </div>

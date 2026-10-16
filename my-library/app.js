@@ -13,41 +13,27 @@ function OM(id){document.getElementById(id).classList.add('open')}
 function CM(id){document.getElementById(id).classList.remove('open')}
 const ST={reading:'在读',finished:'已读',wishlist:'想读'};
 
-// ===== 搜索（仅用 Open Library，大陆可访问）=====
+// ===== 苹果官方 Books API (国内秒开，图书极全) =====
 async function searchBooks(q){
-  const clean=q.replace(/[-\s]/g,'');
-  const isISBN=/^\d{10,13}$/.test(clean);
   let results=[];
   try{
-    if(isISBN){
-      const r=await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${clean}&format=json&jscmd=data`);
-      const d=await r.json();const k=`ISBN:${clean}`;
-      if(d[k]){
-        const b=d[k];
-        results.push({title:b.title||'',author:(b.authors||[]).map(a=>a.name).join(', '),
-          cover:b.cover?.large||b.cover?.medium||`https://covers.openlibrary.org/b/isbn/${clean}-L.jpg`,
-          desc:(b.excerpts||[]).map(e=>e.text).join(' ')||(b.subjects||[]).map(s=>s.name).slice(0,5).join('、'),
-          year:b.publish_date||''});
-      }
-    }
-    if(results.length===0){
-      const r=await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&limit=15&fields=title,author_name,cover_i,first_publish_year,subject,number_of_pages_median`);
-      const d=await r.json();
-      if(d.docs){
-        for(const doc of d.docs){
-          results.push({title:doc.title||'',author:(doc.author_name||[]).join(', '),
-            cover:doc.cover_i?`https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`:'',
-            desc:(doc.subject||[]).slice(0,6).join(' · '),
-            year:doc.first_publish_year?String(doc.first_publish_year):'',
-            pages:doc.number_of_pages_median||0});
-        }
+    const r=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&entity=ebook&country=cn&limit=15`);
+    const d=await r.json();
+    if(d.results){
+      for(const b of d.results){
+        // 将 100x100 的缩略图替换为 600x600 高清封面
+        const cover=b.artworkUrl100 ? b.artworkUrl100.replace('100x100bb','600x600bb') : '';
+        results.push({
+          title: b.trackName || '',
+          author: b.artistName || '',
+          cover: cover,
+          desc: (b.description || '').replace(/<[^>]*>/g, '').substring(0,200),
+          year: b.releaseDate ? b.releaseDate.substring(0,4) : ''
+        });
       }
     }
   }catch(e){console.error('搜索失败:',e)}
-  // 去重
-  const map=new Map();
-  for(const r of results){const k=r.title.replace(/\s+/g,'').toLowerCase();if(!k)continue;if(!map.has(k))map.set(k,r);else if(!map.get(k).cover&&r.cover)map.set(k,r)}
-  return[...map.values()];
+  return results;
 }
 
 // ===== 主应用 =====
@@ -63,7 +49,6 @@ class App{
     this.renderBooks();
   }
 
-  // 导航
   bindNav(){
     document.querySelectorAll('.ni[data-view]').forEach(b=>{
       b.addEventListener('click',()=>{
@@ -89,7 +74,6 @@ class App{
     });
   }
 
-  // FAB
   bindFab(){
     const m=document.getElementById('fab-menu'),o=document.getElementById('overlay');
     const t=()=>{m.classList.toggle('open');o.classList.toggle('open')};
@@ -100,7 +84,6 @@ class App{
     });
   }
 
-  // 书库搜索
   bindExplore(){
     const qi=document.getElementById('explore-query');
     const go=()=>{const q=qi.value.trim();if(q)this.doExplore(q)};
@@ -113,21 +96,21 @@ class App{
   async doExplore(q){
     const st=document.getElementById('explore-status');
     const re=document.getElementById('explore-results');
-    st.innerHTML='<i class="fas fa-spinner spin"></i> 搜索中…（首次可能需几秒）';
+    st.innerHTML='<i class="fas fa-spinner spin"></i> 正在搜索全网书库…';
     re.innerHTML='';
     try{
       const results=await searchBooks(q);
-      if(!results.length){st.innerHTML='未找到结果，试试其他关键词';return}
-      st.innerHTML=`找到 ${results.length} 本`;
-      const my=app.books();
+      if(!results.length){st.innerHTML='未找到结果，试试输入精准书名';return}
+      st.innerHTML=`找到 ${results.length} 本图书`;
+      const my=DB.books();
       re.innerHTML=results.map((r,i)=>{
         const inS=my.find(b=>b.title.replace(/\s+/g,'').toLowerCase()===r.title.replace(/\s+/g,'').toLowerCase());
         return`<div class="ec">
           <div class="ecc">${r.cover?`<img src="${r.cover}" loading="lazy" onerror="this.outerHTML='📖'">`:'📖'}</div>
           <div class="eci">
             <div class="ect">${r.title}</div>
-            <div class="eca">${r.author||'未知'}</div>
-            <div class="ecm">${r.year?r.year+'年 ':''}${r.pages?r.pages+'页':''}</div>
+            <div class="eca">${r.author||'未知作者'}</div>
+            <div class="ecm">${r.year?r.year+'年 出版':''}</div>
             <div class="ecd">${r.desc||'暂无简介'}</div>
           </div>
           ${inS?`<span class="ecis">✓ ${ST[inS.status]}</span>`:`<button class="ecab" data-i="${i}">+ 加入</button>`}
@@ -139,9 +122,6 @@ class App{
     }catch(e){st.innerHTML='搜索失败，请检查网络';console.error(e)}
   }
 
-  books(){return DB.books()}
-
-  // 快速加入
   bindQuickAdd(){
     document.querySelectorAll('.stb').forEach(b=>{
       b.addEventListener('click',()=>{
@@ -155,12 +135,12 @@ class App{
       const d=JSON.parse(document.getElementById('q-data').value);
       const books=DB.books();
       if(books.find(b=>b.title.replace(/\s+/g,'').toLowerCase()===d.title.replace(/\s+/g,'').toLowerCase())){
-        toast('已在书架');CM('modal-quick');return;
+        toast('这本书已经在你的书架里了');CM('modal-quick');return;
       }
       books.unshift({id:DB.id(),title:d.title,author:d.author,cover:d.cover,description:d.desc,status:this.qStatus,rating:0,dateAdded:new Date().toISOString().split('T')[0]});
       DB.sBooks(books);CM('modal-quick');this.renderBooks();
       const q=document.getElementById('explore-query').value.trim();if(q)this.doExplore(q);
-      toast('✅ 已加入');
+      toast('✅ 已成功加入书架');
     });
   }
   openQuickAdd(d){
@@ -171,7 +151,6 @@ class App{
     OM('modal-quick');
   }
 
-  // 书籍表单
   bindBookForm(){
     document.getElementById('bc').addEventListener('input',e=>{
       const u=e.target.value.trim();
@@ -186,10 +165,10 @@ class App{
     const btn=document.getElementById('btn-fetch');
     if(!q){toast('请输入书名');return}
     btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner spin"></i>';
-    rd.innerHTML='<div style="color:var(--t2);font-size:.83rem;padding:8px">搜索中…</div>';
+    rd.innerHTML='<div style="color:var(--t2);font-size:.83rem;padding:8px">正在自动抓取信息…</div>';
     try{
       const res=await searchBooks(q);
-      if(!res.length){rd.innerHTML='<div style="color:var(--t2);font-size:.83rem;padding:8px">未找到</div>';return}
+      if(!res.length){rd.innerHTML='<div style="color:var(--t2);font-size:.83rem;padding:8px">未找到匹配书籍</div>';return}
       rd.innerHTML=res.slice(0,5).map((r,i)=>`<div class="fres" data-i="${i}">
         ${r.cover?`<img src="${r.cover}" onerror="this.style.display='none'">`:''}
         <div><div class="frt">${r.title}</div><div class="fra">${r.author||''} ${r.year||''}</div></div>
@@ -202,10 +181,10 @@ class App{
           document.getElementById('bc').value=r.cover||'';
           document.getElementById('bd').value=r.desc||'';
           document.getElementById('cpv').innerHTML=r.cover?`<img src="${r.cover}" onerror="this.remove()">`:'';
-          rd.innerHTML='';toast('✅ 已填充');
+          rd.innerHTML='';toast('✅ 自动抓取并填充成功');
         });
       });
-    }catch{rd.innerHTML='<div style="color:var(--pk);font-size:.83rem;padding:8px">搜索失败</div>'}
+    }catch{rd.innerHTML='<div style="color:var(--pk);font-size:.83rem;padding:8px">抓取失败</div>'}
     finally{btn.disabled=false;btn.innerHTML='<i class="fas fa-search"></i> 搜'}
   }
   openBookForm(book=null){
@@ -213,7 +192,7 @@ class App{
     document.getElementById('beid').value='';
     document.getElementById('fetch-results').innerHTML='';
     document.getElementById('cpv').innerHTML='';
-    document.getElementById('mb-title').textContent=book?'编辑书籍':'添加书籍';
+    document.getElementById('mb-title').textContent=book?'编辑书籍':'手动添加书籍';
     if(book){
       document.getElementById('beid').value=book.id;
       document.getElementById('bt').value=book.title;
@@ -230,20 +209,19 @@ class App{
     e.preventDefault();const books=DB.books();const eid=document.getElementById('beid').value;
     const d={id:eid||DB.id(),title:document.getElementById('bt').value.trim(),author:document.getElementById('ba').value.trim(),cover:document.getElementById('bc').value.trim(),description:document.getElementById('bd').value.trim(),status:document.getElementById('bs').value,rating:parseInt(document.getElementById('br').value),dateAdded:new Date().toISOString().split('T')[0]};
     if(eid){const i=books.findIndex(b=>b.id===eid);if(i>=0){d.dateAdded=books[i].dateAdded;books[i]=d}}else books.unshift(d);
-    DB.sBooks(books);CM('modal-book');this.renderBooks();toast(eid?'✅ 已更新':'✅ 已添加');
+    DB.sBooks(books);CM('modal-book');this.renderBooks();toast(eid?'✅ 已更新':'✅ 已保存到书架');
   }
   delBook(id){
-    if(!confirm('删除此书及笔记？'))return;
+    if(!confirm('确定要彻底删除本书及相关笔记吗？'))return;
     DB.sBooks(DB.books().filter(b=>b.id!==id));DB.sNotes(DB.notes().filter(n=>n.bookId!==id));
     CM('modal-detail');this.renderBooks();toast('🗑️ 已删除');
   }
 
-  // 书架
   renderBooks(q=''){
     const g=document.getElementById('books-grid');let books=DB.books();const notes=DB.notes();
     if(this.filter!=='all')books=books.filter(b=>b.status===this.filter);
     if(q){const l=q.toLowerCase();books=books.filter(b=>b.title.toLowerCase().includes(l)||(b.author||'').toLowerCase().includes(l))}
-    if(!books.length){g.innerHTML=`<div class="es"><i class="fas fa-book-open"></i><p>${q?'无匹配':'书架空空'}</p><p style="font-size:.83rem">去「书库」搜索添加</p></div>`;return}
+    if(!books.length){g.innerHTML=`<div class="es"><i class="fas fa-book-open"></i><p>${q?'没有搜索到书籍':'书架空空如也'}</p><p style="font-size:.83rem">点底部「书库」搜索你读过或想读的书吧</p></div>`;return}
     g.innerHTML=books.map(b=>{const c=notes.filter(n=>n.bookId===b.id).length;
       return`<div class="bk" data-id="${b.id}"><span class="bdg ${b.status}"></span>${c?`<span class="nc">${c}</span>`:''}
         <div class="cv">${b.cover?`<img src="${b.cover}" loading="lazy" onerror="this.outerHTML='<div class=ph><i class=fas fa-book></i><span>${b.title}</span></div>'">`:`<div class="ph"><i class="fas fa-book"></i><span>${b.title}</span></div>`}</div>
@@ -256,19 +234,18 @@ class App{
     const notes=DB.notes().filter(n=>n.bookId===id);
     document.getElementById('dc').innerHTML=`
       <div class="dh">${b.cover?`<img src="${b.cover}">`:''}
-        <div class="di"><h2>${b.title}</h2><div class="au">${b.author||''}</div><div class="de">${b.description||'暂无'}</div>
+        <div class="di"><h2>${b.title}</h2><div class="au">${b.author||''}</div><div class="de">${b.description||'暂无简介'}</div>
         <div class="dm"><span class="st2 ${b.status}">${ST[b.status]}</span><span class="stars">${'★'.repeat(b.rating||0)}${'☆'.repeat(5-(b.rating||0))}</span></div></div>
       </div>
       <div class="da">
-        <button onclick="app.openNoteForm(null,'${b.id}')"><i class="fas fa-plus"></i> 笔记</button>
+        <button onclick="app.openNoteForm(null,'${b.id}')"><i class="fas fa-plus"></i> 写笔记</button>
         <button onclick="app.openBookForm(DB.books().find(x=>x.id==='${b.id}'))"><i class="fas fa-edit"></i> 编辑</button>
         <button class="del" onclick="app.delBook('${b.id}')"><i class="fas fa-trash"></i> 删除</button>
       </div>
-      <div class="ds"><h3>笔记(${notes.length})</h3>${notes.length?notes.map(n=>this.noteHTML(n,false)).join(''):'<p style="color:var(--t2);text-align:center;padding:16px">暂无</p>'}</div>`;
+      <div class="ds"><h3>读书笔记 (${notes.length})</h3>${notes.length?notes.map(n=>this.noteHTML(n,false)).join(''):'<p style="color:var(--t2);text-align:center;padding:16px">暂无笔记</p>'}</div>`;
     OM('modal-detail');this._bindNA('#dc',()=>this.showDetail(id));
   }
 
-  // 笔记
   bindNoteForm(){
     document.getElementById('form-note').addEventListener('submit',e=>this.saveNote(e));
     document.querySelectorAll('.tb').forEach(b=>{
@@ -280,7 +257,7 @@ class App{
     document.getElementById('neid').value='';document.getElementById('nt').value='quote';
     document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('active',b.dataset.type==='quote'));
     const sel=document.getElementById('nb');
-    sel.innerHTML='<option value="">— 选择 —</option>'+DB.books().map(b=>`<option value="${b.id}">${b.title}</option>`).join('');
+    sel.innerHTML='<option value="">— 请选择图书 —</option>'+DB.books().map(b=>`<option value="${b.id}">${b.title}</option>`).join('');
     if(preBid)sel.value=preBid;
     if(note){
       document.getElementById('neid').value=note.id;sel.value=note.bookId;
@@ -293,7 +270,7 @@ class App{
   }
   renderTP(){
     const ts=DB.topics(),c=document.getElementById('tp');
-    if(!ts.length){c.innerHTML='<span style="color:var(--t2);font-size:.82rem">去课题页创建</span>';return}
+    if(!ts.length){c.innerHTML='<span style="color:var(--t2);font-size:.82rem">还没有课题，请去「人生课题」页面创建</span>';return}
     c.innerHTML=ts.map(t=>`<button type="button" class="tpb ${this.selTopics.includes(t.id)?'sel':''}" data-t="${t.id}"><span class="dot" style="background:${t.color}"></span>${t.name}</button>`).join('');
     c.querySelectorAll('.tpb').forEach(b=>{
       b.addEventListener('click',()=>{const id=b.dataset.t;this.selTopics=this.selTopics.includes(id)?this.selTopics.filter(x=>x!==id):[...this.selTopics,id];this.renderTP()});
@@ -305,9 +282,9 @@ class App{
       content:document.getElementById('nc').value.trim(),comment:document.getElementById('nm').value.trim(),
       topics:[...this.selTopics],page:document.getElementById('np').value||null,dateAdded:new Date().toISOString().split('T')[0]};
     if(eid){const i=notes.findIndex(n=>n.id===eid);if(i>=0){d.dateAdded=notes[i].dateAdded;notes[i]=d}}else notes.unshift(d);
-    DB.sNotes(notes);CM('modal-note');this.renderBooks();toast('✅ 已保存');
+    DB.sNotes(notes);CM('modal-note');this.renderBooks();toast('✅ 笔记保存成功');
   }
-  delNote(id){if(!confirm('删除？'))return;DB.sNotes(DB.notes().filter(n=>n.id!==id));this.renderBooks();toast('🗑️')}
+  delNote(id){if(!confirm('确定删除此笔记？'))return;DB.sNotes(DB.notes().filter(n=>n.id!==id));this.renderBooks();toast('🗑️ 已删除')}
   noteHTML(n,src=true){
     const b=DB.books().find(x=>x.id===n.bookId);const ts=DB.topics();
     const tn=(n.topics||[]).map(id=>ts.find(t=>t.id===id)).filter(Boolean);
@@ -322,7 +299,6 @@ class App{
     document.querySelectorAll(`${sel} .dn`).forEach(b=>{b.addEventListener('click',e=>{e.stopPropagation();this.delNote(b.dataset.id);if(ref)ref()})});
   }
 
-  // 课题
   bindTopicForm(){
     document.getElementById('btn-new-topic').addEventListener('click',()=>this.openTopicForm());
     document.querySelectorAll('.cd').forEach(d=>{
@@ -342,15 +318,15 @@ class App{
     e.preventDefault();const ts=DB.topics();const eid=document.getElementById('teid').value;
     const d={id:eid||DB.id(),name:document.getElementById('tn').value.trim(),description:document.getElementById('td').value.trim(),color:document.getElementById('tc').value};
     if(eid){const i=ts.findIndex(t=>t.id===eid);if(i>=0)ts[i]={...ts[i],...d}}else ts.unshift(d);
-    DB.sTopics(ts);CM('modal-topic');this.renderTopics();toast('✅ 已保存');
+    DB.sTopics(ts);CM('modal-topic');this.renderTopics();toast('✅ 课题已保存');
   }
-  delTopic(id){if(!confirm('删除课题？'))return;DB.sTopics(DB.topics().filter(t=>t.id!==id));this.renderTopics();toast('🗑️')}
+  delTopic(id){if(!confirm('确定删除此课题？'))return;DB.sTopics(DB.topics().filter(t=>t.id!==id));this.renderTopics();toast('🗑️ 已删除')}
   renderTopics(){
     const ts=DB.topics(),notes=DB.notes(),list=document.getElementById('topics-list'),det=document.getElementById('topic-detail');
     det.style.display='none';list.style.display='';
-    if(!ts.length){list.innerHTML='<div class="es"><i class="fas fa-compass"></i><p>还没有课题</p></div>';return}
+    if(!ts.length){list.innerHTML='<div class="es"><i class="fas fa-compass"></i><p>还没有人生课题</p><p style="font-size:.83rem">点击上方「新建课题」开启思考吧</p></div>';return}
     list.innerHTML=ts.map(t=>{const c=notes.filter(n=>(n.topics||[]).includes(t.id)).length;
-      return`<div class="tc" data-t="${t.id}"><div class="tcb" style="background:${t.color}"></div><button class="tcdel" data-t="${t.id}"><i class="fas fa-trash"></i></button><div class="tcn">${t.name}</div><div class="tcd">${t.description||'点击查看'}</div><div class="tcc">${c} 条笔记</div></div>`;
+      return`<div class="tc" data-t="${t.id}"><div class="tcb" style="background:${t.color}"></div><button class="tcdel" data-t="${t.id}"><i class="fas fa-trash"></i></button><div class="tcn">${t.name}</div><div class="tcd">${t.description||'点击查看相关笔记'}</div><div class="tcc">${c} 条笔记</div></div>`;
     }).join('');
     list.querySelectorAll('.tc').forEach(c=>{c.addEventListener('click',e=>{if(e.target.closest('.tcdel'))return;this.showTopic(c.dataset.t)})});
     list.querySelectorAll('.tcdel').forEach(b=>{b.addEventListener('click',e=>{e.stopPropagation();this.delTopic(b.dataset.t)})});
@@ -362,30 +338,28 @@ class App{
     list.style.display='none';det.style.display='';
     det.innerHTML=`<div class="tdh"><button class="tdb" id="tdb"><i class="fas fa-arrow-left"></i></button><div><div class="tdt" style="color:${t.color}">${t.name}</div><div style="color:var(--t2);font-size:.83rem">${notes.length} 条笔记</div></div></div>
       ${t.description?`<p style="color:var(--t2);margin-bottom:12px;font-size:.88rem">${t.description}</p>`:''}
-      ${notes.length?notes.map(n=>this.noteHTML(n,true)).join(''):'<p style="color:var(--t2);text-align:center;padding:30px">暂无笔记</p>'}`;
+      ${notes.length?notes.map(n=>this.noteHTML(n,true)).join(''):'<p style="color:var(--t2);text-align:center;padding:30px">该课题下暂无笔记</p>'}`;
     document.getElementById('tdb').addEventListener('click',()=>this.renderTopics());
     this._bindNA('#topic-detail',()=>this.showTopic(tid));
   }
 
-  // 搜索
   bindSearch(){
     let t;document.getElementById('searchInput').addEventListener('input',e=>{clearTimeout(t);t=setTimeout(()=>this.renderBooks(e.target.value.trim()),300)});
   }
 
-  // 设置
   bindSettings(){
     document.getElementById('btn-export').addEventListener('click',()=>{
       const b=new Blob([DB.exp()],{type:'application/json'});const a=document.createElement('a');
-      a.href=URL.createObjectURL(b);a.download=`lib-${new Date().toISOString().split('T')[0]}.json`;a.click();toast('📦 已导出');
+      a.href=URL.createObjectURL(b);a.download=`library-backup-${new Date().toISOString().split('T')[0]}.json`;a.click();toast('📦 备份导出成功');
     });
     document.getElementById('btn-import').addEventListener('click',()=>document.getElementById('import-file').click());
     document.getElementById('import-file').addEventListener('change',e=>{
       const f=e.target.files[0];if(!f)return;const r=new FileReader();
-      r.onload=()=>{try{DB.imp(r.result);this.renderBooks();toast('✅ 已恢复')}catch{toast('❌ 格式错误')}};
+      r.onload=()=>{try{DB.imp(r.result);this.renderBooks();toast('✅ 数据恢复成功')}catch{toast('❌ 备份文件格式错误')}};
       r.readAsText(f);e.target.value='';
     });
     document.getElementById('btn-clear').addEventListener('click',()=>{
-      if(confirm('⚠️ 清空所有？')){['lb','ln','lt'].forEach(k=>localStorage.removeItem(k));this.renderBooks();toast('🗑️')}
+      if(confirm('⚠️ 确定清空所有数据？清空后无法恢复！')){['lb','ln','lt'].forEach(k=>localStorage.removeItem(k));this.renderBooks();toast('🗑️ 已清空')}
     });
   }
   renderStats(){
@@ -395,4 +369,5 @@ class App{
     document.getElementById('s-topics').textContent=ts.size;
   }
 }
+
 const app=new App();
